@@ -1,0 +1,1 @@
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\TestUnitLib1\obj\Debug\TestUnitLib1.csprojResolveAssemblyReference.cache

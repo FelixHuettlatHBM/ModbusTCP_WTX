@@ -1,0 +1,637 @@
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Form1.resources
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+F:\00_Projekte\1512_Systec\Source\WTXModbus\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Form1.resources
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\hbm\Desktop\leistner\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.measure_class.resources
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.measure_class.resources
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\hbm\Desktop\Studi_HFelix_Dateien_2017_09_08\TCPModbus Zweite Lösung Aufgabe 9.9.17\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Display.resources
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Studi_HFelix_Dateien_2017_09_08_neu\Studi_HFelix_Dateien_2017_09_08\PLC Interface Aufgabe 20.9.2017\C#_Solution\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Display.resources
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Display.resources
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 5.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Display.resources
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 4.10\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Display.resources
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 6.10 nach input_output_words\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Display.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.DataGrid.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Setting_Display.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 9.10.2017 - Mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.DataGrid.resources
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 10.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.DataGrid.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Setter umstellen mit Datagridview\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.DataGrid.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 12.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.DataGrid.resources
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 13.10.2017 - Nach Umstrukturierung input_output\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 18.10.2017 - Vor NUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 18.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 19.10.2017 - NachNUnit Test C#\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Modbus.resources
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\Stand 20.10.2017 - Vor Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\26.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\26.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\26.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\30.10.2017 - Modbus - Data - GUI\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp Code FHuettl 2017_11_3\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus Schnittstelle Csharp FHuettl 2017_11_7\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_9\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_10\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\Nach Änderung TCP Modbus Schnittstelle Csharp FHuettl 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_14\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation Methodinvoker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_17\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchron\Asynchrone Datenkommunikation BackgroundWorker Funktioniert 2017_11_21\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber 2017_12_1\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCP Modbus\Asynchrone Datenkommunikation BackgroundWorker Publisher Subscriber Interface umgebaut 2017_12_06\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_08\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_12 - Ohne Dictionary\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPModbus WTX Stand 2017_12_13 - Ohne Dictionary Interfaces IValues IAsync\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_03 with comments\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_04 with comments\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_05 with comments\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\obj\Debug\WTXModbus.SettingsForm.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.pdb

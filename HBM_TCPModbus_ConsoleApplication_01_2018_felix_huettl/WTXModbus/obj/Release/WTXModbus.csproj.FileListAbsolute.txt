@@ -1,0 +1,13 @@
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\WTXModbus.exe.config
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\WTXModbus.exe
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\WTXModbus.pdb
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\log4net.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\Modbus.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\Unme.Common.dll
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\bin\Release\log4net.xml
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Release\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Release\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Release\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Release\WTXModbus.exe
+C:\Users\huettl\Desktop\30.10.2017 - Nach Strukturänderung\Stand 4.10.2017\WTXModbus\WTXModbus\obj\Release\WTXModbus.pdb

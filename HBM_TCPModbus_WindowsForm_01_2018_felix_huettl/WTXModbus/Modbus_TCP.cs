@@ -74,15 +74,28 @@ namespace WTXModbus
                 try
                 {
                     // Read the data: e.Message's type - ushort[]  
+                    //if (this.connected == true)     // The register is only read, if the connection is established successfully. 
                     e.Message = master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints);
+                   // this.data = e.Message;
                 }
                 catch (System.ArgumentException)
                 {
                     Console.WriteLine("\nNumber of points has to be between 1 and 125.\n");
                 }
+                catch (System.InvalidOperationException)
+                {
+                    this.connected = false;
+
+                    //for (int index = 0; index < this.data.Length; index++)
+                    //    this.data[index] = e.BootingMessage;
+
+                    //handler(this, e);
+
+                    this.Connect();
+                }
 
                 this.data = e.Message;
-
+            
                 // After the read of the register the event is triggered in the following:
                 // Thus the HandleDataEvent(object sender, MessageEvent e) in class WTX120 is called to 
                 // process the read data. In Parameter e, e.Message, the data from the register is hold.
@@ -150,9 +163,9 @@ namespace WTXModbus
             set { this.port = value; }
         }
 
-        public bool Is_connected()
+        public bool is_connected
         {
-            return this.connected;       
+            get { return this.connected; }
         }
 
 

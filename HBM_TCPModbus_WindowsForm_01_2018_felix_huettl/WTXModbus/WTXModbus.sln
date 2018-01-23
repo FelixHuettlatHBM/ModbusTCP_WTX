@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXModbus", "WTXModbus\WTXModbus.csproj", "{1B8BDE86-5015-40A3-B364-5716EC95B932}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXModbus", "WTXModbus.csproj", "{1B8BDE86-5015-40A3-B364-5716EC95B932}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,8 +18,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {462C3EC9-A134-47A9-8F29-E54EFB569036}
 	EndGlobalSection
 EndGlobal

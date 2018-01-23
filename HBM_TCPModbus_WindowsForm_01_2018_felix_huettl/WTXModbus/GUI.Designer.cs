@@ -433,7 +433,7 @@
             this.Controls.Add(this.button2);
             this.Name = "GUI";
             this.Text = "GUI";
-            //this.Load += new System.EventHandler(this.GUI_Load_1);
+            this.Load += new System.EventHandler(this.GUI_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

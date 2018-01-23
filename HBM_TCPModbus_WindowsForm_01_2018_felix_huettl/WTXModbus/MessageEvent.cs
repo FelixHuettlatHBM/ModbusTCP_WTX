@@ -23,11 +23,15 @@ namespace WTXModbus
     /// </summary>
     public class MessageEvent : EventArgs
     {
-        private ushort[] message;     
+        private ushort[] message;
+        private ushort boot_str;
 
         // Constructor: 
         public MessageEvent(ushort[] param)
         {
+
+            this.boot_str = 9999;
+
             this.message = param;
         }
 
@@ -35,6 +39,11 @@ namespace WTXModbus
         { 
             get { return message; }
             set { message = value;}
+        }
+
+        public ushort BootingMessage
+        {
+            get { return boot_str; }
         }
 
         // The following methods show the bit masking and shifting (left and right shift) in general.

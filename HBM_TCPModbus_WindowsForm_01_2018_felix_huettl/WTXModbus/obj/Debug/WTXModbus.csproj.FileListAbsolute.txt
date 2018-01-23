@@ -624,8 +624,8 @@ C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\bin\Debug\Modbus.Extensions.dll
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\bin\Debug\Unme.Common.dll
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\bin\Debug\log4net.xml
-C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.GUI.resources
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.SettingsForm.resources
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache

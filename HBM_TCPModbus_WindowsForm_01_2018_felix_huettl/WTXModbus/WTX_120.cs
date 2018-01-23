@@ -63,6 +63,12 @@ namespace WTXModbus
         // integer value, or like method "comment_application_mode" to set a 0 to "standard application" and a 2 to "filler application" .
         public void HandleDataEvent(object sender, MessageEvent e)
         {
+            if (this.data[0] == 999)
+                for (int index = 0; index < this.data.Length; index++)
+                {
+                    this.data_str[index] = "Booting";
+                }
+
             this.data = e.Message;
             
             this.data_str[0] = this.measurement_with_comma(0);  // 0 equal to "Net and gross measured" as a parameter 

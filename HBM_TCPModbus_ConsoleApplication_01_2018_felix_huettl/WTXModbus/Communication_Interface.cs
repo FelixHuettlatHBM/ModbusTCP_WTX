@@ -33,7 +33,7 @@ namespace WTXModbus
     {
         void Connect();
 
-        bool Is_connected();
+        bool is_connected{ get;}
 
         void ReadRegister();
 

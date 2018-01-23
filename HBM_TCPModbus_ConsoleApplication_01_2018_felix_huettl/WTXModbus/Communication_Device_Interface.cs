@@ -39,6 +39,7 @@ namespace WTXModbus
         string IP_Adress { get; set; }
         int Sending_interval { get; set; }
         int Port { get; set; }
+        
 
         // new void Connect();          // The commented methods are given to show how to implement them in this interface.      
         // new bool Is_connected();

@@ -74,7 +74,8 @@ namespace WTXModbus
                 try
                 {
                     // Read the data: e.Message's type - ushort[]  
-                    e.Message = master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints);
+                    if(this.is_connected==true)     // The register is only read, if the connection is established successfully. 
+                        e.Message = master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints);
                 }
                 catch (System.ArgumentException)
                 {
@@ -150,9 +151,9 @@ namespace WTXModbus
             set { this.port = value; }
         }
 
-        public bool Is_connected()
+        public bool is_connected
         {
-            return this.connected;       
+            get { return this.connected; }
         }
 
 

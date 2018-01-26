@@ -2,7 +2,7 @@
  * 
  * TCP/MODBUS Interface for WTX120 | 01/2018
  * 
- * Author : Felix Huettl 
+ * Author : Felix Huettl
  * 
  *  */
 
@@ -21,14 +21,13 @@ namespace WTXModbus
     /// 
     /// For data transfer the entire interface is submitted from the derived class of IDevice_Values to the GUI:
     /// From method Read_Completed(...) in class "WTX120" to method Read_DataReceived(IDevice_Values Device_Values) in class "GUI". 
-    /// 
-    /// Furthermore you can access individual values, if the interface is known and its derived class is completely implemented by 
-    /// > IDevice_Values.NetandGrossValue <  or > IDevice_Values.get_data_str[0] > IDevice_Values.get_data_ushort[0] for example . 
-    /// 
-    /// There are 2 more arrays: string[] get_data_str and ushort[] get_data_ushort to sum up all values in each array to simplify 
+    /// Furthermore you can access individual values if the interface is known and its derived class is completely implemented by 
+    /// for example > IDevice_Values.NetandGrossValue <  or > IDevice_Values.get_data_str[0] > IDevice_Values.get_data_ushort[0] <. 
+    /// >
+    /// There are 2 more arrays: string[] get_data_str and ushort[] get_data_ushort to sum up all values in an array to simplify 
     /// further operations, like output or conditions.
     /// 
-    /// Behind the integer variables, the index of the arrays is given. 
+    /// Behind the integer variables the index of the arrays is given. 
     /// </summary>
     interface IDeviceValues
     {

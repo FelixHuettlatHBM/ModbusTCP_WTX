@@ -16,8 +16,7 @@ using System.Threading.Tasks;
 namespace WTXModbus
 {
     /// <summary>
-    /// This is the interface for the methods of the data communication between the classes of the Device(class WX120), the GUI 
-    /// and the class for the connection(class ModbusTCP). 
+    /// This is the interface for the methods of the data communication between the classes of the Device and the GUI. 
     /// Besides the interface IDevice_Values, this interface is also derived from WTX120.
     /// It should contain an asynchronous communication allowing to read/write and update the GUI at the same time. In the class
     /// GUI the asynchronous call is started (after the button is clicked) and its corresponding callback method is implemented. 
@@ -26,7 +25,7 @@ namespace WTXModbus
     /// from this interface a Backgroundworker is used (see also in class WTX120). Parameter "command_param" commits the command
     /// and "callback_param" commits the corresponding callback method in the GUI.
     /// 
-    /// The methods Read_DoWork(sender,e) and Write_DoWork(sender,e) should call a method to read the register of the device
+    /// The methods Read_DoWork(sender,e) and Write_DoWork(sender,e) should call a method to read the register of the device(slave)
     /// in an asynchronous way (for example by the Backgroundworker, see also in class WTX120). 
     /// 
     /// The methods Write_Completed(sender,e) and Read_Completed(sender,e) commit the interface IDevice_Values via the callback method to

@@ -2,7 +2,7 @@
  * 
  * TCP/MODBUS Interface for WTX120 | 01/2018
  * 
- * Author : Felix Huettl 
+ * Author : Felix Huettl
  * 
  *  */
 
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace WTXModbus
 {
     /// <summary>
-    /// This interface is used to specify the methods for the connection to the device more precise. It inherits from the interface
+    /// This interface is used to specify the methods for the connection to the device more precise. It inherits from interface
     /// "Communication_Interface", which contains the basic methods to realize a communication to a device like the WTX120.
     /// 
     /// This interface has automatic-properties for the start adress, number of points, IP adress, sending/timer interval and the port,
@@ -28,7 +28,7 @@ namespace WTXModbus
     /// The method ReadRegisterPublishing(MessageEvent e) publishes the event (MessageEvent) and read the register, 
     /// afterwards the message(from the register) will be sent back to WTX120.
     /// 
-    /// The class Modbus_TCP inherits from this interface and from the interface "Communication_Interface". 
+    /// The class Modbus_TCP inherits from this interface and from interface "Communication_Interface". 
     /// </summary>
     interface ICommunicationDevice : ICommunication 
     {
@@ -39,6 +39,7 @@ namespace WTXModbus
         string IP_Adress { get; set; }
         int Sending_interval { get; set; }
         int Port { get; set; }
+        
 
         // new void Connect();          // The commented methods are given to show how to implement them in this interface.      
         // new bool Is_connected();

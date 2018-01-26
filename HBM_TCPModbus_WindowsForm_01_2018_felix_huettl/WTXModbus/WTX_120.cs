@@ -31,17 +31,17 @@ namespace WTXModbus
     {
         private ushort[] data;
         private ushort[] previous_data;
-        private bool is_net;   
+        private bool is_net;
         private ushort command;
-        private string[] data_str;    
-        Action<IDeviceValues> callback_obj;          
+        private string[] data_str;
+        Action<IDeviceValues> callback_obj;
 
         private ModbusTCP pub;
 
         public WTX120(string WTX, ModbusTCP pub_param)
         {
             this.pub = pub_param;
-            
+
             this.data_str = new string[59]; // 59 is the maximum number of input words for the filler application, 
             this.data = new ushort[59];     // 37 is the maximum number for the standard application, here 59 is initialized for the length of the data arrays. 
             this.command = 0x00;
@@ -70,7 +70,7 @@ namespace WTXModbus
                 }
 
             this.data = e.Message;
-            
+
             this.data_str[0] = this.measurement_with_comma(0);  // 0 equal to "Net and gross measured" as a parameter 
             this.data_str[1] = this.measurement_with_comma(1);  // 1 equal to "Net measured" as a parameter
             this.data_str[2] = this.measurement_with_comma(2);  // 2 equal to "Gross measured" as a parameter
@@ -105,7 +105,7 @@ namespace WTXModbus
             this.data_str[25] = this.digital_output_3.ToString();
             this.data_str[26] = this.digital_output_4.ToString();
 
-            if (this.application_mode==0)
+            if (this.application_mode == 0)
             {
                 this.data_str[27] = this.limit_value_status_1.ToString();
                 this.data_str[28] = this.limit_value_status_2.ToString();
@@ -120,48 +120,48 @@ namespace WTXModbus
                 this.data_str[36] = this.weight_memory_net.ToString();
             }
             else
-                if (this.application_mode==2 || this.application_mode==0) // in filler mode 
+                if (this.application_mode == 2 || this.application_mode == 0) // in filler mode 
                 {
-                this.data_str[27] = this.coarse_flow.ToString();
-                this.data_str[28] = this.fine_flow.ToString();
-                this.data_str[29] = this.ready.ToString();
-                this.data_str[30] = this.re_dosing.ToString();
+                    this.data_str[27] = this.coarse_flow.ToString();
+                    this.data_str[28] = this.fine_flow.ToString();
+                    this.data_str[29] = this.ready.ToString();
+                    this.data_str[30] = this.re_dosing.ToString();
 
-                this.data_str[31] = this.emptying.ToString();
-                this.data_str[32] = this.flow_error.ToString();
-                this.data_str[33] = this.alarm.ToString();
-                this.data_str[34] = this.ADC_overload_underload.ToString();
+                    this.data_str[31] = this.emptying.ToString();
+                    this.data_str[32] = this.flow_error.ToString();
+                    this.data_str[33] = this.alarm.ToString();
+                    this.data_str[34] = this.ADC_overload_underload.ToString();
 
-                this.data_str[35] = this.max_dosing_time.ToString();
-                this.data_str[36] = this.legal_for_trade_operation.ToString();
-                this.data_str[37] = this.tolerance_error_plus.ToString();
-                this.data_str[38] = this.tolerance_error_minus.ToString();
+                    this.data_str[35] = this.max_dosing_time.ToString();
+                    this.data_str[36] = this.legal_for_trade_operation.ToString();
+                    this.data_str[37] = this.tolerance_error_plus.ToString();
+                    this.data_str[38] = this.tolerance_error_minus.ToString();
 
-                this.data_str[39] = this.status_digital_input_1.ToString();
-                this.data_str[40] = this.general_scale_error.ToString();
-                this.data_str[41] = this.dosing_process_status.ToString();
-                this.data_str[42] = this.dosing_count.ToString();
+                    this.data_str[39] = this.status_digital_input_1.ToString();
+                    this.data_str[40] = this.general_scale_error.ToString();
+                    this.data_str[41] = this.dosing_process_status.ToString();
+                    this.data_str[42] = this.dosing_count.ToString();
 
-                this.data_str[43] = this.dosing_result.ToString();
-                this.data_str[44] = this.mean_value_of_dosing_results.ToString();
-                this.data_str[45] = this.standard_deviation.ToString();
-                this.data_str[46] = this.total_weight.ToString();
+                    this.data_str[43] = this.dosing_result.ToString();
+                    this.data_str[44] = this.mean_value_of_dosing_results.ToString();
+                    this.data_str[45] = this.standard_deviation.ToString();
+                    this.data_str[46] = this.total_weight.ToString();
 
-                this.data_str[47] = this.fine_flow_cut_off_point.ToString();
-                this.data_str[48] = this.coarse_flow_cut_off_point.ToString();
-                this.data_str[49] = this.actual_dosing_time.ToString();
-                this.data_str[50] = this.actual_coarse_flow_time.ToString();
+                    this.data_str[47] = this.fine_flow_cut_off_point.ToString();
+                    this.data_str[48] = this.coarse_flow_cut_off_point.ToString();
+                    this.data_str[49] = this.actual_dosing_time.ToString();
+                    this.data_str[50] = this.actual_coarse_flow_time.ToString();
 
-                this.data_str[51] = this.actual_fine_flow_time.ToString();
-                this.data_str[52] = this.parameter_set.ToString();
+                    this.data_str[51] = this.actual_fine_flow_time.ToString();
+                    this.data_str[52] = this.parameter_set.ToString();
 
-                this.data_str[53] = this.filler_weight_memory_day.ToString();
-                this.data_str[54] = this.filler_weight_memory_month.ToString();
-                this.data_str[55] = this.filler_weight_memory_year.ToString();
-                this.data_str[56] = this.filler_weight_memory_seq_number.ToString();
-                this.data_str[57] = this.filler_weight_memory_gross.ToString();
-                this.data_str[58] = this.filler_weight_memory_net.ToString();
-            }
+                    this.data_str[53] = this.filler_weight_memory_day.ToString();
+                    this.data_str[54] = this.filler_weight_memory_month.ToString();
+                    this.data_str[55] = this.filler_weight_memory_year.ToString();
+                    this.data_str[56] = this.filler_weight_memory_seq_number.ToString();
+                    this.data_str[57] = this.filler_weight_memory_gross.ToString();
+                    this.data_str[58] = this.filler_weight_memory_net.ToString();
+                }
         }
 
         // This method establishs an asynchronous call to read and to write a register on the device. Therefore a 
@@ -181,7 +181,7 @@ namespace WTXModbus
             this.callback_obj = callback_param;
 
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
-            
+
             bgWorker.WorkerSupportsCancellation = true;  // Specify whether you want the background operation to allow cancellation and to report progress.
             bgWorker.WorkerReportsProgress = true;
 
@@ -199,7 +199,7 @@ namespace WTXModbus
             bgWorker.WorkerReportsProgress = true;
             bgWorker.RunWorkerAsync();
         }
-           
+
         // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 
         // @param : sender - the object of this class. dowork_asynchronous - the argument of the event. 
         public void Read_DoWork(object sender, DoWorkEventArgs dowork_asynchronous)
@@ -207,14 +207,14 @@ namespace WTXModbus
             dowork_asynchronous.Result = (IDeviceValues)this.read_data((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
             // dowork_asynchronous.Result contains all values defined in Interface IDevice_Values.
         }
- 
+
         // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
         // @return: IDevice_Values - Interface, that contains all values for the device. 
         private IDeviceValues read_data(BackgroundWorker worker)
         {
             pub.ReadRegister();
-         
-            return this;      
+
+            return this;
         }
 
         // Get-Method to return an object of class Modbus_TCP
@@ -264,7 +264,7 @@ namespace WTXModbus
         }
 
 
-// The following methods set the specific, single values from the whole array "data".
+        // The following methods set the specific, single values from the whole array "data".
 
         // This method sets the net and gross value. Therefore the ushort array
         // data[] is masked and shifted. It has "Integer32"(look on the manual, page xxx) as a Type for data[0] and data[1], 
@@ -274,8 +274,8 @@ namespace WTXModbus
             get
             {
                 try
-                {   
-                    if (this.pub.NumOfPoints > 1)     
+                {
+                    if (this.pub.NumOfPoints > 1)
                         return (data[1] + (data[0] << 16));
                     else
                         return 0;
@@ -286,7 +286,7 @@ namespace WTXModbus
                 }
             }
         }
-        
+
         public int NetValue
         {
             get
@@ -572,7 +572,7 @@ namespace WTXModbus
                 }
                 catch (System.IndexOutOfRangeException)
                 {
-                    return 0; 
+                    return 0;
                 }
             }
         }
@@ -592,13 +592,13 @@ namespace WTXModbus
                     return 0;
                 }
             }
-}
+        }
 
         public string[] get_data_str
-        {   
+        {
             get
             {
-                    return this.data_str;
+                return this.data_str;
             }
             set
             {
@@ -679,12 +679,12 @@ namespace WTXModbus
         public int digital_output_1
         {
             get
-            { 
+            {
                 try
                 {
                     if (this.pub.NumOfPoints > 7)
-                    return (data[7] & 0x1);
-                else
+                        return (data[7] & 0x1);
+                    else
                         return 0;
                 }
                 catch (System.IndexOutOfRangeException)
@@ -930,7 +930,7 @@ namespace WTXModbus
                     return 0;
                 }
             }
-        }   
+        }
         public int fine_flow
         {
             get
@@ -1477,19 +1477,19 @@ namespace WTXModbus
             {
                 return this.is_net;
             }
-         }
+        }
 
         /* In den folgenden Comment-Methoden werden jeweils verschiedene Auswahloptionen mit Fallunterscheidungen
         * betrachtet und je nach Fall eine unterschiedliche Option ausgewählt.
         */
-        
-        
+
+
         // In the following methods the different options for the single integer values are used to define and
         // interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
-        
+
         private string measurement_with_comma(int index)
         {
-            int value=1;
+            int value = 1;
             if (index == 0)
                 value = this.NetandGrossValue;
             if (index == 1)
@@ -1499,51 +1499,55 @@ namespace WTXModbus
 
 
             if (value.ToString().Length == 5 && value > 0)
-               data_str[index] = ("0." + value.ToString());
+                data_str[index] = ("0." + value.ToString());
             else
-            if (value.ToString().Length == 4 && value > 0)
-                data_str[index] = ("0.0" + value.ToString());
-            else
-            if (value.ToString().Length == 3 && value > 0)
-                data_str[index] = ("0.00" + value.ToString());
-            else
-            if (value.ToString().Length == 2 && value > 0)
-                data_str[index] = ("0.000" + value.ToString());
-            else
-            if (value.ToString().Length == 1 && value > 0)
-                data_str[index] = ("0.0000" + value.ToString());
+                if (value.ToString().Length == 4 && value > 0)
+                    data_str[index] = ("0.0" + value.ToString());
+                else
+                    if (value.ToString().Length == 3 && value > 0)
+                        data_str[index] = ("0.00" + value.ToString());
+                    else
+                        if (value.ToString().Length == 2 && value > 0)
+                            data_str[index] = ("0.000" + value.ToString());
+                        else
+                            if (value.ToString().Length == 1 && value > 0)
+                                data_str[index] = ("0.0000" + value.ToString());
 
-            else
-                switch (this.decimals)
-                {
-                    case 1:
-                        if (value <= -100000) data_str[index] = value.ToString().Insert(6, ".");
-                        else if (value > -100000) data_str[index] = value.ToString().Insert(5, ".");
-                        break;
-                    case 2:
-                        if (value <= -100000) data_str[index] = value.ToString().Insert(5, ".");
-                        else if (value > -100000) data_str[index] = value.ToString().Insert(4, ".");
-                        break;
-                    case 3:
-                        if (value <= -100000) data_str[index] = value.ToString().Insert(4, ".");
-                        else if (value > -100000) data_str[index] = value.ToString().Insert(3, ".");
-                        break;
-                    case 4:
-                        if (value <= -100000) data_str[index] = value.ToString().Insert(3, ".");
-                        else if (value > -100000) data_str[index] = value.ToString().Insert(2, ".");
-                        break;
-                    case 5:
-                        if (value <=  -100000) data_str[index] = value.ToString().Insert(2, ".");
-                        else if (value > -100000) data_str[index] = value.ToString().Insert(1, ".");
-                        break;
-                    case 6:
-                        if (value <= -100000) data_str[index] = value.ToString().Insert(1, ".");
-                        else if (value > -100000) data_str[index] = value.ToString().Insert(0, ".");
-                        break;
-                    default:
-                        Console.WriteLine("error, wrong decimal/comma number.");
-                        return data_str[index];
-                }
+                            else
+                                switch (this.decimals)
+                                {
+                                    case 0:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(2, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(1, ".");
+                                        break;
+                                    case 1:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(6, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(5, ".");
+                                        break;
+                                    case 2:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(5, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(4, ".");
+                                        break;
+                                    case 3:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(4, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(3, ".");
+                                        break;
+                                    case 4:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(3, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(2, ".");
+                                        break;
+                                    case 5:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(2, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(1, ".");
+                                        break;
+                                    case 6:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(1, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(0, ".");
+                                        break;
+                                    default:
+                                        Console.WriteLine("error, wrong decimal/comma number.");
+                                        return data_str[index];
+                                }
 
             if (value < 0)
             {
@@ -1592,9 +1596,9 @@ namespace WTXModbus
                 return "0=Weight is not moving.";
             else
                 if (this.weight_moving == 1)
-                return "1=Weight is moving";
-            else
-                return "Error";
+                    return "1=Weight is moving";
+                else
+                    return "Error";
         }
         private string comment_limit_status()
         {
@@ -1619,15 +1623,15 @@ namespace WTXModbus
                 this.is_net = false;
                 return "gross";
             }
-            else 
-            if (this.weight_type == 1)
-            {
-                this.is_net = true;
-                return "net";
-            }
             else
+                if (this.weight_type == 1)
+                {
+                    this.is_net = true;
+                    return "net";
+                }
+                else
 
-                return "error";
+                    return "error";
         }
         private string comment_scale_range()
         {
@@ -1650,10 +1654,10 @@ namespace WTXModbus
             else
 
                 if (this.application_mode == 2 || this.application_mode == 1)  // Will be changed to '2', so far '1'. 
-                return "Filler";
-            else
+                    return "Filler";
+                else
 
-                return "error";
+                    return "error";
         }
         private string comment_unit()
         {
@@ -1677,9 +1681,9 @@ namespace WTXModbus
                 return "Execution OK!";
             else
                 if (this.status != 1)
-                return "Execution not OK!";
-            else
-                return "error.";
+                    return "Execution not OK!";
+                else
+                    return "error.";
 
         }
     }

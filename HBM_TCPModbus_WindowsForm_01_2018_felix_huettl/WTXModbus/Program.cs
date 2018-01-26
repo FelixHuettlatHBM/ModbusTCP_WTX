@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WTXModbus
-{   
+{
     /// <summary>
     /// This is the class, which contains the static main method as an entry point into the application. 
     /// </summary>
- 
+
     static class Program
     {
         [STAThread]
@@ -25,7 +25,7 @@ namespace WTXModbus
         {
             Application.EnableVisualStyles(); //This method enables visual styles for the application. Visual styles are the colors, fonts, and other visual elements that form an operating system theme.
             Application.SetCompatibleTextRenderingDefault(false); // This is the standard setting for text rendering. 
-            
+
             // Initialize an instance of GUI: 
             GUI GUI_form_obj = new GUI();
 

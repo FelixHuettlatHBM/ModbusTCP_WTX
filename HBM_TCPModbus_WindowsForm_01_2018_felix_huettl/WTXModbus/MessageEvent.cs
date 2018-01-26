@@ -2,7 +2,7 @@
  * 
  * TCP/MODBUS Interface for WTX120 | 01/2018
  * 
- * Author : Felix Huettl - Werkstudent Entwicklung 
+ * Author : Felix Huettl 
  * 
  *  */
 
@@ -17,21 +17,17 @@ namespace WTXModbus
 {
     /// <summary>
     /// Class to define the information from the register of the device. 
-    /// The message's type is ushort[], an array. 
+    /// The message's type is ushort[], it is an array. 
     /// The publisher publishs this message, filled with the information from the register.
     /// to the Subscripter (the Device: WTX120). 
     /// </summary>
     public class MessageEvent : EventArgs
     {
-        private ushort[] message;
-        private ushort boot_str;
+        private ushort[] message;     
 
         // Constructor: 
         public MessageEvent(ushort[] param)
         {
-
-            this.boot_str = 9999;
-
             this.message = param;
         }
 
@@ -39,11 +35,6 @@ namespace WTXModbus
         { 
             get { return message; }
             set { message = value;}
-        }
-
-        public ushort BootingMessage
-        {
-            get { return boot_str; }
         }
 
         // The following methods show the bit masking and shifting (left and right shift) in general.

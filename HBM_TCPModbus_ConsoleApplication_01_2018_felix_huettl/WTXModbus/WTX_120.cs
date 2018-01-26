@@ -200,6 +200,8 @@ namespace WTXModbus
         {
             dowork_asynchronous.Result = (IDeviceValues)this.read_data((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
             // dowork_asynchronous.Result contains all values defined in Interface IDevice_Values.
+
+            this.callback_obj((IDeviceValues)dowork_asynchronous.Result);
         }
  
         // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
@@ -1483,6 +1485,7 @@ namespace WTXModbus
 
         private string measurement_with_comma(int index)
         {
+
             int value = 1;
             if (index == 0)
                 value = this.NetandGrossValue;
@@ -1510,6 +1513,10 @@ namespace WTXModbus
                             else
                                 switch (this.decimals)
                                 {
+                                    case 0:
+                                        if (value <= -100000) data_str[index] = value.ToString().Insert(2, ".");
+                                        else if (value > -100000) data_str[index] = value.ToString().Insert(1, ".");
+                                        break;
                                     case 1:
                                         if (value <= -100000) data_str[index] = value.ToString().Insert(6, ".");
                                         else if (value > -100000) data_str[index] = value.ToString().Insert(5, ".");
@@ -1535,7 +1542,6 @@ namespace WTXModbus
                                         else if (value > -100000) data_str[index] = value.ToString().Insert(0, ".");
                                         break;
                                     default:
-                                        Console.WriteLine("error, wrong decimal/comma number.");
                                         return data_str[index];
                                 }
 
@@ -1580,6 +1586,9 @@ namespace WTXModbus
 
             return data_str[index];
         }
+
+
+
         private string comment_weight_moving()
         {
             if (this.weight_moving == 0)

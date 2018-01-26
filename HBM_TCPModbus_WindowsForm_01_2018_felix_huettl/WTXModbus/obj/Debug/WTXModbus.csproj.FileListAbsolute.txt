@@ -602,18 +602,66 @@ C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_09 GUI in Program\WTXModbus\o
 C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\WTXModbus.exe.config
 C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.exe
 C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.pdb
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\WTXModbus.exe
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\WTXModbus.pdb
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\log4net.dll
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\Modbus.dll
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\Modbus.Extensions.dll
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\Unme.Common.dll
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\bin\Debug\log4net.xml
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.GUI.resources
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.SettingsForm.resources
-C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus Felix 2018_01_16 - Konsolenanwendung\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\TCPWTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.Settings_Form.resources
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\WTXModbus.exe.config
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.GUI.resources
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\WTXModbus.exe
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\log4net.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\Modbus.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\Modbus.Extensions.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\Unme.Common.dll
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\bin\Debug\log4net.xml
+C:\Users\huettl\Desktop\HBM_TCPModbus_ConsoleApplication_01_2018_felix_huettl - Kopie\WTXModbus\obj\Debug\WTXModbus.SettingsForm.resources
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\bin\Debug\WTXModbus.exe.config
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.exe
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.pdb
@@ -628,4 +676,3 @@ C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.Properties.Resources.resources
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.SettingsForm.resources
 C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csproj.GenerateResource.Cache
-C:\Users\huettl\Desktop\HBM_TCPModbus_WindowsForm_01_2018_felix_huettl\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache

@@ -41,11 +41,11 @@ namespace WTXModbus
         // Declaration of the event Eventhandler, for the message information from the register 
         public event EventHandler<MessageEvent> RaiseDataEvent;
 
-        public ModbusTCP(string input_IP_adress_param)
+        public ModbusTCP()
         {
             this.connected = false;
             this.port = 502;
-            this.iP_Adress = input_IP_adress_param; //IP-address to establish a successful connection to the device
+            this.iP_Adress="xyz.tr.abc.o"; //IP-address to establish a successful connection to the device. The individual IP adress is set by the auto-property for IP-Adress (see also in Program.cs).
             
             this.numOfPoints = 38;
             this.startAdress = 0;
@@ -74,12 +74,25 @@ namespace WTXModbus
                 try
                 {
                     // Read the data: e.Message's type - ushort[]  
-                    if(this.is_connected==true)     // The register is only read, if the connection is established successfully. 
-                        e.Message = master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints);
+                    //if (this.connected == true)     // The register is only read, if the connection is established successfully. 
+                    e.Message = master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints);
+                    // this.data = e.Message;
+                    this.connected = true;
                 }
                 catch (System.ArgumentException)
                 {
                     Console.WriteLine("\nNumber of points has to be between 1 and 125.\n");
+                }
+                catch (System.InvalidOperationException)
+                {
+                    this.connected = false;
+
+                    //for (int index = 0; index < this.data.Length; index++)
+                    //    this.data[index] = e.BootingMessage;
+
+                    //handler(this, e);
+
+                    this.Connect();
                 }
 
                 this.data = e.Message;

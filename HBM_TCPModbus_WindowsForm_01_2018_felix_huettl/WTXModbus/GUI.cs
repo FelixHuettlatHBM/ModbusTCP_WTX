@@ -248,7 +248,7 @@ namespace WTXModbus
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            //dataGridView1.Columns[4].Width = 250;                 // Width of the fourth column containing the periodically updated values.           
+            dataGridView1.Columns[4].Width = 250;                 // Width of the fourth column containing the periodically updated values.           
             
             try
             {
@@ -295,6 +295,11 @@ namespace WTXModbus
         // is written and afterwards the new data will be updated by a call of the asynchronous method "WTX_obj.Async_Call(command,callback_method)". 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (WTX_obj.get_Modbus.is_connected == true)
+                toolStripStatusLabel1.Text = "Connected";
+            else
+                toolStripStatusLabel1.Text = "Disconnected";
+
             if (WTX_obj.get_Modbus.is_connected == true)      // Checks whether a connections exists.
             {
                 for (int i = 0; i < WTX_obj.get_data_ushort.Length; i++)
@@ -312,6 +317,7 @@ namespace WTXModbus
         // It checks whether the values has been changed. Only if the value changes the GUI will be updated.
         public void Read_DataReceived(IDeviceValues Device_Values)
         {
+
             compare_test = true ;       // for every iteration of this method, compare_test has to be "true" in the beginning. 
 
             for (int i = 0; i < WTX_obj.get_data_ushort.Length; i++)
@@ -389,7 +395,7 @@ namespace WTXModbus
                 {
                     this.is_standard = true;
 
-                    dataGridView1.Columns.Clear();
+                    //dataGridView1.Columns.Clear();
                     dataGridView1.Rows.Clear();
 
                     this.set_GUI_rows();
@@ -404,7 +410,7 @@ namespace WTXModbus
                 {
                     this.is_standard = false;
 
-                    dataGridView1.Columns.Clear();
+                    //dataGridView1.Columns.Clear();
                     dataGridView1.Rows.Clear();
 
                     this.set_GUI_rows();

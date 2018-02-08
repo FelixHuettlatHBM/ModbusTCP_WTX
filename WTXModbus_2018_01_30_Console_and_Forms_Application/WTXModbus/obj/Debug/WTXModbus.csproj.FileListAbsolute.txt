@@ -1,0 +1,2 @@
+C:\Users\huettl\Desktop\WTXModbus_2018_01_30\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\Von_Dirk_WTXModbus_2018_01_30\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache

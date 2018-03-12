@@ -1,0 +1,85 @@
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+U:\WTXModbus (geändert)\WTXModbus\bin\Debug\WTXModbus.dll
+U:\WTXModbus (geändert)\WTXModbus\bin\Debug\WTXModbus.pdb
+U:\WTXModbus (geändert)\WTXModbus\bin\Debug\NModbus4.dll
+U:\WTXModbus (geändert)\WTXModbus\bin\Debug\NModbus4.xml
+U:\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+U:\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+U:\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.dll
+U:\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus Calc-Cal\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus calibration\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus LiveValue-Calibration\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_07 mit multiplem Schreiben asynchron\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.2 2018_03_08 mit multiplem Schreiben\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\WTXModbus\obj\Debug\WTXModbus.pdb

@@ -1,0 +1,23 @@
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Release\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Release\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Release\WTXModbus.dll
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Release\WTXModbus.pdb
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Release\NModbus4.dll
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\bin\Release\NModbus4.xml
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Release\WTXModbus.dll
+C:\Users\retsch\Downloads\WTXModbus\WTXModbus\obj\Release\WTXModbus.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\bin\Release\WTXModbus.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\bin\Release\WTXModbus.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\bin\Release\NModbus4.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\bin\Release\NModbus4.xml
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Release\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Release\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Release\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\bin\Release\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbus\obj\Release\WTXModbus.pdb

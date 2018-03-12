@@ -1,0 +1,28 @@
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbusGUIsimple.exe.config
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbusGUIsimple.exe
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbusGUIsimple.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbus.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\NModbus4.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbus.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\NModbus4.xml
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.csprojResolveAssemblyReference.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.Form1.resources
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.Properties.Resources.resources
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.csproj.GenerateResource.Cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.csproj.CoreCompileInputs.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.exe
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbusGUIsimple.exe.config
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbusGUIsimple.exe
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbusGUIsimple.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\bin\Release\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.Form1.resources
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.Properties.Resources.resources
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.csproj.GenerateResource.Cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.exe
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\WTXModbusGUIsimple\obj\Release\WTXModbusGUIsimple.pdb

@@ -1,0 +1,76 @@
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbusExamples.GUI.resources
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbus.Properties.Resources.resources
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbusExamples.SettingsForm.resources
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\WTXModbusGUI.exe.config
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\WTXModbusGUI.exe
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\WTXModbusGUI.pdb
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\WTXModbus.dll
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\NModbus4.dll
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\WTXModbus.pdb
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\bin\Release\NModbus4.xml
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.exe
+C:\Users\retsch\Downloads\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbusGUI.exe.config
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbusGUI.exe
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbusGUI.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbus.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\NModbus4.dll
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbus.pdb
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\bin\Release\NModbus4.xml
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.csprojResolveAssemblyReference.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusExamples.GUI.resources
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbus.Properties.Resources.resources
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusExamples.SettingsForm.resources
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.exe
+C:\Users\RETSCH\Documents\copyNetworkFolder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbusGUI.exe.config
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbusGUI.exe
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbusGUI.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbus.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\NModbus4.dll
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\WTXModbus.pdb
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\bin\Release\NModbus4.xml
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.csprojResolveAssemblyReference.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusExamples.GUI.resources
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbus.Properties.Resources.resources
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusExamples.SettingsForm.resources
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.exe
+C:\Users\retsch\Documents\copy network folder\WTXModbus (geändert)\Examples\GUI\obj\Release\WTXModbusGUI.pdb
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\WTXModbusGUI.exe.config
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\WTXModbusGUI.exe
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\WTXModbusGUI.pdb
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\WTXModbus.dll
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\NModbus4.dll
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\WTXModbus.pdb
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\bin\Release\NModbus4.xml
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusGUI.csprojResolveAssemblyReference.cache
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusGUIsimple.CalcCalibration.resources
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusExamples.GUI.resources
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbus.Properties.Resources.resources
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusExamples.SettingsForm.resources
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusGUIsimple.WeightCalibration.resources
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusGUI.csproj.GenerateResource.Cache
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusGUI.exe
+c:\Users\leistner\Desktop\WTXModbus LiveValue-Calibration v1.3 12_03_2018\Examples\GUI\obj\Release\WTXModbusGUI.pdb
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\WTXModbusGUI.exe.config
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\WTXModbusGUI.exe
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\WTXModbusGUI.pdb
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\WTXModbus.dll
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\NModbus4.dll
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\WTXModbus.pdb
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\bin\Release\NModbus4.xml
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.csprojResolveAssemblyReference.cache
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUIsimple.CalcCalibration.resources
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusExamples.GUI.resources
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbus.Properties.Resources.resources
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusExamples.SettingsForm.resources
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUIsimple.WeightCalibration.resources
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.csproj.GenerateResource.Cache
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.exe
+c:\git\Huettl_hot\WTXModbus\Examples\GUI\obj\Release\WTXModbusGUI.pdb

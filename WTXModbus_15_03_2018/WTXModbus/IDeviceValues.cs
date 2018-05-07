@@ -1,11 +1,14 @@
 ﻿/* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 01/2018
+ * TCP/MODBUS Interface for WTX120 | 03/2018
  * 
  * Author : Felix Huettl
  * 
  *  */
 
+
+using System;
+using WTXModbus;
 
 namespace Hbm.Devices.WTXModbus
 {
@@ -14,18 +17,22 @@ namespace Hbm.Devices.WTXModbus
     /// The values are given in realtime by the device via the method ReadHoldingRegister() of the ModbusIpMaster. 
     /// The values have to be declared in this interface and initalized in the derived class "WTX120". 
     /// 
-    /// For data transfer the entire interface is submitted from the derived class of IDevice_Values to the GUI:
+    /// For data transfer the entire interface is submitted from the derived class of IDevice_Values to the GUI or console application:
     /// From method Read_Completed(...) in class "WTX120" to method Read_DataReceived(IDevice_Values Device_Values) in class "GUI". 
     /// Furthermore you can access individual values if the interface is known and its derived class is completely implemented by 
     /// for example > IDevice_Values.NetandGrossValue <  or > IDevice_Values.get_data_str[0] > IDevice_Values.get_data_ushort[0] <. 
     /// >
     /// There are 2 more arrays: string[] get_data_str and ushort[] get_data_ushort to sum up all values in an array to simplify 
     /// further operations, like output or conditions.
+    /// The Eventhandler "DataUpdateEvent" is triggered once the data read from the WTX device and committed to the GUI or console
+    /// application "Programm.cs". 
     /// 
     /// Behind the integer variables the index of the arrays is given. 
     /// </summary>
     public interface IDeviceValues
     {
+        event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
+
         string[] get_data_str { get; set; }
         ushort[] get_data_ushort { get; set; }
                 

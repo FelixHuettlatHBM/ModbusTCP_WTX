@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hbm.Devices.WTXModbus;
+using WTXModbus;
 
 namespace WTXModbusGUIsimple
 {
@@ -31,7 +32,7 @@ namespace WTXModbusGUIsimple
 
         //private System.Windows.Forms.Timer myTimer;      // Neu : 8.3.2018 - Idee : Timer für zyklische Abfrage der Werte nutzen um Asynchronität zu nutzen, hier momentan noch nicht angewendet. 
 
-        private WTX120 WTXObj;
+        private WTX120Modbus WTXObj;
         private int State;
         private double CalibrationWeight;
         //private IFormatProvider Provider;
@@ -45,7 +46,7 @@ namespace WTXModbusGUIsimple
         private string str_comma_dot;
 
 
-        public WeightCalibration(WTX120 WTXObj, bool connected)
+        public WeightCalibration(WTX120Modbus WTXObj, bool connected)
         {
             //myTimer = new System.Windows.Forms.Timer();
             //myTimer.Tick += new EventHandler(timerWeightCalibrationTick);
@@ -217,7 +218,7 @@ namespace WTXModbusGUIsimple
         {
             //todo: write reg 48, 0x7FFFFFFF
 
-            WTXObj.write_Zero__Calibration_Nominal_Load('z', 0x7FFFFFFF, WriteDataReceived);           // 'z' steht für das Setzen der zero load.
+            WTXObj.write_Zero_Calibration_Nominal_Load('z', 0x7FFFFFFF, WriteDataReceived);           // 'z' steht für das Setzen der zero load.
 
             WTXObj.SyncCall_Write_Command(0, 0x80, WriteDataReceived);
         }
@@ -230,11 +231,11 @@ namespace WTXModbusGUIsimple
 
             //write reg 46, CalibrationWeight
 
-            WTXObj.write_Zero__Calibration_Nominal_Load('c', calibrationValue, WriteDataReceived);          // 'c' steht für das Setzen der Calibration Weight.
+            WTXObj.write_Zero_Calibration_Nominal_Load('c', calibrationValue, WriteDataReceived);          // 'c' steht für das Setzen der Calibration Weight.
 
             //write reg 50, 0x7FFFFFFF
 
-            WTXObj.write_Zero__Calibration_Nominal_Load('n', 0x7FFFFFFF, WriteDataReceived);       // 'n' steht für das Setzen der Nominal Load 
+            WTXObj.write_Zero_Calibration_Nominal_Load('n', 0x7FFFFFFF, WriteDataReceived);       // 'n' steht für das Setzen der Nominal Load 
 
             WTXObj.SyncCall_Write_Command(0, 0x100, WriteDataReceived);
 
@@ -265,9 +266,7 @@ namespace WTXModbusGUIsimple
         private void WriteDataReceived(IDeviceValues obj)
         {
             this.handshake_compare = obj.handshake;
-            this.status_compare = obj.status;
-
-            textBox2.Text += "Write executed";
+            this.status_compare = obj.status; 
         }
 
         // Choose the action of the cancel/back button, depending on the current

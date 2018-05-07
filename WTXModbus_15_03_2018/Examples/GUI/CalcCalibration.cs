@@ -6,7 +6,6 @@
  * 
  *  */
 
-using Hbm.Devices.WTXModbus;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +17,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hbm.Devices.WTXModbus;
+using WTXModbus;
 
 namespace WTXModbusGUIsimple
 {
@@ -26,7 +27,7 @@ namespace WTXModbusGUIsimple
 
     public partial class CalcCalibration : Form
     {
-        private WTX120 WTXObj;
+        private WTX120Modbus WTXObj;
         private bool Finished;
         private double Preload;
         private double Capacity;
@@ -39,7 +40,7 @@ namespace WTXModbusGUIsimple
 
         private System.Windows.Forms.Timer myTimer2;      // Neu : 8.3.2018 - Idee : Timer für zyklische Abfrage der Werte nutzen. 
 
-        public CalcCalibration(WTX120 WTXObj, bool connected)
+        public CalcCalibration(WTX120Modbus WTXObj, bool connected)
         {
             myTimer2 = new System.Windows.Forms.Timer();
             myTimer2.Tick += new EventHandler(timerWeightCalibrationTick);
@@ -149,13 +150,13 @@ namespace WTXModbusGUIsimple
 
             //write reg 48, DPreload;
 
-            WTXObj.write_Zero__Calibration_Nominal_Load('z', Convert.ToInt32(DPreload), WriteDataReceived);
+            WTXObj.write_Zero_Calibration_Nominal_Load('z', Convert.ToInt32(DPreload), WriteDataReceived);
 
             WTXObj.SyncCall_Write_Command(0, 0x80, WriteDataReceived);
 
             //write reg 50, DNominalLoad;
 
-            WTXObj.write_Zero__Calibration_Nominal_Load('n', Convert.ToInt32(DNominalLoad), WriteDataReceived);
+            WTXObj.write_Zero_Calibration_Nominal_Load('n', Convert.ToInt32(DNominalLoad), WriteDataReceived);
 
             WTXObj.SyncCall_Write_Command(0, 0x100, WriteDataReceived);
         }

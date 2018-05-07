@@ -89,12 +89,12 @@ namespace WTXModbusExamples
 
             if (this.IP_address != this.IP_address_before)
             {
-                GUI_info.get_dataviewer.get_Modbus.Connect();
+                GUI_info.get_dataviewer.getConnection.Connect();
             }
             
             this.Close();
 
-            GUI_info.timer1_start();
+            //GUI_info.timer1_start();
 
             //Store IPAddress in Settings .settings
             WTXModbus.Properties.Settings.Default.IPAddress = this.IP_address;

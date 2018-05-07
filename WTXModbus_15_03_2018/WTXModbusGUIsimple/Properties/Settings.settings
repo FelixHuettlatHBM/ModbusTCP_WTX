@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">172.19.103.1</Value>
+      <Value Profile="(Default)">172.19.103.8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -98,3 +98,69 @@ C:\Users\huettl\Desktop\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csprojResolveAss
 C:\Users\huettl\Desktop\WTXModbus\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
 C:\Users\huettl\Desktop\WTXModbus\WTXModbus\obj\Debug\WTXModbus.dll
 C:\Users\huettl\Desktop\WTXModbus\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\Newtonsoft.Json.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\Newtonsoft.Json.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\SharpJet.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\Newtonsoft.Json.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\SharpJet.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\Newtonsoft.Json.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\WTXModbus\obj\Debug\WTXModbus.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\obj\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\Newtonsoft.Json.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\SharpJet.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\Newtonsoft.Json.xml
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\WTXModbus\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\Newtonsoft.Json.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\SharpJet.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\Newtonsoft.Json.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\obj\Debug\WTXModbus.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\obj\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\WTXModbus\obj\Debug\WTXModbus.pdb

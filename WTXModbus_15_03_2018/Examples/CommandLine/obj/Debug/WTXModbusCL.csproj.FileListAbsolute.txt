@@ -87,3 +87,71 @@ C:\Users\huettl\Desktop\WTXModbus\Examples\CommandLine\obj\Debug\WTXModbusCL.csp
 C:\Users\huettl\Desktop\WTXModbus\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.CoreCompileInputs.cache
 C:\Users\huettl\Desktop\WTXModbus\Examples\CommandLine\obj\Debug\WTXModbusCL.exe
 C:\Users\huettl\Desktop\WTXModbus\Examples\CommandLine\obj\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\WTXModbusCL.exe.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\obj\Debug\WTXModbusCL.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\obj\Debug\WTXModbusExamples.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\obj\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\obj\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\Newtonsoft.Json.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\SharpJet.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\Newtonsoft.Json.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\CommandLine\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\obj\Debug\WTXModbusExamples.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.exe.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\CommandLine\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusExamples.Properties.Resources.resources
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.exe.config
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\CommandLine\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.exe.config
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\WTXModbusCL.pdb
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusExamples.Properties.Resources.resources
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.exe
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\CommandLine\obj\Debug\WTXModbusCL.pdb

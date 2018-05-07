@@ -99,12 +99,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WTXModbus\WTXModbus.csproj">
-      <Project>{0B1BFFAB-24C2-4436-9B38-CFE316E69C44}</Project>
-      <Name>WTXModbus</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\NE107_DiagnosisPassive.png" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +106,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NE107_OutOfSpecification.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WTXModbus\WTXModbus.csproj">
+      <Project>{0b1bffab-24c2-4436-9b38-cfe316e69c44}</Project>
+      <Name>WTXModbus</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

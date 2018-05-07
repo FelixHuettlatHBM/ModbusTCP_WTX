@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using System.IO;
 using Hbm.Devices.WTXModbus;
 using WTXModbusGUIsimple;
+using WTXModbus;
+using System.Threading;
+using System.ComponentModel;
 
 namespace WTXModbusExamples
 {
@@ -42,8 +45,11 @@ namespace WTXModbusExamples
     /// </summary>
     partial class GUI : Form
     {
-        private ModbusTCP Modbus_TCP_obj;
-        private WTX120 WTX_obj;
+        //private Connection Modbus_TCP_obj;
+
+        private ModbusConnection ModbusObj;
+        private WTX120Modbus WTXModbusObj;
+
         private SettingsForm Set_obj;
 
         private CalcCalibration CalcCalObj;
@@ -53,34 +59,21 @@ namespace WTXModbusExamples
         private ushort[] previous_data_ushort_arr;
 
         private bool is_standard;
-   
-        bool compare_test;
-
-        private int compare_counter;
 
         // Constructor: 
         public GUI()
         {
             //Get IPAddress from Settings.settings
             string ipAddress = WTXModbus.Properties.Settings.Default.IPAddress;
-
+            
             // Implementation of the publisher (Modbus_TCP_obj) and 
-            // the subscribter (Device_WTX_obj)
+            // the subscribter (Device_WTXModbusObj)
 
-            this.Modbus_TCP_obj = new ModbusTCP(ipAddress);
-            this.WTX_obj = new WTX120("WTX120_1", Modbus_TCP_obj);
+            ModbusObj = new ModbusConnection(ipAddress);
 
-            // In the following the opportunity is shown to attach more than
-            // one Subsriber (More than one Device), based on the same publisher (Modbus_TCP): 
-
-            //WTX_120 Device_obj_2 = new WTX_120("WTX120_2", Modbus_TCP_obj);
-            //WTX_120 Device_obj_3 = new WTX_120("WTX120_3", Modbus_TCP_obj);
-            //WTX_120 Device_obj_4 = new WTX_120("WTX120_4", Modbus_TCP_obj);
-            // ... 
-
-            compare_test=true;
-            compare_counter = 0;            
-            is_standard =true;
+            WTXModbusObj = new WTX120Modbus(ModbusObj, 10);
+                   
+            is_standard =false;
 
             InitializeComponent();   // Call of this method to initialize the form.
 
@@ -95,6 +88,7 @@ namespace WTXModbusExamples
             this.set_GUI_rows();
 
             startToolStripMenuItem_Click(this, new EventArgs());
+           
         }
 
         // This method is called from the constructor and sets the columns and the rows of the data grid and shows it as a form.  
@@ -103,7 +97,6 @@ namespace WTXModbusExamples
         // 2) Filler   application : Input words "0+2" till "37". Output words "0" till "50". 
         public void set_GUI_rows()
         {
-
             dataGridView1.Columns.Add("Input:Word_header", "Input:Word");                         // column 1
             dataGridView1.Columns.Add("Input:Name_header", "Input:Name");                         // column 2
             dataGridView1.Columns.Add("Input:Type_header", "Input:Type");                         // column 3
@@ -165,7 +158,7 @@ namespace WTXModbusExamples
                 dataGridView1.Rows.Add("13", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.status", "data_str[35]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                     // row 37 ; data_str_arr[36]
                 dataGridView1.Rows.Add("14", "Weight memory, net", "Int16", ".0-15", "IDevice_Values.status", "data_str[36]", "Stored net value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                         // row 38 ; data_str_arr[37]
             }            
-            if (this.is_standard==false/*WTX_obj.application_mode == 2 || WTX_obj.application_mode==1*/) // case 2) Filler application. Initializing the description and a placeholder for the values in the data grid.
+            if (this.is_standard==false/*WTXModbusObj.application_mode == 2 || WTXModbusObj.application_mode==1*/) // case 2) Filler application. Initializing the description and a placeholder for the values in the data grid.
             {
                 dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "data_str[1]", "Net measured", "0", "0", "Control word", "Bit", ".1", "", "", "Gross/Net", "0");                               // row 2 ; data_str_arr[1]      
                 dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "data_str[2]", "Gross measured", "0", "0", "Control word", "Bit", ".2", "", "", "Zeroing", "0");                             // row 3 ; data_str_arr[2]
@@ -245,7 +238,7 @@ namespace WTXModbusExamples
             label1.Text = "Only for Standard application:";       // label for information : Only output words for standard application
             label2.Text = "Only for Filler application:";         // label for information : Only output words for filler application 
             toolStripStatusLabel5.Text = "38";
-            if (WTX_obj.get_Modbus.is_connected == true)
+            if (WTXModbusObj.getConnection.is_connected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
@@ -254,112 +247,28 @@ namespace WTXModbusExamples
         }
 
         // This automatic property returns an instance of this class. It has usage in the class "Settings_Form".
-        public WTX120 get_dataviewer
+        public WTX120Modbus get_dataviewer
         {
             get
             {
-                return this.WTX_obj;
+                return this.WTXModbusObj;
             }
         }
+
+
 
         // This private method is called for initializing basic information for the tool menu bar on the bottom of the windows form: 
         // For the connection status, IP adress, application mode and number of inputs. 
         private void GUI_Load(object sender, EventArgs e)
         {
-            if (WTX_obj.get_Modbus.is_connected == true)
+            if (WTXModbusObj.getConnection.is_connected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            toolStripStatusLabel2.Text = "IP adress: " + WTX_obj.get_Modbus.IP_Adress;
+            toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
             toolStripStatusLabel3.Text = "Mode : " + this.data_str_arr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + this.WTX_obj.get_Modbus.NumOfPoints; 
-        }
-
-        // This method implements a timer triggering an event in user-defined intervals (here: timer1.Inteval,sending_interval).
-        // This timer is only useable in C# Windows forms applications (System.Windows.Forms.Timer). There is another on for 
-        // for non-Windows forms application in class System.Timers.Timer (Not for Windows Forms, but for the console application) .
-        // This method checks first, whether a connection to the device exists. If so, the data array for the previous timer event 
-        // is written and afterwards the new data will be updated by a call of the asynchronous method "WTX_obj.Async_Call(command,callback_method)". 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (WTX_obj.get_Modbus.is_connected == true)
-                toolStripStatusLabel1.Text = "Connected";
-            else
-                toolStripStatusLabel1.Text = "Disconnected";
-
-            if (WTX_obj.get_Modbus.is_connected == true)      // Checks whether a connections exists.
-            {
-                for (int i = 0; i < WTX_obj.get_data_ushort.Length; i++)
-                {
-                    this.previous_data_ushort_arr[i] = WTX_obj.get_data_ushort[i]; //the data array for the previous timer1_Tick event is written. (as soon as one timer interval is elapsed) 
-                }
-            }
-
-            if (compare_counter < 30)
-                compare_counter++;
-
-            WTX_obj.Async_Call(0x00, Read_DataReceived);    // The new data will be updated by a call of the asynchronous method. "Read_DataReceived" is the 
-                                                            // callback method being called once the register of the device have been read. 
-        }
-
-        // If the data should be read, this is the callback method for the asynchronous call in method timer1_Tick.
-        // This method will be called once the register is read and will write the updated values on the GUI (Windows Form). 
-        // It checks whether the values has been changed. Only if the value changes the GUI will be updated.
-        public void Read_DataReceived(IDeviceValues Device_Values)
-        {
-
-            compare_test = true ;       // for every iteration of this method, compare_test has to be "true" in the beginning. 
-
-            for (int i = 0; i < WTX_obj.get_data_ushort.Length; i++)
-            {
-                // If one value of the data changes, the boolean value "compare_test" will be set to
-                // false and the data array "data_str_arr" will be updated in the following, as well as the GUI form.
-                // ("compare_test" is for the purpose of comparision.)
-                if(WTX_obj.get_data_ushort[i] != this.previous_data_ushort_arr[i])
-                {
-                    compare_test = false;
-                }
-            }
-
-            if (compare_counter < 30)
-                compare_test = false; 
-
-            // If the data is unequal to the previous one, the array "data_str_arr" will be updated in the following, as well as the GUI form. 
-            if (this.compare_test==false)
-            {
-                this.data_str_arr = Device_Values.get_data_str;
-                reset_values();
-            }
-
-            // In form "Settings_Form" you are able to change also the "NumInputs"(Number of the inputs). Having less "NumInputs" it is possible,
-            // that the number of byte read out is not high enough to check the application mode.  
-            // If the number of bytes is high enough for the following if-condition(Application mode requires byte 14),
-            // the application mode can be checked. 
-
-            if (this.WTX_obj.get_Modbus.NumOfPoints > 14 && this.previous_data_ushort_arr.Length > 14) 
-            // Second if-condition: Only if the length of the previous data array is larger than 14, it will be possible to access values otherwise you get an "ArrayoutofBounds"-Exception 
-            {
-
-                if (this.previous_data_ushort_arr[14] != Device_Values.get_data_ushort[14]) // Checks whether the application mode has been changed. If so, the output of the GUI has to be reset. 
-                {
-                    if (Device_Values.application_mode == 0)
-                       // Checks whether the WTX device is in standard application mode (application=0) or in filler application mode (application=2). 
-                        this.is_standard = true;
-                    else
-                        if(Device_Values.application_mode == 2 || Device_Values.application_mode == 1)
-                            this.is_standard = false;
-
-                    // If the upper if-conditions are complied, the data grid will actualized, reset and written onto the GUI, because
-                    // the decriptions and values differ between standard and filler application (see page 154-161 in manual for the different values
-                    // and description).
-
-                    dataGridView1.Columns.Clear();
-                    dataGridView1.Rows.Clear();
-                    this.set_GUI_rows();
-
-                }
-            }
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXModbusObj.getConnection.getNumOfPoints; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -367,66 +276,52 @@ namespace WTXModbusExamples
         // "data_str_arr"-Array to actualize every element of the data grid in the standard or filler application. 
         public void reset_values()
         {
-            if (WTX_obj.get_Modbus.is_connected == true)
+            if (WTXModbusObj.getConnection.is_connected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            toolStripStatusLabel2.Text = "IP adress: " + WTX_obj.get_Modbus.IP_Adress;
+            toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
             toolStripStatusLabel3.Text = "Mode : " + this.data_str_arr[14];                 // index 14 refers to application mode of the Device
-            toolStripStatusLabel2.Text = "IP adress: " + WTX_obj.get_Modbus.IP_Adress;
+            toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
 
             //Changing the width of a column:
             /*foreach (DataGridViewTextBoxColumn c in dataGridView1.Columns)
                 c.Width = 120;*/
-
-            for (int index = 0; index <= 26; index++) // Up to index 26, the input words are equal in standard and filler application.                           
-                dataGridView1.Rows[index].Cells[7].Value = data_str_arr[index];
-
-            if (WTX_obj.application_mode == 0)             // In the standard application: 
+            try
             {
-                if (this.is_standard == false)
+                for (int index = 0; index <= 26; index++) // Up to index 26, the input words are equal in standard and filler application.                           
+                    dataGridView1.Rows[index].Cells[7].Value = data_str_arr[index];
+            }catch(Exception){ }
+
+            if (WTXModbusObj.application_mode == 0)             // In the standard application: 
+            {
+                try
                 {
-                    this.is_standard = true;
-
-                    //dataGridView1.Columns.Clear();
-                    dataGridView1.Rows.Clear();
-
-                    this.set_GUI_rows();
-                }
-                for (int index = 27; index <= 35; index++)
+                    for (int index = 27; index <= 35; index++)
                     dataGridView1.Rows[(index+1)].Cells[7].Value = data_str_arr[index];  //ddd: Achtung Index auf die Schnelle hier verschben, es gibt kein Net and gross measured!?
+                }
+                catch (Exception) { }
             }
             else
-            if (WTX_obj.application_mode == 1 || WTX_obj.application_mode == 2)   // In the filler application: 
-            {
-                if(this.is_standard==true)
+            if (WTXModbusObj.application_mode == 1 || WTXModbusObj.application_mode == 2)   // In the filler application: 
                 {
-                    this.is_standard = false;
-
-                    //dataGridView1.Columns.Clear();
-                    dataGridView1.Rows.Clear();
-
-                    this.set_GUI_rows();
-                }
-
-                for (int index = 27; index <55; index++)
-                {
+                    try
+                    {
+                        for (int index = 27; index <55; index++)
+                        {
                     dataGridView1.Rows[(index + 1)].Cells[7].Value = data_str_arr[index];
-                }
+                        }
+                    }   
+                    catch (Exception) { }
             }
-
-            // Changing the width of a row in every iteration -> That would also mean a  loss of performance.
-            // for (int index = 0; index < dataGridView1.Rows.Count; index++)
-            //     dataGridView1.Rows[index].Height = 15;
-
         }
 
         // Button-Click event to close the application: 
         private void button2_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
-            timer1.Stop();
+            //timer1.Enabled = false;
+            //timer1.Stop();
             this.Close();
         }
 
@@ -434,18 +329,21 @@ namespace WTXModbusExamples
         // the GUI is actualized.
         // A asynchronous call is used in the following button_Click methods. 
         // The callback method is Write_DataReceived, which is called once the command is written into the register of the device. 
+
+        
         public void Write_DataReceived(IDeviceValues Device_Values)
         {
-            this.data_str_arr = Device_Values.get_data_str;
-            this.reset_values();
+            //this.data_str_arr = Device_Values.get_data_str;
+            //this.reset_values();
         }
-
+        
         // This method sends a command to the device : Taring. Command : 0x1       
         // For standard and filler application.
         private void button4_Click(object sender, EventArgs e)
         {
             // Taring
-            WTX_obj.Async_Call(0x1, Write_DataReceived);
+            
+            WTXModbusObj.Async_Call(0x1, Write_DataReceived);
         }
 
         // This method sends a command to the device : Change between gross and net value. Command : 0x2 
@@ -453,15 +351,16 @@ namespace WTXModbusExamples
         private void button1_Click(object sender, EventArgs e)
         {
             // Gross/Net
-            WTX_obj.Async_Call(0x2, Write_DataReceived);  
+            WTXModbusObj.Async_Call(0x2, Write_DataReceived);
         }
 
+        
         // This method sends a command to the device : Zeroing. Command : 0x40
         // For standard and filler application.
         private void button5_Click(object sender, EventArgs e)
         {
             // Zeroing
-            WTX_obj.Async_Call(0x40, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x40, Write_DataReceived);
         }
 
         // This method sends a command to the device : Adjust zero. Command : 0x80
@@ -469,7 +368,7 @@ namespace WTXModbusExamples
         private void button6_Click(object sender, EventArgs e)
         {
             // Adjust zero
-            WTX_obj.Async_Call(0x80, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x80, Write_DataReceived);
         }
 
         // This method sends a command to the device : Adjust nominal. Command : 0x100
@@ -477,7 +376,7 @@ namespace WTXModbusExamples
         private void button7_Click(object sender, EventArgs e)
         {
             // Adjust nominal
-            WTX_obj.Async_Call(0x100, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x100, Write_DataReceived);
         }
 
         // This method sends a command to the device : Activate data. Command : 0x800
@@ -485,7 +384,7 @@ namespace WTXModbusExamples
         private void button8_Click(object sender, EventArgs e)
         {
             // Activate data
-            WTX_obj.Async_Call(0x800, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x800, Write_DataReceived);
         }
 
         // This method sends a command to the device : Manual taring. Command : 0x1000
@@ -494,7 +393,7 @@ namespace WTXModbusExamples
         {
             // Manual taring
             //if (this.is_standard == true)      // Activate this if-conditon only in case, if the should be a change between standard and filler application. 
-            WTX_obj.Async_Call(0x1000, Write_DataReceived);             
+            WTXModbusObj.Async_Call(0x1000, Write_DataReceived);             
         }
 
         // This method sends a command to the device : Weight storage. Command : 0x4000
@@ -502,7 +401,7 @@ namespace WTXModbusExamples
         private void button10_Click(object sender, EventArgs e)
         {
             // Weight storage
-            WTX_obj.Async_Call(0x4000, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x4000, Write_DataReceived);
         }
 
         // This method sends a command to the device : Clear dosing results. Command : 0x4
@@ -511,7 +410,7 @@ namespace WTXModbusExamples
         {
             // Clear dosing results
             //if (this.is_standard == false)
-            WTX_obj.Async_Call(0x4, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x4, Write_DataReceived);
         }
 
         // This method sends a command to the device : Abort dosing. Command : 0x8
@@ -520,7 +419,7 @@ namespace WTXModbusExamples
         {
             // Abort dosing
             //if (this.is_standard == false)
-            WTX_obj.Async_Call(0x8, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x8, Write_DataReceived);
         }
 
         // This method sends a command to the device : Start dosing. Command : 0x10
@@ -529,7 +428,7 @@ namespace WTXModbusExamples
         {
             // Start dosing
             //if (this.is_standard == false)
-            WTX_obj.Async_Call(0x10, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x10, Write_DataReceived);
         }
 
         // This method sends a command to the device : Manual re-dosing. Command : 0x8000
@@ -538,51 +437,59 @@ namespace WTXModbusExamples
         {
             // Manual re-dosing
             //if (this.is_standard == false)
-            WTX_obj.Async_Call(0x8000, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x8000, Write_DataReceived);
         }
+
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120).
         // The timer interval is set in the connection specific class "Modbus_TCP".
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WTX_obj.get_Modbus.Connect();   // First the connection to the device should be established.             
+            WTXModbusObj.getConnection.Connect();  // First the connection to the device should be established.          
 
-            timer1.Enabled = true;
-            timer1.Interval = WTX_obj.get_Modbus.Sending_interval; // the timer interval(Sending_interval) is set in class "Modbus_TCP".
-            timer1.Start();                                            // The timer is started. 
+            this.data_str_arr = WTXModbusObj.get_data_str;
+
+            WTXModbusObj.DataUpdateEvent += ValuesOnConsole;
+        }
+
+
+        private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
+        {
+            this.data_str_arr = WTXModbusObj.get_data_str;
+
+            if (WTXModbusObj.getConnection.is_connected == true)
+                toolStripStatusLabel1.Text = "Connected";
+            else
+                toolStripStatusLabel1.Text = "Disconnected";
+
+
+            reset_values();
         }
 
         // This method stops the timer after the corresponding event has been triggered during the application.
         // Afterwards the timer and the application can be restarted.
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
-            timer1.Stop();
-            
-            toolStripStatusLabel1.Text = "Disconnected";
+            WTXModbusObj.DataUpdateEvent -= ValuesOnConsole;
 
+            toolStripStatusLabel1.Text = "Disconnected";    
         }
 
         // This method stops the timer and exits the application after the corresponding event has been triggered during the application.
         // Afterwards the timer and the application can not be restarted.
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            timer1.Enabled = false;
-            timer1.Stop();
-
             toolStripStatusLabel1.Text = "Disconnected";
 
+            WTXModbusObj.DataUpdateEvent -= ValuesOnConsole;
             this.Close();
+            
             Application.Exit();
         }
 
         // This method saves the values from the GUI in the actual iteration in an extra word file: 
         private void saveInputToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            timer1.Enabled = false;    // Stop the timer. 
-            timer1.Stop();           
-
+        {     
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
             saveFileDialog1.Filter = "Word Document|*.rtf";
@@ -607,21 +514,8 @@ namespace WTXModbusExamples
                     }
                 
             }
-            // Restart the timer.
-            timer1.Enabled = true;
-            timer1.Interval = WTX_obj.get_Modbus.Sending_interval;    
-            timer1.Start();
-
         }
 
-        // This method starts the timer and it is used by class Settings_Form to restart the timer once it is stopped. 
-        // See class "Settings_Form" in method "button2_Click(sender,e)".
-        public void timer1_start()
-        {
-            timer1.Enabled = true;
-            timer1.Interval = WTX_obj.get_Modbus.Sending_interval;     
-            timer1.Start();
-        }
 
         // This method is used to call another form ("Settings_Form") once the corresponding event is triggerred.
         // It is used to change the connection specific attributes, like IP adress, number of inputs and sending/timer interval.
@@ -630,7 +524,7 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            Set_obj = new SettingsForm(WTX_obj.get_Modbus.IP_Adress, this.timer1.Interval, WTX_obj.get_Modbus.NumOfPoints, this);
+            Set_obj = new SettingsForm(WTXModbusObj.getConnection.IP_Adress, this.timer1.Interval, WTXModbusObj.getConnection.getNumOfPoints, this);
             Set_obj.Show();
         }
 
@@ -639,14 +533,14 @@ namespace WTXModbusExamples
         // After updating the values the tool bar labels on the bottom (f.e. "toolStripStatusLabel2") is rewritten with the new values. 
         public void setting()
         {
-            WTX_obj.get_Modbus.IP_Adress = Set_obj.get_IP_address;
-            toolStripStatusLabel2.Text = "IP adress: " + WTX_obj.get_Modbus.IP_Adress;
+            WTXModbusObj.getConnection.IP_Adress = Set_obj.get_IP_address;
+            toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
 
-            WTX_obj.get_Modbus.Sending_interval = Set_obj.get_sending_interval;     
-            this.timer1.Interval = Set_obj.get_sending_interval;          
+            WTXModbusObj.getConnection.Sending_interval = Set_obj.get_sending_interval;     
+            this.timer1.Interval = Set_obj.get_sending_interval;
 
-            WTX_obj.get_Modbus.NumOfPoints = Set_obj.get_number_inputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + this.WTX_obj.get_Modbus.NumOfPoints;
+            WTXModbusObj.getConnection.getNumOfPoints = Set_obj.get_number_inputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXModbusObj.getConnection.getNumOfPoints;
         }
 
         // This method changes the GUI concerning the application mode.
@@ -691,26 +585,32 @@ namespace WTXModbusExamples
         // Neu : 8.3.2018
         private void calculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             bool restart = false;
             if (timer1.Enabled)
             {
                 timer1.Enabled = false;
                 timer1.Stop();
                 restart = true;
-            }
-            CalcCalObj = new CalcCalibration(WTX_obj, Modbus_TCP_obj.is_connected);
+            }               
+            */
+            CalcCalObj = new CalcCalibration(WTXModbusObj, WTXModbusObj.getConnection.is_connected);
             DialogResult res = CalcCalObj.ShowDialog();
+
+            /*
             if (restart)
             {
                 timer1.Enabled = true;
                 timer1.Start();
             }
+            */
         }
 
 
         // Neu : 8.3.2018
         private void calibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             bool restart = false;
             if (timer1.Enabled)
             {
@@ -718,13 +618,28 @@ namespace WTXModbusExamples
                 timer1.Stop();
                 restart = true;
             }
-            WeightCalObj = new WeightCalibration(WTX_obj, Modbus_TCP_obj.is_connected);
+            */
+            WeightCalObj = new WeightCalibration(WTXModbusObj, WTXModbusObj.getConnection.is_connected);
             DialogResult res = WeightCalObj.ShowDialog();
+
+            /*
             if (restart)
             {
                 timer1.Enabled = true;
                 timer1.Start();
             }
+            */
+        }
+
+
+        private void jetbusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ModbusTCP_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

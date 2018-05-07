@@ -110,3 +110,87 @@ C:\Users\huettl\Desktop\WTXModbus\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.Gen
 C:\Users\huettl\Desktop\WTXModbus\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.CoreCompileInputs.cache
 C:\Users\huettl\Desktop\WTXModbus\Examples\GUI\obj\Debug\WTXModbusGUI.exe
 C:\Users\huettl\Desktop\WTXModbus\Examples\GUI\obj\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\WTXModbusGUI.exe.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUI.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUIsimple.CalcCalibration.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusExamples.GUI.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusExamples.SettingsForm.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUIsimple.WeightCalibration.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\obj\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\SharpJet.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_15_03_2018 - Umbau 2\Examples\GUI\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUIsimple.CalcCalibration.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusExamples.GUI.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusExamples.SettingsForm.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUIsimple.WeightCalibration.resources
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\obj\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\WTXModbusGUI.exe.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\TCPModbus Projektordner\WTXModbus_27_03_2018\Examples\GUI\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUIsimple.CalcCalibration.resources
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusExamples.GUI.resources
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusExamples.SettingsForm.resources
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUIsimple.WeightCalibration.resources
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\WTXModbusGUI.exe.config
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\nunit.framework.dll
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\nunit.framework.pdb
+C:\Users\huettl\Desktop\WTXModbus_Abgabe_7_5_2018\Examples\GUI\bin\Debug\nunit.framework.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\WTXModbusGUI.exe.config
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\WTXModbusGUI.pdb
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\WTXModbus.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\NModbus4.dll
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\WTXModbus.pdb
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\WTXModbus.dll.config
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\bin\Debug\NModbus4.xml
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csprojResolveAssemblyReference.cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUIsimple.CalcCalibration.resources
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusExamples.GUI.resources
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbus.Properties.Resources.resources
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusExamples.SettingsForm.resources
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUIsimple.WeightCalibration.resources
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.GenerateResource.Cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.exe
+C:\Users\huettl\Desktop\WTXModbus 7_5_2018\Examples\GUI\obj\Debug\WTXModbusGUI.pdb

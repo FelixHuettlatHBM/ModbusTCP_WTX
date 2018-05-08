@@ -111,7 +111,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WTXModbus\WTXModbus.csproj">
+    <ProjectReference Include="..\..\WTXModbus\WTXModbus.csproj">
       <Project>{0b1bffab-24c2-4436-9b38-cfe316e69c44}</Project>
       <Name>WTXModbus</Name>
     </ProjectReference>

@@ -1,5 +1,4 @@
-﻿using Hbm.Devices.Jet;
-using Hbm.Devices.WTXModbus;
+﻿using Hbm.Devices.WTXModbus;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

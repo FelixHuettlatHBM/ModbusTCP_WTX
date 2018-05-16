@@ -1,4 +1,4 @@
-# ModbusTCP_WTX - Programming interface to HBM device WTX120
+# WTXModbus - Programming interface to HBM device WTX120
 
 ## License
 

@@ -27,7 +27,7 @@ namespace WTXModbusGUIsimple
 
     public partial class CalcCalibration : Form
     {
-        private WTX120Modbus WTXObj;
+        private WTX120 WTXObj;
         private bool Finished;
         private double Preload;
         private double Capacity;
@@ -37,7 +37,7 @@ namespace WTXModbusGUIsimple
         
         private int status_compare;
       
-        public CalcCalibration(WTX120Modbus WTXObj, bool connected)
+        public CalcCalibration(WTX120 WTXObj, bool connected)
         {            
             this.WTXObj = WTXObj;
             Finished = false;

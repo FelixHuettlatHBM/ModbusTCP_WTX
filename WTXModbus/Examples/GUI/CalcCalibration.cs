@@ -27,7 +27,7 @@ namespace WTXModbusGUIsimple
 
     public partial class CalcCalibration : Form
     {
-        private WTX120Modbus WTXObj;
+        private WTX120 WTXObj;
         private bool Finished;
         private double Preload;
         private double Capacity;
@@ -40,7 +40,7 @@ namespace WTXModbusGUIsimple
 
         private System.Windows.Forms.Timer myTimer2;      // Neu : 8.3.2018 - Idee : Timer für zyklische Abfrage der Werte nutzen. 
 
-        public CalcCalibration(WTX120Modbus WTXObj, bool connected)
+        public CalcCalibration(WTX120 WTXObj, bool connected)
         {
             myTimer2 = new System.Windows.Forms.Timer();
             myTimer2.Tick += new EventHandler(timerWeightCalibrationTick);

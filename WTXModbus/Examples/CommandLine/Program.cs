@@ -23,11 +23,11 @@ using System.Globalization;
 namespace WTXModbus
 {
     /// <summary>
-    /// This class implements a console application instead of a windows form. An Object of the class ModbusTcp and WTX120 are initialized as a publisher
+    /// This class implements a console application instead of a windows form. An Object of the class 'ModbusConnection' and 'WTX120' are initialized as a publisher
     /// and subscriber. Afterwars a connection to the device is build and the timer/sending interval is set. 
     /// A timer with for example 500ms is created. After 500ms an event is triggered, which executes the method "OnTimedEvent" reading the register of the device
     /// by an asynchronous call in the method "WTX_obj.Async_Call". As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
-    /// new data , which have already been interpreted in class WTX120, so the data is given as a string array. 
+    /// new data , which have already been interpreted in class 'WTX120', so the data is given as a string array. 
     /// The data is also printed on the console in the callback method "Read_DataReceived". 
     /// Being in the while-loop it is possible to select commands to the device. For example taring, change from gross to net value, stop dosing, zeroing and so on. 
     /// 
@@ -37,7 +37,7 @@ namespace WTXModbus
     static class Program
     {
         private static ModbusConnection ModbusObj;
-        private static WTX120Modbus WTX_obj;
+        private static WTX120 WTX_obj;
 
         private static string input_IP_Adress;
         private static ushort input_numInputs;
@@ -47,8 +47,7 @@ namespace WTXModbus
 
         private static string[] previous_data_str_arr;
         private static bool compare_values_changed;
-
-        // New change on  : 7.3.2018
+        
         private static string calibration_weight;
 
         private static string Preload_str, Capacity_str;
@@ -83,18 +82,16 @@ namespace WTXModbus
 
             set_number_inputs();
 
-            // Start asynchronous data transfer : Method - Nur bei einer Änderung Werte ausgeben - Was abrufbar ist aus der Klasse Program zu WTX120_Modbus
-
             ModbusObj = new ModbusConnection(input_IP_Adress);
 
-            WTX_obj = new WTX120Modbus(ModbusObj, 1000);
+            WTX_obj = new WTX120(ModbusObj, 1000);
 
             WTX_obj.getConnection.getNumOfPoints = input_numInputs;
             WTX_obj.getConnection.Connect();
 
             thread1.Start();
 
-            // Coupling the data via an event-based call - If the event in class WTX120Modbus is triggered, the values are updated on the console: 
+            // Coupling the data via an event-based call - If the event in class WTX120 is triggered, the values are updated on the console: 
             WTX_obj.DataUpdateEvent += ValuesOnConsole;     
 
             // This while loop is repeated till the user enters e. After 500ms the register of the device is read out. In the while-loop the user
@@ -386,7 +383,6 @@ namespace WTXModbus
         // Sets the value for the nominal weight in the WTX
         private static void Calibrate(int calibrationValue)
         {
-
             //write reg 46, CalibrationWeight
 
             WTX_obj.write_Zero_Calibration_Nominal_Load('c', calibrationValue, Write_DataReceived);          // 'c' steht für das Setzen der Calibration Weight.

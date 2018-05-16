@@ -8,21 +8,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
+/*
+ *  This abstract class predefines the methods and auto-properties for the use in class 'WTX120' and it inherits from interface 
+ *  IDeviceValues,having all neccessary values as auto-properties, which are read from the WTX device. 
+ *  
+ *  So class 'WTX120' inherits from class 'DeviceAbstract'. The purpose for this class is to allow other communication protocols, 
+ *  like Jetbus or CanBus to connect to the  WTX120 device. For this application there is no JetBus or CanBus required, so the 
+ *  neccessary for JetBus is commented.
+ *
+ */
+
 namespace WTXModbus
 {
     public abstract class DeviceAbstract : IDeviceValues
     {
-        private Action<IDeviceValues> callback_obj;
-    
-        private ushort command;
-
-        private string ipAddr;
-
-        private ModbusConnection ModbusConnObj;
-        //private JetBusConnection JetConnObj;
-
-        private int timeoutMS;
-        private bool inputModbusJet;
 
         //private INetCommunication<uint, JToken> commObj;
 

@@ -10,7 +10,33 @@ using System.Timers;
 
 namespace WTXModbus
 {
-    public class WTX120Modbus : DeviceAbstract      // PLC 
+    /*
+     *  This class inherits from the abstract class 'DeviceAbstract', which also inherits from interface 'IDeviceValues' presetting 
+     *  all necessary values for your application. 
+     * 
+     *  This class realizes the handling of the read data from your WTX120 weighting terminal. It needs an object of ModbusConnection to 
+     *  have access to the read data and to instruct writing to the WTX120. 
+     *  This class implements as well a timer to read the values periodic according to the timer interval given to the constructor of this
+     *  class. The timer is started in the constructor and the data is read after the interval in the method 'OnTimedEvent(..)' by calling
+     *  the method 'Async_Call(0x00,DataReceivedTimer)'. 
+     *  
+     *  The method 'DataReceivedTimer' is a callback method, which updates the interface IDeviceValues with the new data read from the WTX120.
+     *  The reading of the WTX registers is done asynchronously by the implementation of a 'Backgroundworker' which allows to define
+     *  eventhandler methods while reading and when the reading is done. 
+     *  
+     *  The method 'UpdateEvent(..)' has the data from the WTX120, it gets the data by the call of 'Async_Call(0x00,DataReceivedTimer)' and
+     *  the adding of 'UpdatedEvent(..)' to 'RaiseDataEvent(..)' from class ModbusConnection, meaning that a reading of a register has been done. 
+     *  In 'UpdateEvent(..)' the data is interpreted and converted to strings. For example the value '2' in word 4, 
+     *  bit .2-.3 stands for 'Higher than maximum capacity' or the value '0' in word 5, bit .0-.1 for 'Standard', the application mode. 
+     *  Therefore there are methods like : 'measurement_with_comma(..)', 'comment_weight_moving(..)', 'comment_unit(..)' and so on. 
+     *  The values can be called simply by 'this.NetValue' or 'this.status', because this class inherits from interface IDeviceValues having
+     *  all necessary values. 
+     *  
+     *  In method 'UpdateEvent' a event is triggered as well to signalize the GUI or console application that the data is ready to be
+     *  printed on the console or GUI (on the DataGrid). By the eventHandler 'DataUpdateEvent' it is signalized that the data is ready to
+     *  be printed out.
+     */
+    public class WTX120 : DeviceAbstract     
     {
         private string[] dataStr;
         private ushort[] data;
@@ -27,8 +53,14 @@ namespace WTXModbus
 
         public override event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 
-
-        public WTX120Modbus(ModbusConnection connection, int paramTimerInterval) : base(connection,paramTimerInterval)
+        /*
+         * Constructor of the class WTX120Modbus, which inherits from class DeviceAbstract. 
+         * Therefore you have an extended constructor (with " : base(..)") 
+         *
+         * @param : connection - object of class ModbusConnection, which is created in the console or GUI application.
+         * @param : paramTimerInterval - timer interval for the periodic reading of the values, in milli-seconds. 
+         */
+        public WTX120(ModbusConnection connection, int paramTimerInterval) : base(connection,paramTimerInterval)
         {
             ModbusConnObj = connection;
             
@@ -40,13 +72,13 @@ namespace WTXModbus
                 this.dataStr[i] = "0";
                 data[i] = 0;
             }
-
-            getConnection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
-
-            this.initialize_timer(paramTimerInterval);
+            this.initialize_timer(paramTimerInterval);          // Initializing and starting the timer. 
         }
 
 
+        /* 
+         *  This is a auto-property to get the object of ModbusConnection, which is committed to the constructor of this class. 
+         */
         public override ModbusConnection getConnection
         {
             get
@@ -56,6 +88,15 @@ namespace WTXModbus
 
         }
 
+        /*
+         * This method realizes an asynchronous call to read (command=0x00) and to write(else command!=0x00). It uses the 'BackgroundWorker Class' 
+         * to execute an operation on a seperate thread. To set up background operations f.e. you have to raise the 'DoWork' event (here in 'DoWorkEventHandler')
+         * for the ongoing reading operation. To signalize if the operation(reading or writing) has been completed and finished you have to raise a 
+         * 'RunWorkerCompleted' event.
+         * With the interface you get in the method 'ReadCompleted(..)' you have already the data, but in method 'UpdateEvent(..)' the data is interpreted
+         * and converted to strings, which is a preferred way in this application.  
+         * 
+         */
         public void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceValues> callbackParam)
         {
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
@@ -82,9 +123,15 @@ namespace WTXModbus
             bgWorker.RunWorkerAsync();
         }
 
-
-        // Neu - 8.3.2018 - Ohne Backgroundworker - Ohne Asynchronität
-        public void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceValues> callbackParam)      // Callback-Methode nicht benötigt. 
+        /*
+         * This method implements synchrounous writing to the WTX120 for the purpose of calibration, because you have to send several commands in a row to the
+         * WTX120 to calibrate and wait after each command is finished. 
+         * (Like writing 0x7FFFFFFF for the zero load, writing the calibration value and writing 0x7FFFFFFF again for setting the nominal load.)
+         * So you have a polling to wait till the handshake bit is set to 1 (=1, if the command is set) and 0 (=0,if the command is reset).
+         * @param : wordnumber - the word of the register which should be rewritten. commandParam - the command, 0x00=Reading everthying else is Writing
+         * @param : callbackParam - the callback method which is called once the writing is finished (not used here for the synchronous reading). 
+         */
+        public void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceValues> callbackParam)     
         {
             this.command = commandParam;
             this.callback_obj = callbackParam;
@@ -95,26 +142,21 @@ namespace WTXModbus
             else
             {
                 // (1) Sending of a command:        
-                getConnection.Write(wordNumber, this.command);  // Alternativ : 1.Parameter = wordNumber
+                getConnection.Write(wordNumber, this.command);  
 
                 while (this.handshake == 0)
                 {
-                    Thread.Sleep(100);
                     getConnection.Read();
-                    //this.JetConnObj.Read();
                 }
 
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.handshake == 1)
                 {
-                    getConnection.Write(wordNumber, 0x00);      // Alternativ : 1.Parameter = wordNumber
-                    //this.JetConnObj.Write(0, 1);        // Parameter: uint index, uint data. 
+                    getConnection.Write(wordNumber, 0x00);    
                 }
-                while (/*this.status == 1 &&*/ this.handshake == 1)
+                while (this.handshake == 1)
                 {
-                    Thread.Sleep(100);
                     getConnection.Read();
-                    //this.JetConnObj.Read();
                 }
             }
         }
@@ -135,12 +177,10 @@ namespace WTXModbus
 
             return this;
         }
-
-        // Neu : 8.3.2018
+        
         public IDeviceValues syncReadData()
         {
             getConnection.Read();
-            //this.JetConnObj.Read();
 
             return this;
         }
@@ -155,7 +195,7 @@ namespace WTXModbus
 
         public void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.callback_obj((IDeviceValues)e.Result);         // Neu : 21.11.2017         Interface übergeben. 
+            this.callback_obj((IDeviceValues)e.Result);         // Commit the interface
         }
 
         public void WriteDoWork(object sender, DoWorkEventArgs e)
@@ -178,7 +218,7 @@ namespace WTXModbus
 
         public void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.callback_obj(this);         // Neu : 21.11.2017         Interface übergeben. 
+            this.callback_obj(this);         // Commit the interface
         }
 
         public void write_Zero_Calibration_Nominal_Load(char choice, int load_written, Action<IDeviceValues> callbackParam)
@@ -193,24 +233,18 @@ namespace WTXModbus
             if (choice == 'c')
             {
                 getConnection.Write(46, data_written);
-                //this.JetConnObj.Write(46, data_written);
             }
             if (choice == 'z')
             {
                 getConnection.Write(48, data_written);
-                //this.JetConnObj.Write(48, data_written);
             }
             if (choice == 'n')
             {
                 getConnection.Write(50, data_written);
-                //this.JetConnObj.Write(50, data_written);
             }
 
         }
-
-
-        // 13.04.2018 : Neu - Timer function
-
+        
         // This method initializes the with the timer interval as a parameter: 
         public override void initialize_timer(int timer_interval)
         {
@@ -229,12 +263,17 @@ namespace WTXModbus
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Async_Call(0x00, DataReceivedTimer);
-
-            getConnection.RaiseDataEvent += UpdateEvent;   // Subscribe to the event.
         }
 
+        /*
+         * This method is a callback method, which is called once the reading is done and completed. 
+         * It also couples the method 'UpdateEvent(..)' to the eventHandler 'RaiseDataEvent' from the class ModbusConnection,
+         * signalizing that the data is read from the WTX device. 
+         */
         private void DataReceivedTimer(IDeviceValues Device_Values)
         {
+            getConnection.RaiseDataEvent += UpdateEvent;   // Subscribe to the event.
+
             thisValues = Device_Values;
 
             int previousNetValue = Device_Values.NetValue;
@@ -246,14 +285,12 @@ namespace WTXModbus
             // Set zero, set nominal, set calibration weight... siehe anderen Code. 
         }
 
-        //public override void UpdateEvent(object sender, MessageEvent<ushort> e)
         public override void UpdateEvent(object sender, NetConnectionEventArgs<ushort[]> e)
         {
             this.data = e.Args;
-            //this.data = e.Message;        // Mit MessageEvent 
 
-            this.dataStr[0] = this.measurement_with_comma(this.NetValue, this.decimals);  // 1 equal to "Net measured" as a parameter
-            this.dataStr[1] = this.measurement_with_comma(this.GrossValue, this.decimals);  // 2 equal to "Gross measured" as a parameter
+            this.dataStr[0] = this.measurement_with_comma(this.NetValue, this.decimals);
+            this.dataStr[1] = this.measurement_with_comma(this.GrossValue, this.decimals);
 
             this.dataStr[2] = this.general_weight_error.ToString();
             this.dataStr[3] = this.scale_alarm_triggered.ToString();
@@ -347,9 +384,9 @@ namespace WTXModbus
 
             DataUpdateEvent?.Invoke(this, e);
 
-            // As an alternative to 'DataUpdateEvent?.Invoke(this, e);' : 
+            // As an alternative to 'DataUpdateEvent?.Invoke(this, e);' : Both implementations do the same.  
             /*
-            EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        // Neu : 4.5.18
+            EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        
 
             if (handler2 != null)
                 handler2(this, e);
@@ -1560,14 +1597,10 @@ namespace WTXModbus
             }
         }
 
-        /* In den folgenden Comment-Methoden werden jeweils verschiedene Auswahloptionen mit Fallunterscheidungen
-        * betrachtet und je nach Fall eine unterschiedliche Option ausgewählt.
-        */
-
-            // In the following methods the different options for the single integer values are used to define and
-            // interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
-
-            private string measurement_with_comma(int value, int decimals)
+        /* In the following methods the different options for the single integer values are used to define and
+         *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
+         */
+        private string measurement_with_comma(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";

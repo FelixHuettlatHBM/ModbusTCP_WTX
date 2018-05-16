@@ -19,36 +19,34 @@ using System.ComponentModel;
 namespace WTXModbusExamples
 {
     /// <summary>
-    /// First, an object of this class is created in Program.cs and in the constructor of GUI objects of class ModbusTCP and WTX120 are created to establish
-    /// a connection and data transfer to the device (WTX120), class ModbusTcp. Class ModbusTCP has the purpose to establish a connection, to read from the device (its register)
+    /// First, an object of this class is created in Program.cs or in the constructor of GUI objects of class ModbusConnection and WTX120 are created to establish
+    /// a connection and data transfer to the device (WTX120), class ModbusConnection. Class ModbusConnection has the purpose to establish a connection, to read from the device (its register)
     /// and to write to the device (its register). Class WTX120 has all the values, which will be interpreted from the read bytes and class WTX120 manages 
-    /// the asynchronous data transfer to GUI and the eventbased data transfer to class ModbusTCP. 
+    /// the asynchronous data transfer to GUI and the eventbased data transfer to class ModbusConnection. 
     /// By first initializing the class  GUI, we have the graphical interface seperated from the other class. 
     /// 
     /// This class represents a window or a dialog box that makes up the application's user interface for the values and their description of the device.
     /// It uses a datagrid to put the description and the periodically updated values together. The description shown in the form and initialized in
-    /// the datagrid is based on the manual (see page 154-161). 
+    /// the datagrid is based on the manual (see page manual PCLC link on page 154-161). 
     /// 
     /// This class contains a timer to read the data periodically from the device in a user-defined interval (timer1.Interval, sending_interval). 
-    /// Alternative: The timer could also be implemented in class "Modbus_TCP" (Example in the Console Application, see Git).
+    /// Alternative: The timer could also be implemented in class ModbusConnection (Example in the Console Application, see Git).
     /// Futhermore the data is only displayed, if the values have changed to save reconstruction time on the GUI Form. 
     /// 
     /// Beside a form the GUI could also be a console application by applying that in program.cs instead of a windows form (see on Git).
     /// Therefore the design of the classes and its relations are seperated in 
-    /// connection specific classes and interfaces (class "Modbus_TCP", interface "Communication_Device_Interface", "Communication_Interface")
-    /// and in a device specific class and interface (class "WTX_120", interface "IDevice_Values").
+    /// connection specific classes and interfaces (class ModbusConnection, interface "IModbusConnection")
+    /// and in a device specific class and interface (class "WTX120", interface "IDevice_Values").
     ///  
-    /// In the form, there are several buttons to activate events for the output words, a menu bar on the top to start/stop the application, to save the values,
+    /// In the Windows form, there are several buttons to activate events for the output words, a menu bar on the top to start/stop the application, to save the values,
     /// to show help (like the manual) and to change the settings.
     /// The latter is implemented by an additional form and changes the IP address, number of inputs read out by the register, sending/timer interval. 
     /// A status bar on the bottom shows the actually updated status of the connection ("Connected", "IP adress", "Mode", "TCP/Modbus", "NumInputs").
     /// </summary>
     partial class GUI : Form
     {
-        //private Connection Modbus_TCP_obj;
-
         private ModbusConnection ModbusObj;
-        private WTX120Modbus WTXModbusObj;
+        private WTX120 WTXModbusObj;
 
         private SettingsForm Set_obj;
 
@@ -66,12 +64,9 @@ namespace WTXModbusExamples
             //Get IPAddress from Settings.settings
             string ipAddress = WTXModbus.Properties.Settings.Default.IPAddress;
             
-            // Implementation of the publisher (Modbus_TCP_obj) and 
-            // the subscribter (Device_WTXModbusObj)
 
             ModbusObj = new ModbusConnection(ipAddress);
-
-            WTXModbusObj = new WTX120Modbus(ModbusObj, 10);
+            WTXModbusObj = new WTX120(ModbusObj, 10);
                    
             is_standard =false;
 
@@ -247,7 +242,7 @@ namespace WTXModbusExamples
         }
 
         // This automatic property returns an instance of this class. It has usage in the class "Settings_Form".
-        public WTX120Modbus get_dataviewer
+        public WTX120 get_dataviewer
         {
             get
             {
@@ -442,7 +437,7 @@ namespace WTXModbusExamples
 
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120).
-        // The timer interval is set in the connection specific class "Modbus_TCP".
+        // The timer interval is set in the connection specific class "ModbusConnection".
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WTXModbusObj.getConnection.Connect();  // First the connection to the device should be established.          
@@ -578,11 +573,8 @@ namespace WTXModbusExamples
 
         private void GUI_Load_1(object sender, EventArgs e)
         {
-
         }
-
-
-        // Neu : 8.3.2018
+      
         private void calculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             /*
@@ -605,9 +597,7 @@ namespace WTXModbusExamples
             }
             */
         }
-
-
-        // Neu : 8.3.2018
+     
         private void calibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             /*

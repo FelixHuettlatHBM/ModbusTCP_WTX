@@ -15,12 +15,12 @@ using WTXModbus;
 namespace Hbm.Devices.WTXModbus
 {
     /// <summary>
-    /// This class establishs the communication to the device(here: WTX120), starts/ends the connection,
+    /// This class establishs the communication to the device(here: device WTX120 ), starts/ends the connection,
     /// read and write the register and shows the status of the connection and closes the connection to
     /// the device (here: WTX120). 
     /// Once a button event is clicked in class GUI, an asynchronous call in class WTX120 is started
     /// and finally in this class "Modbus_TCP" the register (of the device) is read or written. 
-    /// The data exchange for reading a register between class "Modbus_TCP" and class "WTX_120" is event-based. 
+    /// The data exchange for reading a register between class "ModbusConnection" and class "WTX120" is event-based. 
     /// This class publishes the event (MessageEvent) and read the register, afterwards it will be sent back to WTX120. 
     /// </summary>
     public class ModbusConnection : IModbusConnection
@@ -33,13 +33,11 @@ namespace Hbm.Devices.WTXModbus
         private ushort startAdress;
         private ushort numOfPoints;
         private string iP_Adress;
-        private int sending_interval;  // Timer1.Interval = Sending Interval 
+        private int sending_interval;  
         private int port;
         private bool connected;
 
         // Declaration of the event Eventhandler. For the message information from the register.
-        // public event EventHandler<MessageEvent<ushort>> RaiseDataEvent;
-
         public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
 
         public ModbusConnection(string ipAddress)
@@ -50,7 +48,7 @@ namespace Hbm.Devices.WTXModbus
 
             this.numOfPoints = 38;
             this.startAdress = 0;
-            sending_interval = 5;       // Timer1.Interval = Sending Interval 
+            sending_interval = 5;      
 
             previousData = new ushort[59];
             data = new ushort[59];
@@ -62,35 +60,25 @@ namespace Hbm.Devices.WTXModbus
             }
         }
 
-        // This method is called from the device class "WTX120" and calls the method ReadRegisterPublishing(e:MessageEvent)
-        // to create a new MessageEvent to read the register of the device. 
-        /*
-         * public void ReadRegister()
-        {
-            if (this.connected == true)
-                this.ReadRegisterPublishing(new MessageEvent(this.data));
-        }
-        */
-
-        // Neu : 19.3.2018
+        /* 
+         * This method is called from the device class "WTX120" and calls the method ReadRegisterPublishing(e:NetConnectionEventArgs)
+         * to create a new MessageEvent to read the register of the device. 
+         */
         public void Read()
         {
             if (this.connected == true)
-                //this.ReadRegisterPublishing(new MessageEvent<ushort>(this.data/*, this.StartAdress, this.NumOfPoints*/));
                 this.ReadRegisterPublishing(new NetConnectionEventArgs<ushort[]>(EventArgType.Data, this.data));
 
         }
 
-        // This method publishes the event (MessageEvent) and read the register, afterwards the message(from the register) will be sent back to WTX120.  
-        // This method is declared as a virtual method to allow derived class to override the event call.
-        //protected virtual void ReadRegisterPublishing(MessageEvent<ushort> e)
-
+        /* 
+         * This method publishes the event (NetConnectionEventArgs, type Data) and read the register, afterwards the data(from the register) will be sent back to WTX120.  
+         * This method is declared as a virtual method to allow derived class to override the event call.
+         */
         protected virtual void ReadRegisterPublishing(NetConnectionEventArgs<ushort[]> e)
         {
             // copy of the event to avoid that a race condition is prevented, if the former subscriber directly logs off after the last
-            // condition( and after if(handler!=null) ) and before the event is triggered. 
-
-            //EventHandler<MessageEvent<ushort>> handler = RaiseDataEvent;
+            // condition( and after if(handler!=null) ) and before the event is triggered.
 
             EventHandler<NetConnectionEventArgs<ushort[]>> handler = RaiseDataEvent;
 
@@ -99,7 +87,6 @@ namespace Hbm.Devices.WTXModbus
             {
                 try
                 {
-
                     // Save the previous data before reading the new, actual one:
                     this.previousData = this.data;
                     // Read the actual data: e.Message's type - ushort[]  
@@ -113,9 +100,7 @@ namespace Hbm.Devices.WTXModbus
                 catch (System.InvalidOperationException)
                 {
                     this.connected = false;
-
                     this.Connect();
-                    Thread.Sleep(100);
                 }
                 
                 this.data = e.Args;
@@ -149,14 +134,15 @@ namespace Hbm.Devices.WTXModbus
             client.Close();
         }
 
-        // This method writes a command to the register of the device.
-        // @param: command - ushort. Command in hex from the GUI. 
-
+        // This method writes a command to the register of the device, to a single register. 
+        // @param: command - ushort. Command in hex from the GUI or console application. 
         public void Write(ushort index, ushort data)
         {
             this.master.WriteSingleRegister(index, data);
         }
 
+        // This method writes a command to the register of the device, to a single register. 
+        // @param: command - ushort. Command in hex from the GUI. 
         public void Write(ushort index, ushort[] data)
         {
             this.master.WriteMultipleRegisters(index, data);
@@ -168,7 +154,7 @@ namespace Hbm.Devices.WTXModbus
             get { return this.previousData; }
         }
 
-        // Getter/Setter for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
+        // Auto-properties (get and set) for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
         public string IP_Adress
         {
             get { return this.iP_Adress; }

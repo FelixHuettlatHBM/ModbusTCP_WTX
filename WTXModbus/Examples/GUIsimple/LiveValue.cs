@@ -39,7 +39,7 @@ namespace WTXModbusGUIsimple
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
         private static ModbusConnection ModbusObj;
-        private static WTX120Modbus WTXObj;
+        private static WTX120 WTXObj;
         private static int DefaultTimerInterval = 500;
         private String IPAddress;
         private CalcCalibration CalcCalObj;
@@ -89,7 +89,7 @@ namespace WTXModbusGUIsimple
         {
             ModbusObj = new ModbusConnection(IPAddress);
 
-            WTXObj = new WTX120Modbus(ModbusObj, 1000);
+            WTXObj = new WTX120(ModbusObj, 1000);
             
             WTXObj.getConnection.getNumOfPoints = 6;
 

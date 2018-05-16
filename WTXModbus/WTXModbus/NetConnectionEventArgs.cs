@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace WTXModbus
 {
+      /*
+       * This enum implements 2 types of events : Data and Message. In this Modbus/TCP application we use Data for the reading of
+       * the WTX registers. For example a CanBus or JetBus application would require a Message as an event type. 
+       * The setting to Data is done in class 'ModbusConnection' when a reading is executed. 
+       */
+
         public enum EventArgType
         {
             Message,
@@ -13,13 +19,16 @@ namespace WTXModbus
             Data,
         }
 
-        /// <summary>
-        /// Also vom Prinzip her macht es ja Sinn. Es wird ein Event-Type definiert und dort können
-        /// dann Argumente beliebigen Typs drin stehen. Das klingt doch eigentlich vom Prinzip
-        /// schon mal logisch.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public class NetConnectionEventArgs<T> : EventArgs
+    /*
+     * This event inherits from EventArgs. An object of this class is created in class 'ModbusConnection' if data should
+     * be read. From 'm_Args' you can also get the data from the WTX register once read from the WTX. In this application
+     * we get the data from an object of class 'WTX120'(advantage :already interpreted as strings), but the other way would be also possible.
+     * 
+     * By using this class we can commit arguments of any desired type, because of using generics. 
+     * We use for Modbus/TCP ushort as a type. For Jetbus and CanBus we would unsigned int ('uint') as type. 
+     */
+
+    public class NetConnectionEventArgs<T> : EventArgs
         {
             private EventArgType m_Type;
             private T m_Args;
@@ -32,6 +41,10 @@ namespace WTXModbus
 
             public EventArgType Type { get { return m_Type; } }
 
+            /*
+             * This is an auto-property, which returns and sets the argument. The return type is a generic to allow
+             * several cases like for Modbus/TCP, CanBus, JetBus. 
+             */
             public T Args
             {
             get

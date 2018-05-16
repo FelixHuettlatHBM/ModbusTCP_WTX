@@ -59,7 +59,7 @@
     <Compile Include="IDeviceValues.cs" />
     <Compile Include="ModbusConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WTX120Modbus.cs" />
+    <Compile Include="WTX120.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

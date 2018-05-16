@@ -32,7 +32,7 @@ namespace WTXModbusGUIsimple
 
         //private System.Windows.Forms.Timer myTimer;      // Neu : 8.3.2018 - Idee : Timer für zyklische Abfrage der Werte nutzen um Asynchronität zu nutzen, hier momentan noch nicht angewendet. 
 
-        private WTX120Modbus WTXObj;
+        private WTX120 WTXObj;
         private int State;
         private double CalibrationWeight;
         //private IFormatProvider Provider;
@@ -46,7 +46,7 @@ namespace WTXModbusGUIsimple
         private string str_comma_dot;
 
 
-        public WeightCalibration(WTX120Modbus WTXObj, bool connected)
+        public WeightCalibration(WTX120 WTXObj, bool connected)
         {
             //myTimer = new System.Windows.Forms.Timer();
             //myTimer.Tick += new EventHandler(timerWeightCalibrationTick);

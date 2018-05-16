@@ -24,14 +24,14 @@ namespace Hbm.Devices.WTXModbus
     /// >
     /// There are 2 more arrays: string[] get_data_str and ushort[] get_data_ushort to sum up all values in an array to simplify 
     /// further operations, like output or conditions.
-    /// The Eventhandler "DataUpdateEvent" is triggered once the data read from the WTX device and committed to the GUI or console
-    /// application "Programm.cs". 
+    /// The Eventhandler "DataUpdateEvent" is triggered once the data read in class ModbusConnection from the WTX device and committed 
+    /// to the GUI or consoleapplication "Programm.cs". 
     /// 
-    /// Behind the integer variables the index of the arrays is given. 
+    /// Behind the variables the index of the arrays is given. 
     /// </summary>
     public interface IDeviceValues
     {
-        event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
+        event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;   
 
         string[] get_data_str { get; set; }
         ushort[] get_data_ushort { get; set; }

@@ -345,10 +345,15 @@ namespace WTXModbus
 
             e.Args = this.data;
 
+            DataUpdateEvent?.Invoke(this, e);
+
+            // As an alternative to 'DataUpdateEvent?.Invoke(this, e);' : 
+            /*
             EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        // Neu : 4.5.18
 
             if (handler2 != null)
                 handler2(this, e);
+            */
         }
 
         public override IDeviceValues DeviceValues
@@ -1559,10 +1564,10 @@ namespace WTXModbus
         * betrachtet und je nach Fall eine unterschiedliche Option ausgewählt.
         */
 
-        // In the following methods the different options for the single integer values are used to define and
-        // interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
+            // In the following methods the different options for the single integer values are used to define and
+            // interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
 
-        private string measurement_with_comma(int value, int decimals)
+            private string measurement_with_comma(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";

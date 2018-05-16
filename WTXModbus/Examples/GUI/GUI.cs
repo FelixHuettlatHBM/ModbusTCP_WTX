@@ -274,7 +274,7 @@ namespace WTXModbusExamples
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
         // First it actualizes the tool bar menu regarding the status of the connection, afterwards it iterates the 
         // "data_str_arr"-Array to actualize every element of the data grid in the standard or filler application. 
-        public void reset_values()
+        public void refresh_values()
         {
             if (WTXModbusObj.getConnection.is_connected == true)
                 toolStripStatusLabel1.Text = "Connected";
@@ -463,7 +463,7 @@ namespace WTXModbusExamples
                 toolStripStatusLabel1.Text = "Disconnected";
 
 
-            reset_values();
+            refresh_values();
         }
 
         // This method stops the timer after the corresponding event has been triggered during the application.

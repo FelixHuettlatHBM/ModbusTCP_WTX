@@ -17,7 +17,7 @@ using System.Timers;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
-using WTXModbusGUIsimple;
+//using WTXModbusGUIsimple;
 
 using Hbm.Devices.WTXModbus;
 using WTXModbus;
@@ -84,6 +84,7 @@ namespace WTXModbusGUIsimple
             this.Connect();
         }
 
+        // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
             ModbusObj = new ModbusConnection(IPAddress);
@@ -114,7 +115,8 @@ namespace WTXModbusGUIsimple
 
                 String tempIpAddress = textBox1.Text;
                 WTXObj.getConnection.IP_Adress = tempIpAddress;
-                WTXObj.getConnection.Connect();
+           
+                WTXObj.getConnection.Connect();  // Equal to : ModbusObj.Connect();
                 if (WTXObj.getConnection.is_connected)
                 {
                     IPAddress = tempIpAddress;

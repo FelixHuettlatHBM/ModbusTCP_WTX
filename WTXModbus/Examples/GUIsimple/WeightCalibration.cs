@@ -23,7 +23,7 @@ using WTXModbus;
 namespace WTXModbusGUIsimple
 {
     // This class provides a window to calibrate the WTX with a calibration weight.
-    // First ´the dead load is measured and after that the calibration weight is measured.
+    // First the dead load is measured and after that the calibration weight is measured.
     // You can step back with button2 (Back).
 
     public partial class WeightCalibration : Form
@@ -63,7 +63,7 @@ namespace WTXModbusGUIsimple
             {
                 textBox1.Enabled = false;
                 button1.Enabled = false;
-                button2.Text = "Close";
+                button2.Text  = "Close";
                 textBox2.Text = "No WTX connected!";
             }
 

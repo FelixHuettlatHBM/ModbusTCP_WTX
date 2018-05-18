@@ -258,6 +258,26 @@ namespace WTXModbus
             aTimer.Enabled = true;
         }
 
+        /*
+         * This method stops the timer, for example in case for the calibration.
+         */
+        public void stopTimer()
+        {
+            aTimer.Elapsed -= OnTimedEvent;
+            aTimer.Enabled = false;
+            aTimer.Stop();
+        }
+
+        /*
+         * This method restarts the timer, for example in case for the calibration.
+         */
+        public void restartTimer()
+        {
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
+
         // Event method, which will be triggered after a interval of the timer is elapsed- 
         // After triggering (after 500ms) the register is read. 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)

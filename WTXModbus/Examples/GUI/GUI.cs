@@ -19,24 +19,22 @@ using System.ComponentModel;
 namespace WTXModbusExamples
 {
     /// <summary>
-    /// First, an object of this class is created in Program.cs or in the constructor of GUI objects of class ModbusConnection and WTX120 are created to establish
-    /// a connection and data transfer to the device (WTX120), class ModbusConnection. Class ModbusConnection has the purpose to establish a connection, to read from the device (its register)
-    /// and to write to the device (its register). Class WTX120 has all the values, which will be interpreted from the read bytes and class WTX120 manages 
-    /// the asynchronous data transfer to GUI and the eventbased data transfer to class ModbusConnection. 
-    /// By first initializing the class  GUI, we have the graphical interface seperated from the other class. 
-    /// 
-    /// This class represents a window or a dialog box that makes up the application's user interface for the values and their description of the device.
+    /// First, objects of class 'ModbusConnection' and 'WTX120' are created to establish a connection and data transfer to the device (WTX120). 
+    /// Class 'ModbusConnection' has the purpose to establish a connection, to read from the device (its register)
+    /// and to write to the device (its register). Class 'WTX120' creates timer to read and update periodically the values of the WTX in a certain timer
+    /// interval given in the constructor of class 'WTX120' while generating an object of it. Class 'WTX120' has all the values, 
+    /// which will be interpreted from the read bytes and class 'WTX120' manages the asynchronous data transfer to GUI and the eventbased data transfer #
+    /// to class ModbusConnection. 
+    ///  
+    /// This class 'GUI' represents a window or a dialog box that makes up the application's user interface for the values and their description of the device.
     /// It uses a datagrid to put the description and the periodically updated values together. The description shown in the form and initialized in
     /// the datagrid is based on the manual (see page manual PCLC link on page 154-161). 
-    /// 
-    /// This class contains a timer to read the data periodically from the device in a user-defined interval (timer1.Interval, sending_interval). 
-    /// Alternative: The timer could also be implemented in class ModbusConnection (Example in the Console Application, see Git).
     /// Futhermore the data is only displayed, if the values have changed to save reconstruction time on the GUI Form. 
     /// 
     /// Beside a form the GUI could also be a console application by applying that in program.cs instead of a windows form (see on Git).
     /// Therefore the design of the classes and its relations are seperated in 
     /// connection specific classes and interfaces (class ModbusConnection, interface "IModbusConnection")
-    /// and in a device specific class and interface (class "WTX120", interface "IDevice_Values").
+    /// and in a device specific class and in a device specific interface (class "WTX120", interface "IDevice_Values").
     ///  
     /// In the Windows form, there are several buttons to activate events for the output words, a menu bar on the top to start/stop the application, to save the values,
     /// to show help (like the manual) and to change the settings.
@@ -58,7 +56,7 @@ namespace WTXModbusExamples
 
         private bool is_standard;
 
-        // Constructor: 
+        // Constructor of class GUI for the initialisation: 
         public GUI()
         {
             //Get IPAddress from Settings.settings
@@ -86,7 +84,7 @@ namespace WTXModbusExamples
            
         }
 
-        // This method is called from the constructor and sets the columns and the rows of the data grid and shows it as a form.  
+        // This method is called from the constructor and sets the columns and the rows of the data grid.
         // There are 2 cases:
         // 1) Standard application : Input words "0+2" till "14". Output words "0" till "50". 
         // 2) Filler   application : Input words "0+2" till "37". Output words "0" till "50". 
@@ -250,8 +248,6 @@ namespace WTXModbusExamples
             }
         }
 
-
-
         // This private method is called for initializing basic information for the tool menu bar on the bottom of the windows form: 
         // For the connection status, IP adress, application mode and number of inputs. 
         private void GUI_Load(object sender, EventArgs e)
@@ -268,7 +264,7 @@ namespace WTXModbusExamples
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
         // First it actualizes the tool bar menu regarding the status of the connection, afterwards it iterates the 
-        // "data_str_arr"-Array to actualize every element of the data grid in the standard or filler application. 
+        // "data_str_arr" array to actualize every element of the data grid in the standard or filler application. 
         public void refresh_values()
         {
             if (WTXModbusObj.getConnection.is_connected == true)
@@ -315,17 +311,13 @@ namespace WTXModbusExamples
         // Button-Click event to close the application: 
         private void button2_Click(object sender, EventArgs e)
         {
-            //timer1.Enabled = false;
-            //timer1.Stop();
             this.Close();
         }
 
         // This is the callback method for writing. First the values in "data_str_arr" are updated and 
         // the GUI is actualized.
         // A asynchronous call is used in the following button_Click methods. 
-        // The callback method is Write_DataReceived, which is called once the command is written into the register of the device. 
-
-        
+        // The callback method is Write_DataReceived, which is called once the command is written into the register of the device.      
         public void Write_DataReceived(IDeviceValues Device_Values)
         {
             //this.data_str_arr = Device_Values.get_data_str;
@@ -336,8 +328,7 @@ namespace WTXModbusExamples
         // For standard and filler application.
         private void button4_Click(object sender, EventArgs e)
         {
-            // Taring
-            
+            // Taring       
             WTXModbusObj.Async_Call(0x1, Write_DataReceived);
         }
 
@@ -511,7 +502,6 @@ namespace WTXModbusExamples
             }
         }
 
-
         // This method is used to call another form ("Settings_Form") once the corresponding event is triggerred.
         // It is used to change the connection specific attributes, like IP adress, number of inputs and sending/timer interval.
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -575,50 +565,33 @@ namespace WTXModbusExamples
         {
         }
       
+        /*
+         *  This method is called once the tool item "Calculate Calibration" is clicked. It creates a windows form for
+         *  the calibration with a dead load and a nominal span. 
+         */
         private void calculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*
-            bool restart = false;
-            if (timer1.Enabled)
-            {
-                timer1.Enabled = false;
-                timer1.Stop();
-                restart = true;
-            }               
-            */
+
+            WTXModbusObj.stopTimer();
+
             CalcCalObj = new CalcCalibration(WTXModbusObj, WTXModbusObj.getConnection.is_connected);
             DialogResult res = CalcCalObj.ShowDialog();
 
-            /*
-            if (restart)
-            {
-                timer1.Enabled = true;
-                timer1.Start();
-            }
-            */
+            WTXModbusObj.restartTimer();
         }
-     
+
+        /*
+         *  This method is called once the tool item "Calibration with weight" is clicked. It creates a windows form for
+         *  the calibration with an individual weight put on the load cell or sensor. 
+         */
         private void calibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*
-            bool restart = false;
-            if (timer1.Enabled)
-            {
-                timer1.Enabled = false;
-                timer1.Stop();
-                restart = true;
-            }
-            */
+            WTXModbusObj.stopTimer();
+
             WeightCalObj = new WeightCalibration(WTXModbusObj, WTXModbusObj.getConnection.is_connected);
             DialogResult res = WeightCalObj.ShowDialog();
 
-            /*
-            if (restart)
-            {
-                timer1.Enabled = true;
-                timer1.Start();
-            }
-            */
+            WTXModbusObj.restartTimer();
         }
 
 

@@ -59,6 +59,8 @@ namespace WTXModbus
         private static string str_comma_dot;
         private static double DoubleCalibrationWeight, potenz;
 
+        private static bool isCalibrating;
+
         static void Main()
         {
             // Initialize:
@@ -70,6 +72,8 @@ namespace WTXModbus
 
             str_comma_dot = "";
             calibration_weight = "0";
+
+            isCalibrating = false;
 
             DoubleCalibrationWeight = 0.0;
             potenz = 0.0;
@@ -89,7 +93,7 @@ namespace WTXModbus
             WTX_obj.getConnection.getNumOfPoints = input_numInputs;
             WTX_obj.getConnection.Connect();
 
-            thread1.Start();
+            //thread1.Start();
 
             // Coupling the data via an event-based call - If the event in class WTX120 is triggered, the values are updated on the console: 
             WTX_obj.DataUpdateEvent += ValuesOnConsole;     
@@ -97,7 +101,8 @@ namespace WTXModbus
             // This while loop is repeated till the user enters e. After 500ms the register of the device is read out. In the while-loop the user
             // can select commands, which are send immediately to the device. 
             while (value_exitapplication.KeyChar != 'e')
-            {             
+            {
+                isCalibrating = false;
                 value_outputwords = Console.ReadKey();
 
                 switch (value_outputwords.KeyChar)
@@ -113,26 +118,10 @@ namespace WTXModbus
 
                     // Fall für schreiben auf multiple Register:
                     case 'c':       // Calculate Calibration
-
-                        zero_load_nominal_load_input();
-
-                        Calculate();
-
-
+                        CalculateCalibration();
                         break;
                     case 'w':       // Calculation with weight 
-
-                        calibration_weight_input();
-                        Console.WriteLine("\nTo start : Set zero load and press any key for measuring zero and wait.");
-                        string another = Console.ReadLine();
-
-                        MeasureZero();
-                        Console.WriteLine("\n\nDead load measured.Put weight on scale, press any key and wait.");
-
-                        string another2 = Console.ReadLine();
-
-                        Calibrate(potencyCalibrationWeight());
-
+                        CalibrationWithWeight();
                         break;
 
                     //case '8' : WTX_obj.Async_Call(0x4, Write_DataReceived);           break;   // Clear dosing results
@@ -184,17 +173,69 @@ namespace WTXModbus
         }
 
 
+        /*
+         * This method calcutes the values for a dead load and a nominal load(span) in a ratio in mV/V and write in into the WTX registers. 
+         */
+        private static void CalculateCalibration()
+        {
+            isCalibrating = true;
+
+            WTX_obj.stopTimer();
+
+            zero_load_nominal_load_input();
+
+            Calculate();
+
+            CalculateCalibration();
+
+            WTX_obj.restartTimer();
+
+            isCalibrating = false;
+        }
+
+        /*
+         * This method does a calibration with an individual weight to the WTX.  
+         * First you tip the value for the calibration weight, then you set the value for the dead load (method ‚MeasureZero‘), 
+         * finally you set the value for the nominal weight in the WTX (method ‚Calibrate(calibrationValue)‘).
+         */
+        private static void CalibrationWithWeight()
+        {
+            isCalibrating = true;
+
+            WTX_obj.stopTimer();
+
+            calibration_weight_input();
+            Console.WriteLine("\nTo start : Set zero load and press any key for measuring zero and wait.");
+            string another = Console.ReadLine();
+
+            MeasureZero();
+            Console.WriteLine("\n\nDead load measured.Put weight on scale, press any key and wait.");
+
+            string another2 = Console.ReadLine();
+
+            Calibrate(potencyCalibrationWeight());
+
+            WTX_obj.restartTimer();
+
+            isCalibrating = false;
+
+        }
+
+        /*
+         * This method potentiate the number of the values decimals and multiply it with the calibration weight(input) to get
+         * an integer which is in written into the WTX registers by the method Calibrate(potencyCalibrationWeight()). 
+         */
         private static int potencyCalibrationWeight()
         {
 
-            str_comma_dot = calibration_weight.Replace(".", ",");                   // Neu : 12.3 - Für die Umwandlung in eine Gleitkommazahl. 
-            DoubleCalibrationWeight = double.Parse(str_comma_dot);                   // Damit können Kommata und Punkte eingegeben werden. 
+            str_comma_dot = calibration_weight.Replace(".", ","); // Transformation into a floating-point number.Thereby commas and dots can be used as input for the calibration weight.
+            DoubleCalibrationWeight = double.Parse(str_comma_dot);                  
 
-            potenz = Math.Pow(10, WTX_obj.decimals);
-
-            DoubleCalibrationWeight = DoubleCalibrationWeight * potenz;
-
-            return (int)DoubleCalibrationWeight;
+            potenz = Math.Pow(10, WTX_obj.decimals); // Potentisation by 10^(decimals). 
+            
+            return (int) (DoubleCalibrationWeight * potenz); // Multiplying of the potentiated values with the calibration weight, ...
+                                                             // ...casting to integer (easily possible because of the multiplying with ... 
+                                                             // ...the potensied value) and returning of the value. 
         }
 
 
@@ -224,7 +265,9 @@ namespace WTXModbus
 
             bool compare = valuesChanged();
 
-            if (WTX_obj.DeviceValues != null && (compare == true))
+            // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is not null (respectively empty),
+            // if compare is true meaning that the values of the WTX device changed (for example the net value changed from 1.2 to 1.3) and if no calibration is done at that moment.
+            if (WTX_obj.DeviceValues != null && (compare == true) && (isCalibrating==false))
             {
                 Console.Clear();
 
@@ -353,7 +396,12 @@ namespace WTXModbus
             Console.WriteLine("It is recommended to use at least '6' for writing and reading. \nDefault setting for the full application in filler mode : '38'\nPlease tip the button 'Enter' after you typed in the number '1' or '2' or...'6'");
         }
 
-
+        /*
+         * This method is a callback method for the asnchronous writing via the method 'Async_Call', which is called once the writing is done. Here, in that case the 
+         * callback method 'Write_DataReceived' is empty, there is no need to print the values on the console twice because the timer in class 'WTX120' does that already 
+         * in a short time intervall. 
+         * If you do not want a timer you can put f.e. the printing method into 'Write_DataReceived' f.e. .
+         */
         private static void Write_DataReceived(IDeviceValues obj)
         {
             throw new NotImplementedException();
@@ -380,7 +428,7 @@ namespace WTXModbus
 
         }
 
-        // Sets the value for the nominal weight in the WTX
+        // This method sets the value for the nominal weight in the WTX.
         private static void Calibrate(int calibrationValue)
         {
             //write reg 46, CalibrationWeight
@@ -395,18 +443,14 @@ namespace WTXModbus
 
             WTX_obj.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
 
-            int counter = 0;
-            while (counter <= 1000)
+            while (WTX_obj.get_data_str[0] != calibration_weight.Replace(".", ",") || WTX_obj.get_data_str[1] != calibration_weight.Replace(".", ","))
             {
-                Thread.Sleep(1);
-                if (counter == 1 || counter == 300 || counter == 600 || counter == 900)
-                    Console.Write(".");
-                counter++;
+                Console.Write("Wait for setting the nomnial weight into the WTX.");
             }
 
         }
 
-        // Sets the value for dead load in the WTX
+        // This method sets the values for dead load in the WTX.
         private static void MeasureZero()
         {
             //todo: write reg 48, 0x7FFFFFFF
@@ -417,13 +461,9 @@ namespace WTXModbus
 
             WTX_obj.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
 
-            int counter = 0;
-            while (counter <= 1000)
+            while (WTX_obj.NetValue != 0 || WTX_obj.GrossValue != 0)
             {
-                Thread.Sleep(1);
-                if (counter == 1 || counter == 300 || counter == 600 || counter == 900)
-                    Console.Write(".");
-                counter++;
+                 Console.Write("Wait for setting the dead load into the WTX.");
             }
         }
     }

@@ -13,11 +13,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
-//using WTXModbusGUIsimple;
 
 using Hbm.Devices.WTXModbus;
 using WTXModbus;
@@ -40,13 +38,15 @@ namespace WTXModbusGUIsimple
 
         private static ModbusConnection ModbusObj;
         private static WTX120 WTXObj;
-        private static int DefaultTimerInterval = 500;
+
+        private static int DefaultTimerInterval = 200;
+
         private String IPAddress;
         private CalcCalibration CalcCalObj;
         private WeightCalibration WeightCalObj;
 
         // toolStripLabel1: Label connectionStatus
-        // toolstripLabel2: Label movingStatus
+        // toolstripLabel2: Label movingStatuDefaultTimerIntervals
         // toolstripLabel3: Gross/net status
         // textBox1: Textbox IP-Address
         // textBox2: big Textbox for display values etc.
@@ -89,7 +89,7 @@ namespace WTXModbusGUIsimple
         {
             ModbusObj = new ModbusConnection(IPAddress);
 
-            WTXObj = new WTX120(ModbusObj, 1000);
+            WTXObj = new WTX120(ModbusObj, DefaultTimerInterval);
             
             WTXObj.getConnection.getNumOfPoints = 6;
 
@@ -117,20 +117,21 @@ namespace WTXModbusGUIsimple
                 WTXObj.getConnection.IP_Adress = tempIpAddress;
            
                 WTXObj.getConnection.Connect();  // Equal to : ModbusObj.Connect();
+
                 if (WTXObj.getConnection.is_connected)
                 {
                     IPAddress = tempIpAddress;
                     this.toolStripLabel1.Text = "connected";
-                    //WriteDataReceived(null);
-                    RenameButtonGrossNet();
+                    //RenameButtonGrossNet();
                     WTXObj.getConnection.Sending_interval = DefaultTimerInterval;
-                    InitializeTimer(DefaultTimerInterval);
+
                 }
                 else
                 {
                     WTXObj.getConnection.IP_Adress = IPAddress;
-                    timer1.Enabled = false;
-                    timer1.Stop();
+
+                    WTXObj.stopTimer();
+                    
                     textBox2.Text = "Connection could not be established!" + Environment.NewLine
                         + "Please check connection or IP-Address.";
                     toolStripLabel1.Text = "disconnected";
@@ -141,23 +142,6 @@ namespace WTXModbusGUIsimple
             {
                 button1.Enabled = true;
             }
-        }
-
-        // Initializes the timer with the timer_interval as a parameter
-        // If new_timer_interval <1, previous respectively default value of 200 is used 
-        private void InitializeTimer(int newTimerInterval)
-        {
-            timer1.Enabled = true;
-            if (newTimerInterval  > 0)
-            {
-                timer1.Interval = newTimerInterval;
-            }
-            else
-            {
-                timer1.Interval = DefaultTimerInterval;
-            }         
-            timer1.Start();
-            textBox2.Text = "Connection established.";
         }
 
         // Method executed after read from WTX by eventbased call from WTX120Modbus, UpdateEvent(..) 
@@ -181,7 +165,6 @@ namespace WTXModbusGUIsimple
             }
             else
             {
-
                 textBox2.Invoke(new Action(() =>
                 {
                     pictureBox1.Image = Properties.Resources.NE107_OutOfSpecification;
@@ -209,7 +192,7 @@ namespace WTXModbusGUIsimple
                 toolStripLabel3.Text = "Net";
             }
 
-            //RenameButtonGrossNet();
+            RenameButtonGrossNet();
 
         }
 
@@ -276,12 +259,15 @@ namespace WTXModbusGUIsimple
         {
             if (WTXObj.getConnection.is_connected)
             {
-                //RenameButtonGrossNet();
+                RenameButtonGrossNet();
                 WTXObj.Async_Call(0x1, WriteDataReceived);
             }
             else
             {
-                textBox2.Text = "No WTX connected!";
+                textBox2.Invoke(new Action(() =>
+                {
+                    textBox2.Text = "No WTX connected!";
+                }));
             }
 
         }
@@ -295,7 +281,10 @@ namespace WTXModbusGUIsimple
             }
             else
             {
-                textBox2.Text = "No WTX connected!";
+                textBox2.Invoke(new Action(() =>
+                {
+                    textBox2.Text = "No WTX connected!";
+                }));
             }
         }       
 
@@ -305,19 +294,26 @@ namespace WTXModbusGUIsimple
             if (WTXObj.getConnection.is_connected)
             {
                 WTXObj.Async_Call(0x2, WriteDataReceived);
-                //RenameButtonGrossNet();
+                RenameButtonGrossNet();
             }
             else
             {
-                textBox2.Text = "No WTX connected!";
+                textBox2.Invoke(new Action(() =>
+                {
+                    textBox2.Text = "No WTX connected!";
+                }));
             }
         }
 
         // CallbackMethod executed after write to WTX
         public void WriteDataReceived(IDeviceValues deviceValues)
         {
-            textBox2.Text = "write executed";
-            //RenameButtonGrossNet();
+            textBox2.Invoke(new Action(() =>
+            {
+                textBox2.Text = "write executed";
+            }));
+
+            RenameButtonGrossNet();
         }
 
         // Adapts button Gross/Net text
@@ -325,50 +321,47 @@ namespace WTXModbusGUIsimple
         {
             if (WTXObj.weight_type == 0) //is gross?
             {
-                button4.Text = "Net";
+                textBox2.Invoke(new Action(() =>
+                {
+                    button4.Text = "Net";
+                }));
             }
             else // is net
             {
-                button4.Text = "Gross";
+                textBox2.Invoke(new Action(() =>
+                {
+                    button4.Text = "Gross";
+                }));
+
+                textBox2.Invoke(new Action(() =>
+                {
+                    button4.Text = "Gross";
+                }));
             }
         }
 
         //Opens a menu window for calculated calibration
         private void CalculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool restart = false;
-            if (timer1.Enabled)
-            {
-                timer1.Enabled = false;
-                timer1.Stop();
-                restart = true;
-            }
+            WTXObj.stopTimer();
+
             CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.is_connected);
             DialogResult res = CalcCalObj.ShowDialog();
-            if (restart)
-            {
-                timer1.Enabled = true;
-                timer1.Start();
-            }
+
+            WTXObj.restartTimer();
+
         }
 
         //Opens a menu window for calibration with a calibration weight
         private void CalibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool restart = false;
-            if (timer1.Enabled)
-            {
-                timer1.Enabled = false;
-                timer1.Stop();
-                restart = true;
-            }
+
+            WTXObj.stopTimer();
+
             WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.is_connected);
             DialogResult res = WeightCalObj.ShowDialog();
-            if (restart)
-            {
-                timer1.Enabled = true;
-                timer1.Start();
-            }
+
+            WTXObj.restartTimer();
         }
 
 

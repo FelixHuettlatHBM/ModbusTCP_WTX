@@ -41,6 +41,8 @@ namespace WTXModbus
         private string[] dataStr;
         private ushort[] data;
 
+        private ushort[] previousData;
+
         private System.Timers.Timer aTimer;
         private bool isNet;
 
@@ -65,13 +67,16 @@ namespace WTXModbus
             ModbusConnObj = connection;
             
             data = new ushort[59];
+            previousData = new ushort[59];
             dataStr = new string[59];
 
             for (int i = 0; i < 59; i++)
             {
                 this.dataStr[i] = "0";
-                data[i] = 0;
+                this.data[i] = 0;
+                this.previousData[i] = 0;
             }
+            
             this.initialize_timer(paramTimerInterval);          // Initializing and starting the timer. 
         }
 
@@ -91,8 +96,8 @@ namespace WTXModbus
         /*
          * This method realizes an asynchronous call to read (command=0x00) and to write(else command!=0x00). It uses the 'BackgroundWorker Class' 
          * to execute an operation on a seperate thread. To set up background operations f.e. you have to raise the 'DoWork' event (here in 'DoWorkEventHandler')
-         * for the ongoing reading operation. To signalize if the operation(reading or writing) has been completed and finished you have to raise a 
-         * 'RunWorkerCompleted' event.
+         * for the ongoing reading operation (ongoing because of the timer). 
+         * To signalize if the operation(reading or writing) has been completed and finished you have to raise a 'RunWorkerCompleted' event.
          * With the interface you get in the method 'ReadCompleted(..)' you have already the data, but in method 'UpdateEvent(..)' the data is interpreted
          * and converted to strings, which is a preferred way in this application.  
          * 
@@ -400,9 +405,25 @@ namespace WTXModbus
                 this.dataStr[57] = this.filler_weight_memory_net.ToString();
             }
 
+            bool compareDataChanged = false;
+
             e.Args = this.data;
 
-            DataUpdateEvent?.Invoke(this, e);
+            for (int index = 0; index < 6; index++)
+            {
+                if (this.previousData[index] != this.data[index])
+                    compareDataChanged = true;
+            }
+            // If one value of the data changes, the boolean value 'compareDataChanged' will be set to true and the data will be 
+            // updated in the following, as well as the GUI form. ('compareDataChanged' is for the purpose of comparision.)
+
+            // The data is only invoked by the event 'DataUpdateEvent' if the data has been changed. The comparision is made by...
+            // ... the arrays 'previousData' and 'data' with the boolean 
+            if (compareDataChanged == true)
+                    DataUpdateEvent?.Invoke(this, e);
+
+            this.previousData = this.data;
+
 
             // As an alternative to 'DataUpdateEvent?.Invoke(this, e);' : Both implementations do the same.  
             /*

@@ -238,36 +238,15 @@ namespace WTXModbus
                                                              // ...the potensied value) and returning of the value. 
         }
 
-
-        // This method checks whether the data, read from the WTX device, changed. If so, the data is printed on the console,
-        // if not, the previous data from the previous read out is kept and is not deleted from the console.
-        private static bool valuesChanged()
-        {
-            compare_values_changed = false;
-            for (int i = 0; i < WTX_obj.get_data_ushort.Length; i++)
-            {
-                // If one value of the data changes, the boolean value "compare_test" will be set to
-                // false and the data array "data_str_arr" will be updated in the following, as well as the GUI form.
-                // ("compare_test" is for the purpose of comparision.)
-                if (WTX_obj.get_data_ushort[i] != ModbusObj.getPreviousData[i])
-                {
-                    compare_values_changed = true;
-                }
-
-            }
-            return compare_values_changed;
-        }
-
-
         // This method prints the values of the device (as a integer and the interpreted string) as well as the description of each bit. 
         private static void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
 
-            bool compare = valuesChanged();
 
-            // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is not null (respectively empty),
-            // if compare is true meaning that the values of the WTX device changed (for example the net value changed from 1.2 to 1.3) and if no calibration is done at that moment.
-            if (WTX_obj.DeviceValues != null && (compare == true) && (isCalibrating==false))
+            // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is 
+            // not null (respectively empty) and if no calibration is done at that moment.
+
+            if (WTX_obj.DeviceValues != null && (isCalibrating==false))
             {
                 Console.Clear();
 

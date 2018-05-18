@@ -109,8 +109,8 @@ namespace WTXModbusGUIsimple
                     abort = true;
                 }
                 if (abort) return;
-
-                Calculate();
+                
+                WTXObj.Calculate(Preload,Capacity);
 
                 label5.Text = "Calibration Successful!";
                 Finished = true;
@@ -136,27 +136,6 @@ namespace WTXModbusGUIsimple
             }
         }
 
-        // Calculates the values for deadload and nominal load in d from the inputs in mV/V
-        // and writes the into the WTX registers.
-        private void Calculate()
-        {
-            double DPreload = Preload * MultiplierMv2D;
-            double DNominalLoad = DPreload + (Capacity * MultiplierMv2D);
-
-            //write reg 48, DPreload;
-
-            WTXObj.write_Zero_Calibration_Nominal_Load('z', Convert.ToInt32(DPreload), WriteDataReceived);
-
-            WTXObj.SyncCall_Write_Command(0, 0x80, WriteDataReceived);
-
-            //write reg 50, DNominalLoad;
-
-            WTXObj.write_Zero_Calibration_Nominal_Load('n', Convert.ToInt32(DNominalLoad), WriteDataReceived);
-
-            WTXObj.SyncCall_Write_Command(0, 0x100, WriteDataReceived);
-        }
-
-
         // This is a callback method for the synchronous command, a write instruction to the WTX registers. 
         // Once the writing is finished, this method is called. So the handshake and status bits are updated if
         // the user is interested in the data transfer between application and WTX device. 
@@ -164,12 +143,14 @@ namespace WTXModbusGUIsimple
         // in class 'WTX120' and 'ModbusConnection'. 
         // By this optional example it is also shown how data can be simply called in another way:
         // By 'obj.NetValue', 'obj.GrossValue' or 'obj.handshake'.
+
+/*
         private void WriteDataReceived(IDeviceValues obj)
         {
             this.handshake_compare_optional = obj.handshake;
             this.status_compare_optional = obj.status;
         }
-
+*/
         private void CalcCalibration_Load(object sender, EventArgs e)
         {
 

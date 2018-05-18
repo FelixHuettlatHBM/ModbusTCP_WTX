@@ -1638,6 +1638,32 @@ namespace WTXModbus
             }
         }
 
+
+
+
+        public override int calibration_weight
+        {
+            set
+            {
+
+            }
+        }
+        
+        public override int zero_load
+        {
+            set
+            {
+
+            }
+        }
+        public override int nominal_load
+        {
+            set
+            {
+
+            }
+        }
+
         /* In the following methods the different options for the single integer values are used to define and
          *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
          */
@@ -1758,6 +1784,76 @@ namespace WTXModbus
 
         }
 
+
+
+        // Calculates the values for deadload and nominal load in d from the inputs in mV/V
+        // and writes the into the WTX registers.
+        public void Calculate(double Preload, double Capacity)
+        {
+            double MultiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
+
+            double DPreload = Preload * MultiplierMv2D;
+            double DNominalLoad = DPreload + (Capacity * MultiplierMv2D);
+
+            //write reg 48, DPreload;
+
+            this.write_Zero_Calibration_Nominal_Load('z', Convert.ToInt32(DPreload), Write_DataReceived);
+
+            this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
+
+            //write reg 50, DNominalLoad;
+
+            this.write_Zero_Calibration_Nominal_Load('n', Convert.ToInt32(DNominalLoad), Write_DataReceived);
+
+            this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
+
+        }
+
+        private void Write_DataReceived(IDeviceValues obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        // This method sets the value for the nominal weight in the WTX.
+        public void Calibrate(int calibrationValue, string calibration_weight_Str)
+        {
+            //write reg 46, CalibrationWeight
+
+            this.write_Zero_Calibration_Nominal_Load('c', calibrationValue, Write_DataReceived);          // 'c' steht für das Setzen der Calibration Weight.
+
+            //write reg 50, 0x7FFFFFFF
+
+            this.write_Zero_Calibration_Nominal_Load('n', 0x7FFFFFFF, Write_DataReceived);       // 'n' steht für das Setzen der Nominal Load 
+
+            Console.Write(".");
+
+            this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
+
+            this.restartTimer();
+
+            while (this.get_data_str[0] != calibration_weight_Str.Replace(".", ",") || this.get_data_str[1] != calibration_weight_Str.Replace(".", ","))
+            {
+                Console.Write("Wait for setting the nomnial weight into the WTX.");
+            }
+
+        }
+
+        // This method sets the values for dead load in the WTX.
+        public void MeasureZero()
+        {
+            //todo: write reg 48, 0x7FFFFFFF
+
+            this.write_Zero_Calibration_Nominal_Load('z', 0x7FFFFFFF, Write_DataReceived);           // 'z' steht für das Setzen der zero load.
+
+            Console.Write(".");
+
+            this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
+
+            while (this.NetValue != 0 || this.GrossValue != 0)
+            {
+                Console.Write("Wait for setting the dead load into the WTX.");
+            }
+        }
 
 
     }

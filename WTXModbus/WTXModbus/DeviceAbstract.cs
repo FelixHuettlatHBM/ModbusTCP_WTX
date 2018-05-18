@@ -134,7 +134,37 @@ namespace WTXModbus
         public abstract int actual_fine_flow_time { get; }             // data[61]
         public abstract int parameter_set { get; }                     // data[62]
 
-
+        /*
+        public abstract int Residual_flow_time { set; }
+        public abstract int target_filling_weight { set; }
+        public abstract int coarse_flow_cut_off_pointSet { set; }
+        public abstract int fine_flow_cut_off_pointSet { set; }
+        public abstract int minimum_fine_flow { set; }
+        public abstract int optimization_of_cut_off_points{ set; }
+        public abstract int maximum_dosing_tome { set; }
+        public abstract int start_with_fine_flow { set; }
+        public abstract int coarse_lockout_time { set; }
+        public abstract int fine_lockout_time { set; }
+        public abstract int tare_mode { set; }
+        public abstract int upper_tolerance_limit { set; }
+        public abstract int lower_tolerance_limit { set; }
+        public abstract int minimum_start_weight { set; }
+        public abstract int empty_weight { set; }
+        public abstract int tare_delay { set; }
+        public abstract int coarse_flow_monitoring_time { set; }
+        public abstract int coarse_flow_monitoring { set; }
+        public abstract int fine_flow_monitoring { set; }
+        public abstract int fine_flow_monitoring_time { set; }
+        public abstract int delay_time_after_fine_flow { set; }
+        public abstract int activation_time_after_fine_flow { set; }
+        public abstract int systematic_difference { set; }
+        public abstract int downards_dosing { set; }
+        public abstract int valve_control { set; }
+        public abstract int emptying_mode { set; }
+        */
+        public abstract int calibration_weight { set; }
+        public abstract int zero_load { set; }
+        public abstract int nominal_load { set; }
     }
 }
 

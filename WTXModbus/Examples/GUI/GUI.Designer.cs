@@ -39,7 +39,6 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -64,6 +63,7 @@
             this.button14 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -139,23 +139,13 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(763, 477);
+            this.button9.Location = new System.Drawing.Point(754, 477);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(93, 23);
+            this.button9.Size = new System.Drawing.Size(106, 23);
             this.button9.TabIndex = 10;
             this.button9.Text = "Manual taring";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(505, 477);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(99, 23);
-            this.button10.TabIndex = 11;
-            this.button10.Text = "Weight storage";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // statusStrip1
             // 
@@ -230,14 +220,14 @@
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -246,7 +236,7 @@
             this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveInputToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveInputToolStripMenuItem
@@ -259,7 +249,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -306,7 +296,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(763, 506);
+            this.button11.Location = new System.Drawing.Point(754, 506);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(106, 23);
             this.button11.TabIndex = 15;
@@ -315,16 +305,16 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(875, 506);
+            this.button12.Location = new System.Drawing.Point(866, 506);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(80, 23);
+            this.button12.Size = new System.Drawing.Size(87, 23);
             this.button12.TabIndex = 16;
             this.button12.Text = "Abort dosing";
             this.button12.UseVisualStyleBackColor = true;
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(961, 506);
+            this.button13.Location = new System.Drawing.Point(959, 506);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(75, 23);
             this.button13.TabIndex = 17;
@@ -358,11 +348,22 @@
             this.label2.TabIndex = 20;
             this.label2.Text = "label2";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(505, 477);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(87, 23);
+            this.button2.TabIndex = 21;
+            this.button2.Text = "Record weight";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1142, 559);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button14);
@@ -371,7 +372,6 @@
             this.Controls.Add(this.button11);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
@@ -403,7 +403,6 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -428,5 +427,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calculateCalibrationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calibrationWithWeightToolStripMenuItem;
+        private System.Windows.Forms.Button button2;
     }
 }

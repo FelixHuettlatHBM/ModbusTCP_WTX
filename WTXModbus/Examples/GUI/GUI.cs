@@ -387,7 +387,7 @@ namespace WTXModbusExamples
         private void button10_Click(object sender, EventArgs e)
         {
             // Weight storage
-            WTXModbusObj.Async_Call(0x4000, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x4000, Write_DataReceived);   // Bit .
         }
 
         // This method sends a command to the device : Clear dosing results. Command : 0x4
@@ -396,7 +396,7 @@ namespace WTXModbusExamples
         {
             // Clear dosing results
             //if (this.is_standard == false)
-            WTXModbusObj.Async_Call(0x4, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x4, Write_DataReceived);  // Bit .2
         }
 
         // This method sends a command to the device : Abort dosing. Command : 0x8
@@ -405,7 +405,7 @@ namespace WTXModbusExamples
         {
             // Abort dosing
             //if (this.is_standard == false)
-            WTXModbusObj.Async_Call(0x8, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x8, Write_DataReceived);   // Bit .3
         }
 
         // This method sends a command to the device : Start dosing. Command : 0x10
@@ -414,7 +414,16 @@ namespace WTXModbusExamples
         {
             // Start dosing
             //if (this.is_standard == false)
-            WTXModbusObj.Async_Call(0x10, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x10, Write_DataReceived);    // Bit .4
+        }
+
+        // Write Bit .14 to the register of the WTX device. Only in the filler mode: 
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            // Manual re-dosing
+            //if (this.is_standard == false)
+            WTXModbusObj.Async_Call(0x4000, Write_DataReceived);        // Bit .14
+
         }
 
         // This method sends a command to the device : Manual re-dosing. Command : 0x8000
@@ -423,8 +432,10 @@ namespace WTXModbusExamples
         {
             // Manual re-dosing
             //if (this.is_standard == false)
-            WTXModbusObj.Async_Call(0x8000, Write_DataReceived);
+            WTXModbusObj.Async_Call(0x8000, Write_DataReceived);        // Bit .15
         }
+
+
 
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120).
@@ -604,5 +615,7 @@ namespace WTXModbusExamples
         {
 
         }
+
+
     }
 }

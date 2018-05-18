@@ -119,6 +119,8 @@ namespace WTXModbus
                     // Fall für schreiben auf multiple Register:
                     case 'c':       // Calculate Calibration
                         CalculateCalibration();
+
+
                         break;
                     case 'w':       // Calculation with weight 
                         CalibrationWithWeight();
@@ -184,11 +186,9 @@ namespace WTXModbus
 
             zero_load_nominal_load_input();
 
-            Calculate();
+            WTX_obj.Calculate(Preload,Capacity);
 
-            CalculateCalibration();
-
-            WTX_obj.restartTimer();
+            //WTX_obj.restartTimer();
 
             isCalibrating = false;
         }
@@ -208,14 +208,14 @@ namespace WTXModbus
             Console.WriteLine("\nTo start : Set zero load and press any key for measuring zero and wait.");
             string another = Console.ReadLine();
 
-            MeasureZero();
+            WTX_obj.MeasureZero();
             Console.WriteLine("\n\nDead load measured.Put weight on scale, press any key and wait.");
 
             string another2 = Console.ReadLine();
 
-            Calibrate(potencyCalibrationWeight());
+            WTX_obj.Calibrate(potencyCalibrationWeight(), calibration_weight);
 
-            WTX_obj.restartTimer();
+            //WTX_obj.restartTimer();
 
             isCalibrating = false;
 
@@ -381,69 +381,12 @@ namespace WTXModbus
          * in a short time intervall. 
          * If you do not want a timer you can put f.e. the printing method into 'Write_DataReceived' f.e. .
          */
+         
         private static void Write_DataReceived(IDeviceValues obj)
         {
             throw new NotImplementedException();
         }
+        
 
-        // Calculates the values for deadload and nominal load in d from the inputs in mV/V
-        // and writes the into the WTX registers.
-        private static void Calculate()
-        {
-            double DPreload = Preload * MultiplierMv2D;
-            double DNominalLoad = DPreload + (Capacity * MultiplierMv2D);
-
-            //write reg 48, DPreload;
-
-            WTX_obj.write_Zero_Calibration_Nominal_Load('z', Convert.ToInt32(DPreload), Write_DataReceived);
-
-            WTX_obj.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
-
-            //write reg 50, DNominalLoad;
-
-            WTX_obj.write_Zero_Calibration_Nominal_Load('n', Convert.ToInt32(DNominalLoad), Write_DataReceived);
-
-            WTX_obj.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
-
-        }
-
-        // This method sets the value for the nominal weight in the WTX.
-        private static void Calibrate(int calibrationValue)
-        {
-            //write reg 46, CalibrationWeight
-
-            WTX_obj.write_Zero_Calibration_Nominal_Load('c', calibrationValue, Write_DataReceived);          // 'c' steht für das Setzen der Calibration Weight.
-
-            //write reg 50, 0x7FFFFFFF
-
-            WTX_obj.write_Zero_Calibration_Nominal_Load('n', 0x7FFFFFFF, Write_DataReceived);       // 'n' steht für das Setzen der Nominal Load 
-
-            Console.Write(".");
-
-            WTX_obj.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
-
-            while (WTX_obj.get_data_str[0] != calibration_weight.Replace(".", ",") || WTX_obj.get_data_str[1] != calibration_weight.Replace(".", ","))
-            {
-                Console.Write("Wait for setting the nomnial weight into the WTX.");
-            }
-
-        }
-
-        // This method sets the values for dead load in the WTX.
-        private static void MeasureZero()
-        {
-            //todo: write reg 48, 0x7FFFFFFF
-
-            WTX_obj.write_Zero_Calibration_Nominal_Load('z', 0x7FFFFFFF, Write_DataReceived);           // 'z' steht für das Setzen der zero load.
-
-            Console.Write(".");
-
-            WTX_obj.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
-
-            while (WTX_obj.NetValue != 0 || WTX_obj.GrossValue != 0)
-            {
-                 Console.Write("Wait for setting the dead load into the WTX.");
-            }
-        }
     }
 }

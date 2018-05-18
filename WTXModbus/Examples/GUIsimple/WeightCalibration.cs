@@ -23,7 +23,7 @@ using WTXModbus;
 namespace WTXModbusGUIsimple
 {
     // This class provides a window to calibrate the WTX with a calibration weight.
-    // First the dead load is measured and after that the calibration weight is measured.
+    // First ´the dead load is measured and after that the calibration weight is measured.
     // You can step back with button2 (Back).
 
     public partial class WeightCalibration : Form
@@ -63,7 +63,7 @@ namespace WTXModbusGUIsimple
             {
                 textBox1.Enabled = false;
                 button1.Enabled = false;
-                button2.Text  = "Close";
+                button2.Text = "Close";
                 textBox2.Text = "No WTX connected!";
             }
 
@@ -137,7 +137,7 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Measure zero in progess.";
                     Application.DoEvents();
 
-                    this.MeasureZero();
+                    WTXObj.MeasureZero();
 
                     textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
                     button1.Text = "Calibrate";
@@ -152,7 +152,7 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Calibration in progress.";
                     Application.DoEvents();
 
-                    this.Calibrate(this.potencyCalibrationWeight());
+                    WTXObj.Calibrate(this.potencyCalibrationWeight(), CalibrationWeight.ToString());
 
                     if (WTXObj.status == 1 && WTXObj.handshake == 0)
                         textBox2.Text = "Calibration successful and finished.";
@@ -198,48 +198,6 @@ namespace WTXModbusGUIsimple
             {
                 e.Handled = true;
             }
-        }
-
-        // Sets the value for dead load in the WTX
-        private void MeasureZero()
-        {
-            //todo: write reg 48, 0x7FFFFFFF
-
-            WTXObj.write_Zero_Calibration_Nominal_Load('z', 0x7FFFFFFF, WriteDataReceived);           // 'z' steht für das Setzen der zero load.
-
-            WTXObj.SyncCall_Write_Command(0, 0x80, WriteDataReceived);
-        }
-
-        // Sets the value for the nominal weight in the WTX
-        private void Calibrate(int calibrationValue)
-        {
-            this.handshake_compare = 0;
-            this.status_compare = 0;
-
-            //write reg 46, CalibrationWeight
-
-            WTXObj.write_Zero_Calibration_Nominal_Load('c', calibrationValue, WriteDataReceived);          // 'c' steht für das Setzen der Calibration Weight.
-
-            //write reg 50, 0x7FFFFFFF
-
-            WTXObj.write_Zero_Calibration_Nominal_Load('n', 0x7FFFFFFF, WriteDataReceived);       // 'n' steht für das Setzen der Nominal Load 
-
-            WTXObj.SyncCall_Write_Command(0, 0x100, WriteDataReceived);
-
-        }
-
-        // Callback method executed after read out of the WTX
-        private void ReadDataReceived(IDeviceValues obj)
-        {
-            this.handshake_compare = obj.handshake;
-            this.status_compare = obj.status;
-        }
-
-        // Callback method executed after write values in the WTX
-        private void WriteDataReceived(IDeviceValues obj)
-        {
-            this.handshake_compare = obj.handshake;
-            this.status_compare = obj.status;
         }
 
         // Choose the action of the cancel/back button, depending on the current

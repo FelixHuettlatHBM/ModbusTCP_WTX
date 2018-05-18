@@ -23,34 +23,27 @@ using WTXModbus;
 namespace WTXModbusGUIsimple
 {
     // This class provides a window to calibrate the WTX with a calibration weight.
-    //
-    // First dead load is measured and after that the calibration weight is measured.
+    // First ´the dead load is measured and after that the calibration weight is measured.
     // You can step back with button2 (Back).
 
     public partial class WeightCalibration : Form
     {
-
-        //private System.Windows.Forms.Timer myTimer;      // Neu : 8.3.2018 - Idee : Timer für zyklische Abfrage der Werte nutzen um Asynchronität zu nutzen, hier momentan noch nicht angewendet. 
-
         private WTX120 WTXObj;
         private int State;
         private double CalibrationWeight;
         //private IFormatProvider Provider;
 
-        private int handshake_compare;      // Neu : 8.3.2018
-        private int status_compare;         // Neu : 8.3.2018
+        private int handshake_compare;     
+        private int status_compare;        
 
-        private double PowCalibrationWeight; // Neu : 9.3.2018
+        private double PowCalibrationWeight; 
         private double potenz;
 
         private string str_comma_dot;
 
-
+        // Constructor of class WeightCalibration: 
         public WeightCalibration(WTX120 WTXObj, bool connected)
         {
-            //myTimer = new System.Windows.Forms.Timer();
-            //myTimer.Tick += new EventHandler(timerWeightCalibrationTick);
-
             this.PowCalibrationWeight = 0.0;
             this.potenz = 0.0;
 
@@ -139,9 +132,6 @@ namespace WTXModbusGUIsimple
 
                 case 1: // measure zero
 
-                    //myTimer.Interval = 1;     // Neu : 8.3.2018 - Timer für einen asnychrones Lesen und Schreiben, was aber beim Kalibrieren wenig Sinn machen würde. 
-                    //myTimer.Start();         
-
                     button1.Enabled = false;
 
                     textBox2.Text = "Measure zero in progess.";
@@ -177,18 +167,15 @@ namespace WTXModbusGUIsimple
 
                     button1.Enabled = false;
                     State = 0;
-
-                    //myTimer.Enabled = false;        // Neu : 8.3.2018 - Timer für einen asnychrones Lesen und Schreiben, was aber beim Kalibrieren wenig Sinn machen würde. 
-                    //myTimer.Stop();
-
+                    
                     Close();
                     break;
             }
             button1.Enabled = true;
             this.Cursor = Cursors.Default;
         }
+        
 
-        // Neu : 9.3.2018
         private int potencyCalibrationWeight()
         {
             //this.DoubleCalibrationWeight = Convert.ToDouble(textBox1.Text, Provider); 
@@ -240,20 +227,6 @@ namespace WTXModbusGUIsimple
             WTXObj.SyncCall_Write_Command(0, 0x100, WriteDataReceived);
 
         }
-
-
-        // New(8.3.2018) : This is the method to run when the timer is raised.
-        /*private void timerWeightCalibrationTick(Object myObject, EventArgs myEventArgs)
-        {
-            this.handshake_compare = WTXObj.handshake;
-            this.status_compare = WTXObj.status;
-
-            label3.Text = this.handshake_compare.ToString();
-            label6.Text = this.status_compare.ToString();
-
-            WTXObj.Async_Call(0x00, ReadDataReceived);
-        }*/
-
 
         // Callback method executed after read out of the WTX
         private void ReadDataReceived(IDeviceValues obj)
@@ -309,27 +282,3 @@ namespace WTXModbusGUIsimple
         }
     }
 }
-
-
-/*
- *  // Mit Übertragungsprotokoll: 
- *  
- *             //WTXObj.get_Modbus.WriteRegister(0, 0x80);
-
-            //WTXObj.SyncCall(0, 0x80, WriteDataReceived);
-
-            while (this.handshake_compare == 0)
-            {
-                WTXObj.Async_Call(0x00, ReadDataReceived);
-            }
-
-            if(this.handshake_compare==1)
-                WTXObj.Async_Call(0x00, WriteDataReceived);
-                //WTXObj.get_Modbus.WriteRegister(0, 0x00);
-
-            while (this.handshake_compare == 1)
-            {
-                WTXObj.Async_Call(0x00, ReadDataReceived);
-            }
-
-    */

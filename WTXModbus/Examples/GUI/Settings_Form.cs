@@ -32,7 +32,7 @@ namespace WTXModbusExamples
 
         private GUI GUI_info;
 
-        // Constructor: 
+        // Constructor of class 'SettingForm': 
         public SettingsForm(string IP_address_param, int sending_interval_param, ushort number_inputs_param, GUI GUI_obj_param)
         {
             InitializeComponent();

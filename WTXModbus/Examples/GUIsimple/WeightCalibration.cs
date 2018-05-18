@@ -23,34 +23,27 @@ using WTXModbus;
 namespace WTXModbusGUIsimple
 {
     // This class provides a window to calibrate the WTX with a calibration weight.
-    //
-    // First dead load is measured and after that the calibration weight is measured.
+    // First ´the dead load is measured and after that the calibration weight is measured.
     // You can step back with button2 (Back).
 
     public partial class WeightCalibration : Form
     {
-
-        //private System.Windows.Forms.Timer myTimer;      // Neu : 8.3.2018 - Idee : Timer für zyklische Abfrage der Werte nutzen um Asynchronität zu nutzen, hier momentan noch nicht angewendet. 
-
         private WTX120 WTXObj;
         private int State;
         private double CalibrationWeight;
         //private IFormatProvider Provider;
 
-        private int handshake_compare;      // Neu : 8.3.2018
-        private int status_compare;         // Neu : 8.3.2018
+        private int handshake_compare;
+        private int status_compare;
 
-        private double PowCalibrationWeight; // Neu : 9.3.2018
+        private double PowCalibrationWeight;
         private double potenz;
 
         private string str_comma_dot;
 
-
+        // Constructor of class WeightCalibration: 
         public WeightCalibration(WTX120 WTXObj, bool connected)
         {
-            //myTimer = new System.Windows.Forms.Timer();
-            //myTimer.Tick += new EventHandler(timerWeightCalibrationTick);
-
             this.PowCalibrationWeight = 0.0;
             this.potenz = 0.0;
 
@@ -102,11 +95,11 @@ namespace WTXModbusGUIsimple
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            this.Cursor=Cursors.WaitCursor;
+            this.Cursor = Cursors.WaitCursor;
 
             //Switch depending on the current calibration step described by State
             switch (State)
-            {          
+            {
                 case 0: //start
 
                     try
@@ -139,9 +132,6 @@ namespace WTXModbusGUIsimple
 
                 case 1: // measure zero
 
-                    //myTimer.Interval = 1;     // Neu : 8.3.2018 - Timer für einen asnychrones Lesen und Schreiben, was aber beim Kalibrieren wenig Sinn machen würde. 
-                    //myTimer.Start();         
-                    
                     button1.Enabled = false;
 
                     textBox2.Text = "Measure zero in progess.";
@@ -164,10 +154,10 @@ namespace WTXModbusGUIsimple
 
                     this.Calibrate(this.potencyCalibrationWeight());
 
-                    if(WTXObj.status==1 && WTXObj.handshake==0)
-                        textBox2.Text = "Calibration finished successfully!";
+                    if (WTXObj.status == 1 && WTXObj.handshake == 0)
+                        textBox2.Text = "Calibration successful and finished.";
                     else
-                        textBox2.Text = "Calibration failed.";
+                        textBox2.Text = "Calibration  failed.";
 
                     button1.Text = "Close";
                     State = 3;
@@ -178,9 +168,6 @@ namespace WTXModbusGUIsimple
                     button1.Enabled = false;
                     State = 0;
 
-                    //myTimer.Enabled = false;        // Neu : 8.3.2018 - Timer für einen asnychrones Lesen und Schreiben, was aber beim Kalibrieren wenig Sinn machen würde. 
-                    //myTimer.Stop();
-
                     Close();
                     break;
             }
@@ -188,7 +175,7 @@ namespace WTXModbusGUIsimple
             this.Cursor = Cursors.Default;
         }
 
-        // Neu : 9.3.2018
+
         private int potencyCalibrationWeight()
         {
             //this.DoubleCalibrationWeight = Convert.ToDouble(textBox1.Text, Provider); 
@@ -220,7 +207,7 @@ namespace WTXModbusGUIsimple
 
             WTXObj.write_Zero_Calibration_Nominal_Load('z', 0x7FFFFFFF, WriteDataReceived);           // 'z' steht für das Setzen der zero load.
 
-            WTXObj.SyncCall_Write_Command(0, 0x80, WriteDataReceived);          
+            WTXObj.SyncCall_Write_Command(0, 0x80, WriteDataReceived);
         }
 
         // Sets the value for the nominal weight in the WTX
@@ -228,7 +215,7 @@ namespace WTXModbusGUIsimple
         {
             this.handshake_compare = 0;
             this.status_compare = 0;
-            
+
             //write reg 46, CalibrationWeight
 
             WTXObj.write_Zero_Calibration_Nominal_Load('c', calibrationValue, WriteDataReceived);          // 'c' steht für das Setzen der Calibration Weight.
@@ -240,20 +227,6 @@ namespace WTXModbusGUIsimple
             WTXObj.SyncCall_Write_Command(0, 0x100, WriteDataReceived);
 
         }
-
-
-        // New(8.3.2018) : This is the method to run when the timer is raised.
-        /*private void timerWeightCalibrationTick(Object myObject, EventArgs myEventArgs)
-        {
-            this.handshake_compare = WTXObj.handshake;
-            this.status_compare = WTXObj.status;
-
-            label3.Text = this.handshake_compare.ToString();
-            label6.Text = this.status_compare.ToString();
-
-            WTXObj.Async_Call(0x00, ReadDataReceived);
-        }*/
-
 
         // Callback method executed after read out of the WTX
         private void ReadDataReceived(IDeviceValues obj)
@@ -267,8 +240,6 @@ namespace WTXModbusGUIsimple
         {
             this.handshake_compare = obj.handshake;
             this.status_compare = obj.status;
-
-            textBox2.Text += "Write executed";
         }
 
         // Choose the action of the cancel/back button, depending on the current
@@ -304,29 +275,10 @@ namespace WTXModbusGUIsimple
         {
 
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
-
-
-/*
- *  // Mit Übertragungsprotokoll: 
- *  
- *             //WTXObj.get_Modbus.WriteRegister(0, 0x80);
-
-            //WTXObj.SyncCall(0, 0x80, WriteDataReceived);
-
-            while (this.handshake_compare == 0)
-            {
-                WTXObj.Async_Call(0x00, ReadDataReceived);
-            }
-
-            if(this.handshake_compare==1)
-                WTXObj.Async_Call(0x00, WriteDataReceived);
-                //WTXObj.get_Modbus.WriteRegister(0, 0x00);
-
-            while (this.handshake_compare == 1)
-            {
-                WTXObj.Async_Call(0x00, ReadDataReceived);
-            }
-
-    */

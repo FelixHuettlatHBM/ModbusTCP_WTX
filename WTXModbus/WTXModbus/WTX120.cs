@@ -50,6 +50,7 @@ namespace WTXModbus
         private IDeviceValues thisValues;
         
         private ushort command;
+        private bool compareDataChanged;
 
         private Action<IDeviceValues> callback_obj;
 
@@ -69,6 +70,8 @@ namespace WTXModbus
             data = new ushort[59];
             previousData = new ushort[59];
             dataStr = new string[59];
+
+            compareDataChanged = false;
 
             for (int i = 0; i < 59; i++)
             {
@@ -317,19 +320,19 @@ namespace WTXModbus
             this.dataStr[0] = this.measurement_with_comma(this.NetValue, this.decimals);
             this.dataStr[1] = this.measurement_with_comma(this.GrossValue, this.decimals);
 
-            this.dataStr[2] = this.general_weight_error.ToString();
-            this.dataStr[3] = this.scale_alarm_triggered.ToString();
+            this.dataStr[2] = this.generalWeightError.ToString();
+            this.dataStr[3] = this.scaleAlarmTriggered.ToString();
             this.dataStr[4] = this.comment_limit_status();
             this.dataStr[5] = this.comment_weight_moving();
 
-            this.dataStr[6] = this.scale_seal_is_open.ToString();
-            this.dataStr[7] = this.manual_tare.ToString();
+            this.dataStr[6] = this.scaleSealIsOpen.ToString();
+            this.dataStr[7] = this.manualTare.ToString();
             this.dataStr[8] = this.comment_weight_type();
             this.dataStr[9] = this.comment_scale_range();
 
-            this.dataStr[10] = this.zero_required.ToString();
-            this.dataStr[11] = this.weight_within_the_center_of_zero.ToString();
-            this.dataStr[12] = this.weight_in_zero_range.ToString();
+            this.dataStr[10] = this.zeroRequired.ToString();
+            this.dataStr[11] = this.weightWithinTheCenterOfZero.ToString();
+            this.dataStr[12] = this.weightInZeroRange.ToString();
             this.dataStr[13] = this.comment_application_mode();
 
             this.dataStr[14] = this.decimals.ToString();
@@ -337,65 +340,65 @@ namespace WTXModbus
             this.dataStr[16] = this.handshake.ToString();
             this.dataStr[17] = this.comment_status();
 
-            this.dataStr[18] = this.digital_input_1.ToString();
-            this.dataStr[19] = this.digital_input_2.ToString();
-            this.dataStr[20] = this.digital_input_3.ToString();
-            this.dataStr[21] = this.digital_input_4.ToString();
+            this.dataStr[18] = this.input1.ToString();
+            this.dataStr[19] = this.input2.ToString();
+            this.dataStr[20] = this.input3.ToString();
+            this.dataStr[21] = this.input4.ToString();
 
-            this.dataStr[22] = this.digital_output_1.ToString();
-            this.dataStr[23] = this.digital_output_2.ToString();
-            this.dataStr[24] = this.digital_output_3.ToString();
-            this.dataStr[25] = this.digital_output_4.ToString();
+            this.dataStr[22] = this.output1.ToString();
+            this.dataStr[23] = this.output2.ToString();
+            this.dataStr[24] = this.output3.ToString();
+            this.dataStr[25] = this.output4.ToString();
 
-            if (this.application_mode == 0)
+            if (this.applicationMode == 0)
             {
-                this.dataStr[26] = this.limit_value_status_1.ToString();
-                this.dataStr[27] = this.limit_value_status_2.ToString();
-                this.dataStr[28] = this.limit_value_status_3.ToString();
-                this.dataStr[29] = this.limit_value_status_4.ToString();
+                this.dataStr[26] = this.limitStatus1.ToString();
+                this.dataStr[27] = this.limitStatus2.ToString();
+                this.dataStr[28] = this.limitStatus3.ToString();
+                this.dataStr[29] = this.limitStatus4.ToString();
 
-                this.dataStr[30] = this.weight_memory_day.ToString();
-                this.dataStr[31] = this.weight_memory_month.ToString();
-                this.dataStr[32] = this.weight_memory_year.ToString();
-                this.dataStr[33] = this.weight_memory_seq_number.ToString();
-                this.dataStr[34] = this.weight_memory_gross.ToString();
-                this.dataStr[35] = this.weight_memory_net.ToString();
+                this.dataStr[30] = this.weightMemDay.ToString();
+                this.dataStr[31] = this.weightMemMonth.ToString();
+                this.dataStr[32] = this.weightMemYear.ToString();
+                this.dataStr[33] = this.weightMemSeqNumber.ToString();
+                this.dataStr[34] = this.weightMemGross.ToString();
+                this.dataStr[35] = this.weightMemNet.ToString();
             }
             else
-                if (this.application_mode == 2 || this.application_mode == 0) // in filler mode 
+                if (this.applicationMode == 2 || this.applicationMode == 0) // in filler mode 
             {
-                this.dataStr[26] = this.coarse_flow.ToString();
-                this.dataStr[27] = this.fine_flow.ToString();
+                this.dataStr[26] = this.coarseFlow.ToString();
+                this.dataStr[27] = this.fineFlow.ToString();
                 this.dataStr[28] = this.ready.ToString();
-                this.dataStr[29] = this.re_dosing.ToString();
+                this.dataStr[29] = this.reDosing.ToString();
 
                 this.dataStr[30] = this.emptying.ToString();
-                this.dataStr[31] = this.flow_error.ToString();
+                this.dataStr[31] = this.flowError.ToString();
                 this.dataStr[32] = this.alarm.ToString();
-                this.dataStr[33] = this.ADC_overload_underload.ToString();
+                this.dataStr[33] = this.ADC_overUnderload.ToString();
 
-                this.dataStr[34] = this.max_dosing_time.ToString();
-                this.dataStr[35] = this.legal_for_trade_operation.ToString();
-                this.dataStr[36] = this.tolerance_error_plus.ToString();
-                this.dataStr[37] = this.tolerance_error_minus.ToString();
+                this.dataStr[34] = this.maxDosingTime.ToString();
+                this.dataStr[35] = this.legalTradeOp.ToString();
+                this.dataStr[36] = this.toleranceErrorPlus.ToString();
+                this.dataStr[37] = this.toleranceErrorMinus.ToString();
 
-                this.dataStr[38] = this.status_digital_input_1.ToString();
-                this.dataStr[39] = this.general_scale_error.ToString();
-                this.dataStr[40] = this.dosing_process_status.ToString();
-                this.dataStr[41] = this.dosing_count.ToString();
+                this.dataStr[38] = this.status.ToString();
+                this.dataStr[39] = this.generalScaleError.ToString();
+                this.dataStr[40] = this.fillingProcessStatus.ToString();
+                this.dataStr[41] = this.numberDosingResults.ToString();
 
-                this.dataStr[42] = this.dosing_result.ToString();
-                this.dataStr[43] = this.mean_value_of_dosing_results.ToString();
-                this.dataStr[44] = this.standard_deviation.ToString();
-                this.dataStr[45] = this.total_weight.ToString();
+                this.dataStr[42] = this.dosingResult.ToString();
+                this.dataStr[43] = this.meanValueDosingResults.ToString();
+                this.dataStr[44] = this.standardDeviation.ToString();
+                this.dataStr[45] = this.totalWeight.ToString();
 
-                this.dataStr[46] = this.fine_flow_cut_off_point.ToString();
-                this.dataStr[47] = this.coarse_flow_cut_off_point.ToString();
-                this.dataStr[48] = this.actual_dosing_time.ToString();
-                this.dataStr[49] = this.actual_coarse_flow_time.ToString();
+                this.dataStr[46] = this.fineFlowCutOffPoint.ToString();
+                this.dataStr[47] = this.coarseFlowCutOffPoint.ToString();
+                this.dataStr[48] = this.actualDosingTime.ToString();
+                this.dataStr[49] = this.actualCoarseFlowTime.ToString();
 
-                this.dataStr[50] = this.actual_fine_flow_time.ToString();
-                this.dataStr[51] = this.parameter_set.ToString();
+                this.dataStr[50] = this.actualFineFlowTime.ToString();
+                this.dataStr[51] = this.parameterSetProduct.ToString();
 
                 this.dataStr[52] = this.filler_weight_memory_day.ToString();
                 this.dataStr[53] = this.filler_weight_memory_month.ToString();
@@ -405,7 +408,7 @@ namespace WTXModbus
                 this.dataStr[57] = this.filler_weight_memory_net.ToString();
             }
 
-            bool compareDataChanged = false;
+            compareDataChanged = false;
 
             e.Args = this.data;
 
@@ -480,7 +483,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int general_weight_error
+        public override int generalWeightError
         {
             get
             {
@@ -497,7 +500,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int scale_alarm_triggered
+        public override int scaleAlarmTriggered
         {
             get
             {
@@ -514,7 +517,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limit_status
+        public override  int limitStatus
         {
             get
             {
@@ -531,7 +534,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_moving
+        public override int weightMoving
         {
             get
             {
@@ -548,7 +551,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int scale_seal_is_open
+        public override  int scaleSealIsOpen
         {
             get
             {
@@ -565,7 +568,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int manual_tare
+        public override  int manualTare
         {
             get
             {
@@ -582,7 +585,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_type
+        public override  int weightType
         {
             get
             {
@@ -599,7 +602,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int scale_range
+        public override  int scaleRange
         {
             get
             {
@@ -616,7 +619,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int zero_required
+        public override  int zeroRequired
         {
             get
             {
@@ -633,7 +636,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_within_the_center_of_zero
+        public override  int weightWithinTheCenterOfZero
         {
             get
             {
@@ -650,7 +653,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_in_zero_range
+        public override  int weightInZeroRange
         {
             get
             {
@@ -667,7 +670,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int application_mode
+        public override  int applicationMode
         {
             get
             {
@@ -753,7 +756,7 @@ namespace WTXModbus
             }
         }
 
-        public override  string[] get_data_str
+        public override  string[] getDataStr
         {
             get
             {
@@ -765,7 +768,7 @@ namespace WTXModbus
             }
         }
 
-        public override  int digital_input_1
+        public override  int input1
         {
             get
             {
@@ -784,7 +787,7 @@ namespace WTXModbus
 
 
         }
-        public override  int digital_input_2
+        public override  int input2
         {
             get
             {
@@ -801,7 +804,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int digital_input_3
+        public override  int input3
         {
             get
             {
@@ -818,7 +821,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int digital_input_4
+        public override  int input4
         {
             get
             {
@@ -835,7 +838,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int digital_output_1
+        public override int output1
         {
             get
             {
@@ -852,7 +855,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int digital_output_2
+        public override  int output2
         {
             get
             {
@@ -869,7 +872,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int digital_output_3
+        public override  int output3
         {
             get
             {
@@ -886,7 +889,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int digital_output_4
+        public override  int output4
         {
             get
             {
@@ -903,7 +906,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limit_value_status_1
+        public override int limitStatus1
         {
             get
             {
@@ -920,7 +923,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limit_value_status_2
+        public override  int limitStatus2
         {
             get
             {
@@ -937,7 +940,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limit_value_status_3
+        public override  int limitStatus3
         {
             get
             {
@@ -954,7 +957,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limit_value_status_4
+        public override  int limitStatus4
         {
             get
             {
@@ -971,7 +974,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_memory_day
+        public override  int weightMemDay
         {
             get
             {
@@ -988,7 +991,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_memory_month
+        public override  int weightMemMonth
         {
             get
             {
@@ -1005,7 +1008,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_memory_year
+        public override  int weightMemYear
         {
             get
             {
@@ -1022,7 +1025,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_memory_seq_number
+        public override  int weightMemSeqNumber
         {
             get
             {
@@ -1039,7 +1042,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_memory_gross
+        public override  int weightMemGross
         {
             get
             {
@@ -1056,7 +1059,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weight_memory_net
+        public override  int weightMemNet
         {
             get
             {
@@ -1073,7 +1076,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int coarse_flow
+        public override  int coarseFlow
         {
             get
             {
@@ -1090,7 +1093,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int fine_flow
+        public override  int fineFlow
         {
             get
             {
@@ -1124,7 +1127,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int re_dosing
+        public override  int reDosing
         {
             get
             {
@@ -1158,7 +1161,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int flow_error
+        public override  int flowError
         {
             get
             {
@@ -1192,7 +1195,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int ADC_overload_underload
+        public override  int ADC_overUnderload
         {
             get
             {
@@ -1209,7 +1212,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int max_dosing_time
+        public override  int maxDosingTime
         {
             get
             {
@@ -1226,7 +1229,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int legal_for_trade_operation
+        public override  int legalTradeOp
         {
             get
             {
@@ -1243,7 +1246,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int tolerance_error_plus
+        public override  int toleranceErrorPlus
         {
             get
             {
@@ -1260,7 +1263,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int tolerance_error_minus
+        public override  int toleranceErrorMinus
         {
             get
             {
@@ -1277,7 +1280,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int status_digital_input_1
+        public override  int statusInput1
         {
             get
             {
@@ -1294,7 +1297,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int general_scale_error
+        public override  int generalScaleError
         {
             get
             {
@@ -1311,7 +1314,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int dosing_process_status
+        public override  int fillingProcessStatus
         {
             get
             {
@@ -1328,7 +1331,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int dosing_count
+        public override  int numberDosingResults
         {
             get
             {
@@ -1345,7 +1348,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int dosing_result
+        public override  int dosingResult
         {
             get
             {
@@ -1362,7 +1365,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int mean_value_of_dosing_results
+        public override  int meanValueDosingResults
         {
             get
             {
@@ -1379,7 +1382,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int standard_deviation
+        public override  int standardDeviation
         {
             get
             {
@@ -1396,7 +1399,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int total_weight
+        public override  int totalWeight
         {
             get
             {
@@ -1413,7 +1416,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int fine_flow_cut_off_point
+        public override int fineFlowCutOffPoint
         {
             get
             {
@@ -1430,7 +1433,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int coarse_flow_cut_off_point
+        public override int coarseFlowCutOffPoint
         {
             get
             {
@@ -1447,7 +1450,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int actual_dosing_time
+        public override  int actualDosingTime
         {
             get
             {
@@ -1464,7 +1467,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int actual_coarse_flow_time
+        public override  int actualCoarseFlowTime
         {
             get
             {
@@ -1481,7 +1484,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int actual_fine_flow_time
+        public override  int actualFineFlowTime
         {
             get
             {
@@ -1498,7 +1501,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int parameter_set
+        public override int parameterSetProduct
         {
             get
             {
@@ -1618,7 +1621,7 @@ namespace WTXModbus
             }
         }
 
-        public override ushort[] get_data_ushort
+        public override ushort[] getDataUshort
         {
             get
             {
@@ -1641,7 +1644,7 @@ namespace WTXModbus
 
 
 
-        public override int calibration_weight
+        public override int calibrationWeight
         {
             set
             {
@@ -1689,17 +1692,17 @@ namespace WTXModbus
 
         private string comment_weight_moving()
         {
-            if (this.weight_moving == 0)
+            if (this.weightMoving == 0)
                 return "0=Weight is not moving.";
             else
-                if (this.weight_moving == 1)
+                if (this.weightMoving == 1)
                 return "1=Weight is moving";
             else
                 return "Error";
         }
         private string comment_limit_status()
         {
-            switch (this.limit_status)
+            switch (this.limitStatus)
             {
                 case 0:
                     return "Weight within limits";
@@ -1715,13 +1718,13 @@ namespace WTXModbus
         }
         private string comment_weight_type()
         {
-            if (this.weight_type == 0)
+            if (this.weightType == 0)
             {
                 this.isNet = false;
                 return "gross";
             }
             else
-                if (this.weight_type == 1)
+                if (this.weightType == 1)
             {
                 this.isNet = true;
                 return "net";
@@ -1732,7 +1735,7 @@ namespace WTXModbus
         }
         private string comment_scale_range()
         {
-            switch (this.scale_range)
+            switch (this.scaleRange)
             {
                 case 0:
                     return "Range 1";
@@ -1746,11 +1749,11 @@ namespace WTXModbus
         }
         private string comment_application_mode()
         {
-            if (this.application_mode == 0)
+            if (this.applicationMode == 0)
                 return "Standard";
             else
 
-                if (this.application_mode == 2 || this.application_mode == 1)  // Will be changed to '2', so far '1'. 
+                if (this.applicationMode == 2 || this.applicationMode == 1)  // Will be changed to '2', so far '1'. 
                 return "Filler";
             else
 
@@ -1831,7 +1834,7 @@ namespace WTXModbus
 
             this.restartTimer();
 
-            while (this.get_data_str[0] != calibration_weight_Str.Replace(".", ",") || this.get_data_str[1] != calibration_weight_Str.Replace(".", ","))
+            while (this.getDataStr[0] != calibration_weight_Str.Replace(".", ",") || this.getDataStr[1] != calibration_weight_Str.Replace(".", ","))
             {
                 Console.Write("Wait for setting the nomnial weight into the WTX.");
             }

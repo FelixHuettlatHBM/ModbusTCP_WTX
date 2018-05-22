@@ -114,13 +114,11 @@ namespace WTXModbus
                     case '4': WTX_obj.Async_Call(0x100, Write_DataReceived); break;   // Adjust nominal
                     case '5': WTX_obj.Async_Call(0x800, Write_DataReceived); break;   // Activate data
                     case '6': WTX_obj.Async_Call(0x1000, Write_DataReceived); break;  // Manual taring
-                    case '7': WTX_obj.Async_Call(0x4000, Write_DataReceived); break;  // Weight storage
+                    case '7': WTX_obj.Async_Call(0x4000, Write_DataReceived); break;  // Record Weight
 
                     // Fall für schreiben auf multiple Register:
                     case 'c':       // Calculate Calibration
                         CalculateCalibration();
-
-
                         break;
                     case 'w':       // Calculation with weight 
                         CalibrationWithWeight();
@@ -178,6 +176,7 @@ namespace WTXModbus
         /*
          * This method calcutes the values for a dead load and a nominal load(span) in a ratio in mV/V and write in into the WTX registers. 
          */
+         
         private static void CalculateCalibration()
         {
             isCalibrating = true;
@@ -191,7 +190,7 @@ namespace WTXModbus
             //WTX_obj.restartTimer();
 
             isCalibrating = false;
-        }
+        }       
 
         /*
          * This method does a calibration with an individual weight to the WTX.  
@@ -204,7 +203,10 @@ namespace WTXModbus
 
             WTX_obj.stopTimer();
 
-            calibration_weight_input();
+            Console.Clear();
+            Console.WriteLine("\nPlease tip the value for the calibration weight and tip enter to confirm : ");
+            calibration_weight = Console.ReadLine();
+
             Console.WriteLine("\nTo start : Set zero load and press any key for measuring zero and wait.");
             string another = Console.ReadLine();
 
@@ -220,6 +222,7 @@ namespace WTXModbus
             isCalibrating = false;
 
         }
+        
 
         /*
          * This method potentiate the number of the values decimals and multiply it with the calibration weight(input) to get
@@ -251,68 +254,68 @@ namespace WTXModbus
                 Console.Clear();
 
                 Console.WriteLine("Options to set the device : Enter the following keys:\nb-Choose the number of bytes read from the register |");
-                if (WTX_obj.DeviceValues.application_mode == 0)
+                if (WTX_obj.DeviceValues.applicationMode == 0)
                 {
                     Console.WriteLine("0-Taring | 1-Gross/net  | 2-Zeroing  | 3- Adjust zero | 4-Adjust nominal |\n5-Activate Data \t| 6-Manual taring \t      | 7-Weight storage\n");
                 }
                 else
-                    if (WTX_obj.DeviceValues.application_mode == 1 || WTX_obj.DeviceValues.application_mode == 2)
+                    if (WTX_obj.DeviceValues.applicationMode == 1 || WTX_obj.DeviceValues.applicationMode == 2)
                     Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
 
-                if (WTX_obj.DeviceValues.application_mode == 0 || WTX_obj.DeviceValues.application_mode == 2 || WTX_obj.DeviceValues.application_mode == 1)   // If the device is a compatible mode (standard=0 or filler=1 | filler=2) 
+                if (WTX_obj.DeviceValues.applicationMode == 0 || WTX_obj.DeviceValues.applicationMode == 2 || WTX_obj.DeviceValues.applicationMode == 1)   // If the device is a compatible mode (standard=0 or filler=1 | filler=2) 
                 {
 
                     // The values are printed on the console according to the input - "numInputs": 
 
                     if (input_numInputs == 1)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.get_data_str[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
+                        Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
                     }
                     else
                         if (input_numInputs == 2 || input_numInputs == 3 || input_numInputs == 4)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.get_data_str[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                        Console.WriteLine("Gross value:                   " + WTX_obj.get_data_str[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
+                        Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
+                        Console.WriteLine("Gross value:                   " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
                     }
                     else
                             if (input_numInputs == 5)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.get_data_str[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                        Console.WriteLine("Gross value:                   " + WTX_obj.get_data_str[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
-                        Console.WriteLine("General weight error:          " + WTX_obj.get_data_str[2] + "\t  As an Integer:  " + WTX_obj.DeviceValues.general_weight_error);
-                        Console.WriteLine("Scale alarm triggered:         " + WTX_obj.get_data_str[3] + "\t  As an Integer:  " + WTX_obj.DeviceValues.limit_status);
-                        Console.WriteLine("Scale seal is open:            " + WTX_obj.get_data_str[6] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scale_seal_is_open);
-                        Console.WriteLine("Manual tare:                   " + WTX_obj.get_data_str[7] + "\t  As an Integer:  " + WTX_obj.DeviceValues.manual_tare);
-                        Console.WriteLine("Weight type:                   " + WTX_obj.get_data_str[8] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weight_type);
-                        Console.WriteLine("Scale range:                   " + WTX_obj.get_data_str[9] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scale_range);
-                        Console.WriteLine("Zero required/True zero:       " + WTX_obj.get_data_str[10] + "\t  As an Integer:  " + WTX_obj.DeviceValues.zero_required);
-                        Console.WriteLine("Weight within center of zero:  " + WTX_obj.get_data_str[11] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weight_within_the_center_of_zero);
-                        Console.WriteLine("Weight in zero range:          " + WTX_obj.get_data_str[12] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weight_within_the_center_of_zero);
-                        Console.WriteLine("Limit status:                  " + WTX_obj.get_data_str[4] + "  As an Integer:  " + WTX_obj.DeviceValues.limit_status);
-                        Console.WriteLine("Weight moving:                 " + WTX_obj.get_data_str[5] + "  As an Integer:" + WTX_obj.DeviceValues.weight_moving);
+                        Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
+                        Console.WriteLine("Gross value:                   " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
+                        Console.WriteLine("General weight error:          " + WTX_obj.getDataStr[2] + "\t  As an Integer:  " + WTX_obj.DeviceValues.generalWeightError);
+                        Console.WriteLine("Scale alarm triggered:         " + WTX_obj.getDataStr[3] + "\t  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
+                        Console.WriteLine("Scale seal is open:            " + WTX_obj.getDataStr[6] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleSealIsOpen);
+                        Console.WriteLine("Manual tare:                   " + WTX_obj.getDataStr[7] + "\t  As an Integer:  " + WTX_obj.DeviceValues.manualTare);
+                        Console.WriteLine("Weight type:                   " + WTX_obj.getDataStr[8] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightType);
+                        Console.WriteLine("Scale range:                   " + WTX_obj.getDataStr[9] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleRange);
+                        Console.WriteLine("Zero required/True zero:       " + WTX_obj.getDataStr[10] + "\t  As an Integer:  " + WTX_obj.DeviceValues.zeroRequired);
+                        Console.WriteLine("Weight within center of zero:  " + WTX_obj.getDataStr[11] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero);
+                        Console.WriteLine("Weight in zero range:          " + WTX_obj.getDataStr[12] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightInZeroRange);
+                        Console.WriteLine("Limit status:                  " + WTX_obj.getDataStr[4] + "  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
+                        Console.WriteLine("Weight moving:                 " + WTX_obj.getDataStr[5] + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
                     }
                     else
                     if (input_numInputs == 6 || input_numInputs == 38)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.get_data_str[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                        Console.WriteLine("Gross value:                   " + WTX_obj.get_data_str[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
-                        Console.WriteLine("General weight error:          " + WTX_obj.get_data_str[2] + "\t  As an Integer:  " + WTX_obj.DeviceValues.general_weight_error);
-                        Console.WriteLine("Scale alarm triggered:         " + WTX_obj.get_data_str[3] + "\t  As an Integer:  " + WTX_obj.DeviceValues.limit_status);
-                        Console.WriteLine("Scale seal is open:            " + WTX_obj.get_data_str[6] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scale_seal_is_open);
-                        Console.WriteLine("Manual tare:                   " + WTX_obj.get_data_str[7] + "\t  As an Integer:  " + WTX_obj.DeviceValues.manual_tare);
-                        Console.WriteLine("Weight type:                   " + WTX_obj.get_data_str[8] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weight_type);
-                        Console.WriteLine("Scale range:                   " + WTX_obj.get_data_str[9] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scale_range);
-                        Console.WriteLine("Zero required/True zero:       " + WTX_obj.get_data_str[10] + "\t  As an Integer:  " + WTX_obj.DeviceValues.zero_required);
-                        Console.WriteLine("Weight within center of zero:  " + WTX_obj.get_data_str[11] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weight_within_the_center_of_zero);
-                        Console.WriteLine("Weight in zero range:          " + WTX_obj.get_data_str[12] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weight_within_the_center_of_zero);
-                        Console.WriteLine("Application mode:              " + WTX_obj.get_data_str[13] + "\t  As an Integer:  " + WTX_obj.DeviceValues.application_mode);
-                        Console.WriteLine("Decimal places:                " + WTX_obj.get_data_str[14] + "\t  As an Integer:  " + WTX_obj.DeviceValues.decimals);
-                        Console.WriteLine("Unit:                          " + WTX_obj.get_data_str[15] + "\t  As an Integer:  " + WTX_obj.DeviceValues.unit);
-                        Console.WriteLine("Handshake:                     " + WTX_obj.get_data_str[16] + "\t  As an Integer:  " + WTX_obj.DeviceValues.handshake);
-                        Console.WriteLine("Status:                        " + WTX_obj.get_data_str[17] + "\t  As an Integer:  " + WTX_obj.DeviceValues.status);
+                        Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
+                        Console.WriteLine("Gross value:                   " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
+                        Console.WriteLine("General weight error:          " + WTX_obj.getDataStr[2] + "\t  As an Integer:  " + WTX_obj.DeviceValues.generalWeightError);
+                        Console.WriteLine("Scale alarm triggered:         " + WTX_obj.getDataStr[3] + "\t  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
+                        Console.WriteLine("Scale seal is open:            " + WTX_obj.getDataStr[6] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleSealIsOpen);
+                        Console.WriteLine("Manual tare:                   " + WTX_obj.getDataStr[7] + "\t  As an Integer:  " + WTX_obj.DeviceValues.manualTare);
+                        Console.WriteLine("Weight type:                   " + WTX_obj.getDataStr[8] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightType);
+                        Console.WriteLine("Scale range:                   " + WTX_obj.getDataStr[9] + "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleRange);
+                        Console.WriteLine("Zero required/True zero:       " + WTX_obj.getDataStr[10] + "\t  As an Integer:  " + WTX_obj.DeviceValues.zeroRequired);
+                        Console.WriteLine("Weight within center of zero:  " + WTX_obj.getDataStr[11] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero);
+                        Console.WriteLine("Weight in zero range:          " + WTX_obj.getDataStr[12] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightInZeroRange);
+                        Console.WriteLine("Application mode:              " + WTX_obj.getDataStr[13] + "\t  As an Integer:  " + WTX_obj.DeviceValues.applicationMode);
+                        Console.WriteLine("Decimal places:                " + WTX_obj.getDataStr[14] + "\t  As an Integer:  " + WTX_obj.DeviceValues.decimals);
+                        Console.WriteLine("Unit:                          " + WTX_obj.getDataStr[15] + "\t  As an Integer:  " + WTX_obj.DeviceValues.unit);
+                        Console.WriteLine("Handshake:                     " + WTX_obj.getDataStr[16] + "\t  As an Integer:  " + WTX_obj.DeviceValues.handshake);
+                        Console.WriteLine("Status:                        " + WTX_obj.getDataStr[17] + "\t  As an Integer:  " + WTX_obj.DeviceValues.status);
 
-                        Console.WriteLine("Limit status:                  " + WTX_obj.get_data_str[4] + "  As an Integer:  " + WTX_obj.DeviceValues.limit_status);
-                        Console.WriteLine("Weight moving:                 " + WTX_obj.get_data_str[5] + "  As an Integer:" + WTX_obj.DeviceValues.weight_moving);
+                        Console.WriteLine("Limit status:                  " + WTX_obj.getDataStr[4] + "  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
+                        Console.WriteLine("Weight moving:                 " + WTX_obj.getDataStr[5] + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
                     }
                     else
                         Console.WriteLine("\nWrong input for the number of bytes, which should be read from the register!\nPlease enter 'b' to choose again.");
@@ -320,17 +323,6 @@ namespace WTXModbus
                 else
                     Console.WriteLine("\n\t No compatible mode set for the WTX-device");
             }
-        }
-
-
-        private static void calibration_weight_input()
-        {
-
-            Console.Clear();
-
-            Console.WriteLine("\nPlease tip the value for the calibration weight and tip enter to confirm : ");
-
-            calibration_weight = Console.ReadLine();
         }
 
         private static void zero_load_nominal_load_input()

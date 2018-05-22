@@ -35,6 +35,9 @@ namespace WTXModbus
      *  In method 'UpdateEvent' a event is triggered as well to signalize the GUI or console application that the data is ready to be
      *  printed on the console or GUI (on the DataGrid). By the eventHandler 'DataUpdateEvent' it is signalized that the data is ready to
      *  be printed out.
+     *  
+     *  The methods 'Calibrate' and 'Calculate' are also given in this class, which do the calibration with a nominal load, a dead load and 
+     *  a individual weight.
      */
     public class WTX120 : DeviceAbstract     
     {
@@ -45,6 +48,7 @@ namespace WTXModbus
 
         private System.Timers.Timer aTimer;
         private bool isNet;
+        private bool isCalibrating;
 
         private ModbusConnection ModbusConnObj;
         private IDeviceValues thisValues;
@@ -65,13 +69,14 @@ namespace WTXModbus
          */
         public WTX120(ModbusConnection connection, int paramTimerInterval) : base(connection,paramTimerInterval)
         {
-            ModbusConnObj = connection;
+            this.ModbusConnObj = connection;
             
-            data = new ushort[59];
-            previousData = new ushort[59];
-            dataStr = new string[59];
+            this.data = new ushort[59];
+            this.previousData = new ushort[59];
+            this.dataStr = new string[59];
 
-            compareDataChanged = false;
+            this.compareDataChanged = false;
+            this.isCalibrating = false;
 
             for (int i = 0; i < 59; i++)
             {
@@ -422,8 +427,13 @@ namespace WTXModbus
 
             // The data is only invoked by the event 'DataUpdateEvent' if the data has been changed. The comparision is made by...
             // ... the arrays 'previousData' and 'data' with the boolean 
-            if (compareDataChanged == true)
-                    DataUpdateEvent?.Invoke(this, e);
+
+            if ((this.compareDataChanged == true) || (this.isCalibrating == true))   // 'isCalibrating' indicates if a calibration is done just before ...
+                                                                                     // and the data should be send to the GUI/console and be printed out. 
+            {
+                DataUpdateEvent?.Invoke(this, e);
+                this.isCalibrating = false;
+            }
 
             this.previousData = this.data;
 
@@ -1787,8 +1797,6 @@ namespace WTXModbus
 
         }
 
-
-
         // Calculates the values for deadload and nominal load in d from the inputs in mV/V
         // and writes the into the WTX registers.
         public void Calculate(double Preload, double Capacity)
@@ -1810,6 +1818,9 @@ namespace WTXModbus
 
             this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
 
+            this.isCalibrating = true;
+
+            this.restartTimer();
         }
 
         private void Write_DataReceived(IDeviceValues obj)
@@ -1834,11 +1845,13 @@ namespace WTXModbus
 
             this.restartTimer();
 
+            this.isCalibrating = true;
+
             while (this.getDataStr[0] != calibration_weight_Str.Replace(".", ",") || this.getDataStr[1] != calibration_weight_Str.Replace(".", ","))
             {
                 Console.Write("Wait for setting the nomnial weight into the WTX.");
             }
-
+           
         }
 
         // This method sets the values for dead load in the WTX.

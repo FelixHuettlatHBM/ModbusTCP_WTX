@@ -44,9 +44,6 @@ namespace WTXModbus
 
         private static ConsoleKeyInfo value_outputwords;
         private static ConsoleKeyInfo value_exitapplication;
-
-        private static string[] previous_data_str_arr;
-        private static bool compare_values_changed;
         
         private static string calibration_weight;
 
@@ -66,7 +63,6 @@ namespace WTXModbus
             // Initialize:
 
             Thread thread1 = new Thread(new ThreadStart(InputOutput));
-            compare_values_changed = false;
 
             Provider = CultureInfo.InvariantCulture;
 
@@ -171,8 +167,6 @@ namespace WTXModbus
             input_numInputs = (ushort)Convert.ToInt32(Console.ReadLine());
 
         }
-
-
         /*
          * This method calcutes the values for a dead load and a nominal load(span) in a ratio in mV/V and write in into the WTX registers. 
          */
@@ -186,11 +180,11 @@ namespace WTXModbus
             zero_load_nominal_load_input();
 
             WTX_obj.Calculate(Preload,Capacity);
-
-            //WTX_obj.restartTimer();
-
+            
             isCalibrating = false;
-        }       
+
+            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)'.
+        }
 
         /*
          * This method does a calibration with an individual weight to the WTX.  
@@ -201,7 +195,7 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            WTX_obj.stopTimer();
+            WTX_obj.stopTimer();    
 
             Console.Clear();
             Console.WriteLine("\nPlease tip the value for the calibration weight and tip enter to confirm : ");
@@ -217,7 +211,7 @@ namespace WTXModbus
 
             WTX_obj.Calibrate(potencyCalibrationWeight(), calibration_weight);
 
-            //WTX_obj.restartTimer();
+            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calibrate(..)'.
 
             isCalibrating = false;
 

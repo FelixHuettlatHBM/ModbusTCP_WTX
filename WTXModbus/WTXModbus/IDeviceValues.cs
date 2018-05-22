@@ -104,35 +104,35 @@ namespace Hbm.Devices.WTXModbus
         int actualFineFlowTime { get; }       // data[61]
         int parameterSetProduct { get; }      // data[62]
          
-        // Set-properties to set the output words from 9 to 44 
-             
+        // Set-properties to set the output words from 9 to 44 for the filler application. 
+            
         /*
-        int Residual_flow_time { set; }             
-        int target_filling_weight { set; }
-        int coarse_flow_cut_off_pointSet { set; }
-        int fine_flow_cut_off_pointSet { set; }
-        int minimum_fine_flow { set; }
-        int optimization_of_cut_off_points { set; }
-        int maximum_dosing_tome { set; }
-        int start_with_fine_flow { set; }
-        int coarse_lockout_time { set; }
-        int fine_lockout_time { set; }
-        int tare_mode { set; }
-        int upper_tolerance_limit { set; }
-        int lower_tolerance_limit { set; }
-        int minimum_start_weight { set; }
-        int empty_weight { set; }
-        int tare_delay { set; }
-        int coarse_flow_monitoring_time { set; }
-        int coarse_flow_monitoring { set; }
-        int fine_flow_monitoring { set; }
-        int fine_flow_monitoring_time { set; }
-        int delay_time_after_fine_flow { set; }
-        int activation_time_after_fine_flow { set; }
-        int systematic_difference { set; }
-        int downards_dosing { set; }
-        int valve_control { set; }
-        int emptying_mode { set; }
+        int ResidualFlowTime { set; }             
+        int targetFillingWeight { set; }
+        int coarseFlowCutOffPointSet { set; }
+        int fineFlowCutOffPointSet { set; }
+        int minimumFineFlow { set; }
+        int optimizationOfCutOffPoints { set; }
+        int maximumDosingTime { set; }
+        int startWithFineFlow { set; }
+        int coarseLockoutTime { set; }
+        int fineLockoutTime { set; }
+        int tareMode { set; }
+        int upperToleranceLimit { set; }
+        int lowerToleranceLimit { set; }
+        int minimumStartWeight { set; }
+        int emptyWeight { set; }
+        int tareDelay { set; }
+        int coarseFlowMonitoringTime { set; }
+        int coarseFlowMonitoring { set; }
+        int fineFlowMonitoring { set; }
+        int fineFlowMonitoringTime { set; }
+        int delayTimeAfterFineFlow { set; }
+        int activationTimeAfterFineFlow { set; }
+        int systematicDifference { set; }
+        int downardsDosing { set; }
+        int valveControl { set; }
+        int emptyingMode { set; }
         */
 
         // Set-properties to set the output words 46, 48, 50 for the calibration:

@@ -21,14 +21,14 @@ namespace WTXModbusExamples
     static class Program
     {
         [STAThread]
-        static void Main()
+        static void Main(string[] args) // arguments from the command line of the VS project arguments : IP address and timer interval. 
         {
             Application.EnableVisualStyles(); //This method enables visual styles for the application. Visual styles are the colors, fonts, and other visual elements that form an operating system theme.
             Application.SetCompatibleTextRenderingDefault(false); // This is the standard setting for text rendering. 
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GUI());            
+            Application.Run(new GUI(args));            
         }
     }
 }

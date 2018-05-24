@@ -56,17 +56,27 @@ namespace WTXModbusExamples
 
         private bool is_standard;
 
+        private string ipAddress;
+        private int timerInterval;
+
         // Constructor of class GUI for the initialisation: 
-        public GUI()
+        public GUI(string[] args)
         {
-            //Get IPAddress from Settings.settings
-            string ipAddress = WTXModbus.Properties.Settings.Default.IPAddress;
-            
+            //Get IPAddress and the timer interval from the command line of the VS project arguments (at "Debug").
+            if (args.Length > 0)
+            {
+                this.ipAddress = args[0];
+            }
+            if (args.Length > 1)
+            {
+                this.timerInterval = Convert.ToInt32(args[1]);
+            }
 
             ModbusObj = new ModbusConnection(ipAddress);
-            WTXModbusObj = new WTX120(ModbusObj, 10);
+            WTXModbusObj = new WTX120(ModbusObj, this.timerInterval);
                    
             is_standard =false;
+            ModbusObj.IP_Adress = ipAddress;
 
             InitializeComponent();   // Call of this method to initialize the form.
 
@@ -81,7 +91,7 @@ namespace WTXModbusExamples
             this.set_GUI_rows();
 
             startToolStripMenuItem_Click(this, new EventArgs());
-           
+
         }
 
         // This method is called from the constructor and sets the columns and the rows of the data grid.
@@ -307,6 +317,7 @@ namespace WTXModbusExamples
                     }   
                     catch (Exception) { }
             }
+
         }
 
         // Button-Click event to close the application: 
@@ -371,6 +382,7 @@ namespace WTXModbusExamples
         private void button8_Click(object sender, EventArgs e)
         {
             // Activate data
+
             WTXModbusObj.Async_Call(0x800, Write_DataReceived);
         }
 

@@ -45,6 +45,8 @@ namespace WTXModbusGUIsimple
         private CalcCalibration CalcCalObj;
         private WeightCalibration WeightCalObj;
 
+        private int timerInterval;
+
         // toolStripLabel1: Label connectionStatus
         // toolstripLabel2: Label movingStatuDefaultTimerIntervals
         // toolstripLabel3: Gross/net status
@@ -55,9 +57,6 @@ namespace WTXModbusGUIsimple
         // Basic Constructor without arguments
         public LiveValue()
         {
-            // Implementation of the publisher (Modbus_TCP_obj) and 
-            // the subscribter (Device_WTX_obj)
-
             InitializeComponent();
 
             IPAddress = WTXModbusGUIsimple.Properties.Settings.Default.IPAddress;
@@ -69,10 +68,21 @@ namespace WTXModbusGUIsimple
         // An attempt to connect to default IP is executed.
         public LiveValue(string[] args): this()
         {
+            this.Show();
+
+            this.IPAddress = "172.19.103.8"; ; // Default Setting
+            this.timerInterval = 500;          // Default setting
+
+
             if (args.Length > 0)
             {
-                IPAddress = args[0];                
-                textBox1.Text = IPAddress;
+                this.IPAddress = args[0];                
+                textBox1.Text  = args[0];
+            }
+
+            if (args.Length > 1)
+            {
+                this.timerInterval = Convert.ToInt32(args[1]);
             }
 
             this.Connect();
@@ -87,9 +97,9 @@ namespace WTXModbusGUIsimple
         // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
-            ModbusObj = new ModbusConnection(IPAddress);
+            ModbusObj = new ModbusConnection(this.IPAddress);
 
-            WTXObj = new WTX120(ModbusObj, DefaultTimerInterval);
+            WTXObj = new WTX120(ModbusObj, this.timerInterval);
             
             WTXObj.getConnection.getNumOfPoints = 6;
 
@@ -111,24 +121,26 @@ namespace WTXModbusGUIsimple
                 toolStripLabel1.Text = "connecting";
                 textBox2.TextAlign = HorizontalAlignment.Left;
                 pictureBox1.Image = Properties.Resources.NE107_DiagnosisPassive;
+
                 Update();
 
-                String tempIpAddress = textBox1.Text;
-                WTXObj.getConnection.IP_Adress = tempIpAddress;
-           
+                string tempIpAddress = textBox1.Text;
+                WTXObj.getConnection.IP_Adress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
+
                 WTXObj.getConnection.Connect();  // Equal to : ModbusObj.Connect();
 
                 if (WTXObj.getConnection.is_connected)
                 {
+                    WTXObj.restartTimer();
                     IPAddress = tempIpAddress;
                     this.toolStripLabel1.Text = "connected";
-                    //RenameButtonGrossNet();
-                    WTXObj.getConnection.Sending_interval = DefaultTimerInterval;
+                    RenameButtonGrossNet();
+                    WTXObj.getConnection.Sending_interval = this.timerInterval;
 
                 }
                 else
                 {
-                    WTXObj.getConnection.IP_Adress = IPAddress;
+                    WTXObj.getConnection.IP_Adress = this.IPAddress;
 
                     WTXObj.stopTimer();
                     
@@ -355,7 +367,6 @@ namespace WTXModbusGUIsimple
         //Opens a menu window for calibration with a calibration weight
         private void CalibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             WTXObj.stopTimer();
 
             WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.is_connected);
@@ -379,6 +390,10 @@ namespace WTXModbusGUIsimple
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
         }
     }
 }

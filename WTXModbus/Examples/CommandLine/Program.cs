@@ -63,7 +63,7 @@ namespace WTXModbus
         {
             // Input for the ip adress, the timer interval and the input mode: 
 
-            ipAddress = "172.19.103.8";
+            ipAddress = "172.19.103.8";     // Default setting. 
             inputMode = 6;
             timer_interval = 200;
 
@@ -75,14 +75,8 @@ namespace WTXModbus
             {
                 timer_interval = Convert.ToInt32(args[1]);
             }
-            if (args.Length > 2)
-            {
-                inputMode = Convert.ToUInt16(args[2]);
-            }
             
             // Initialize:
-
-            //Thread thread1 = new Thread(new ThreadStart(InputOutput));
 
             Provider = CultureInfo.InvariantCulture;
 
@@ -96,27 +90,17 @@ namespace WTXModbus
 
             Console.WriteLine("\nTCPModbus Interface for weighting terminals of HBM\nEnter e to exit the application");
 
-            /* // If you want to tip in the IP-Adress, input mode and timer interval into the console application. Input : Ip adress, number of input bytes of the WTX120 device. 
-            Console.WriteLine("\n\n Please enter the IP Adress with dots (see on the device, on a tip-on note) \n Default setting: 172.19.103.8\n ");
-            ipAddress = Console.ReadLine();
-            Console.Clear();
-            set_number_inputs();
-            */
-
             do // do-while loop for the connection establishment. If the connection is established successfully, the do-while loop is left/exit. 
             {
                 ModbusObj = new ModbusConnection(ipAddress);
 
                 WTX_obj = new WTX120(ModbusObj, timer_interval);    // timer_interval is given by the VS project properties menu as an argument.
 
-                WTX_obj.getConnection.getNumOfPoints = inputMode; // input_numInputs; // for the input after the start of the console application, here commented. 
-                                                                  // InputMode is given by the VS project properties menu as an argument
-
                 WTX_obj.getConnection.Connect();
-
+          
                 if (WTX_obj.getConnection.is_connected == true)
                 {
-                    Console.WriteLine("\nThe connection has been established successfully.\nPlease press any key to continue and to print the values of the WTX device...");
+                    Console.WriteLine("\nThe connection has been established successfully.\nThe values of the WTX device are printed on the console ... :");
                 }
                 else
                 {
@@ -125,6 +109,7 @@ namespace WTXModbus
                 }
 
             } while (WTX_obj.getConnection.is_connected==false);
+
 
             //thread1.Start();
 
@@ -178,12 +163,6 @@ namespace WTXModbus
 
             } // end while
         } // end main  
-
-        // For the thread1.start method for further inputs. 
-        private static void InputOutput()
-        {
-            value_exitapplication = Console.ReadKey();
-        }
 
         // This method sets the number of read bytes (words) in the register of the device. 
         // You can set '1' for the net value. '2','3' or '4' for the net and gross value. '5' for the net,gross value and the weight status(word[4]) for the bits representing the weight status like weight moving, weight type, scale range and so ... 

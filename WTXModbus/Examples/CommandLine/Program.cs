@@ -39,8 +39,9 @@ namespace WTXModbus
         private static ModbusConnection ModbusObj;
         private static WTX120 WTX_obj;
 
-        private static string input_IP_Adress;
-        private static ushort input_numInputs;
+        private static string ipAddress;     // IP-adress, set as the first argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
+        private static int timer_interval;   // timer interval, set as the second argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
+        private static ushort inputMode;     // inputMode (number of input bytes), set as the third argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
 
         private static ConsoleKeyInfo value_outputwords;
         private static ConsoleKeyInfo value_exitapplication;
@@ -56,13 +57,32 @@ namespace WTXModbus
         private static string str_comma_dot;
         private static double DoubleCalibrationWeight, potenz;
 
-        private static bool isCalibrating;
+        private static bool isCalibrating;  // For checking if the WTX120 device is calculating at a moment after the command has been send. If 'isCalibrating' is true, the values are not printed on the console. 
 
-        static void Main()
+        static void Main(string[] args)
         {
+            // Input for the ip adress, the timer interval and the input mode: 
+
+            ipAddress = "172.19.103.8";
+            inputMode = 6;
+            timer_interval = 200;
+
+            if (args.Length > 0)
+            {
+                ipAddress = args[0];
+            }
+            if (args.Length > 1)
+            {
+                timer_interval = Convert.ToInt32(args[1]);
+            }
+            if (args.Length > 2)
+            {
+                inputMode = Convert.ToUInt16(args[2]);
+            }
+            
             // Initialize:
 
-            Thread thread1 = new Thread(new ThreadStart(InputOutput));
+            //Thread thread1 = new Thread(new ThreadStart(InputOutput));
 
             Provider = CultureInfo.InvariantCulture;
 
@@ -75,19 +95,36 @@ namespace WTXModbus
             potenz = 0.0;
 
             Console.WriteLine("\nTCPModbus Interface for weighting terminals of HBM\nEnter e to exit the application");
+
+            /* // If you want to tip in the IP-Adress, input mode and timer interval into the console application. Input : Ip adress, number of input bytes of the WTX120 device. 
             Console.WriteLine("\n\n Please enter the IP Adress with dots (see on the device, on a tip-on note) \n Default setting: 172.19.103.8\n ");
-
-            input_IP_Adress = Console.ReadLine();
+            ipAddress = Console.ReadLine();
             Console.Clear();
-
             set_number_inputs();
+            */
 
-            ModbusObj = new ModbusConnection(input_IP_Adress);
+            do // do-while loop for the connection establishment. If the connection is established successfully, the do-while loop is left/exit. 
+            {
+                ModbusObj = new ModbusConnection(ipAddress);
 
-            WTX_obj = new WTX120(ModbusObj, 1000);
+                WTX_obj = new WTX120(ModbusObj, timer_interval);    // timer_interval is given by the VS project properties menu as an argument.
 
-            WTX_obj.getConnection.getNumOfPoints = input_numInputs;
-            WTX_obj.getConnection.Connect();
+                WTX_obj.getConnection.getNumOfPoints = inputMode; // input_numInputs; // for the input after the start of the console application, here commented. 
+                                                                  // InputMode is given by the VS project properties menu as an argument
+
+                WTX_obj.getConnection.Connect();
+
+                if (WTX_obj.getConnection.is_connected == true)
+                {
+                    Console.WriteLine("\nThe connection has been established successfully.\nPlease press any key to continue and to print the values of the WTX device...");
+                }
+                else
+                {
+                    Console.WriteLine("\nFailure : The connection has not been established successfully.\nPlease enter a correct IP Adress for the connection establishment...");
+                    ipAddress = Console.ReadLine();
+                }
+
+            } while (WTX_obj.getConnection.is_connected==false);
 
             //thread1.Start();
 
@@ -164,7 +201,7 @@ namespace WTXModbus
 
             Console.WriteLine("It is recommended to use at least '6' for writing and reading. \nDefault setting for the full application in filler mode : '38'\nPlease tip the button 'Enter' after you typed in the number '1' or '2' or...'6'");
 
-            input_numInputs = (ushort)Convert.ToInt32(Console.ReadLine());
+            inputMode = (ushort)Convert.ToInt32(Console.ReadLine());
 
         }
         /*
@@ -261,18 +298,18 @@ namespace WTXModbus
 
                     // The values are printed on the console according to the input - "numInputs": 
 
-                    if (input_numInputs == 1)
+                    if (inputMode == 1)
                     {
                         Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
                     }
                     else
-                        if (input_numInputs == 2 || input_numInputs == 3 || input_numInputs == 4)
+                        if (inputMode == 2 || inputMode == 3 || inputMode == 4)
                     {
                         Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
                         Console.WriteLine("Gross value:                   " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
                     }
                     else
-                            if (input_numInputs == 5)
+                            if (inputMode == 5)
                     {
                         Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
                         Console.WriteLine("Gross value:                   " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
@@ -289,7 +326,7 @@ namespace WTXModbus
                         Console.WriteLine("Weight moving:                 " + WTX_obj.getDataStr[5] + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
                     }
                     else
-                    if (input_numInputs == 6 || input_numInputs == 38)
+                    if (inputMode == 6 || inputMode == 38)
                     {
                         Console.WriteLine("Net value:                     " + WTX_obj.getDataStr[0] + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
                         Console.WriteLine("Gross value:                   " + WTX_obj.getDataStr[1] + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);

@@ -150,7 +150,7 @@ namespace WTXModbusGUIsimple
 
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
-            if (WTXObj.limit_status == 0)  //Check for Errors
+            if (WTXObj.limitStatus == 0)  //Check for Errors
             {
 
                 textBox2.Invoke(new Action(() =>
@@ -168,13 +168,13 @@ namespace WTXModbusGUIsimple
                 textBox2.Invoke(new Action(() =>
                 {
                     pictureBox1.Image = Properties.Resources.NE107_OutOfSpecification;
-                    textBox2.Text = ConvertLimitStatus(WTXObj.limit_status);
+                    textBox2.Text = ConvertLimitStatus(WTXObj.limitStatus);
                     textBox2.TextAlign = HorizontalAlignment.Left;
 
                 }));
             }
 
-            if (WTXObj.weight_moving != 0)
+            if (WTXObj.weightMoving != 0)
             {
                 toolStripLabel2.Text = "Moving";
             }
@@ -183,7 +183,7 @@ namespace WTXModbusGUIsimple
                 toolStripLabel2.Text = "";
             }
 
-            if (WTXObj.weight_type == 0)
+            if (WTXObj.weightType == 0)
             {
                 toolStripLabel3.Text = "Gross";
             }
@@ -319,7 +319,7 @@ namespace WTXModbusGUIsimple
         // Adapts button Gross/Net text
         private void RenameButtonGrossNet()
         {
-            if (WTXObj.weight_type == 0) //is gross?
+            if (WTXObj.weightType == 0) //is gross?
             {
                 textBox2.Invoke(new Action(() =>
                 {

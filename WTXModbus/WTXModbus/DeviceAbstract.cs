@@ -66,24 +66,24 @@ namespace WTXModbus
         public abstract string[] getDataStr { get; set; }
         public abstract ushort[] getDataUshort { get; set; }
       
-        public abstract int NetValue { get; }                   // data[1]
-        public abstract int GrossValue { get; }                 // data[2]
-        public abstract int generalWeightError { get; }       // data[3]
-        public abstract int scaleAlarmTriggered { get; }      // data[4]
-        public abstract int limitStatus { get; }               // data[5]
-        public abstract int weightMoving { get; }              // data[6]
-        public abstract int scaleSealIsOpen { get; }         // data[7]
-        public abstract int manualTare { get; }                // data[8]
-        public abstract int weightType { get; }                // data[9]
-        public abstract int scaleRange { get; }                // data[10]
-        public abstract int zeroRequired { get; }              // data[11]
-        public abstract int weightWithinTheCenterOfZero { get; }   // data[12]
-        public abstract int weightInZeroRange { get; }               // data[13]
-        public abstract int applicationMode { get; }           // data[14]
-        public abstract int decimals { get; }                   // data[15]
-        public abstract int unit { get; }                       // data[16]
-        public abstract int handshake { get; }                  // data[17]
-        public abstract int status { get; }                     // data[18]
+        public abstract int NetValue { get; }                    // data[1]
+        public abstract int GrossValue { get; }                  // data[2]
+        public abstract int generalWeightError { get; }          // data[3]
+        public abstract int scaleAlarmTriggered { get; }         // data[4]
+        public abstract int limitStatus { get; }                 // data[5]
+        public abstract int weightMoving { get; }                // data[6]
+        public abstract int scaleSealIsOpen { get; }             // data[7]
+        public abstract int manualTare { get; }                  // data[8]
+        public abstract int weightType { get; }                  // data[9]
+        public abstract int scaleRange { get; }                  // data[10]
+        public abstract int zeroRequired { get; }                // data[11]
+        public abstract int weightWithinTheCenterOfZero { get; } // data[12]
+        public abstract int weightInZeroRange { get; }           // data[13]
+        public abstract int applicationMode { get; }             // data[14]
+        public abstract int decimals { get; }                    // data[15]
+        public abstract int unit { get; }                        // data[16]
+        public abstract int handshake { get; }                   // data[17]
+        public abstract int status { get; }                      // data[18]
         
         public abstract int input1 { get; }            // data[19]
         public abstract int input2 { get; }            // data[20]
@@ -102,71 +102,70 @@ namespace WTXModbus
         public abstract int weightMemDay { get; }          // data[31]
         public abstract int weightMemMonth { get; }        // data[32]
         public abstract int weightMemYear { get; }         // data[33]
-        public abstract int weightMemSeqNumber { get; }   // data[34]
+        public abstract int weightMemSeqNumber { get; }    // data[34]
         public abstract int weightMemGross { get; }        // data[35]
         public abstract int weightMemNet { get; }          // data[36]
 
-        public abstract int coarseFlow { get; }                // data[37]
-        public abstract int fineFlow { get; }                  // data[38]
-        public abstract int ready { get; }                      // data[39]
-        public abstract int reDosing { get; }                  // data[40]
-        public abstract int emptying { get; }                   // data[41]
-        public abstract int flowError { get; }                 // data[42]
-        public abstract int alarm { get; }                      // data[43]
+        public abstract int coarseFlow { get; }            // data[37]
+        public abstract int fineFlow { get; }              // data[38]
+        public abstract int ready { get; }                 // data[39]
+        public abstract int reDosing { get; }              // data[40]
+        public abstract int emptying { get; }              // data[41]
+        public abstract int flowError { get; }             // data[42]
+        public abstract int alarm { get; }                 // data[43]
         public abstract int ADC_overUnderload { get; }     // data[44]
-        public abstract int maxDosingTime { get; }            // data[45]
-        public abstract int legalTradeOp { get; }  // data[46]
-        public abstract int toleranceErrorPlus { get; }       // data[47]
-        public abstract int toleranceErrorMinus { get; }      // data[48]
-        public abstract int statusInput1 { get; }     // data[49]
-        public abstract int generalScaleError { get; }        // data[50]
+        public abstract int maxDosingTime { get; }         // data[45]
+        public abstract int legalTradeOp { get; }          // data[46]
+        public abstract int toleranceErrorPlus { get; }    // data[47]
+        public abstract int toleranceErrorMinus { get; }   // data[48]
+        public abstract int statusInput1 { get; }          // data[49]
+        public abstract int generalScaleError { get; }     // data[50]
 
-        public abstract int fillingProcessStatus { get; }             // data[51]
-        public abstract int numberDosingResults { get; }                      // data[52]
-        public abstract int dosingResult { get; }                     // data[53]
-        public abstract int meanValueDosingResults { get; }      // data[54]
-        public abstract int standardDeviation { get; }                // data[55]
-        public abstract int totalWeight { get; }                      // data[56]
-        public abstract int fineFlowCutOffPoint { get; }           // data[57]
-        public abstract int coarseFlowCutOffPoint { get; }         // data[58]
-        public abstract int actualDosingTime { get; }                // data[59]
-        public abstract int actualCoarseFlowTime { get; }           // data[60]
-        public abstract int actualFineFlowTime { get; }             // data[61]
-        public abstract int parameterSetProduct { get; }                     // data[62]
+        public abstract int fillingProcessStatus { get; }    // data[51]
+        public abstract int numberDosingResults { get; }     // data[52]
+        public abstract int dosingResult { get; }            // data[53]
+        public abstract int meanValueDosingResults { get; }  // data[54]
+        public abstract int standardDeviation { get; }       // data[55]
+        public abstract int totalWeight { get; }             // data[56]
+        public abstract int fineFlowCutOffPoint { get; }     // data[57]
+        public abstract int coarseFlowCutOffPoint { get; }   // data[58]
+        public abstract int actualDosingTime { get; }        // data[59]
+        public abstract int actualCoarseFlowTime { get; }    // data[60]
+        public abstract int actualFineFlowTime { get; }      // data[61]
+        public abstract int parameterSetProduct { get; }     // data[62]
 
         /*
-        public abstract int Residual_flow_time { set; }
-        public abstract int target_fillingWeight { set; }
-        public abstract int coarse_flow_cut_off_pointSet { set; }
-        public abstract int fine_flow_cut_off_pointSet { set; }
-        public abstract int minimum_fine_flow { set; }
-        public abstract int optimization_of_cut_off_points{ set; }
-        public abstract int maximum_dosing_tome { set; }
-        public abstract int startWith_fine_flow { set; }
-        public abstract int coarse_lockout_time { set; }
-        public abstract int fine_lockout_time { set; }
-        public abstract int tare_mode { set; }
-        public abstract int upper_tolerance_limit { set; }
-        public abstract int lower_tolerance_limit { set; }
+        public abstract int residualFlowTime { set; }
+        public abstract int targetFillingWeight { set; }
+        public abstract int coarseFlowCutOffPointSet { set; }
+        public abstract int fineFlowCutOffPointSet { set; }
+        public abstract int minimumFineFlow { set; }
+        public abstract int optimizationOfCutOffPoints{ set; }
+        public abstract int maximumDosingTome { set; }
+        public abstract int startWithFineFlow { set; }
+        public abstract int coarseLockoutTime { set; }
+        public abstract int fineLockoutTime { set; }
+        public abstract int tareMode { set; }
+        public abstract int upperToleranceLimit { set; }
+        public abstract int lowerToleranceLimit { set; }
         public abstract int minimumStartWeight { set; }
         public abstract int emptyWeight { set; }
-        public abstract int tare_delay { set; }
-        public abstract int coarse_flow_monitoring_time { set; }
-        public abstract int coarse_flow_monitoring { set; }
-        public abstract int fine_flow_monitoring { set; }
-        public abstract int fine_flow_monitoring_time { set; }
-        public abstract int delay_time_after_fine_flow { set; }
-        public abstract int activation_time_after_fine_flow { set; }
-        public abstract int systematic_difference { set; }
-        public abstract int downards_dosing { set; }
-        public abstract int valve_control { set; }
-        public abstract int emptying_mode { set; }
+        public abstract int tareDelay { set; }
+        public abstract int coarseFlowMonitoringTime { set; }
+        public abstract int coarseFlowMonitoring { set; }
+        public abstract int fineFlowMonitoring { set; }
+        public abstract int fineFlowMonitoringTime { set; }
+        public abstract int delayTimeAfterFineFlow { set; }
+        public abstract int activationTimeAfterFineFlow { set; }
+        public abstract int systematicDifference { set; }
+        public abstract int downardsDosing { set; }
+        public abstract int valveControl { set; }
+        public abstract int emptyingMode { set; }
         */
         public abstract int calibrationWeight { set; }
-        public abstract int zero_load { set; }
-        public abstract int nominal_load { set; }
+        public abstract int zeroLoad { set; }
+        public abstract int nominalLoad { set; }
         
-        public int calibration_weight { set => throw new NotImplementedException(); }
     }
 }
 

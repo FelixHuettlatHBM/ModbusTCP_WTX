@@ -1662,14 +1662,14 @@ namespace WTXModbus
             }
         }
         
-        public override int zero_load
+        public override int zeroLoad
         {
             set
             {
 
             }
         }
-        public override int nominal_load
+        public override int nominalLoad
         {
             set
             {

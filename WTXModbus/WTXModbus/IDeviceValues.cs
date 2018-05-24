@@ -137,8 +137,8 @@ namespace Hbm.Devices.WTXModbus
 
         // Set-properties to set the output words 46, 48, 50 for the calibration:
 
-        int calibration_weight { set; }
-        int zero_load { set; }
-        int nominal_load { set; }
+        int calibrationWeight { set; }
+        int zeroLoad { set; }
+        int nominalLoad { set; }
     }
 }

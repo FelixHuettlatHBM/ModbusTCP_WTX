@@ -57,6 +57,7 @@ namespace WTXModbus
         private bool compareDataChanged;
 
         private Action<IDeviceValues> callback_obj;
+        ushort[] data_written;
 
         public override event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 
@@ -74,6 +75,7 @@ namespace WTXModbus
             this.data = new ushort[59];
             this.previousData = new ushort[59];
             this.dataStr = new string[59];
+            this.data_written = new ushort[2];
 
             this.compareDataChanged = false;
             this.isCalibrating = false;
@@ -234,30 +236,34 @@ namespace WTXModbus
             this.callback_obj(this);         // Commit the interface
         }
 
-        public void write_Zero_Calibration_Nominal_Load(char choice, int load_written, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordS32(int load_written,ushort wordNumber, Action<IDeviceValues> callbackParam)
         {
             this.callback_obj = callbackParam;
-
-            ushort[] data_written = new ushort[2];
 
             data_written[0] = (ushort)((load_written & 0xffff0000) >> 16);
             data_written[1] = (ushort)(load_written & 0x0000ffff);
 
-            if (choice == 'c')
-            {
-                getConnection.Write(46, data_written);
-            }
-            if (choice == 'z')
-            {
-                getConnection.Write(48, data_written);
-            }
-            if (choice == 'n')
-            {
-                getConnection.Write(50, data_written);
-            }
-
+            getConnection.Write(wordNumber, data_written);
         }
-        
+
+        public void writeOutputWordU08(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        {
+            this.callback_obj = callbackParam;
+
+            data_written[0] = (ushort)((load_written & 0x000000ff));
+
+            getConnection.Write(wordNumber, data_written[0]);
+        }
+
+        public void writeOutputWordU16(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        {
+            this.callback_obj = callbackParam;
+
+            data_written[0] = (ushort)((load_written & 0xffff0000) >> 16);
+
+            getConnection.Write(wordNumber, data_written[0]);
+        }
+
         // This method initializes the with the timer interval as a parameter: 
         public override void initialize_timer(int timer_interval)
         {
@@ -269,6 +275,7 @@ namespace WTXModbus
 
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
+            aTimer.Start();
         }
 
         /*
@@ -445,6 +452,12 @@ namespace WTXModbus
             if (handler2 != null)
                 handler2(this, e);
             */
+        }
+
+        public bool Calibrating
+        {
+            get { return this.isCalibrating; }
+            set { this.isCalibrating = value; }
         }
 
         public override IDeviceValues DeviceValues
@@ -1806,15 +1819,15 @@ namespace WTXModbus
             double DPreload = Preload * MultiplierMv2D;
             double DNominalLoad = DPreload + (Capacity * MultiplierMv2D);
 
-            //write reg 48, DPreload;
+            //write reg 48, DPreload;         
 
-            this.write_Zero_Calibration_Nominal_Load('z', Convert.ToInt32(DPreload), Write_DataReceived);
+            this.writeOutputWordS32(Convert.ToInt32(DPreload), 48, Write_DataReceived);
 
             this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
 
-            //write reg 50, DNominalLoad;
+            //write reg 50, DNominalLoad;          
 
-            this.write_Zero_Calibration_Nominal_Load('n', Convert.ToInt32(DNominalLoad), Write_DataReceived);
+            this.writeOutputWordS32(Convert.ToInt32(DNominalLoad), 50, Write_DataReceived);
 
             this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
 
@@ -1831,13 +1844,13 @@ namespace WTXModbus
         // This method sets the value for the nominal weight in the WTX.
         public void Calibrate(int calibrationValue, string calibration_weight_Str)
         {
-            //write reg 46, CalibrationWeight
+            //write reg 46, CalibrationWeight         
 
-            this.write_Zero_Calibration_Nominal_Load('c', calibrationValue, Write_DataReceived);          // 'c' steht für das Setzen der Calibration Weight.
+            this.writeOutputWordS32(calibrationValue, 46, Write_DataReceived);
 
             //write reg 50, 0x7FFFFFFF
 
-            this.write_Zero_Calibration_Nominal_Load('n', 0x7FFFFFFF, Write_DataReceived);       // 'n' steht für das Setzen der Nominal Load 
+            this.writeOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
 
             Console.Write(".");
 
@@ -1846,29 +1859,57 @@ namespace WTXModbus
             this.restartTimer();
 
             this.isCalibrating = true;
-
-            while (this.getDataStr[0] != calibration_weight_Str.Replace(".", ",") || this.getDataStr[1] != calibration_weight_Str.Replace(".", ","))
+            
+            // Check if the values of the WTX device are equal to the calibration value. It is also checked within a certain interval if the measurement is noisy.
+            if ((this.NetValue!=calibrationValue || this.GrossValue != calibrationValue)) 
             {
                 Console.Write("Wait for setting the nomnial weight into the WTX.");
+                this.Async_Call(0x00, DataReceivedTimer);
             }
-           
+            else
+                if(this.NetValue > (calibrationValue+10) || (this.NetValue < (calibrationValue -10)))
+                {
+                Console.Write("Wait for setting the nomnial weight into the WTX.");
+                this.Async_Call(0x00, DataReceivedTimer);
+                }
+                    else
+                     if (this.GrossValue > (calibrationValue + 10) || (this.GrossValue < (calibrationValue - 10)))
+                     {
+                          Console.Write("Wait for setting the nomnial weight into the WTX.");
+                     }
+                     else
+                     {
+                         Console.Write("Calibration failed, please restart the application");
+                     }
+
         }
 
-        // This method sets the values for dead load in the WTX.
         public void MeasureZero()
         {
             //todo: write reg 48, 0x7FFFFFFF
-
-            this.write_Zero_Calibration_Nominal_Load('z', 0x7FFFFFFF, Write_DataReceived);           // 'z' steht für das Setzen der zero load.
+            
+            this.writeOutputWordS32(0x7FFFFFFF, 48,Write_DataReceived);
 
             Console.Write(".");
 
             this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
 
-            while (this.NetValue != 0 || this.GrossValue != 0)
+            if ((this.NetValue != 0 || this.GrossValue != 0))
             {
                 Console.Write("Wait for setting the dead load into the WTX.");
+                this.Async_Call(0x00, DataReceivedTimer);
             }
+            else
+            if (this.NetValue > (0 + 10) || (this.NetValue < (0 - 10)))
+            {
+                Console.Write("Wait for setting the dead load into the WTX.");
+                this.Async_Call(0x00, DataReceivedTimer);
+            }
+            else
+              if (this.GrossValue > (0 + 10) || (this.GrossValue < (0 - 10)))
+              {
+                  Console.Write("Wait for setting the dead load into the WTX.");
+               }
         }
 
 

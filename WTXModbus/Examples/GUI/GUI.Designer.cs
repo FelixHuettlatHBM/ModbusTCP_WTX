@@ -64,6 +64,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -74,7 +75,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(0, 28);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1142, 443);
+            this.dataGridView1.Size = new System.Drawing.Size(1156, 443);
             this.dataGridView1.TabIndex = 2;
             // 
             // button1
@@ -139,7 +140,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(754, 477);
+            this.button9.Location = new System.Drawing.Point(770, 477);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(106, 23);
             this.button9.TabIndex = 10;
@@ -157,7 +158,7 @@
             this.toolStripStatusLabel5});
             this.statusStrip1.Location = new System.Drawing.Point(0, 537);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1142, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1156, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -199,7 +200,7 @@
             this.toolsToolStripMenuItem});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1142, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1156, 25);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
@@ -297,7 +298,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(754, 506);
+            this.button11.Location = new System.Drawing.Point(770, 506);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(106, 23);
             this.button11.TabIndex = 15;
@@ -306,7 +307,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(866, 506);
+            this.button12.Location = new System.Drawing.Point(882, 506);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(87, 23);
             this.button12.TabIndex = 16;
@@ -315,7 +316,7 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(959, 506);
+            this.button13.Location = new System.Drawing.Point(975, 506);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(75, 23);
             this.button13.TabIndex = 17;
@@ -324,7 +325,7 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(1042, 506);
+            this.button14.Location = new System.Drawing.Point(1056, 506);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(100, 23);
             this.button14.TabIndex = 18;
@@ -359,11 +360,22 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(0, 508);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(156, 23);
+            this.button3.TabIndex = 22;
+            this.button3.Text = "Reset calibration";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1142, 559);
+            this.ClientSize = new System.Drawing.Size(1156, 559);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -429,5 +441,6 @@
         private System.Windows.Forms.ToolStripMenuItem calculateCalibrationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calibrationWithWeightToolStripMenuItem;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

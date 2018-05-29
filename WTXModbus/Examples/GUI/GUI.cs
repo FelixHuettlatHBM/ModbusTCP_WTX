@@ -253,7 +253,6 @@ namespace WTXModbusExamples
                 dataGridView1.Rows.Add("35", "Weight memory, Seq number", "Int16", ".0-15", "IDevice_Values.weightSeqNumber", "data_str[56]", "Stored value for seq.number", "0", "-", "-", "-", "-", "-", "-", "-");                 // row 57 ; data_str_arr[56]
                 dataGridView1.Rows.Add("36", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.weightMemGross", "data_str[57]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-");     // row 58 ; data_str_arr[57]
                 dataGridView1.Rows.Add("37", "Weight memory, net", "Int16", ".0-15", "IDevice_Values.weightMemDayNet", "data_str[58]", "Stored net value", "0", "-", "-", "-", "-", "-", "-", "-");                   // row 59 ; data_str_arr[58]
-                dataGridView1.Rows.Add("-", "-", "-", "", "-", "", "-", "-", "-", "-", "-", "-", "-", "-", "-");                       // row 60 ; data_str_arr[59]
 
             }
 
@@ -522,6 +521,8 @@ namespace WTXModbusExamples
                 this.is_standard = false;
 
             // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first.      
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
             this.set_GUI_rows();
 
             WTXModbusObj.DataUpdateEvent += ValuesOnConsole;
@@ -715,6 +716,9 @@ namespace WTXModbusExamples
         // Refresh the GUI if the change between standard and filler have been made: 
         private void button10_Click_1(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+
             if (WTXModbusObj.applicationMode == 0 && this.is_standard == false)
                 this.is_standard = true;
 

@@ -92,16 +92,13 @@ namespace WTXModbusExamples
                 this.data_str_arr[i] = "0";
                 this.previous_data_ushort_arr[i] = 0;
             }
-            
-            startToolStripMenuItem_Click(this, new EventArgs());
+
+            startToolStripMenuItem_Click(this, new EventArgs());                   
 
             startIndex = 8;   // Default setting for standard mode. 
             i = 0;
             arrayLength = 0;
 
-            // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first. 
-            //initializeDataGrid();          
-            this.set_GUI_rows();
         }
 
         // This method loads the datagrid at the beginning of the application: For printing the datagrid on the beginning.
@@ -507,13 +504,29 @@ namespace WTXModbusExamples
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120).
         // The timer interval is set in the connection specific class "ModbusConnection".
+        // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first. 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WTXModbusObj.getConnection.Connect();  // First the connection to the device should be established.          
 
             this.data_str_arr = WTXModbusObj.getDataStr;
 
+            if (WTXModbusObj.applicationMode == 0 && this.is_standard == false)
+                this.is_standard = true;
+
+            else
+                if (WTXModbusObj.applicationMode == 1 && this.is_standard == true)
+                this.is_standard = false;
+            else
+                if (WTXModbusObj.applicationMode == 2 && this.is_standard == true)
+                this.is_standard = false;
+
+            // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first.      
+            this.set_GUI_rows();
+
             WTXModbusObj.DataUpdateEvent += ValuesOnConsole;
+
+
         }
 
 
@@ -698,12 +711,31 @@ namespace WTXModbusExamples
 
             //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)'.
         }
-        /*
-        private void DataGridview1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+
+        // Refresh the GUI if the change between standard and filler have been made: 
+        private void button10_Click_1(object sender, EventArgs e)
         {
-            
+            if (WTXModbusObj.applicationMode == 0 && this.is_standard == false)
+                this.is_standard = true;
+
+            else
+            if (WTXModbusObj.applicationMode == 1 && this.is_standard == true)
+                this.is_standard = false;
+            else
+            if (WTXModbusObj.applicationMode == 2 && this.is_standard == true)
+                this.is_standard = false;
+
+            // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first.      
+            this.set_GUI_rows();
+
+
         }
-        */
+        /*
+private void DataGridview1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+{
+
+}
+*/
 
     }
 }

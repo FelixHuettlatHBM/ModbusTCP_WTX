@@ -52,7 +52,6 @@ namespace WTXModbusExamples
         private WeightCalibration WeightCalObj;
 
         private string[] data_str_arr;
-        private ushort[] previous_data_ushort_arr;
 
         private bool is_standard;
 
@@ -85,12 +84,10 @@ namespace WTXModbusExamples
             InitializeComponent();   // Call of this method to initialize the form.
 
             this.data_str_arr = new string[59];
-            this.previous_data_ushort_arr = new ushort[59];
 
             for (int i = 0; i < 59; i++)
             {
                 this.data_str_arr[i] = "0";
-                this.previous_data_ushort_arr[i] = 0;
             }
 
             startToolStripMenuItem_Click(this, new EventArgs());                   
@@ -131,127 +128,125 @@ namespace WTXModbusExamples
 
             if (this.is_standard==true) // case 1) Standard application. Initializing the description and a placeholder for the values in the data grid.
             { 
-                dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "data_str[1]", "Net measured", "0", "0", "Control word", "Bit", ".0", "Taring", "0");
+                dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "data_str[1]", "Net measured", "0", "0", "Control word", "Bit", ".0", "Taring", "Button taring");                                           // row 1 ; data_str_arr[1]      
+                dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "data_str[2]", "Gross measured", "0", "0",  "Control word", "Bit", ".1", "Gross/Net",  "Button Gross/Net");                               // row 2 ; data_str_arr[2]      
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".0", "IDevice_Values.general_weight_error", "data_str[3]", "General weight error", "0", "0", "Control word", "Bit", ".6", "Zeroing",  "Button Zeroing");                    // row 3 ; data_str_arr[3]
 
-                dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "data_str[2]", "Gross measured", "0", "0",  "Control word", "Bit", ".1", "Gross/Net",  "0");                               // row 2 ; data_str_arr[1]      
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".0", "IDevice_Values.general_weight_error", "data_str[3]", "General weight error", "0", "0", "Control word", "Bit", ".6", "Zeroing",  "0");                             // row 3 ; data_str_arr[2]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".1", "IDevice_Values.scale_alarm_triggered", "data_str[4]", "Scale alarm(s) triggered", "0", "0", "Control word", "Bit", ".7", "Adjust zero", "Button Adjust zero");         // row 4 ; data_str_arr[4]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".2-3", "IDevice_Values.limit_status", "data_str[5]", "Limit status", "0", "0", "Control word", "Bit", ".8",  "Adjust nominal", "Button Adjust nominal");                    // row 5 ; data_str_arr[5]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".4", "IDevice_Values.weight_moving", "data_str[6]", "Weight moving", "0", "0",  "Control word", "Bit", ".11",  "Activate data", "Button Activate data");                     // row 6 ; data_str_arr[6]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".5", "IDevice_Values.scale_seal_is_open", "data_str[7]", "Scale seal is open", "0", "0", "Control word", "Bit", ".12",  "Manual taring", "Button Manual taring");            // row 7 ; data_str_arr[7]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".6", "IDevice_Values.manual_tare", "data_str[8]", "Manual tare", "0", "0", "Control word", "Bit", ".14",  "Record weight", "Button Record weight");                          // row 8 ; data_str_arr[8]
 
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".1", "IDevice_Values.scale_alarm_triggered", "data_str[4]", "Scale alarm(s) triggered", "0", "0", "Control word", "Bit", ".7", "Adjust zero",  "0");         // row 4 ; data_str_arr[3]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".2-3", "IDevice_Values.limit_status", "data_str[5]", "Limit status", "0", "0", "Control word", "Bit", ".8",  "Adjust nominal", "0"); // row 5 ; data_str_arr[4]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".4", "IDevice_Values.weight_moving", "data_str[6]", "Weight moving", "0", "0",  "Control word", "Bit", ".11",  "Activate data", "0");                    // row 6 ; data_str_arr[5]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".5", "IDevice_Values.scale_seal_is_open", "data_str[7]", "Scale seal is open", "0", "0", "Control word", "Bit", ".12",  "Manual taring", "0");                     // row 7 ; data_str_arr[6]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".6", "IDevice_Values.manual_tare", "data_str[8]", "Manual tare", "0", "0", "Control word", "Bit", ".14",  "Record weight", "0");          // row 8 ; data_str_arr[7]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".7", "IDevice_Values.weight_type", "data_str[9]", "Weight type", "0", "2", "Manual tare value", "S32", ".0-31",  "Manual tare value", "0-Write Output word");                               // row 9  ; data_str_arr[9]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".8-9", "IDevice_Values.scale_range", "data_str[10]", "Scale range", "0", "4", "Limit value 1", "U08", ".0-7",  "Source 1", "0-Write Output word");                                         // row 10 ; data_str_arr[10]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".10", "IDevice_Values.zero_required", "data_str[11]", "Zero required", "0", "5", "Limit value 1", "U08", ".0-7",  "Mode 1", "0-Write Output word");                                         // row 11 ; data_str_arr[11]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".11", "IDevice_Values.weight_within_the_center_of_zero", "data_str[12]", "Weight within the center of zero", "0", "6", "Limit value 1", "S32", ".0-31",  "Activation level/Lower band limit 1", "0-Write Output word");   // row 12 ; data_str_arr[12]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".12", "IDevice_Values.weight_in_zero_range", "data_str[13]", "Weight in zero range", "0", "8", "Limit value 1", "S32", ".0-31",  "Hysteresis/Band height 1", "0-Write Output word");        // row 13 ; data_str_arr[13]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".0-1", "IDevice_Values.application_mode", "data_str[14]", "Application mode", "0", "10", "Limit value 2", "U08", ".0-7",  "Source 2", "0-Write Output word");                            // row 14 ; data_str_arr[14]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".4-6", "IDevice_Values.decimals", "data_str[15]", "Decimals", "0", "11", "Limit value 2", "U08", ".0-7",  "Mode 2", "0-Write Output word");                                              // row 15 ; data_str_arr[15]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".7-8", "IDevice_Values.unit", "data_str[16]", "Unit", "0", "12", "Limit value 2", "S32", ".0-31",  "Activation level/Lower band limit 2", "0-Write Output word");                        // row 16 ; data_str_arr[16]
 
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".7", "IDevice_Values.weight_type", "data_str[9]", "Weight type", "0", "2", "Manual tare value", "S32", ".0-31",  "Manual tare value", "0");             // row 9  ; data_str_arr[8]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".8-9", "IDevice_Values.scale_range", "data_str[10]", "Scale range", "0", "4", "Limit value 1", "U08", ".0-7",  "Source 1", "0");                           // row 10 ; data_str_arr[9]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".10", "IDevice_Values.zero_required", "data_str[11]", "Zero required", "0", "5", "Limit value 1", "U08", ".0-7",  "Mode 1", "0");                         // row 11 ; data_str_arr[10]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".11", "IDevice_Values.weight_within_the_center_of_zero", "data_str[12]", "Weight within the center of zero", "0", "6", "Limit value 1", "S32", ".0-31",  "Activation level/Lower band limit 1", "0");                             // row 12 ; data_str_arr[11]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".12", "IDevice_Values.weight_in_zero_range", "data_str[13]", "Weight in zero range", "0", "8", "Limit value 1", "S32", ".0-31",  "Hysteresis/Band height 1", "0");  // row 13 ; data_str_arr[12]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".0-1", "IDevice_Values.application_mode", "data_str[14]", "Application mode", "0", "10", "Limit value 2", "U08", ".0-7",  "Source 2", "0");               // row 14 ; data_str_arr[13]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".4-6", "IDevice_Values.decimals", "data_str[15]", "Decimals", "0", "11", "Limit value 2", "U08", ".0-7",  "Mode 2", "0");                     // row 15 ; data_str_arr[14]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".7-8", "IDevice_Values.unit", "data_str[16]", "Unit", "0", "12", "Limit value 2", "S32", ".0-31",  "Activation level/Lower band limit 2", "0");       // row 16 ; data_str_arr[15]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".14", "IDevice_Values.handshake", "data_str[17]", "Handshake", "0", "14", "Limit value 2", "S32", ".0-31",  "Hysteresis/Band height 2", "0-Write Output word");            // row 17 ; data_str_arr[17] 
+                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".15", "IDevice_Values.status", "data_str[18]", "Status", "0", "16", "Limit value 3", "U08", ".0-7",  "Source 3", "0-Write Output word");                                   // row 18 ; data_str_arr[18]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".0", "IDevice_Values.input1", "data_str[19]", "Input 1", "0", "17", "Limit value 3", "U08", ".0-7",  "Mode 3", "0-Write Output word");                                            // row 19 ; data_str_arr[19]
 
-                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".14", "IDevice_Values.handshake", "data_str[17]", "Handshake", "0", "14", "Limit value 2", "S32", ".0-31",  "Hysteresis/Band height 2", "0");            // row 17 ; data_str_arr[16] 
-                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".15", "IDevice_Values.status", "data_str[18]", "Status", "0", "16", "Limit value 3", "U08", ".0-7",  "Source 3", "0");                     // row 18 ; data_str_arr[17]
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".0", "IDevice_Values.input1", "data_str[19]", "Input 1", "0", "17", "Limit value 3", "U08", ".0-7",  "Mode 3", "0");                             // row 19 ; data_str_arr[18]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".1", "IDevice_Values.input2", "data_str[20]", "Input 2", "0", "19", "Limit value 3", "S32", ".0-31",  "Activation level/Lower band limit 3", "0-Write Output word");      // row 20 ; data_str_arr[20]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".2", "IDevice_Values.input3", "data_str[21]", "Input 3", "0", "20", "Limit value 3", "S32", ".0-31",  "Hysteresis/Band height 3", "0-Write Output word");                 // row 21 ; data_str_arr[21]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".3", "IDevice_Values.input4", "data_str[22]", "Input 4", "0", "22", "Limit value 4", "U08", ".0-7",  "Source 4", "0-Write Output word");                                  // row 22 ; data_str_arr[22]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".0", "IDevice_Values.output1", "data_str[23]", "Output 1", "0", "23", "Limit value 4", "U08", ".0-7",  "Mode 4", "0-Write Output word");                                 // row 23 ; data_str_arr[23]
 
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".1", "IDevice_Values.input2", "data_str[20]", "Input 2", "0", "19", "Limit value 3", "S32", ".0-31",  "Activation level/Lower band limit 3", "0");      // row 20 ; data_str_arr[19]
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".2", "IDevice_Values.input3", "data_str[21]", "Input 3", "0", "20", "Limit value 3", "S32", ".0-31",  "Hysteresis/Band height 3", "0");                 // row 21 ; data_str_arr[20]
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".3", "IDevice_Values.input4", "data_str[22]", "Input 4", "0", "22", "Limit value 4", "U08", ".0-7",  "Source 4", "0");                                  // row 22 ; data_str_arr[21]
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".0", "IDevice_Values.output1", "data_str[23]", "Output 1", "0", "23", "Limit value 4", "U08", ".0-7",  "Mode 4", "0");                                    // row 23 ; data_str_arr[22]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".1", "IDevice_Values.output2", "data_str[24]", "Output 2", "0", "24", "Limit value 4", "S32", ".0-31",  "Activation level/Lower band limit 4", "0-Write Output word");      // row 24 ; data_str_arr[24]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".2", "IDevice_Values.output3", "data_str[25]", "Output 3", "0", "26", "Limit value 4", "S32", ".0-31",  "Hysteresis/Band height 4", "0-Write Output word");                 // row 25 ; data_str_arr[25]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".3", "IDevice_Values.output4", "data_str[26]", "Output 4", "0", "46", "Calibration weight", "S32", ".0-31",  "Calibration weight", "Tools Calibration");  // row 26 ; data_str_arr[26]
+                dataGridView1.Rows.Add("8", "Limit value 1",   "Bit", ".0", "IDevice_Values.limitValue1", "data_str[27]", "Limit value 1", "0", "48", "Zero load", "S32", ".0-31",  "Zero load", "Tools Calibration");           // row 27 ; data_str_arr[27]
 
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".1", "IDevice_Values.output2", "data_str[24]", "Output 2", "0", "24", "Limit value 4", "S32", ".0-31",  "Activation level/Lower band limit 4", "0");    // row 24 ; data_str_arr[23]
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".2", "IDevice_Values.output3", "data_str[25]", "Output 3", "0", "26", "Limit value 4", "S32", ".0-31",  "Hysteresis/Band height 4", "0");                 // row 25 ; data_str_arr[24]
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".3", "IDevice_Values.output4", "data_str[26]", "Output 4", "0", "46", "Calibration weight", "S32", ".0-31",  "Calibration weight", "0");                // row 26 ; data_str_arr[25]
-                dataGridView1.Rows.Add("8", "Limit value 1",   "Bit", ".0", "IDevice_Values.limitValue1", "data_str[27]", "Limit value 1", "0", "48", "Zero load", "S32", ".0-31",  "Zero load", "0");                                  // row 27 ; data_str_arr[26]
+                dataGridView1.Rows.Add("8", "Limit value 2", "Bit", ".1", "IDevice_Values.limitValue2", "data_str[28]", "Limit value 2", "0", "50", "Nominal load", "S32", ".0-31",  "Nominal load", "Tools Calibration");      // row 28 ; data_str_arr[28]              
+                dataGridView1.Rows.Add("8", "Limit value 3", "Bit", ".2", "IDevice_Values.limitValue3", "data_str[29]", "Limit value 3", "0", "-", "-", "-", "-", "-", "-", "-", "-", "-");                                     // row 30 ; data_str_arr[29]
+                dataGridView1.Rows.Add("8", "Limit value 4", "Bit", ".3", "IDevice_Values.limitValue4", "data_str[30]", "Limit value 4", "0", "-", "-", "-", "-", "-", "-", "-", "-");                                          // row 31 ; data_str_arr[30]
+                dataGridView1.Rows.Add("9", "Weight memory, Day", "Int16", ".0-15", "IDevice_Values.weightMemDay", "data_str[31]", "Stored value for day", "0", "-", "-", "-", "-", "-", "-", "-", "-");                        // row 32 ; data_str_arr[31]
 
-                dataGridView1.Rows.Add("8", "Limit value 2", "Bit", ".1", "IDevice_Values.limitValue2", "data_str[28]", "Limit value 2", "0", "50", "Nominal load", "S32", ".0-31",  "Nominal load", "0");                                                                                           // row 28 ; data_str_arr[27]              
-                dataGridView1.Rows.Add("8", "Limit value 3", "Bit", ".2", "IDevice_Values.limitValue3", "data_str[29]", "Limit value 3", "0", "-", "-", "-", "-", "-", "-", "-", "-", "-");           // row 30 ; data_str_arr[29]
-                dataGridView1.Rows.Add("8", "Limit value 4", "Bit", ".3", "IDevice_Values.limitValue4", "data_str[30]", "Limit value 4", "0", "-", "-", "-", "-", "-", "-", "-", "-");           // row 31 ; data_str_arr[30]
-                dataGridView1.Rows.Add("9", "Weight memory, Day", "Int16", ".0-15", "IDevice_Values.weightMemDay", "data_str[31]", "Stored value for day", "0", "-", "-", "-", "-", "-", "-", "-", "-");           // row 32 ; data_str_arr[31]
+                dataGridView1.Rows.Add("10", "Weight memory, Month", "Int16", ".0-15", "IDevice_Values.weightMemMonth", "data_str[32]", "Stored value for month", "0", "-", "-", "-", "-", "-", "-", "-", "-");   // row 33 ; data_str_arr[32]
+                dataGridView1.Rows.Add("11", "Weight memory, Year", "Int16", ".0-15", "IDevice_Values.weightMemYear", "data_str[33]", "Stored value for year", "0", "-", "-", "-", "-", "-", "-", "-", "-");      // row 34 ; data_str_arr[33]
 
-                dataGridView1.Rows.Add("10", "Weight memory, Month", "Int16", ".0-15", "IDevice_Values.weightMemMonth", "data_str[32]", "Stored value for month", "0", "-", "-", "-", "-", "-", "-", "-", "-");                      // row 33 ; data_str_arr[32]
-                dataGridView1.Rows.Add("11", "Weight memory, Year", "Int16", ".0-15", "IDevice_Values.weightMemYear", "data_str[33]", "Stored value for year", "0", "-", "-", "-", "-", "-", "-", "-", "-");                 // row 34 ; data_str_arr[33]
-
-                dataGridView1.Rows.Add("12", "Weight memory, Seq...number", "Int16", ".0-15", "IDevice_Values.weightMemSeqNumber", "data_str[34]", "Stored value for seq.number", "0", "-", "-", "-", "-", "-", "-", "-", "-");                   // row 35 ; data_str_arr[34]
-                dataGridView1.Rows.Add("13", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.weightMemGross", "data_str[35]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-", "-");     // row 36 ; data_str_arr[35]
-                dataGridView1.Rows.Add("14", "Weight memory, net", "Int16", ".0-15", "IDevice_Values.weightMemNet", "data_str[36]", "Stored net value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                     // row 37 ; data_str_arr[36]             
+                dataGridView1.Rows.Add("12", "Weight memory, Seq...number", "Int16", ".0-15", "IDevice_Values.weightMemSeqNumber", "data_str[34]", "Stored value for seq.number", "0", "-", "-", "-", "-", "-", "-", "-", "-");       // row 35 ; data_str_arr[34]
+                dataGridView1.Rows.Add("13", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.weightMemGross", "data_str[35]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                           // row 36 ; data_str_arr[35]
+                dataGridView1.Rows.Add("14", "Weight memory, net", "Int16", ".0-15", "IDevice_Values.weightMemNet", "data_str[36]", "Stored net value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                                 // row 37 ; data_str_arr[36]             
             }            
             if (this.is_standard==false) // case 2) Filler application. Initializing the description and a placeholder for the values in the data grid.
             {
-                dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "data_str[1]", "Net measured", "0", "0", "Control word", "Bit", ".0", "Taring",  "DataGrid0");                               // row 2 ; data_str_arr[1]      
-                dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "data_str[2]", "Gross measured", "0", "0", "Control word", "Bit", ".1", "Gross/Net", "DataGrid1");                             // row 3 ; data_str_arr[2]
+                dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "data_str[1]", "Net measured", "0", "0", "Control word", "Bit", ".0", "Taring",  "Button Taring");                               // row 1 ; data_str_arr[1]      
+                dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "data_str[2]", "Gross measured", "0", "0", "Control word", "Bit", ".1", "Gross/Net", "Button Gross/Net");                      // row 2 ; data_str_arr[2]
 
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".0", "IDevice_Values.general_weight_error", "data_str[3]", "General weight error", "0", "0", "Control word", "Bit", ".2", "Clear dosing results",  "DataGrid2");                             // row 3 ; data_str_arr[2]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".0", "IDevice_Values.general_weight_error", "data_str[3]", "General weight error", "0", "0", "Control word", "Bit", ".2", "Clear dosing results", "Button Clear dosing results");         // row 3 ; data_str_arr[3]        
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".1", "IDevice_Values.scale_alarm_triggered", "data_str[4]", "Scale alarm(s) triggered", "0", "0", "Control word", "Bit", ".3", "Abort dosing", "Button Abort dosing");                    // row 4 ; data_str_arr[4]
 
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".1", "IDevice_Values.scale_alarm_triggered", "data_str[4]", "Scale alarm(s) triggered", "0", "0", "Control word", "Bit", ".3", "Abort dosing",  "DataGrid3");       // row 4 ; data_str_arr[3]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".2-3", "IDevice_Values.limit_status", "data_str[5]", "Limit status", "0", "0", "Control word", "Bit", ".4", "Start dosing", "Button Start dosing");              // row 5 ; data_str_arr[5]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".4", "IDevice_Values.weight_moving", "data_str[6]", "Weight moving", "0", "0", "Control word", "Bit", ".6", "Zeroing", "Button Zeroing");                         // row 6 ; data_str_arr[6]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".5", "IDevice_Values.scale_seal_is_open", "data_str[7]", "Scale seal is open", "0", "0", "Control word", "Bit", ".7", "Adjust zero", "Button Adjust zero");       // row 7 ; data_str_arr[7]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".6", "IDevice_Values.manual_tare", "data_str[8]", "Manual tare", "0", "0", "Control word", "Bit", ".8", "Adjust nominal", "Button Adjust nominal");               // row 8 ; data_str_arr[8]
 
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".2-3", "IDevice_Values.limit_status", "data_str[5]", "Limit status", "0", "0", "Control word", "Bit", ".4", "Start dosing",  "DataGrid3");  // row 5 ; data_str_arr[4]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".4", "IDevice_Values.weight_moving", "data_str[6]", "Weight moving", "0", "0", "Control word", "Bit", ".6", "Zeroing",  "0");                         // row 6 ; data_str_arr[5]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".5", "IDevice_Values.scale_seal_is_open", "data_str[7]", "Scale seal is open", "0", "0", "Control word", "Bit", ".7", "Adjust zero",  "0");                      // row 7 ; data_str_arr[6]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".6", "IDevice_Values.manual_tare", "data_str[8]", "Manual tare", "0", "0", "Control word", "Bit", ".8", "Adjust nominal",  "0");         // row 8 ; data_str_arr[7]
-
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".7", "IDevice_Values.weight_type", "data_str[9]", "Weight type", "0", "0", "Control word", "Bit", ".11", "Activate data",  "0");                       // row 9 ;  data_str_arr[8]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".8-9", "IDevice_Values.scale_range", "data_str[10]", "Scale range", "0", "0", "Control word", "Bit", ".14", "Record weight",  "0");                      // row 10 ; data_str_arr[9]
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".10", "IDevice_Values.zero_required", "data_str[11]", "Zero required", "0", "1", "Control word", "Bit", ".15", "Manual re-dosing",  "0");                // row 11 ; data_str_arr[10]           
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".11", "IDevice_Values.weight_within_the_center_of_zero", "data_str[12]", "Weight within the center of zero", "0", "2", "Residual flow time", "U16", ".0-15",  "", "0");                      // row 12 ; data_str_arr[11]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".7", "IDevice_Values.weight_type", "data_str[9]", "Weight type", "0", "0", "Control word", "Bit", ".11", "Activate data", "Button Activate data");                         // row 9 ;  data_str_arr[9]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bits", ".8-9", "IDevice_Values.scale_range", "data_str[10]", "Scale range", "0", "0", "Control word", "Bit", ".14", "Record weight", "Button Record weight");                     // row 10 ; data_str_arr[10]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".10", "IDevice_Values.zero_required", "data_str[11]", "Zero required", "0", "1", "Control word", "Bit", ".15", "Manual re-dosing", "Button Manual re-dosing");             // row 11 ; data_str_arr[11]           
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".11", "IDevice_Values.weight_within_the_center_of_zero", "data_str[12]", "Weight within the center of zero", "0", "2", "Residual flow time", "U16", ".0-15",  "", "0-Write Output word");    // row 12 ; data_str_arr[12]
                 
-                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".12", "IDevice_Values.weight_in_zero_range", "data_str[13]", "Weight in zero range", "0", "4", "Filling weight", "S32", ".0-31",  "", "0");   // row 13 ; data_str_arr[12]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".0-1", "IDevice_Values.application_mode", "data_str[14]", "Application mode", "0", "6", "Coarse flow cut-off point", "S32", ".0-31",  "", "0");                // row 14 ; data_str_arr[13]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".4-6", "IDevice_Values.decimals", "data_str[15]", "Decimals", "0", "8", "Fine flow cut-off point", "S32", ".0-31",  "", "0");                      // row 15 ; data_str_arr[14]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".7-8", "IDevice_Values.unit", "data_str[16]", "Unit", "0", "10", "Minimum fine flow", "S32", ".0-31",  "", "0");                                            // row 16 ; data_str_arr[15]
+                dataGridView1.Rows.Add("4", "DS461-Weight status", "Bit", ".12", "IDevice_Values.weight_in_zero_range", "data_str[13]", "Weight in zero range", "0", "4", "Filling weight", "S32", ".0-31",  "", "0-Write Output word");           // row 13 ; data_str_arr[13]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".0-1", "IDevice_Values.application_mode", "data_str[14]", "Application mode", "0", "6", "Coarse flow cut-off point", "S32", ".0-31",  "", "0-Write Output word");    // row 14 ; data_str_arr[14]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".4-6", "IDevice_Values.decimals", "data_str[15]", "Decimals", "0", "8", "Fine flow cut-off point", "S32", ".0-31",  "", "0-Write Output word");                      // row 15 ; data_str_arr[15]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bits", ".7-8", "IDevice_Values.unit", "data_str[16]", "Unit", "0", "10", "Minimum fine flow", "S32", ".0-31",  "", "0-Write Output word");                                   // row 16 ; data_str_arr[16]
                 
-                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".14", "IDevice_Values.handshake", "data_str[17]", "Handshake", "0", "11", "Optimization of cut-off points", "U08", ".0-7",  "", "0");       // row 17 ; data_str_arr[16]
-                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".15", "IDevice_Values.status", "data_str[18]", "Status", "0", "12", "Maximum dosing time", "U16", ".0-15",  "", "0");         // row 18 ; data_str_arr[17]
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".0", "IDevice_Values.input1", "data_str[19]", "Input 1", "0", "13", "Start with fine flow", "U16", ".0-15",  "", "0");              // row 19 ; data_str_arr[18]
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".1", "IDevice_Values.input2", "data_str[20]", "Input 2", "0", "14", "Coarse lockout time", "U16", ".0-15",  "", "0");                      // row 20 ; data_str_arr[19] 
+                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".14", "IDevice_Values.handshake", "data_str[17]", "Handshake", "0", "11", "Optimization of cut-off points", "U08", ".0-7",  "", "0-Write Output word");  // row 17 ; data_str_arr[17]
+                dataGridView1.Rows.Add("5", "Measured value status", "Bit", ".15", "IDevice_Values.status", "data_str[18]", "Status", "0", "12", "Maximum dosing time", "U16", ".0-15",  "", "0-Write Output word");                  // row 18 ; data_str_arr[18]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".0", "IDevice_Values.input1", "data_str[19]", "Input 1", "0", "13", "Start with fine flow", "U16", ".0-15",  "", "0-Write Output word");                        // row 19 ; data_str_arr[19]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".1", "IDevice_Values.input2", "data_str[20]", "Input 2", "0", "14", "Coarse lockout time", "U16", ".0-15",  "", "0-Write Output word");                         // row 20 ; data_str_arr[20] 
                 
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".2", "IDevice_Values.input3", "data_str[21]", "Input 3", "0", "15", "Fine lockout time", "U16", ".0-35",  "", "0");                        // row 21 ; data_str_arr[20]
-                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".3", "IDevice_Values.input4", "data_str[22]", "Input 4", "0", "16", "Tare mode", "U08", ".0-7",  "", "0");                                 // row 22 ; data_str_arr[21]
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".0", "IDevice_Values.output1", "data_str[23]", "Output 1", "0", "18", "Tolerance limit +", "S32", ".0-31",  "", "0");                        // row 23 ; data_str_arr[22]
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".1", "IDevice_Values.output2", "data_str[24]", "Output 2", "0", "20", "Tolerance limit -", "S32", ".0-31",  "", "0");                      // row 24 ; data_str_arr[23]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".2", "IDevice_Values.input3", "data_str[21]", "Input 3", "0", "15", "Fine lockout time", "U16", ".0-35",  "", "0-Write Output word");                           // row 21 ; data_str_arr[21]
+                dataGridView1.Rows.Add("6", "Digital inputs", "Bit", ".3", "IDevice_Values.input4", "data_str[22]", "Input 4", "0", "16", "Tare mode", "U08", ".0-7",  "", "0-Write Output word");                                    // row 22 ; data_str_arr[22]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".0", "IDevice_Values.output1", "data_str[23]", "Output 1", "0", "18", "Tolerance limit +", "S32", ".0-31",  "", "0-Write Output word");                        // row 23 ; data_str_arr[23]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".1", "IDevice_Values.output2", "data_str[24]", "Output 2", "0", "20", "Tolerance limit -", "S32", ".0-31",  "", "0-Write Output word");                        // row 24 ; data_str_arr[24]
                 
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".2", "IDevice_Values.output3", "data_str[25]", "Output 3", "0", "22", "Minimum start weight", "S32", ".0-31",  "", "0");                   // row 25 ; data_str_arr[24]
-                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".3", "IDevice_Values.output4", "data_str[26]", "Output 4", "0", "24", "Empty weight", "S32", ".0-31",  "", "0");                           // row 26 ; data_str_arr[25] 
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".0", "IDevice_Values.coarseFlow", "data_str[27]", "Coarse flow", "0", "26", "Tare", "U16", ".0-35",  "", "0");                                   // row 27 ; data_str_arr[26]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".1", "IDevice_Values.fineFlow", "data_str[28]", "Fine flow", "0", "28", "Coarse flow monitoring time", "U16", ".0-15",  "", "0");                                                                           // row 28 ; data_str_arr[27]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".2", "IDevice_Values.output3", "data_str[25]", "Output 3", "0", "22", "Minimum start weight", "S32", ".0-31",  "", "0-Write Output word");                   // row 25 ; data_str_arr[25]
+                dataGridView1.Rows.Add("7", "Digital outputs", "Bit", ".3", "IDevice_Values.output4", "data_str[26]", "Output 4", "0", "24", "Empty weight", "S32", ".0-31",  "", "0-Write Output word");                           // row 26 ; data_str_arr[26] 
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".0", "IDevice_Values.coarseFlow", "data_str[27]", "Coarse flow", "0", "26", "Tare", "U16", ".0-35",  "", "0-Write Output word");                               // row 27 ; data_str_arr[27]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".1", "IDevice_Values.fineFlow", "data_str[28]", "Fine flow", "0", "28", "Coarse flow monitoring time", "U16", ".0-15",  "", "0-Write Output word");            // row 28 ; data_str_arr[28]
 
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".2", "IDevice_Values.ready", "data_str[29]", "Ready", "0", "30", "Coarse flow monitoring", "U32", ".0-31",  "", "0");                // row 29 ; data_str_arr[28]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".3", "IDevice_Values.reDosing", "data_str[30]", "Re-dosing", "0", "31", "Fine flow monitoring", "U32", ".0-31",  "", "0");                    // row 30 ; data_str_arr[29]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".4", "IDevice_Values.emptying", "data_str[31]", "Emptying", "0", "32", "Fine flow monitoring time", "U16", ".0-15",  "", "0");                   // row 31 ; data_str_arr[30]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".5", "IDevice_Values.flowError", "data_str[32]", "Flow error", "0", "34", "Delay time after fine flow", "U08", ".0-7",  "", "0");               // row 32 ; data_str_arr[31]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".2", "IDevice_Values.ready", "data_str[29]", "Ready", "0", "30", "Coarse flow monitoring", "U32", ".0-31",  "", "0-Write Output word");                            // row 29 ; data_str_arr[29]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".3", "IDevice_Values.reDosing", "data_str[30]", "Re-dosing", "0", "31", "Fine flow monitoring", "U32", ".0-31",  "", "0-Write Output word");                       // row 30 ; data_str_arr[30]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".4", "IDevice_Values.emptying", "data_str[31]", "Emptying", "0", "32", "Fine flow monitoring time", "U16", ".0-15",  "", "0-Write Output word");                   // row 31 ; data_str_arr[31]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".5", "IDevice_Values.flowError", "data_str[32]", "Flow error", "0", "34", "Delay time after fine flow", "U08", ".0-7",  "", "0-Write Output word");                // row 32 ; data_str_arr[32]
                
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".6", "IDevice_Values.alarm", "data_str[33]", "Alarm", "0", "36", "Activation time after fine flow", "U08", ".0-7",  "", "0");           // row 33 ; data_str_arr[32]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".7", "IDevice_Values.ADC_OverUnderload", "data_str[34]", "ADC-Overload/Underload", "0", "38", "Systematic difference", "U32", ".0-31",  "", "0");                  // row 34 ; data_str_arr[33]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".8", "IDevice_Values.maxDosingTime", "data_str[35]", "Max. Dosing time", "0", "40", "Downwards dosing", "U08", ".0-7",  "", "0");                             // row 35 ; data_str_arr[34]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".9", "IDevice_Values.legalTradeOP", "data_str[36]", "Legal-for-trade operation", "0", "46", "Valve control", "U08", ".0-7",  "", "0");               // row 36 ; data_str_arr[35]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".6", "IDevice_Values.alarm", "data_str[33]", "Alarm", "0", "36", "Activation time after fine flow", "U08", ".0-7",  "", "0-Write Output word");                                     // row 33 ; data_str_arr[33]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".7", "IDevice_Values.ADC_OverUnderload", "data_str[34]", "ADC-Overload/Underload", "0", "38", "Systematic difference", "U32", ".0-31",  "", "0-Write Output word");                 // row 34 ; data_str_arr[34]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".8", "IDevice_Values.maxDosingTime", "data_str[35]", "Max. Dosing time", "0", "40", "Downwards dosing", "U08", ".0-7",  "", "0-Write Output word");                                 // row 35 ; data_str_arr[35]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".9", "IDevice_Values.legalTradeOP", "data_str[36]", "Legal-for-trade operation", "0", "46", "Valve control", "U08", ".0-7",  "", "0-Write Output word");                            // row 36 ; data_str_arr[36]
                 
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".10", "IDevice_Values.toleranceErrorPlus", "data_str[37]", "Tolerance error +", "0", "48", "Emptying mode", "U08", ".0-7",  "", "0");                     // row 37 ; data_str_arr[36]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".11", "IDevice_Values.toleranceErrorMinus", "data_str[38]", "Tolerance error -", "0", "50", "Calibration weight", "S32", ".0-31",  "", "0");      // row 38 ; data_str_arr[37]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".14", "IDevice_Values.statusInput1", "data_str[39]", "Status digital input 1", "0", "Zero load", "S32", ".0-31", "", "", "0");                      // row 39 ; data_str_arr[38]
-                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".15", "IDevice_Values.generalScaleError", "data_str[40]", "General scale error", "0", "Nominal load", "S32", ".0-31", "", "", "0");                   // row 40 ; data_str_arr[39]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".10", "IDevice_Values.toleranceErrorPlus", "data_str[37]", "Tolerance error +", "0", "48", "Emptying mode", "U08", ".0-7",  "", "0-Write Output word");                             // row 37 ; data_str_arr[37]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".11", "IDevice_Values.toleranceErrorMinus", "data_str[38]", "Tolerance error -", "0", "50", "Calibration weight", "S32", ".0-31",  "", "Tools calibration");      // row 38 ; data_str_arr[38]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".14", "IDevice_Values.statusInput1", "data_str[39]", "Status digital input 1", "0", "Zero load", "S32", ".0-31", "", "", "Tools calibration");                    // row 39 ; data_str_arr[39]
+                dataGridView1.Rows.Add("8", "Dosing status", "Bit", ".15", "IDevice_Values.generalScaleError", "data_str[40]", "General scale error", "0", "Nominal load", "S32", ".0-31", "", "", "Tools calibration");               // row 40 ; data_str_arr[40]
                
-                dataGridView1.Rows.Add("9", "Dosing process status", "U16", ".0-15", "IDevice_Values.fillingProcessStatus", "data_str[41]", "Initializing,Pre-dosing to Analysis", "0", "-", "-", "-", "-", "-", "-", "-", "-");                     // row 41 ; data_str_arr[40]
-                dataGridView1.Rows.Add("11", "Dosing count", "U16", ".0-15", "IDevice_Values.numberDosingResults", "data_str[42]", " ", "0", "-");                                      // row 43 ; data_str_arr[42]
-                dataGridView1.Rows.Add("12", "Dosing result", "S32", ".0-31", "IDevice_Values.dosingResult", "data_str[43]", " ", "0", "-", "-", "-", "-", "-", "-", "-", "-");                                        // row 44 ; data_str_arr[43]
+                dataGridView1.Rows.Add("9", "Dosing process status", "U16", ".0-15", "IDevice_Values.fillingProcessStatus", "data_str[41]", "Initializing,Pre-dosing to Analysis", "0", "-", "-", "-", "-", "-", "-", "-", "-");     // row 41 ; data_str_arr[41]
+                dataGridView1.Rows.Add("11", "Dosing count", "U16", ".0-15", "IDevice_Values.numberDosingResults", "data_str[42]", " ", "0", "-");                                                                    // row 43 ; data_str_arr[42]
+                dataGridView1.Rows.Add("12", "Dosing result", "S32", ".0-31", "IDevice_Values.dosingResult", "data_str[43]", " ", "0", "-", "-", "-", "-", "-", "-", "-", "-");                                       // row 44 ; data_str_arr[43]
 
-                dataGridView1.Rows.Add("14", "Mean value of dosing results", "S32", ".0-31", "IDevice_Values.meanValueDosingResults", "data_str[44]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                          // row 45 ; data_str_arr[44]
-                dataGridView1.Rows.Add("16", "Standard deviation", "S32", ".0-31", "IDevice_Values.standardDeviation", "data_str[45]", " ", "0", "-", "-", "-", "-", "-", "-", "-");           // row 46 ; data_str_arr[45]
-                dataGridView1.Rows.Add("18", "Total weight", "S32", ".0-31", "IDevice_Values.totalWeight", "data_str[46]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                     // row 47 ; data_str_arr[46]
+                dataGridView1.Rows.Add("14", "Mean value of dosing results", "S32", ".0-31", "IDevice_Values.meanValueDosingResults", "data_str[44]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                   // row 45 ; data_str_arr[44]
+                dataGridView1.Rows.Add("16", "Standard deviation", "S32", ".0-31", "IDevice_Values.standardDeviation", "data_str[45]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                                  // row 46 ; data_str_arr[45]
+                dataGridView1.Rows.Add("18", "Total weight", "S32", ".0-31", "IDevice_Values.totalWeight", "data_str[46]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                                              // row 47 ; data_str_arr[46]
                 dataGridView1.Rows.Add("20", "Fine flow cut-off point", "S32", ".0-31", "IDevice_Values.fineFlowCutOffPoint", "data_str[47]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                           // row 48 ; data_str_arr[47]
                
-                dataGridView1.Rows.Add("22", "Coarse flow cut-off point", "S32", ".0-31", "IDevice_Values.coarseFlowCutOffPoint", "data_str[48]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                // row 49 ; data_str_arr[48]
-                dataGridView1.Rows.Add("24", "Actual dosing time", "U16", ".0-15", "IDevice_Values.actualDosingTime", "data_str[49]", " ", "0", "-", "-", "-", "-", "-", "-", "-");              // row 50 ; data_str_arr[49]
-                dataGridView1.Rows.Add("25", "Actual coarse flow time", "U16", ".0-15", "IDevice_Values.actualCoarseFlowTime", "data_str[50]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                     // row 51 ; data_str_arr[50]
-                dataGridView1.Rows.Add("26", "Actual fine flow time", "U16", ".0-15", "IDevice_Values.actualFineFlowTime", "data_str[51]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                // row 52 ; data_str_arr[51]
+                dataGridView1.Rows.Add("22", "Coarse flow cut-off point", "S32", ".0-31", "IDevice_Values.coarseFlowCutOffPoint", "data_str[48]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                       // row 49 ; data_str_arr[48]
+                dataGridView1.Rows.Add("24", "Actual dosing time", "U16", ".0-15", "IDevice_Values.actualDosingTime", "data_str[49]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                                   // row 50 ; data_str_arr[49]
+                dataGridView1.Rows.Add("25", "Actual coarse flow time", "U16", ".0-15", "IDevice_Values.actualCoarseFlowTime", "data_str[50]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                          // row 51 ; data_str_arr[50]
+                dataGridView1.Rows.Add("26", "Actual fine flow time", "U16", ".0-15", "IDevice_Values.actualFineFlowTime", "data_str[51]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                              // row 52 ; data_str_arr[51]
                 
-                dataGridView1.Rows.Add("27", "Parameter set (product)", "U08", ".0-7", "IDevice_Values.parameterSetProduct", "data_str[52]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                  // row 53 ; data_str_arr[52]
-                dataGridView1.Rows.Add("32", "Weight memory, Day", "Int16", ".0-15", "IDevice_Values.weightMemDay", "data_str[53]", "Stored value for day", "0", "-", "-", "-", "-", "-", "-", "-");                 // row 54 ; data_str_arr[53]
-                dataGridView1.Rows.Add("33", "Weight memory, Month", "Int16", ".0-15", "IDevice_Values.weightMemMonth", "data_str[54]", "Stored value for month", "0", "-", "-", "-", "-", "-", "-", "-");                   // row 55 ; data_str_arr[54]
+                dataGridView1.Rows.Add("27", "Parameter set (product)", "U08", ".0-7", "IDevice_Values.parameterSetProduct", "data_str[52]", " ", "0", "-", "-", "-", "-", "-", "-", "-");                            // row 53 ; data_str_arr[52]
+                dataGridView1.Rows.Add("32", "Weight memory, Day", "Int16", ".0-15", "IDevice_Values.weightMemDay", "data_str[53]", "Stored value for day", "0", "-", "-", "-", "-", "-", "-", "-");                  // row 54 ; data_str_arr[53]
+                dataGridView1.Rows.Add("33", "Weight memory, Month", "Int16", ".0-15", "IDevice_Values.weightMemMonth", "data_str[54]", "Stored value for month", "0", "-", "-", "-", "-", "-", "-", "-");            // row 55 ; data_str_arr[54]
                 dataGridView1.Rows.Add("34", "Weight memory, Year", "Int16", ".0-15", "IDevice_Values.weightMemYear", "data_str[55]", "Stored value for year", "0", "-", "-", "-", "-", "-", "-", "-");               // row 56 ; data_str_arr[55]
                
-                dataGridView1.Rows.Add("35", "Weight memory, Seq number", "Int16", ".0-15", "IDevice_Values.weightSeqNumber", "data_str[56]", "Stored value for seq.number", "0", "-", "-", "-", "-", "-", "-", "-");                 // row 57 ; data_str_arr[56]
-                dataGridView1.Rows.Add("36", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.weightMemGross", "data_str[57]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-");     // row 58 ; data_str_arr[57]
+                dataGridView1.Rows.Add("35", "Weight memory, Seq number", "Int16", ".0-15", "IDevice_Values.weightSeqNumber", "data_str[56]", "Stored value for seq.number", "0", "-", "-", "-", "-", "-", "-", "-"); // row 57 ; data_str_arr[56]
+                dataGridView1.Rows.Add("36", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.weightMemGross", "data_str[57]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-");                // row 58 ; data_str_arr[57]
                 dataGridView1.Rows.Add("37", "Weight memory, net", "Int16", ".0-15", "IDevice_Values.weightMemDayNet", "data_str[58]", "Stored net value", "0", "-", "-", "-", "-", "-", "-", "-");                   // row 59 ; data_str_arr[58]
 
             }
@@ -396,6 +391,8 @@ namespace WTXModbusExamples
 
         // This method sends a command to the device : Activate data. Command : 0x800
         // For standard and filler application.
+        // If the button 'Activate data' is clicked the output words entered into the datagrid in column ...
+        // ... 'Output:value' from word 2 to 26 (standard mode) and from word 9 to 44 are written into the WTX device. 
         private void button8_Click(object sender, EventArgs e)
         {
             // Activate data
@@ -408,34 +405,38 @@ namespace WTXModbusExamples
                 arrayLength = 17;
                 maximumIndex = 25;
             }
-            else if (WTXModbusObj.applicationMode == 1 || WTXModbusObj.applicationMode == 2)
+            else if (WTXModbusObj.applicationMode == 1 || WTXModbusObj.applicationMode == 2)  // if in filler mode: 
             {
                 startIndex  = 11;
                 arrayLength = 26;
                 maximumIndex = 36;
             }
 
-            ushort[] testValue = new ushort[arrayLength];
+            ushort[] valueArr = new ushort[arrayLength];
 
             for (int index = startIndex; index < maximumIndex; index++)  // In Filler mode: From index 11 to the maximum row number.In Standard mode: From index 8 to the maximum row number.
             {
                 i = index - startIndex;
                 
-                var test= dataGridView1.Rows[index].Cells[13].Value;
-                testValue[i] = (ushort)Convert.ToInt16(test);
+                var input= dataGridView1.Rows[index].Cells[13].Value;
+                valueArr[i] = (ushort)Convert.ToInt16(input);
 
-                if (testValue[i] != 0)
+                string inputStr = input.ToString();
+
+                // Writing values to the WTX according to the data type : S32 or U08 or U16 (given in the GUI datagrid).
+                if (inputStr != "0-Write Output word")
                 {
-                    if(dataGridView1.Rows[index].Cells[8].Value.ToString()=="S32")
-                        WTXModbusObj.writeOutputWordS32(testValue[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                    if(dataGridView1.Rows[index].Cells[10].Value.ToString()=="S32")
+                        WTXModbusObj.writeOutputWordS32(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
 
                     else
                         if(dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
-                            WTXModbusObj.writeOutputWordU08(testValue[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                            WTXModbusObj.writeOutputWordU08(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
 
                     else if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
-                              WTXModbusObj.writeOutputWordU16(testValue[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                              WTXModbusObj.writeOutputWordU16(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
                 }
+                
             }
         }
 
@@ -643,14 +644,6 @@ namespace WTXModbusExamples
             this.set_GUI_rows();
         }
         
-        // This method returns the data array with type ushort from the previous iteration. 
-        public ushort[] previous_data
-        {
-            get
-            {
-                return this.previous_data_ushort_arr;
-            }
-        }
 
         /*
          *  This method is called once the tool item "Calculate Calibration" is clicked. It creates a windows form for
@@ -658,7 +651,6 @@ namespace WTXModbusExamples
          */
         private void calculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             WTXModbusObj.stopTimer();
 
             CalcCalObj = new CalcCalibration(WTXModbusObj, WTXModbusObj.getConnection.is_connected);

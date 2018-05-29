@@ -1666,30 +1666,6 @@ namespace WTXModbus
 
 
 
-
-        public override int calibrationWeight
-        {
-            set
-            {
-
-            }
-        }
-        
-        public override int zeroLoad
-        {
-            set
-            {
-
-            }
-        }
-        public override int nominalLoad
-        {
-            set
-            {
-
-            }
-        }
-
         /* In the following methods the different options for the single integer values are used to define and
          *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
          */

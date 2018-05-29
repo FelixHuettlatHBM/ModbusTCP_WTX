@@ -133,39 +133,60 @@ namespace WTXModbus
         public abstract int actualCoarseFlowTime { get; }    // data[60]
         public abstract int actualFineFlowTime { get; }      // data[61]
         public abstract int parameterSetProduct { get; }     // data[62]
+        
+        // Output words for the standard application: Not used so far
 
         /*
-        public abstract int residualFlowTime { set; }
-        public abstract int targetFillingWeight { set; }
-        public abstract int coarseFlowCutOffPointSet { set; }
-        public abstract int fineFlowCutOffPointSet { set; }
-        public abstract int minimumFineFlow { set; }
-        public abstract int optimizationOfCutOffPoints{ set; }
-        public abstract int maximumDosingTome { set; }
-        public abstract int startWithFineFlow { set; }
-        public abstract int coarseLockoutTime { set; }
-        public abstract int fineLockoutTime { set; }
-        public abstract int tareMode { set; }
-        public abstract int upperToleranceLimit { set; }
-        public abstract int lowerToleranceLimit { set; }
-        public abstract int minimumStartWeight { set; }
-        public abstract int emptyWeight { set; }
-        public abstract int tareDelay { set; }
-        public abstract int coarseFlowMonitoringTime { set; }
-        public abstract int coarseFlowMonitoring { set; }
-        public abstract int fineFlowMonitoring { set; }
-        public abstract int fineFlowMonitoringTime { set; }
-        public abstract int delayTimeAfterFineFlow { set; }
-        public abstract int activationTimeAfterFineFlow { set; }
-        public abstract int systematicDifference { set; }
-        public abstract int downardsDosing { set; }
-        public abstract int valveControl { set; }
-        public abstract int emptyingMode { set; }
+        public int manualTareValue { get; set; }
+        public int limitValue1Input { get; set; }
+        public int limitValue1Mode { get; set; }
+        public int limitValue1ActivationLevelLowerBandLimit { get; set; }
+        public int limitValue1HysteresisBandHeight { get; set; }
+        public int limitValue2Source { get; set; }
+        public int limitValue2Mode { get; set; }
+        public int limitValue2ActivationLevelLowerBandLimit { get; set; }
+        public int limitValue2HysteresisBandHeight { get; set; }
+        public int limitValue3Source { get; set; }
+        public int limitValue3Mode { get; set; }
+        public int limitValue3ActivationLevelLowerBandLimit { get; set; }
+        public int limitValue3HysteresisBandHeight { get; set; }
+        public int limitValue4Source { get; set; }
+        public int limitValue4Mode { get; set; }
+        public int limitValue4ActivationLevelLowerBandLimit { get; set; }
+        public int limitValue4HysteresisBandHeight { get; set; }
         */
-        public abstract int calibrationWeight { set; }
-        public abstract int zeroLoad { set; }
-        public abstract int nominalLoad { set; }
-        
+
+        // Output words for the filler application: Not used so far
+
+        /*
+        public int ResidualFlowTime { get; set; }
+        public int targetFillingWeight { get; set; }
+        public int coarseFlowCutOffPointSet { get; set; }
+        public int fineFlowCutOffPointSet { get; set; }
+        public int minimumFineFlow { get; set; }
+        public int optimizationOfCutOffPoints { get; set; }
+        public int maximumDosingTime { get; set; }
+        public int startWithFineFlow { get; set; }
+        public int coarseLockoutTime { get; set; }
+        public int fineLockoutTime { get; set; }
+        public int tareMode { get; set; }
+        public int upperToleranceLimit { get; set; }
+        public int lowerToleranceLimit { get; set; }
+        public int minimumStartWeight { get; set; }
+        public int emptyWeight { get; set; }
+        public int tareDelay { get; set; }
+        public int coarseFlowMonitoringTime { get; set; }
+        public int coarseFlowMonitoring { get; set; }
+        public int fineFlowMonitoring { get; set; }
+        public int fineFlowMonitoringTime { get; set; }
+        public int delayTimeAfterFineFlow { get; set; }
+        public int activationTimeAfterFineFlow { get; set; }
+        public int systematicDifference { get; set; }
+        public int downardsDosing { get; set; }
+        public int valveControl { get; set; }
+        public int emptyingMode { get; set; }
+        */
+
     }
 }
 

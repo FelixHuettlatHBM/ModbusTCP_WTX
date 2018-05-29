@@ -103,42 +103,62 @@ namespace Hbm.Devices.WTXModbus
         int actualCoarseFlowTime { get; }     // data[60]
         int actualFineFlowTime { get; }       // data[61]
         int parameterSetProduct { get; }      // data[62]
-         
-        // Set-properties to set the output words from 9 to 44 for the filler application. 
-            
+
+        // Get-Set-properties to set the output words from 2 to 26 for the standard application. 
+
         /*
-        int ResidualFlowTime { set; }             
-        int targetFillingWeight { set; }
-        int coarseFlowCutOffPointSet { set; }
+        int manualTareValue { get; set; }
+
+        int limitValue1Input { get; set; }
+        int limitValue1Mode { get; set; }
+        int limitValue1ActivationLevelLowerBandLimit { get; set; }
+        int limitValue1HysteresisBandHeight { get; set; }
+
+        int limitValue2Source { get; set; }
+        int limitValue2Mode { get; set; }
+        int limitValue2ActivationLevelLowerBandLimit { get; set; }
+        int limitValue2HysteresisBandHeight { get; set; }
+
+        int limitValue3Source { get; set; }
+        int limitValue3Mode { get; set; }
+        int limitValue3ActivationLevelLowerBandLimit { get; set; }
+        int limitValue3HysteresisBandHeight { get; set; }
+
+        int limitValue4Source { get; set; }
+        int limitValue4Mode { get; set; }
+        int limitValue4ActivationLevelLowerBandLimit { get; set; }
+        int limitValue4HysteresisBandHeight { get; set; }
+        */
+
+        // Get-Set-properties to set the output words from 9 to 44 for the filler application. 
+
+        /*
+        int ResidualFlowTime { get; set; }             
+        int targetFillingWeight { get;  set; }
+        int coarseFlowCutOffPointSet { get;  set; }
         int fineFlowCutOffPointSet { set; }
         int minimumFineFlow { set; }
         int optimizationOfCutOffPoints { set; }
         int maximumDosingTime { set; }
-        int startWithFineFlow { set; }
-        int coarseLockoutTime { set; }
-        int fineLockoutTime { set; }
-        int tareMode { set; }
-        int upperToleranceLimit { set; }
-        int lowerToleranceLimit { set; }
-        int minimumStartWeight { set; }
-        int emptyWeight { set; }
-        int tareDelay { set; }
-        int coarseFlowMonitoringTime { set; }
-        int coarseFlowMonitoring { set; }
-        int fineFlowMonitoring { set; }
-        int fineFlowMonitoringTime { set; }
-        int delayTimeAfterFineFlow { set; }
-        int activationTimeAfterFineFlow { set; }
-        int systematicDifference { set; }
-        int downardsDosing { set; }
-        int valveControl { set; }
-        int emptyingMode { set; }
+        int startWithFineFlow { get; set; }
+        int coarseLockoutTime { get; set; }
+        int fineLockoutTime { get; set; }
+        int tareMode { get; set; }
+        int upperToleranceLimit { get; set; }
+        int lowerToleranceLimit { get; set; }
+        int minimumStartWeight { get; set; }
+        int emptyWeight { get; set; }
+        int tareDelay { get; set; }
+        int coarseFlowMonitoringTime { get; set; }
+        int coarseFlowMonitoring { get; set; }
+        int fineFlowMonitoring { get; set; }
+        int fineFlowMonitoringTime { get; set; }
+        int delayTimeAfterFineFlow { get; set; }
+        int activationTimeAfterFineFlow { get; set; }
+        int systematicDifference { get; set; }
+        int downardsDosing { get; set; }
+        int valveControl { get; set; }
+        int emptyingMode { get; set; }
         */
-
-        // Set-properties to set the output words 46, 48, 50 for the calibration:
-
-        int calibrationWeight { set; }
-        int zeroLoad { set; }
-        int nominalLoad { set; }
     }
 }

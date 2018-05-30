@@ -106,13 +106,14 @@ namespace Hbm.Devices.WTXModbus
 
         // Get-Set-properties to set the output words from 2 to 26 for the standard application. 
 
-        /*
         int manualTareValue { get; set; }
 
         int limitValue1Input { get; set; }
         int limitValue1Mode { get; set; }
         int limitValue1ActivationLevelLowerBandLimit { get; set; }
         int limitValue1HysteresisBandHeight { get; set; }
+
+        /* 
 
         int limitValue2Source { get; set; }
         int limitValue2Mode { get; set; }

@@ -133,58 +133,62 @@ namespace WTXModbus
         public abstract int actualCoarseFlowTime { get; }    // data[60]
         public abstract int actualFineFlowTime { get; }      // data[61]
         public abstract int parameterSetProduct { get; }     // data[62]
-        
+
+        public abstract int manualTareValue { get; set; }
+        public abstract int limitValue1Input { get; set; }
+        public abstract int limitValue1Mode  { get; set; }
+        public abstract int limitValue1ActivationLevelLowerBandLimit { get; set; }
+        public abstract int limitValue1HysteresisBandHeight { get; set; }
+
         // Output words for the standard application: Not used so far
 
         /*
-        public int manualTareValue { get; set; }
-        public int limitValue1Input { get; set; }
-        public int limitValue1Mode { get; set; }
-        public int limitValue1ActivationLevelLowerBandLimit { get; set; }
-        public int limitValue1HysteresisBandHeight { get; set; }
-        public int limitValue2Source { get; set; }
-        public int limitValue2Mode { get; set; }
-        public int limitValue2ActivationLevelLowerBandLimit { get; set; }
-        public int limitValue2HysteresisBandHeight { get; set; }
-        public int limitValue3Source { get; set; }
-        public int limitValue3Mode { get; set; }
-        public int limitValue3ActivationLevelLowerBandLimit { get; set; }
-        public int limitValue3HysteresisBandHeight { get; set; }
-        public int limitValue4Source { get; set; }
-        public int limitValue4Mode { get; set; }
-        public int limitValue4ActivationLevelLowerBandLimit { get; set; }
-        public int limitValue4HysteresisBandHeight { get; set; }
+         
+        public abstract int manualTareValue { get; set; }
+
+        public abstract int limitValue2Source { get; set; }
+        public abstract int limitValue2Mode { get; set; }
+        public abstract int limitValue2ActivationLevelLowerBandLimit { get; set; }
+        public abstract int limitValue2HysteresisBandHeight { get; set; }
+        public abstract int limitValue3Source { get; set; }
+        public abstract int limitValue3Mode { get; set; }
+        public abstract int limitValue3ActivationLevelLowerBandLimit { get; set; }
+        public abstract int limitValue3HysteresisBandHeight { get; set; }
+        public abstract int limitValue4Source { get; set; }
+        public abstract int limitValue4Mode { get; set; }
+        public abstract int limitValue4ActivationLevelLowerBandLimit { get; set; }
+        public abstract int limitValue4HysteresisBandHeight { get; set; }
         */
 
         // Output words for the filler application: Not used so far
 
         /*
-        public int ResidualFlowTime { get; set; }
-        public int targetFillingWeight { get; set; }
-        public int coarseFlowCutOffPointSet { get; set; }
-        public int fineFlowCutOffPointSet { get; set; }
-        public int minimumFineFlow { get; set; }
-        public int optimizationOfCutOffPoints { get; set; }
-        public int maximumDosingTime { get; set; }
-        public int startWithFineFlow { get; set; }
-        public int coarseLockoutTime { get; set; }
-        public int fineLockoutTime { get; set; }
-        public int tareMode { get; set; }
-        public int upperToleranceLimit { get; set; }
-        public int lowerToleranceLimit { get; set; }
-        public int minimumStartWeight { get; set; }
-        public int emptyWeight { get; set; }
-        public int tareDelay { get; set; }
-        public int coarseFlowMonitoringTime { get; set; }
-        public int coarseFlowMonitoring { get; set; }
-        public int fineFlowMonitoring { get; set; }
-        public int fineFlowMonitoringTime { get; set; }
-        public int delayTimeAfterFineFlow { get; set; }
-        public int activationTimeAfterFineFlow { get; set; }
-        public int systematicDifference { get; set; }
-        public int downardsDosing { get; set; }
-        public int valveControl { get; set; }
-        public int emptyingMode { get; set; }
+        public abstract int ResidualFlowTime { get; set; }
+        public abstract int targetFillingWeight { get; set; }
+        public abstract int coarseFlowCutOffPointSet { get; set; }
+        public abstract int fineFlowCutOffPointSet { get; set; }
+        public abstract int minimumFineFlow { get; set; }
+        public abstract int optimizationOfCutOffPoints { get; set; }
+        public abstract int maximumDosingTime { get; set; }
+        public abstract int startWithFineFlow { get; set; }
+        public abstract int coarseLockoutTime { get; set; }
+        public abstract int fineLockoutTime { get; set; }
+        public abstract int tareMode { get; set; }
+        public abstract int upperToleranceLimit { get; set; }
+        public abstract int lowerToleranceLimit { get; set; }
+        public abstract int minimumStartWeight { get; set; }
+        public abstract int emptyWeight { get; set; }
+        public abstract int tareDelay { get; set; }
+        public abstract int coarseFlowMonitoringTime { get; set; }
+        public abstract int coarseFlowMonitoring { get; set; }
+        public abstract int fineFlowMonitoring { get; set; }
+        public abstract int fineFlowMonitoringTime { get; set; }
+        public abstract int delayTimeAfterFineFlow { get; set; }
+        public abstract int activationTimeAfterFineFlow { get; set; }
+        public abstract int systematicDifference { get; set; }
+        public abstract int downardsDosing { get; set; }
+        public abstract int valveControl { get; set; }
+        public abstract int emptyingMode { get; set; }
         */
 
     }

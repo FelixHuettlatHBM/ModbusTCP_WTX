@@ -43,8 +43,9 @@ namespace WTXModbus
     {
         private string[] dataStr;
         private ushort[] data;
-
         private ushort[] previousData;
+
+        private ushort[] outputData; 
 
         private System.Timers.Timer aTimer;
         private bool isNet;
@@ -78,6 +79,8 @@ namespace WTXModbus
             this.dataStr      = new string[59];
             this.data_written = new ushort[2];
 
+            this.outputData = new ushort[26]; // Output data length for filler application, also used for the standard application.
+
             this.compareDataChanged = false;
             this.isCalibrating      = false;
             this.isRefreshed        = false;
@@ -88,7 +91,12 @@ namespace WTXModbus
                 this.data[i] = 0;
                 this.previousData[i] = 0;
             }
-            
+
+            for (int i = 0; i < 26; i++)
+            {
+                this.outputData[i] = 0;
+            }
+
             this.initialize_timer(paramTimerInterval);          // Initializing and starting the timer. 
         }
 
@@ -484,7 +492,6 @@ namespace WTXModbus
                 return thisValues;
             }
         }
-
 
         // The following methods set the specific, single values from the whole array "data".
 
@@ -1680,6 +1687,70 @@ namespace WTXModbus
                 return this.isNet;
             }
         }
+
+        // Get and Set-Properties of the output words, for the standard and filler application. (To be continued on 04-06-2018 for all the rest...)
+
+        public override int manualTareValue
+        {
+            get
+            {
+                return this.outputData[0];
+            }
+            set
+            {
+                this.outputData[0] = (ushort) value;
+            }
+        }
+
+        public override int limitValue1Input
+        {
+            get
+            {
+                return this.outputData[1];
+            }
+            set
+            {
+                this.outputData[1] = (ushort) value;
+            }
+        }
+
+        public override int limitValue1Mode
+        {
+            get
+            {
+                return this.outputData[2];
+            }
+            set
+            {
+                this.outputData[2] = (ushort) value;
+            }
+        }
+
+        public override int limitValue1ActivationLevelLowerBandLimit
+        {
+            get
+            {
+                return this.outputData[3];
+            }
+            set
+            {
+                this.outputData[3] = (ushort) value;
+            }
+        }
+
+        public override int limitValue1HysteresisBandHeight
+        {
+            get
+            {
+                return this.outputData[4];
+            }
+            set
+            {
+                this.outputData[4] = (ushort) value;
+            }
+        }
+
+
 
 
 

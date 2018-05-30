@@ -49,6 +49,7 @@ namespace WTXModbus
         private System.Timers.Timer aTimer;
         private bool isNet;
         private bool isCalibrating;
+        private bool isRefreshed;
 
         private ModbusConnection ModbusConnObj;
         private IDeviceValues thisValues;
@@ -72,13 +73,14 @@ namespace WTXModbus
         {
             this.ModbusConnObj = connection;
             
-            this.data = new ushort[59];
+            this.data         = new ushort[59];
             this.previousData = new ushort[59];
-            this.dataStr = new string[59];
+            this.dataStr      = new string[59];
             this.data_written = new ushort[2];
 
             this.compareDataChanged = false;
-            this.isCalibrating = false;
+            this.isCalibrating      = false;
+            this.isRefreshed        = false;
 
             for (int i = 0; i < 59; i++)
             {
@@ -435,11 +437,14 @@ namespace WTXModbus
             // The data is only invoked by the event 'DataUpdateEvent' if the data has been changed. The comparision is made by...
             // ... the arrays 'previousData' and 'data' with the boolean 
 
-            if ((this.compareDataChanged == true) || (this.isCalibrating == true))   // 'isCalibrating' indicates if a calibration is done just before ...
-                                                                                     // and the data should be send to the GUI/console and be printed out. 
+            if ((this.compareDataChanged == true) || (this.isCalibrating == true) || this.isRefreshed==true)   // 'isCalibrating' indicates if a calibration is done just before ...
+                                                                                                               // and the data should be send to the GUI/console and be printed out. 
+                                                                                                               // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
             {
                 DataUpdateEvent?.Invoke(this, e);
+
                 this.isCalibrating = false;
+                this.Refreshed = false;
             }
 
             this.previousData = this.data;
@@ -452,6 +457,18 @@ namespace WTXModbus
             if (handler2 != null)
                 handler2(this, e);
             */
+        }
+        
+        public bool Refreshed
+        {
+            get { return this.isRefreshed; }
+            set { this.isRefreshed = value; }
+        }
+
+        public bool dataChanged
+        {
+            get { return this.compareDataChanged;  }
+            set { this.compareDataChanged = value; }
         }
 
         public bool Calibrating

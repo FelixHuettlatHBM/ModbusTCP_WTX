@@ -289,12 +289,12 @@ namespace WTXModbusExamples
         // First it actualizes the tool bar menu regarding the status of the connection, afterwards it iterates the 
         // "data_str_arr" array to actualize every element of the data grid in the standard or filler application. 
         public void refresh_values()
-        {
+        {     
             if (WTXModbusObj.getConnection.is_connected == true)
                 toolStripStatusLabel1.Text = "Connected";
-            else
+            if (WTXModbusObj.getConnection.is_connected == false)
                 toolStripStatusLabel1.Text = "Disconnected";
-
+            
             toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
             toolStripStatusLabel3.Text = "Mode : " + this.data_str_arr[14];                 // index 14 refers to application mode of the Device
             toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
@@ -525,21 +525,14 @@ namespace WTXModbusExamples
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
             this.set_GUI_rows();
-
+            
             WTXModbusObj.DataUpdateEvent += ValuesOnConsole;
-
-
         }
 
 
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
             this.data_str_arr = WTXModbusObj.getDataStr;
-
-            if (WTXModbusObj.getConnection.is_connected == true)
-                toolStripStatusLabel1.Text = "Connected";
-            else
-                toolStripStatusLabel1.Text = "Disconnected";
 
             refresh_values();
         }
@@ -603,6 +596,8 @@ namespace WTXModbusExamples
                   
             Set_obj = new SettingsForm(WTXModbusObj.getConnection.IP_Adress, this.timer1.Interval, WTXModbusObj.getConnection.getNumOfPoints, this);
             Set_obj.Show();
+
+
         }
 
         // This method updates the values of the connection(IP adress, timer/sending interval, number of inputs), set in class "Settings_Form".
@@ -724,6 +719,11 @@ namespace WTXModbusExamples
             // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first.      
             this.set_GUI_rows();
 
+            WTXModbusObj.Refreshed = true;
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
 
         }
         /*

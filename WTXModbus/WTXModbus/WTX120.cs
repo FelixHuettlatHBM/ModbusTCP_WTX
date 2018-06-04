@@ -39,13 +39,13 @@ namespace WTXModbus
      *  The methods 'Calibrate' and 'Calculate' are also given in this class, which do the calibration with a nominal load, a dead load and 
      *  a individual weight.
      */
-    public class WTX120 : DeviceAbstract     
+    public class WTX120 : DeviceAbstract
     {
         private string[] dataStr;
         private ushort[] data;
         private ushort[] previousData;
 
-        private ushort[] outputData; 
+        private ushort[] outputData;
 
         private System.Timers.Timer aTimer;
         private bool isNet;
@@ -54,7 +54,7 @@ namespace WTXModbus
 
         private ModbusConnection ModbusConnObj;
         private IDeviceValues thisValues;
-        
+
         private ushort command;
         private bool compareDataChanged;
 
@@ -70,20 +70,20 @@ namespace WTXModbus
          * @param : connection - object of class ModbusConnection, which is created in the console or GUI application.
          * @param : paramTimerInterval - timer interval for the periodic reading of the values, in milli-seconds. 
          */
-        public WTX120(ModbusConnection connection, int paramTimerInterval) : base(connection,paramTimerInterval)
+        public WTX120(ModbusConnection connection, int paramTimerInterval) : base(connection, paramTimerInterval)
         {
             this.ModbusConnObj = connection;
-            
-            this.data         = new ushort[59];
+
+            this.data = new ushort[59];
             this.previousData = new ushort[59];
-            this.dataStr      = new string[59];
+            this.dataStr = new string[59];
             this.data_written = new ushort[2];
 
             this.outputData = new ushort[26]; // Output data length for filler application, also used for the standard application.
 
             this.compareDataChanged = false;
-            this.isCalibrating      = false;
-            this.isRefreshed        = false;
+            this.isCalibrating = false;
+            this.isRefreshed = false;
 
             for (int i = 0; i < 59; i++)
             {
@@ -156,7 +156,7 @@ namespace WTXModbus
          * @param : wordnumber - the word of the register which should be rewritten. commandParam - the command, 0x00=Reading everthying else is Writing
          * @param : callbackParam - the callback method which is called once the writing is finished (not used here for the synchronous reading). 
          */
-        public void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceValues> callbackParam)     
+        public void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceValues> callbackParam)
         {
             this.command = commandParam;
             this.callback_obj = callbackParam;
@@ -167,7 +167,7 @@ namespace WTXModbus
             else
             {
                 // (1) Sending of a command:        
-                getConnection.Write(wordNumber, this.command);  
+                getConnection.Write(wordNumber, this.command);
 
                 while (this.handshake == 0)
                 {
@@ -177,7 +177,7 @@ namespace WTXModbus
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.handshake == 1)
                 {
-                    getConnection.Write(wordNumber, 0x00);    
+                    getConnection.Write(wordNumber, 0x00);
                 }
                 while (this.handshake == 1)
                 {
@@ -202,7 +202,7 @@ namespace WTXModbus
 
             return this;
         }
-        
+
         public IDeviceValues syncReadData()
         {
             getConnection.Read();
@@ -246,7 +246,8 @@ namespace WTXModbus
             this.callback_obj(this);         // Commit the interface
         }
 
-        public void writeOutputWordS32(int load_written,ushort wordNumber, Action<IDeviceValues> callbackParam)
+
+        public void writeOutputWordS32(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
         {
             this.callback_obj = callbackParam;
 
@@ -254,7 +255,9 @@ namespace WTXModbus
             data_written[1] = (ushort)(load_written & 0x0000ffff);
 
             getConnection.Write(wordNumber, data_written);
+
         }
+
 
         public void writeOutputWordU08(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
         {
@@ -445,9 +448,9 @@ namespace WTXModbus
             // The data is only invoked by the event 'DataUpdateEvent' if the data has been changed. The comparision is made by...
             // ... the arrays 'previousData' and 'data' with the boolean 
 
-            if ((this.compareDataChanged == true) || (this.isCalibrating == true) || this.isRefreshed==true)   // 'isCalibrating' indicates if a calibration is done just before ...
-                                                                                                               // and the data should be send to the GUI/console and be printed out. 
-                                                                                                               // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
+            if ((this.compareDataChanged == true) || (this.isCalibrating == true) || this.isRefreshed == true)   // 'isCalibrating' indicates if a calibration is done just before ...
+                                                                                                                 // and the data should be send to the GUI/console and be printed out. 
+                                                                                                                 // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
             {
                 DataUpdateEvent?.Invoke(this, e);
 
@@ -466,7 +469,7 @@ namespace WTXModbus
                 handler2(this, e);
             */
         }
-        
+
         public bool Refreshed
         {
             get { return this.isRefreshed; }
@@ -475,7 +478,7 @@ namespace WTXModbus
 
         public bool dataChanged
         {
-            get { return this.compareDataChanged;  }
+            get { return this.compareDataChanged; }
             set { this.compareDataChanged = value; }
         }
 
@@ -564,7 +567,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limitStatus
+        public override int limitStatus
         {
             get
             {
@@ -598,7 +601,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int scaleSealIsOpen
+        public override int scaleSealIsOpen
         {
             get
             {
@@ -615,7 +618,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int manualTare
+        public override int manualTare
         {
             get
             {
@@ -632,7 +635,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightType
+        public override int weightType
         {
             get
             {
@@ -649,7 +652,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int scaleRange
+        public override int scaleRange
         {
             get
             {
@@ -666,7 +669,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int zeroRequired
+        public override int zeroRequired
         {
             get
             {
@@ -683,7 +686,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightWithinTheCenterOfZero
+        public override int weightWithinTheCenterOfZero
         {
             get
             {
@@ -700,7 +703,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightInZeroRange
+        public override int weightInZeroRange
         {
             get
             {
@@ -717,7 +720,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int applicationMode
+        public override int applicationMode
         {
             get
             {
@@ -734,7 +737,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int decimals
+        public override int decimals
         {
             get
             {
@@ -751,7 +754,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int unit
+        public override int unit
         {
             get
             {
@@ -768,7 +771,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int handshake
+        public override int handshake
         {
             get
             {
@@ -785,7 +788,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int status
+        public override int status
         {
             get
             {
@@ -803,7 +806,7 @@ namespace WTXModbus
             }
         }
 
-        public override  string[] getDataStr
+        public override string[] getDataStr
         {
             get
             {
@@ -815,7 +818,7 @@ namespace WTXModbus
             }
         }
 
-        public override  int input1
+        public override int input1
         {
             get
             {
@@ -834,7 +837,7 @@ namespace WTXModbus
 
 
         }
-        public override  int input2
+        public override int input2
         {
             get
             {
@@ -851,7 +854,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int input3
+        public override int input3
         {
             get
             {
@@ -868,7 +871,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int input4
+        public override int input4
         {
             get
             {
@@ -902,7 +905,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int output2
+        public override int output2
         {
             get
             {
@@ -919,7 +922,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int output3
+        public override int output3
         {
             get
             {
@@ -936,7 +939,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int output4
+        public override int output4
         {
             get
             {
@@ -970,7 +973,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limitStatus2
+        public override int limitStatus2
         {
             get
             {
@@ -987,7 +990,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limitStatus3
+        public override int limitStatus3
         {
             get
             {
@@ -1004,7 +1007,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int limitStatus4
+        public override int limitStatus4
         {
             get
             {
@@ -1021,7 +1024,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightMemDay
+        public override int weightMemDay
         {
             get
             {
@@ -1038,7 +1041,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightMemMonth
+        public override int weightMemMonth
         {
             get
             {
@@ -1055,7 +1058,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightMemYear
+        public override int weightMemYear
         {
             get
             {
@@ -1072,7 +1075,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightMemSeqNumber
+        public override int weightMemSeqNumber
         {
             get
             {
@@ -1089,7 +1092,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightMemGross
+        public override int weightMemGross
         {
             get
             {
@@ -1106,7 +1109,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int weightMemNet
+        public override int weightMemNet
         {
             get
             {
@@ -1123,7 +1126,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int coarseFlow
+        public override int coarseFlow
         {
             get
             {
@@ -1140,7 +1143,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int fineFlow
+        public override int fineFlow
         {
             get
             {
@@ -1157,7 +1160,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int ready
+        public override int ready
         {
             get
             {
@@ -1174,7 +1177,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int reDosing
+        public override int reDosing
         {
             get
             {
@@ -1191,7 +1194,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int emptying
+        public override int emptying
         {
             get
             {
@@ -1208,7 +1211,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int flowError
+        public override int flowError
         {
             get
             {
@@ -1225,7 +1228,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int alarm
+        public override int alarm
         {
             get
             {
@@ -1242,7 +1245,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int ADC_overUnderload
+        public override int ADC_overUnderload
         {
             get
             {
@@ -1259,7 +1262,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int maxDosingTime
+        public override int maxDosingTime
         {
             get
             {
@@ -1276,7 +1279,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int legalTradeOp
+        public override int legalTradeOp
         {
             get
             {
@@ -1293,7 +1296,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int toleranceErrorPlus
+        public override int toleranceErrorPlus
         {
             get
             {
@@ -1310,7 +1313,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int toleranceErrorMinus
+        public override int toleranceErrorMinus
         {
             get
             {
@@ -1327,7 +1330,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int statusInput1
+        public override int statusInput1
         {
             get
             {
@@ -1344,7 +1347,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int generalScaleError
+        public override int generalScaleError
         {
             get
             {
@@ -1361,7 +1364,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int fillingProcessStatus
+        public override int fillingProcessStatus
         {
             get
             {
@@ -1378,7 +1381,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int numberDosingResults
+        public override int numberDosingResults
         {
             get
             {
@@ -1395,7 +1398,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int dosingResult
+        public override int dosingResult
         {
             get
             {
@@ -1412,7 +1415,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int meanValueDosingResults
+        public override int meanValueDosingResults
         {
             get
             {
@@ -1429,7 +1432,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int standardDeviation
+        public override int standardDeviation
         {
             get
             {
@@ -1446,7 +1449,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int totalWeight
+        public override int totalWeight
         {
             get
             {
@@ -1497,7 +1500,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int actualDosingTime
+        public override int actualDosingTime
         {
             get
             {
@@ -1514,7 +1517,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int actualCoarseFlowTime
+        public override int actualCoarseFlowTime
         {
             get
             {
@@ -1531,7 +1534,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override  int actualFineFlowTime
+        public override int actualFineFlowTime
         {
             get
             {
@@ -1698,7 +1701,7 @@ namespace WTXModbus
             }
             set
             {
-                this.outputData[0] = (ushort) value;
+                this.outputData[0] = (ushort)value;
             }
         }
 
@@ -1710,7 +1713,7 @@ namespace WTXModbus
             }
             set
             {
-                this.outputData[1] = (ushort) value;
+                this.outputData[1] = (ushort)value;
             }
         }
 
@@ -1722,7 +1725,7 @@ namespace WTXModbus
             }
             set
             {
-                this.outputData[2] = (ushort) value;
+                this.outputData[2] = (ushort)value;
             }
         }
 
@@ -1734,7 +1737,7 @@ namespace WTXModbus
             }
             set
             {
-                this.outputData[3] = (ushort) value;
+                this.outputData[3] = (ushort)value;
             }
         }
 
@@ -1746,9 +1749,293 @@ namespace WTXModbus
             }
             set
             {
-                this.outputData[4] = (ushort) value;
+                this.outputData[4] = (ushort)value;
             }
         }
+
+
+
+        public override int limitValue2Source
+        {
+            get
+            {
+                return this.outputData[5];
+            }
+            set
+            {
+                this.outputData[5] = (ushort)value;
+            }
+        }
+
+        public override int limitValue2Mode
+        {
+            get
+            {
+                return this.outputData[6];
+            }
+            set
+            {
+                this.outputData[6] = (ushort)value;
+            }
+        }
+
+        public override int limitValue2ActivationLevelLowerBandLimit
+        {
+            get
+            {
+                return this.outputData[7];
+            }
+            set
+            {
+                this.outputData[7] = (ushort)value;
+            }
+        }
+
+        public override int limitValue2HysteresisBandHeight
+        {
+            get
+            {
+                return this.outputData[8];
+            }
+            set
+            {
+                this.outputData[8] = (ushort)value;
+            }
+        }
+
+
+
+        public override int limitValue3Source
+        {
+            get
+            {
+                return this.outputData[9];
+            }
+            set
+            {
+                this.outputData[9] = (ushort)value;
+            }
+        }
+
+        public override int limitValue3Mode
+        {
+            get
+            {
+                return this.outputData[10];
+            }
+            set
+            {
+                this.outputData[10] = (ushort)value;
+            }
+        }
+
+        public override int limitValue3ActivationLevelLowerBandLimit
+        {
+            get
+            {
+                return this.outputData[11];
+            }
+            set
+            {
+                this.outputData[11] = (ushort)value;
+            }
+        }
+
+        public override int limitValue3HysteresisBandHeight
+        {
+            get
+            {
+                return this.outputData[12];
+            }
+            set
+            {
+                this.outputData[12] = (ushort)value;
+            }
+        }
+
+
+        public override int limitValue4Source
+        {
+            get
+            {
+                return this.outputData[13];
+            }
+            set
+            {
+                this.outputData[13] = (ushort)value;
+            }
+        }
+
+        public override int limitValue4Mode
+        {
+            get
+            {
+                return this.outputData[14];
+            }
+            set
+            {
+                this.outputData[14] = (ushort)value;
+            }
+        }
+
+        public override int limitValue4ActivationLevelLowerBandLimit
+        {
+            get
+            {
+                return this.outputData[15];
+            }
+            set
+            {
+                this.outputData[15] = (ushort)value;
+            }
+        }
+
+        public override int limitValue4HysteresisBandHeight
+        {
+            get
+            {
+                return this.outputData[16];
+            }
+            set
+            {
+                this.outputData[16] = (ushort)value;
+            }
+        }
+
+
+        public override int ResidualFlowTime
+        {
+            get { return this.outputData[17]; }
+            set { this.outputData[17] = (ushort)value; }
+        }
+
+        public override int targetFillingWeight{
+            get { return this.outputData[18];}
+            set { this.outputData[18] = (ushort)value; }
+        }
+
+        public override int coarseFlowCutOffPointSet{
+            get { return this.outputData[19];}
+            set { this.outputData[19] = (ushort) value; }
+        }
+
+        public override int fineFlowCutOffPointSet
+        {
+            get { return this.outputData[20];}
+            set { this.outputData[20] = (ushort) value; }
+        }
+        public override int minimumFineFlow
+        {
+            get { return this.outputData[21];}
+            set { this.outputData[21] = (ushort) value; }
+        }
+
+        public override int optimizationOfCutOffPoints
+        {
+            get { return this.outputData[22];}
+            set { this.outputData[22] = (ushort) value; }
+        }
+        public override int maximumDosingTime
+        {
+            get { return this.outputData[23];}
+            set { this.outputData[23] = (ushort) value; }
+        }
+        public override int startWithFineFlow
+        {
+            get { return this.outputData[24];}
+            set { this.outputData[24] = (ushort) value; }
+        }
+        public override int coarseLockoutTime
+        {
+            get { return this.outputData[25];}
+            set { this.outputData[25] = (ushort) value; }
+        }
+        public override int fineLockoutTime
+        {
+            get { return this.outputData[26];}
+            set { this.outputData[26] = (ushort) value; }
+        }
+        public override int tareMode
+        {
+            get { return this.outputData[27];}
+            set { this.outputData[27] = (ushort) value; }
+        }
+        public override int upperToleranceLimit
+        {
+            get { return this.outputData[28];}
+            set { this.outputData[28] = (ushort) value; }
+        }
+        public override int lowerToleranceLimit
+        {
+            get { return this.outputData[29];}
+            set { this.outputData[29] = (ushort) value; }
+        }
+        public override int minimumStartWeight
+        {
+            get { return this.outputData[30];}
+            set { this.outputData[30] = (ushort) value; }
+        }
+        public override int emptyWeight
+        {
+            get { return this.outputData[31];}
+            set { this.outputData[31] = (ushort) value; }
+        }
+        public override int tareDelay
+        {
+            get { return this.outputData[32];}
+            set { this.outputData[32] = (ushort) value; }
+        }
+        public override int coarseFlowMonitoringTime
+        {
+            get { return this.outputData[33];}
+            set { this.outputData[33] = (ushort) value; }
+        }
+        public override int coarseFlowMonitoring
+        {
+            get { return this.outputData[34];}
+            set { this.outputData[34] = (ushort) value; }
+        }
+        public override int fineFlowMonitoring
+        {
+            get { return this.outputData[35];}
+            set { this.outputData[35] = (ushort) value; }
+        }
+        public override int fineFlowMonitoringTime
+        {
+            get { return this.outputData[36];}
+            set { this.outputData[36] = (ushort) value; }
+        }
+        public override int delayTimeAfterFineFlow
+        {
+            get { return this.outputData[37];}
+            set { this.outputData[37] = (ushort) value; }
+        }
+        public override int activationTimeAfterFineFlow
+        {
+            get { return this.outputData[38];}
+            set { this.outputData[38] = (ushort) value; }
+        }
+        public override int systematicDifference
+        {
+            get { return this.outputData[39];}
+            set { this.outputData[39] = (ushort) value; }
+        }
+        public override int downardsDosing
+        {
+            get { return this.outputData[40];}
+            set { this.outputData[40] = (ushort) value; }
+        }
+        public override int valveControl
+        {
+            get { return this.outputData[41];}
+            set { this.outputData[41] = (ushort) value; }
+        }
+        public override int emptyingMode
+        {
+            get { return this.outputData[42];}
+            set { this.outputData[42] = (ushort) value; }
+        }
+
 
 
 

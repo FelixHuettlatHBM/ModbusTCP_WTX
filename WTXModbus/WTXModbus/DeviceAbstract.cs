@@ -142,10 +142,6 @@ namespace WTXModbus
 
         // Output words for the standard application: Not used so far
 
-        /*
-         
-        public abstract int manualTareValue { get; set; }
-
         public abstract int limitValue2Source { get; set; }
         public abstract int limitValue2Mode { get; set; }
         public abstract int limitValue2ActivationLevelLowerBandLimit { get; set; }
@@ -158,11 +154,10 @@ namespace WTXModbus
         public abstract int limitValue4Mode { get; set; }
         public abstract int limitValue4ActivationLevelLowerBandLimit { get; set; }
         public abstract int limitValue4HysteresisBandHeight { get; set; }
-        */
-
+ 
         // Output words for the filler application: Not used so far
 
-        /*
+        
         public abstract int ResidualFlowTime { get; set; }
         public abstract int targetFillingWeight { get; set; }
         public abstract int coarseFlowCutOffPointSet { get; set; }
@@ -189,7 +184,7 @@ namespace WTXModbus
         public abstract int downardsDosing { get; set; }
         public abstract int valveControl { get; set; }
         public abstract int emptyingMode { get; set; }
-        */
+        
 
     }
 }

@@ -112,9 +112,7 @@ namespace Hbm.Devices.WTXModbus
         int limitValue1Mode { get; set; }
         int limitValue1ActivationLevelLowerBandLimit { get; set; }
         int limitValue1HysteresisBandHeight { get; set; }
-
-        /* 
-
+    
         int limitValue2Source { get; set; }
         int limitValue2Mode { get; set; }
         int limitValue2ActivationLevelLowerBandLimit { get; set; }
@@ -129,11 +127,11 @@ namespace Hbm.Devices.WTXModbus
         int limitValue4Mode { get; set; }
         int limitValue4ActivationLevelLowerBandLimit { get; set; }
         int limitValue4HysteresisBandHeight { get; set; }
-        */
+        
 
         // Get-Set-properties to set the output words from 9 to 44 for the filler application. 
 
-        /*
+        
         int ResidualFlowTime { get; set; }             
         int targetFillingWeight { get;  set; }
         int coarseFlowCutOffPointSet { get;  set; }
@@ -160,6 +158,6 @@ namespace Hbm.Devices.WTXModbus
         int downardsDosing { get; set; }
         int valveControl { get; set; }
         int emptyingMode { get; set; }
-        */
+        
     }
 }

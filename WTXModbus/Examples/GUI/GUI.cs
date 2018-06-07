@@ -540,99 +540,142 @@ namespace WTXModbusExamples
         {
             if (e.ColumnIndex == 13)
             {
-                ushort value = (ushort)Convert.ToInt16(dataGridView1[e.ColumnIndex, e.RowIndex].Value); // For the value which should be written to the WTX device 
+                ushort value = 0;
+                ushort index = 0;
+                bool inputFormatIsRight = false;
 
-                ushort index = (ushort)Convert.ToInt16(dataGridView1[8, e.RowIndex].Value); // For the index, the word number which should be written to the WTX device 
-
-                // For the standard application: 
-                if (this.is_standard == true)   
+                if (this.is_standard == true)
                 {
                     if (e.RowIndex >= 8 && e.RowIndex <= 24)
                     {
-                        MessageBox.Show(value.ToString());  // for test purpose only.
-
-                        // If the specific cell of the row 8,9,10 till row 24 has changed, write the value to the specific properties. 
-
-                        switch(e.RowIndex)
+                        try
                         {
-                            case  8: WTXModbusObj.manualTareValue  = value;                         break;
-                            case  9: WTXModbusObj.limitValue1Input = value;                         break;
-                            case 10: WTXModbusObj.limitValue1Mode  = value;                         break;
-                            case 11: WTXModbusObj.limitValue1ActivationLevelLowerBandLimit = value; break;
-                            case 12: WTXModbusObj.limitValue1HysteresisBandHeight = value;          break;
-                            case 13: WTXModbusObj.limitValue2Source = value;                        break;
-                            case 14: WTXModbusObj.limitValue2Mode = value;                          break;
-                            case 15: WTXModbusObj.limitValue2ActivationLevelLowerBandLimit = value; break;
-                            case 16: WTXModbusObj.limitValue2HysteresisBandHeight = value;          break;
-
-                            case 17: WTXModbusObj.limitValue3Source = value;                        break;
-                            case 18: WTXModbusObj.limitValue3Mode   = value;                        break;
-                            case 19: WTXModbusObj.limitValue3ActivationLevelLowerBandLimit = value; break;
-                            case 20: WTXModbusObj.limitValue3HysteresisBandHeight = value;          break;
-                            case 21: WTXModbusObj.limitValue4Source = value;                        break;
-                            case 22: WTXModbusObj.limitValue4Mode = value;                          break;
-                            case 23: WTXModbusObj.limitValue4ActivationLevelLowerBandLimit = value; break;
-                            case 24: WTXModbusObj.limitValue4HysteresisBandHeight = value;          break;
-
-                            default:  break;
+                            value = (ushort)Convert.ToInt16(dataGridView1[e.ColumnIndex, e.RowIndex].Value); // For the value which should be written to the WTX device 
+                            inputFormatIsRight = true;
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Die Eingabe hat das falsche Format. Bitte geben Sie eine Zahl ein.");
+                            inputFormatIsRight = false;
                         }
                     }
+                    else
+                        MessageBox.Show("Bitte in den vorgegebenen Feldern eingeben für standard application.");
                 }
-                else if(this.is_standard==false)  // for the filler application. 
+
+                if (this.is_standard == false)
                 {
                     if (e.RowIndex >= 11 && e.RowIndex <= 36)
                     {
-                        MessageBox.Show(value.ToString());  // for test purpose only.
-                        switch (e.RowIndex)
+                        try
                         {
-                            case 11: WTXModbusObj.ResidualFlowTime = value; break;
-                            case 12: WTXModbusObj.targetFillingWeight = value; break;
-                            case 13: WTXModbusObj.coarseFlowCutOffPointSet = value; break;
-                            case 14: WTXModbusObj.fineFlowCutOffPointSet = value; break;
-                            case 15: WTXModbusObj.minimumFineFlow = value; break;
-                            case 16: WTXModbusObj.optimizationOfCutOffPoints = value; break;
-
-                            case 17: WTXModbusObj.maximumDosingTime = value; break;
-                            case 18: WTXModbusObj.startWithFineFlow = value; break;
-                            case 19: WTXModbusObj.coarseLockoutTime = value; break;
-                            case 20: WTXModbusObj.fineLockoutTime = value; break;
-                            case 21: WTXModbusObj.tareMode = value; break;
-                            case 22: WTXModbusObj.upperToleranceLimit = value; break;
-                            case 23: WTXModbusObj.lowerToleranceLimit = value; break;
-                            case 24: WTXModbusObj.minimumStartWeight = value; break;
-
-                            case 25: WTXModbusObj.emptyWeight = value; break;
-                            case 26: WTXModbusObj.tareDelay = value; break;
-                            case 27: WTXModbusObj.coarseFlowMonitoringTime = value; break;
-                            case 28: WTXModbusObj.coarseFlowMonitoring = value; break;
-                            case 29: WTXModbusObj.fineFlowMonitoring = value; break;
-                            case 30: WTXModbusObj.fineFlowMonitoringTime = value; break;
-
-                            case 31: WTXModbusObj.delayTimeAfterFineFlow = value; break;
-                            case 32: WTXModbusObj.activationTimeAfterFineFlow = value; break;
-                            case 33: WTXModbusObj.systematicDifference = value; break;
-                            case 34: WTXModbusObj.downardsDosing = value; break;
-                            case 35: WTXModbusObj.valveControl = value; break;
-                            case 36: WTXModbusObj.emptyingMode = value; break;
-
+                            value = (ushort)Convert.ToInt16(dataGridView1[e.ColumnIndex, e.RowIndex].Value); // For the value which should be written to the WTX device 
+                            inputFormatIsRight = true;
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Die Eingabe hat das falsche Format. Bitte geben Sie eine Zahl ein.");
+                            inputFormatIsRight = false;
                         }
                     }
+                    else
+                        MessageBox.Show("Bitte in den vorgegebenen Feldern eingeben für filler application.");
                 }
 
-                // For the filler application: 
+                if (inputFormatIsRight == true)
+                {
+                    index = (ushort)Convert.ToInt16(dataGridView1[8, e.RowIndex].Value); // For the index, the word number which should be written to the WTX device 
 
-                // According to the data type (given in the data grid) the words are written as type 'S32', 'U08' or 'U16' to the WTX. 
+                    // For the standard application: 
+                    if (this.is_standard == true)
+                    {
+                        if (e.RowIndex >= 8 && e.RowIndex <= 24)
+                        {
+                            MessageBox.Show(value.ToString());  // for test purpose only.
 
-                if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "S32")
-                    WTXModbusObj.writeOutputWordS32(value, index, Write_DataReceived);
-                else
-                 if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
-                    WTXModbusObj.writeOutputWordU08(value, index, Write_DataReceived);
-                else 
-                if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
-                    WTXModbusObj.writeOutputWordU16(value, index, Write_DataReceived);
+                            // If the specific cell of the row 8,9,10 till row 24 has changed, write the value to the specific properties. 
 
-            }
+                            switch (e.RowIndex)
+                            {
+                                case 8: WTXModbusObj.manualTareValue = value; break;
+                                case 9: WTXModbusObj.limitValue1Input = value; break;
+                                case 10: WTXModbusObj.limitValue1Mode = value; break;
+                                case 11: WTXModbusObj.limitValue1ActivationLevelLowerBandLimit = value; break;
+                                case 12: WTXModbusObj.limitValue1HysteresisBandHeight = value; break;
+                                case 13: WTXModbusObj.limitValue2Source = value; break;
+                                case 14: WTXModbusObj.limitValue2Mode = value; break;
+                                case 15: WTXModbusObj.limitValue2ActivationLevelLowerBandLimit = value; break;
+                                case 16: WTXModbusObj.limitValue2HysteresisBandHeight = value; break;
+
+                                case 17: WTXModbusObj.limitValue3Source = value; break;
+                                case 18: WTXModbusObj.limitValue3Mode = value; break;
+                                case 19: WTXModbusObj.limitValue3ActivationLevelLowerBandLimit = value; break;
+                                case 20: WTXModbusObj.limitValue3HysteresisBandHeight = value; break;
+                                case 21: WTXModbusObj.limitValue4Source = value; break;
+                                case 22: WTXModbusObj.limitValue4Mode = value; break;
+                                case 23: WTXModbusObj.limitValue4ActivationLevelLowerBandLimit = value; break;
+                                case 24: WTXModbusObj.limitValue4HysteresisBandHeight = value; break;
+
+                                default: break;
+                            }
+                        }
+                    }
+                    else if (this.is_standard == false)  // for the filler application. 
+                    {
+                        if (e.RowIndex >= 11 && e.RowIndex <= 36)
+                        {
+                            MessageBox.Show(value.ToString());  // for test purpose only.
+                            switch (e.RowIndex)
+                            {
+                                case 11: WTXModbusObj.ResidualFlowTime = value; break;
+                                case 12: WTXModbusObj.targetFillingWeight = value; break;
+                                case 13: WTXModbusObj.coarseFlowCutOffPointSet = value; break;
+                                case 14: WTXModbusObj.fineFlowCutOffPointSet = value; break;
+                                case 15: WTXModbusObj.minimumFineFlow = value; break;
+                                case 16: WTXModbusObj.optimizationOfCutOffPoints = value; break;
+
+                                case 17: WTXModbusObj.maximumDosingTime = value; break;
+                                case 18: WTXModbusObj.startWithFineFlow = value; break;
+                                case 19: WTXModbusObj.coarseLockoutTime = value; break;
+                                case 20: WTXModbusObj.fineLockoutTime = value; break;
+                                case 21: WTXModbusObj.tareMode = value; break;
+                                case 22: WTXModbusObj.upperToleranceLimit = value; break;
+                                case 23: WTXModbusObj.lowerToleranceLimit = value; break;
+                                case 24: WTXModbusObj.minimumStartWeight = value; break;
+
+                                case 25: WTXModbusObj.emptyWeight = value; break;
+                                case 26: WTXModbusObj.tareDelay = value; break;
+                                case 27: WTXModbusObj.coarseFlowMonitoringTime = value; break;
+                                case 28: WTXModbusObj.coarseFlowMonitoring = value; break;
+                                case 29: WTXModbusObj.fineFlowMonitoring = value; break;
+                                case 30: WTXModbusObj.fineFlowMonitoringTime = value; break;
+
+                                case 31: WTXModbusObj.delayTimeAfterFineFlow = value; break;
+                                case 32: WTXModbusObj.activationTimeAfterFineFlow = value; break;
+                                case 33: WTXModbusObj.systematicDifference = value; break;
+                                case 34: WTXModbusObj.downardsDosing = value; break;
+                                case 35: WTXModbusObj.valveControl = value; break;
+                                case 36: WTXModbusObj.emptyingMode = value; break;
+
+                            }
+                        }
+                    }
+
+                    // For the filler application: 
+
+                    // According to the data type (given in the data grid) the words are written as type 'S32', 'U08' or 'U16' to the WTX. 
+
+                    if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "S32")
+                        WTXModbusObj.writeOutputWordS32(value, index, Write_DataReceived);
+                    else
+                     if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
+                        WTXModbusObj.writeOutputWordU08(value, index, Write_DataReceived);
+                    else
+                    if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
+                        WTXModbusObj.writeOutputWordU16(value, index, Write_DataReceived);
+
+                }
+            } // end - if (inputFormatIsRight == true)
         }
 
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)

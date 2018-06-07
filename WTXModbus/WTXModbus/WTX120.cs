@@ -79,7 +79,7 @@ namespace WTXModbus
             this.dataStr = new string[59];
             this.data_written = new ushort[2];
 
-            this.outputData = new ushort[26]; // Output data length for filler application, also used for the standard application.
+            this.outputData = new ushort[43]; // Output data length for filler application, also used for the standard application.
 
             this.compareDataChanged = false;
             this.isCalibrating = false;
@@ -92,7 +92,7 @@ namespace WTXModbus
                 this.previousData[i] = 0;
             }
 
-            for (int i = 0; i < 26; i++)
+            for (int i = 0; i < 43; i++)
             {
                 this.outputData[i] = 0;
             }

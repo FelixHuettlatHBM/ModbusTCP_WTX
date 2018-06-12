@@ -58,6 +58,7 @@ namespace WTXModbus
         private static double DoubleCalibrationWeight, potenz;
 
         private static bool isCalibrating;  // For checking if the WTX120 device is calculating at a moment after the command has been send. If 'isCalibrating' is true, the values are not printed on the console. 
+        private static bool ShowAllInputWords;
 
         static void Main(string[] args)
         {
@@ -84,6 +85,7 @@ namespace WTXModbus
             calibration_weight = "0";
 
             isCalibrating = false;
+            ShowAllInputWords = false;
 
             DoubleCalibrationWeight = 0.0;
             potenz = 0.0;
@@ -141,10 +143,19 @@ namespace WTXModbus
                     case 'w':       // Calculation with weight 
                         CalibrationWithWeight();
                         break;
-
-                    //case '8' : WTX_obj.Async_Call(0x4, Write_DataReceived);           break;   // Clear dosing results
-                    //case '9' : WTX_obj.Async_Call(0x8, Write_DataReceived);           break;   // Abort dosing 
-                    // ... 
+                    case 'a':  // Show all input words in the filler application. 
+                        if (ShowAllInputWords == false)
+                        {
+                            ShowAllInputWords = true;
+                            WTX_obj.Refreshed = true;
+                        }
+                        else
+                            if (ShowAllInputWords == true)
+                            {
+                            ShowAllInputWords = false;
+                            WTX_obj.Refreshed = true;
+                            }
+                        break;
 
                     default: break;
 
@@ -173,7 +184,7 @@ namespace WTXModbus
 
             Console.WriteLine("Please enter how many words(bytes) you want to read from the register\nof the device. See the following table for choosing:");
 
-            Console.WriteLine("\nEnter '1'       : Enables reading of ... \n\t\t  word[0]- netto value.\n");
+            Console.WriteLine("\nEnter '1'     : Enables reading of ... \n\t\t  word[0]- netto value.\n");
             Console.WriteLine("Enter '2','3',4': Enables reading of ... \n\t\t  word[2]- gross value. \n\t\t  Word[0]- netto value.\n");
             Console.WriteLine("Enter '5'       : Enables reading of ... \n\t\t  word[4]- weight moving,weight type,scale range,..(see manual)\n\t\t  word[2]- gross value. \n\t\t  Word[0]- netto value.\n");
             Console.WriteLine("Enter '6'       : Enables writing to the register and reading of ... \n\t\t  word[5]- application mode,decimals,unit,handshake,status bit\n\t\t  word[4]- weight moving,weight type,scale range,..(see manual)\n\t\t  word[2]- gross value. \n\t\t  Word[0]- netto value.\n");
@@ -230,9 +241,7 @@ namespace WTXModbus
             //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calibrate(..)'.
 
             isCalibrating = false;
-
-        }
-        
+        }  
 
         /*
          * This method potentiate the number of the values decimals and multiply it with the calibration weight(input) to get
@@ -264,13 +273,21 @@ namespace WTXModbus
                 Console.Clear();
 
                 Console.WriteLine("Options to set the device : Enter the following keys:\nb-Choose the number of bytes read from the register |");
-                if (WTX_obj.DeviceValues.applicationMode == 0)
+
+                if (WTX_obj.DeviceValues.applicationMode == 0)  // If the WTX120 device is in standard application/mode.
                 {
                     Console.WriteLine("0-Taring | 1-Gross/net  | 2-Zeroing  | 3- Adjust zero | 4-Adjust nominal |\n5-Activate Data \t| 6-Manual taring \t      | 7-Weight storage\n");
                 }
                 else
-                    if (WTX_obj.DeviceValues.applicationMode == 1 || WTX_obj.DeviceValues.applicationMode == 2)
-                    Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+                    if (WTX_obj.DeviceValues.applicationMode == 1 || WTX_obj.DeviceValues.applicationMode == 2) // If the WTX120 device is in filler application/mode.
+                    {
+
+                    if(ShowAllInputWords==false)
+                    Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show all input words 0 to 37\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+
+                    if (ShowAllInputWords == true)
+                        Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show only input word 0 to 5\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+                }
 
                 if (WTX_obj.DeviceValues.applicationMode == 0)   // If the device is in the standard mode (standard=0; filler=1 or filler=2) 
                 {
@@ -353,12 +370,15 @@ namespace WTXModbus
 
                         Console.WriteLine("Limit status:                  " + WTX_obj.getDataStr[4] + "  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
                         Console.WriteLine("Weight moving:                 " + WTX_obj.getDataStr[5] + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
+                    
+                    if (ShowAllInputWords == true)
+                    {
 
                         Console.WriteLine("Digital input  1:              " + WTX_obj.getDataStr[18] + "\t  As an Integer:  " + WTX_obj.DeviceValues.input1);
                         Console.WriteLine("Digital input  2:              " + WTX_obj.getDataStr[19] + "\t  As an Integer:  " + WTX_obj.DeviceValues.input2);
                         Console.WriteLine("Digital input  3:              " + WTX_obj.getDataStr[20] + "\t  As an Integer:  " + WTX_obj.DeviceValues.input3);
                         Console.WriteLine("Digital input  4:              " + WTX_obj.getDataStr[21] + "\t  As an Integer:  " + WTX_obj.DeviceValues.input4);
-                
+
                         Console.WriteLine("Digital output 1:              " + WTX_obj.getDataStr[22] + "\t  As an Integer:  " + WTX_obj.DeviceValues.output1);
                         Console.WriteLine("Digital output 2:              " + WTX_obj.getDataStr[23] + "\t  As an Integer:  " + WTX_obj.DeviceValues.output2);
                         Console.WriteLine("Digital output 3:              " + WTX_obj.getDataStr[24] + "\t  As an Integer:  " + WTX_obj.DeviceValues.output3);
@@ -388,7 +408,7 @@ namespace WTXModbus
                         Console.WriteLine("Mean value of dosing results:  " + WTX_obj.getDataStr[44] + "\t  As an Integer:  " + WTX_obj.DeviceValues.meanValueDosingResults);
                         Console.WriteLine("Standard deviation:            " + WTX_obj.getDataStr[45] + "\t  As an Integer:  " + WTX_obj.DeviceValues.standardDeviation);
                         Console.WriteLine("Total weight:                  " + WTX_obj.getDataStr[46] + "\t  As an Integer:  " + WTX_obj.DeviceValues.totalWeight);
-                     
+
                         Console.WriteLine("Fine flow cut-off point:       " + WTX_obj.getDataStr[47] + "\t  As an Integer:  " + WTX_obj.DeviceValues.fineFlowCutOffPoint);
                         Console.WriteLine("Coarse flow cut-off point:     " + WTX_obj.getDataStr[48] + "\t  As an Integer:  " + WTX_obj.DeviceValues.coarseFlowCutOffPoint);
                         Console.WriteLine("Current dosing time:           " + WTX_obj.getDataStr[49] + "\t  As an Integer:  " + WTX_obj.DeviceValues.currentDosingTime);
@@ -402,6 +422,8 @@ namespace WTXModbus
                         Console.WriteLine("Weight memory, Seq.Number:     " + WTX_obj.getDataStr[56] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemSeqNumber);
                         Console.WriteLine("Weight memory, gross:          " + WTX_obj.getDataStr[57] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemGross);
                         Console.WriteLine("Weight memory, net:            " + WTX_obj.getDataStr[58] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemNet);
+                    }
+                    
                 }
             }
         }

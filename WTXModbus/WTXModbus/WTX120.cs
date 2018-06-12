@@ -59,7 +59,8 @@ namespace WTXModbus
         private bool compareDataChanged;
 
         private Action<IDeviceValues> callback_obj;
-        ushort[] data_written;
+        private ushort[] data_written;
+        private int timerInterval;
 
         public override event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 
@@ -96,6 +97,8 @@ namespace WTXModbus
             {
                 this.outputData[i] = 0;
             }
+
+            this.timerInterval = 100;
 
             this.initialize_timer(paramTimerInterval);          // Initializing and starting the timer. 
         }
@@ -278,11 +281,20 @@ namespace WTXModbus
         }
 
         // This method initializes the with the timer interval as a parameter: 
-        public override void initialize_timer(int timer_interval)
+        public override void initialize_timer(int paramTimerInterval)
         {
-            // Create a timer with an interval of 500ms. 
-            aTimer = new System.Timers.Timer(timer_interval);
-
+            // Create a timer with an interval of the parameter value, if the argument paramTimerInterval is not valid,
+            // an exception is catched and a default value for the timer interval is set, the timer tries to start again. 
+            try
+            {
+                aTimer = new System.Timers.Timer(paramTimerInterval);
+            }
+            catch (ArgumentException)
+            {
+                this.timerInterval = 100;   // In case if the timer interval is not valid, an 'ArgumentException' is catched and a default value for
+                                            // the timer interval is set. 
+                aTimer = new System.Timers.Timer(this.timerInterval);
+            }
             // Connect the elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
 

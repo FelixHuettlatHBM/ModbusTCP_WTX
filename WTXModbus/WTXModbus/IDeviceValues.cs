@@ -99,9 +99,11 @@ namespace Hbm.Devices.WTXModbus
         int totalWeight { get; }              // data[56]
         int fineFlowCutOffPoint { get; }      // data[57]
         int coarseFlowCutOffPoint { get; }    // data[58]
-        int actualDosingTime { get; }         // data[59]
-        int actualCoarseFlowTime { get; }     // data[60]
-        int actualFineFlowTime { get; }       // data[61]
+
+        int currentDosingTime { get; }         // data[59]
+        int currentCoarseFlowTime { get; }     // data[60]
+        int currentFineFlowTime { get; }       // data[61]
+
         int parameterSetProduct { get; }      // data[62]
 
         // Get-Set-properties to set the output words from 2 to 26 for the standard application. 
@@ -130,8 +132,7 @@ namespace Hbm.Devices.WTXModbus
         
 
         // Get-Set-properties to set the output words from 9 to 44 for the filler application. 
-
-        
+      
         int ResidualFlowTime { get; set; }             
         int targetFillingWeight { get;  set; }
         int coarseFlowCutOffPointSet { get;  set; }

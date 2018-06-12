@@ -129,9 +129,9 @@ namespace WTXModbus
         public abstract int totalWeight { get; }             // data[56]
         public abstract int fineFlowCutOffPoint { get; }     // data[57]
         public abstract int coarseFlowCutOffPoint { get; }   // data[58]
-        public abstract int actualDosingTime { get; }        // data[59]
-        public abstract int actualCoarseFlowTime { get; }    // data[60]
-        public abstract int actualFineFlowTime { get; }      // data[61]
+        public abstract int currentDosingTime { get; }        // data[59]
+        public abstract int currentCoarseFlowTime { get; }    // data[60]
+        public abstract int currentFineFlowTime { get; }      // data[61]
         public abstract int parameterSetProduct { get; }     // data[62]
 
         public abstract int manualTareValue { get; set; }

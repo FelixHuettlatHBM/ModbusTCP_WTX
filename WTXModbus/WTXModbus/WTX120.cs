@@ -431,10 +431,10 @@ namespace WTXModbus
 
                 this.dataStr[46] = this.fineFlowCutOffPoint.ToString();
                 this.dataStr[47] = this.coarseFlowCutOffPoint.ToString();
-                this.dataStr[48] = this.actualDosingTime.ToString();
-                this.dataStr[49] = this.actualCoarseFlowTime.ToString();
+                this.dataStr[48] = this.currentDosingTime.ToString();
+                this.dataStr[49] = this.currentCoarseFlowTime.ToString();
 
-                this.dataStr[50] = this.actualFineFlowTime.ToString();
+                this.dataStr[50] = this.currentFineFlowTime.ToString();
                 this.dataStr[51] = this.parameterSetProduct.ToString();
 
                 this.dataStr[52] = this.filler_weight_memory_day.ToString();
@@ -1512,7 +1512,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int actualDosingTime
+        public override int currentDosingTime
         {
             get
             {
@@ -1529,7 +1529,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int actualCoarseFlowTime
+        public override int currentCoarseFlowTime
         {
             get
             {
@@ -1546,7 +1546,7 @@ namespace WTXModbus
                 }
             }
         }
-        public override int actualFineFlowTime
+        public override int currentFineFlowTime
         {
             get
             {

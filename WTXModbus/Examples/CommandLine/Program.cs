@@ -59,6 +59,7 @@ namespace WTXModbus
 
         private static bool isCalibrating;  // For checking if the WTX120 device is calculating at a moment after the command has been send. If 'isCalibrating' is true, the values are not printed on the console. 
         private static bool ShowAllInputWords;
+        private static bool ShowAllOutputWords;
 
         static void Main(string[] args)
         {
@@ -85,7 +86,8 @@ namespace WTXModbus
             calibration_weight = "0";
 
             isCalibrating = false;
-            ShowAllInputWords = false;
+            ShowAllInputWords  = false;
+            ShowAllOutputWords = false;
 
             DoubleCalibrationWeight = 0.0;
             potenz = 0.0;
@@ -127,14 +129,14 @@ namespace WTXModbus
 
                 switch (value_outputwords.KeyChar)
                 {
-                    case '0': WTX_obj.Async_Call(0x1, Write_DataReceived); break;     // Taring 
-                    case '1': WTX_obj.Async_Call(0x2, Write_DataReceived); break;     // Gross/Net
-                    case '2': WTX_obj.Async_Call(0x40, Write_DataReceived); break;    // Zeroing
-                    case '3': WTX_obj.Async_Call(0x80, Write_DataReceived); break;    // Adjust zero 
-                    case '4': WTX_obj.Async_Call(0x100, Write_DataReceived); break;   // Adjust nominal
-                    case '5': WTX_obj.Async_Call(0x800, Write_DataReceived); break;   // Activate data
-                    case '6': WTX_obj.Async_Call(0x1000, Write_DataReceived); break;  // Manual taring
-                    case '7': WTX_obj.Async_Call(0x4000, Write_DataReceived); break;  // Record Weight
+                    case '0': WTX_obj.Async_Call(0x1, Write_DataReceived);    break;    // Taring 
+                    case '1': WTX_obj.Async_Call(0x2, Write_DataReceived);    break;    // Gross/Net
+                    case '2': WTX_obj.Async_Call(0x40, Write_DataReceived);   break;    // Zeroing
+                    case '3': WTX_obj.Async_Call(0x80, Write_DataReceived);   break;    // Adjust zero 
+                    case '4': WTX_obj.Async_Call(0x100, Write_DataReceived);  break;    // Adjust nominal
+                    case '5': WTX_obj.Async_Call(0x800, Write_DataReceived);  break;    // Activate data
+                    case '6': WTX_obj.Async_Call(0x1000, Write_DataReceived); break;    // Manual taring
+                    case '7': WTX_obj.Async_Call(0x4000, Write_DataReceived); break;    // Record Weight
 
                     // Fall für schreiben auf multiple Register:
                     case 'c':       // Calculate Calibration
@@ -156,6 +158,14 @@ namespace WTXModbus
                             WTX_obj.Refreshed = true;
                             }
                         break;
+
+                    /*
+                    case 'o': // Writing of the output words
+
+                        ShowAllOutputWords = true; // Beginning with the print of the possible output words to write.
+                        WTX_obj.Refreshed  = true;
+                        break;
+                    */
 
                     default: break;
 
@@ -263,8 +273,6 @@ namespace WTXModbus
         // This method prints the values of the device (as a integer and the interpreted string) as well as the description of each bit. 
         private static void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
-
-
             // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is 
             // not null (respectively empty) and if no calibration is done at that moment.
 
@@ -283,7 +291,7 @@ namespace WTXModbus
                     {
 
                     if(ShowAllInputWords==false)
-                    Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show all input words 0 to 37\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+                    Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show all input words 0 to 37 | o-Show output words 9-44\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
 
                     if (ShowAllInputWords == true)
                         Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show only input word 0 to 5\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
@@ -423,7 +431,41 @@ namespace WTXModbus
                         Console.WriteLine("Weight memory, gross:          " + WTX_obj.getDataStr[57] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemGross);
                         Console.WriteLine("Weight memory, net:            " + WTX_obj.getDataStr[58] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemNet);
                     }
-                    
+                    /*
+                    if(ShowAllOutputWords==true)
+                    {
+                        Console.WriteLine("Residual flow time:             " + WTX_obj.ResidualFlowTime);
+                        Console.WriteLine("Target filling weight:          " + WTX_obj.targetFillingWeight);
+                        Console.WriteLine("Coarse flow cut-off point:      " + WTX_obj.coarseFlowCutOffPoint);
+                        Console.WriteLine("Fine flow cut-off point:        " + WTX_obj.fineFlowCutOffPoint);
+
+                        Console.WriteLine("Minimum fine flow:              " + WTX_obj.minimumFineFlow);
+                        Console.WriteLine("Optimization of cut-off points: " + WTX_obj.optimizationOfCutOffPoints);
+                        Console.WriteLine("Maximum dosing time:            " + WTX_obj.maxDosingTime);
+                        Console.WriteLine("Start with fine flow:           " + WTX_obj.startWithFineFlow);
+
+                        Console.WriteLine("Coarse lockout time:            " + WTX_obj.coarseLockoutTime);
+                        Console.WriteLine("Fine lockout time:              " + WTX_obj.fineLockoutTime);
+                        Console.WriteLine("Tare mode:                      " + WTX_obj.tareMode);
+                        Console.WriteLine("Upper tolerance limit + :       " + WTX_obj.upperToleranceLimit);
+
+                        Console.WriteLine("Lower tolerance limit -:        " + WTX_obj.lowerToleranceLimit);
+                        Console.WriteLine("Minimum start weight:           " + WTX_obj.minimumStartWeight);
+                        Console.WriteLine("Empty weight:                   " + WTX_obj.emptyWeight);
+                        Console.WriteLine("Tare delay:                     " + WTX_obj.tareDelay);
+
+                        Console.WriteLine("Coarse flow monitoring time:    " + WTX_obj.coarseFlowMonitoringTime);
+                        Console.WriteLine("Coarse flow monitoring:         " + WTX_obj.coarseFlowMonitoring);
+                        Console.WriteLine("Fine flow monitoring:           " + WTX_obj.fineFlowMonitoring);
+                        Console.WriteLine("Fine flow monitoring time:      " + WTX_obj.fineFlowMonitoringTime);
+
+                        Console.WriteLine("Delay time after fine flow:     " + WTX_obj.delayTimeAfterFineFlow);
+                        Console.WriteLine("Systematic difference:          " + WTX_obj.systematicDifference);
+                        Console.WriteLine("Downwards dosing:               " + WTX_obj.downardsDosing);
+                        Console.WriteLine("Valve control:                  " + WTX_obj.valveControl);
+                        Console.WriteLine("Emptying mode:                  " + WTX_obj.emptyingMode);
+                    }
+                    */
                 }
             }
         }

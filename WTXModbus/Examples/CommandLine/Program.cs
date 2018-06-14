@@ -158,14 +158,23 @@ namespace WTXModbus
                             WTX_obj.Refreshed = true;
                             }
                         break;
-
-                    /*
+                  
                     case 'o': // Writing of the output words
 
-                        ShowAllOutputWords = true; // Beginning with the print of the possible output words to write.
-                        WTX_obj.Refreshed  = true;
-                        break;
-                    */
+                        if (ShowAllOutputWords == false)
+                        {
+                            ShowAllOutputWords = true;
+                            WTX_obj.Refreshed = true;
+                        }
+                        else
+                            if (ShowAllOutputWords == true)
+                            {
+                            ShowAllOutputWords = false;
+                            WTX_obj.Refreshed = true;
+                            }
+
+
+                        break;             
 
                     default: break;
 
@@ -431,41 +440,41 @@ namespace WTXModbus
                         Console.WriteLine("Weight memory, gross:          " + WTX_obj.getDataStr[57] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemGross);
                         Console.WriteLine("Weight memory, net:            " + WTX_obj.getDataStr[58] + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemNet);
                     }
-                    /*
+                    
                     if(ShowAllOutputWords==true)
                     {
-                        Console.WriteLine("Residual flow time:             " + WTX_obj.ResidualFlowTime);
-                        Console.WriteLine("Target filling weight:          " + WTX_obj.targetFillingWeight);
-                        Console.WriteLine("Coarse flow cut-off point:      " + WTX_obj.coarseFlowCutOffPoint);
-                        Console.WriteLine("Fine flow cut-off point:        " + WTX_obj.fineFlowCutOffPoint);
+                        Console.WriteLine("Residual flow time:            " + WTX_obj.ResidualFlowTime);
+                        Console.WriteLine("Target filling weight:         " + WTX_obj.targetFillingWeight);
+                        Console.WriteLine("Coarse flow cut-off point:     " + WTX_obj.coarseFlowCutOffPoint);
+                        Console.WriteLine("Fine flow cut-off point:       " + WTX_obj.fineFlowCutOffPoint);
 
-                        Console.WriteLine("Minimum fine flow:              " + WTX_obj.minimumFineFlow);
-                        Console.WriteLine("Optimization of cut-off points: " + WTX_obj.optimizationOfCutOffPoints);
-                        Console.WriteLine("Maximum dosing time:            " + WTX_obj.maxDosingTime);
-                        Console.WriteLine("Start with fine flow:           " + WTX_obj.startWithFineFlow);
+                        Console.WriteLine("Minimum fine flow:             " + WTX_obj.minimumFineFlow);
+                        Console.WriteLine("Optimization of cut-off points:" + WTX_obj.optimizationOfCutOffPoints);
+                        Console.WriteLine("Maximum dosing time:           " + WTX_obj.maxDosingTime);
+                        Console.WriteLine("Start with fine flow:          " + WTX_obj.startWithFineFlow);
 
-                        Console.WriteLine("Coarse lockout time:            " + WTX_obj.coarseLockoutTime);
-                        Console.WriteLine("Fine lockout time:              " + WTX_obj.fineLockoutTime);
-                        Console.WriteLine("Tare mode:                      " + WTX_obj.tareMode);
-                        Console.WriteLine("Upper tolerance limit + :       " + WTX_obj.upperToleranceLimit);
+                        Console.WriteLine("Coarse lockout time:           " + WTX_obj.coarseLockoutTime);
+                        Console.WriteLine("Fine lockout time:             " + WTX_obj.fineLockoutTime);
+                        Console.WriteLine("Tare mode:                     " + WTX_obj.tareMode);
+                        Console.WriteLine("Upper tolerance limit + :      " + WTX_obj.upperToleranceLimit);
 
-                        Console.WriteLine("Lower tolerance limit -:        " + WTX_obj.lowerToleranceLimit);
-                        Console.WriteLine("Minimum start weight:           " + WTX_obj.minimumStartWeight);
-                        Console.WriteLine("Empty weight:                   " + WTX_obj.emptyWeight);
-                        Console.WriteLine("Tare delay:                     " + WTX_obj.tareDelay);
+                        Console.WriteLine("Lower tolerance limit -:       " + WTX_obj.lowerToleranceLimit);
+                        Console.WriteLine("Minimum start weight:          " + WTX_obj.minimumStartWeight);
+                        Console.WriteLine("Empty weight:                  " + WTX_obj.emptyWeight);
+                        Console.WriteLine("Tare delay:                    " + WTX_obj.tareDelay);
 
-                        Console.WriteLine("Coarse flow monitoring time:    " + WTX_obj.coarseFlowMonitoringTime);
-                        Console.WriteLine("Coarse flow monitoring:         " + WTX_obj.coarseFlowMonitoring);
-                        Console.WriteLine("Fine flow monitoring:           " + WTX_obj.fineFlowMonitoring);
-                        Console.WriteLine("Fine flow monitoring time:      " + WTX_obj.fineFlowMonitoringTime);
+                        Console.WriteLine("Coarse flow monitoring time:   " + WTX_obj.coarseFlowMonitoringTime);
+                        Console.WriteLine("Coarse flow monitoring:        " + WTX_obj.coarseFlowMonitoring);
+                        Console.WriteLine("Fine flow monitoring:          " + WTX_obj.fineFlowMonitoring);
+                        Console.WriteLine("Fine flow monitoring time:     " + WTX_obj.fineFlowMonitoringTime);
 
-                        Console.WriteLine("Delay time after fine flow:     " + WTX_obj.delayTimeAfterFineFlow);
-                        Console.WriteLine("Systematic difference:          " + WTX_obj.systematicDifference);
-                        Console.WriteLine("Downwards dosing:               " + WTX_obj.downardsDosing);
-                        Console.WriteLine("Valve control:                  " + WTX_obj.valveControl);
-                        Console.WriteLine("Emptying mode:                  " + WTX_obj.emptyingMode);
+                        Console.WriteLine("Delay time after fine flow:    " + WTX_obj.delayTimeAfterFineFlow);
+                        Console.WriteLine("Systematic difference:         " + WTX_obj.systematicDifference);
+                        Console.WriteLine("Downwards dosing:              " + WTX_obj.downardsDosing);
+                        Console.WriteLine("Valve control:                 " + WTX_obj.valveControl);
+                        Console.WriteLine("Emptying mode:                 " + WTX_obj.emptyingMode);
                     }
-                    */
+                    
                 }
             }
         }

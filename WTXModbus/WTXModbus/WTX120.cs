@@ -2182,6 +2182,8 @@ namespace WTXModbus
             double DPreload = Preload * MultiplierMv2D;
             double DNominalLoad = DPreload + (Capacity * MultiplierMv2D);
 
+            this.stopTimer();
+
             //write reg 48, DPreload;         
 
             this.writeOutputWordS32(Convert.ToInt32(DPreload), 48, Write_DataReceived);
@@ -2249,6 +2251,8 @@ namespace WTXModbus
 
         public void MeasureZero()
         {
+            this.stopTimer();
+
             //todo: write reg 48, 0x7FFFFFFF
             
             this.writeOutputWordS32(0x7FFFFFFF, 48,Write_DataReceived);

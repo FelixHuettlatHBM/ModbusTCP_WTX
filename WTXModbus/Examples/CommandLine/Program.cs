@@ -221,15 +221,15 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            WTX_obj.stopTimer();
+            //WTX_obj.stopTimer();      // The timer is stopped in the method 'Calculate(..)' in class WTX120.
 
             zero_load_nominal_load_input();
-
+           
             WTX_obj.Calculate(Preload,Capacity);
             
             isCalibrating = false;
 
-            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)'.
+            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
         }
 
         /*
@@ -241,7 +241,7 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            WTX_obj.stopTimer();    
+            //WTX_obj.stopTimer();    // The timer is stopped in the method 'Calculate(..)' in class WTX120.
 
             Console.Clear();
             Console.WriteLine("\nPlease tip the value for the calibration weight and tip enter to confirm : ");
@@ -257,7 +257,7 @@ namespace WTXModbus
 
             WTX_obj.Calibrate(potencyCalibrationWeight(), calibration_weight);
 
-            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calibrate(..)'.
+            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
 
             isCalibrating = false;
         }  

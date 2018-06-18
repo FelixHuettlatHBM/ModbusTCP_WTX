@@ -435,7 +435,9 @@ namespace WTXModbusExamples
                     else if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
                               WTXModbusObj.writeOutputWordU16(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
                 }
-                
+
+
+                WTXModbusObj.Async_Call(0x100, Write_DataReceived);
             }
         }
 
@@ -591,7 +593,7 @@ namespace WTXModbusExamples
                     {
                         if (e.RowIndex >= 8 && e.RowIndex <= 24)
                         {
-                            MessageBox.Show(value.ToString());  // for test purpose only.
+                            //MessageBox.Show(value.ToString());  // for test purpose only.
 
                             // If the specific cell of the row 8,9,10 till row 24 has changed, write the value to the specific properties. 
 
@@ -665,17 +667,33 @@ namespace WTXModbusExamples
 
                     // According to the data type (given in the data grid) the words are written as type 'S32', 'U08' or 'U16' to the WTX. 
 
+                    // Only for testing : 
+                    /*
                     if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "S32")
                         WTXModbusObj.writeOutputWordS32(value, index, Write_DataReceived);
                     else
-                     if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
+                     if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U08")
                         WTXModbusObj.writeOutputWordU08(value, index, Write_DataReceived);
                     else
-                    if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
+                    if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U16")
                         WTXModbusObj.writeOutputWordU16(value, index, Write_DataReceived);
+                    */
+                } // end - if (inputFormatIsRight == true)
 
-                }
-            } // end - if (inputFormatIsRight == true)
+                if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "S32")
+                    WTXModbusObj.writeOutputWordS32(value, index, Write_DataReceived);
+
+                if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U08")
+                    WTXModbusObj.writeOutputWordU08(value, index, Write_DataReceived);
+
+                if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U16")
+                    WTXModbusObj.writeOutputWordU16(value, index, Write_DataReceived);
+            }
+
+            // Test Activate Data after the write of an output word: 
+            //WTXModbusObj.Async_Call(0x800, Write_DataReceived);        // Bit .11 - Activate Data
+
+
         }
 
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
@@ -690,7 +708,6 @@ namespace WTXModbusExamples
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WTXModbusObj.DataUpdateEvent -= ValuesOnConsole;
-
             toolStripStatusLabel1.Text = "Disconnected";    
         }
 

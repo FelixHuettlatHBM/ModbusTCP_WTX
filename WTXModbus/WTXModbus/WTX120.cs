@@ -250,32 +250,31 @@ namespace WTXModbus
         }
 
 
-        public void writeOutputWordS32(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)
         {
             this.callback_obj = callbackParam;
 
-            data_written[0] = (ushort)((load_written & 0xffff0000) >> 16);
-            data_written[1] = (ushort)(load_written & 0x0000ffff);
+            data_written[0] = (ushort)((valueParam & 0xffff0000) >> 16);
+            data_written[1] = (ushort)(valueParam & 0x0000ffff);
 
             getConnection.Write(wordNumber, data_written);
-
         }
 
 
-        public void writeOutputWordU08(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)
         {
             this.callback_obj = callbackParam;
 
-            data_written[0] = (ushort)((load_written & 0x000000ff));
+            data_written[0] = (ushort)((valueParam & 0x000000ff));
 
             getConnection.Write(wordNumber, data_written[0]);
         }
 
-        public void writeOutputWordU16(int load_written, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)
         {
             this.callback_obj = callbackParam;
 
-            data_written[0] = (ushort)((load_written & 0xffff0000) >> 16);
+            data_written[0] = (ushort)((valueParam & 0xffff0000) >> 16);
 
             getConnection.Write(wordNumber, data_written[0]);
         }
@@ -2048,11 +2047,6 @@ namespace WTXModbus
             set { this.outputData[42] = (ushort) value; }
         }
 
-
-
-
-
-
         /* In the following methods the different options for the single integer values are used to define and
          *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
          */
@@ -2203,7 +2197,7 @@ namespace WTXModbus
 
         private void Write_DataReceived(IDeviceValues obj)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         // This method sets the value for the nominal weight in the WTX.

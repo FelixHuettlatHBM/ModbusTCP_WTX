@@ -173,14 +173,14 @@
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(53, 17);
-            this.toolStripStatusLabel2.Text = "IP adress";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(60, 17);
+            this.toolStripStatusLabel2.Text = "IP address";
             // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(41, 17);
-            this.toolStripStatusLabel3.Text = "Mode:";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(47, 17);
+            this.toolStripStatusLabel3.Text = "Mode:  ";
             // 
             // toolStripStatusLabel4
             // 

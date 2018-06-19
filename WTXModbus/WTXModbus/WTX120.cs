@@ -460,9 +460,9 @@ namespace WTXModbus
             // ... the arrays 'previousData' and 'data' with the boolean 
 
             if ((this.compareDataChanged == true) || (this.isCalibrating == true) || this.isRefreshed == true)   // 'isCalibrating' indicates if a calibration is done just before ...
-                                                                                                                 // and the data should be send to the GUI/console and be printed out. 
+            {                                                                                                    // and the data should be send to the GUI/console and be printed out. 
                                                                                                                  // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
-            {
+            
                 DataUpdateEvent?.Invoke(this, e);
 
                 this.isCalibrating = false;

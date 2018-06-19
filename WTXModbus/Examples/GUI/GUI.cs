@@ -294,7 +294,7 @@ namespace WTXModbusExamples
             if (WTXModbusObj.getConnection.is_connected == false)
                 toolStripStatusLabel1.Text = "Disconnected";
             
-            toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
+            toolStripStatusLabel2.Text = "IP address: " + WTXModbusObj.getConnection.IP_Adress;
             toolStripStatusLabel3.Text = "Mode : " + this.data_str_arr[14];                 // index 14 refers to application mode of the Device
             toolStripStatusLabel2.Text = "IP adress: " + WTXModbusObj.getConnection.IP_Adress;
 

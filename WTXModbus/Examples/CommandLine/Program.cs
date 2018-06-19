@@ -40,7 +40,7 @@ namespace WTXModbus
         private static WTX120 WTX_obj;
 
         private static string ipAddress;     // IP-adress, set as the first argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
-        private static int timer_interval;   // timer interval, set as the second argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
+        private static int timerInterval;    // timer interval, set as the second argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
         private static ushort inputMode;     // inputMode (number of input bytes), set as the third argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
 
         private static ConsoleKeyInfo value_outputwords;
@@ -67,7 +67,7 @@ namespace WTXModbus
 
             ipAddress = "172.19.103.8";     // Default setting. 
             inputMode = 6;
-            timer_interval = 200;
+            timerInterval = 200;           
 
             if (args.Length > 0)
             {
@@ -75,8 +75,10 @@ namespace WTXModbus
             }
             if (args.Length > 1)
             {
-                timer_interval = Convert.ToInt32(args[1]);
+                timerInterval = Convert.ToInt32(args[1]);
             }
+            else
+                timerInterval = 200; // Default value for the timer interval. 
             
             // Initialize:
 
@@ -98,7 +100,7 @@ namespace WTXModbus
             {
                 ModbusObj = new ModbusConnection(ipAddress);
 
-                WTX_obj = new WTX120(ModbusObj, timer_interval);    // timer_interval is given by the VS project properties menu as an argument.
+                WTX_obj = new WTX120(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
 
                 WTX_obj.getConnection.Connect();
           

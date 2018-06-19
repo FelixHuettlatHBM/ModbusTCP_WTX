@@ -84,6 +84,8 @@ namespace WTXModbusGUIsimple
             {
                 this.timerInterval = Convert.ToInt32(args[1]);
             }
+            else
+                this.timerInterval = 200; // Default value for the timer interval. 
 
             this.Connect();
         }

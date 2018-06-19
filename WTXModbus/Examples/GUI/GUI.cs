@@ -74,6 +74,8 @@ namespace WTXModbusExamples
             {
                 this.timerInterval = Convert.ToInt32(args[1]);
             }
+            else
+                this.timerInterval = 200; // Default value for the timer interval.
 
             ModbusObj = new ModbusConnection(ipAddress);
             WTXModbusObj = new WTX120(ModbusObj, this.timerInterval);

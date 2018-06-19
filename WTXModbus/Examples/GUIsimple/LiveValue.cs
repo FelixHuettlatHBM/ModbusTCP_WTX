@@ -164,12 +164,13 @@ namespace WTXModbusGUIsimple
         {
             if (WTXObj.limitStatus == 0)  //Check for Errors
             {
+                int taraValue = WTXObj.GrossValue - WTXObj.NetValue;
 
                 textBox2.Invoke(new Action(() =>
                 {
-                    textBox2.Text = "Net:" + ConvertValue2String(WTXObj.NetValue) + Environment.NewLine
-                    + "Gross:" + ConvertValue2String(WTXObj.GrossValue) + Environment.NewLine
-                    + "Tara:" + ConvertValue2String(WTXObj.GrossValue - WTXObj.NetValue);
+                    textBox2.Text = "Net:" + WTXObj.netGrossValueStringComment(WTXObj.NetValue,WTXObj.decimals) + WTXObj.unitStringComment() + Environment.NewLine
+                    + "Gross:" + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals) + WTXObj.unitStringComment() + Environment.NewLine
+                    + "Tara:"  + WTXObj.netGrossValueStringComment(taraValue        , WTXObj.decimals) + WTXObj.unitStringComment();
                     textBox2.TextAlign = HorizontalAlignment.Right;
                     pictureBox1.Image = Properties.Resources.NE107_DiagnosisActive;
 
@@ -180,7 +181,7 @@ namespace WTXModbusGUIsimple
                 textBox2.Invoke(new Action(() =>
                 {
                     pictureBox1.Image = Properties.Resources.NE107_OutOfSpecification;
-                    textBox2.Text = ConvertLimitStatus(WTXObj.limitStatus);
+                    textBox2.Text = WTXObj.limitStatusStringComment(/*WTXObj.limitStatus*/);
                     textBox2.TextAlign = HorizontalAlignment.Left;
 
                 }));

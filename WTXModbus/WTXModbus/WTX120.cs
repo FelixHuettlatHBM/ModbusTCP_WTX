@@ -353,28 +353,28 @@ namespace WTXModbus
         {
             this.data = e.Args;
 
-            this.dataStr[0] = this.measurement_with_comma(this.NetValue, this.decimals);
-            this.dataStr[1] = this.measurement_with_comma(this.GrossValue, this.decimals);
+            this.dataStr[0] = this.netGrossValueStringComment(this.NetValue, this.decimals);
+            this.dataStr[1] = this.netGrossValueStringComment(this.GrossValue, this.decimals);
 
             this.dataStr[2] = this.generalWeightError.ToString();
             this.dataStr[3] = this.scaleAlarmTriggered.ToString();
-            this.dataStr[4] = this.comment_limit_status();
-            this.dataStr[5] = this.comment_weight_moving();
+            this.dataStr[4] = this.limitStatusStringComment();
+            this.dataStr[5] = this.weightMovingStringComment();
 
             this.dataStr[6] = this.scaleSealIsOpen.ToString();
             this.dataStr[7] = this.manualTare.ToString();
-            this.dataStr[8] = this.comment_weight_type();
-            this.dataStr[9] = this.comment_scale_range();
+            this.dataStr[8] = this.weightTypeStringComment();
+            this.dataStr[9] = this.scaleRangeStringComment();
 
             this.dataStr[10] = this.zeroRequired.ToString();
             this.dataStr[11] = this.weightWithinTheCenterOfZero.ToString();
             this.dataStr[12] = this.weightInZeroRange.ToString();
-            this.dataStr[13] = this.comment_application_mode();
+            this.dataStr[13] = this.applicationModeStringComment();
 
             this.dataStr[14] = this.decimals.ToString();
-            this.dataStr[15] = this.comment_unit();
+            this.dataStr[15] = this.unitStringComment();
             this.dataStr[16] = this.handshake.ToString();
-            this.dataStr[17] = this.comment_status();
+            this.dataStr[17] = this.statusStringComment();
 
             this.dataStr[18] = this.input1.ToString();
             this.dataStr[19] = this.input2.ToString();
@@ -2047,10 +2047,11 @@ namespace WTXModbus
             set { this.outputData[42] = (ushort) value; }
         }
 
-        /* In the following methods the different options for the single integer values are used to define and
+        /* 
+         *In the following methods the different options for the single integer values are used to define and
          *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
          */
-        private string measurement_with_comma(int value, int decimals)
+        public string netGrossValueStringComment(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";
@@ -2070,7 +2071,7 @@ namespace WTXModbus
             return returnvalue;
         }
 
-        private string comment_weight_moving()
+        public string weightMovingStringComment()
         {
             if (this.weightMoving == 0)
                 return "0=Weight is not moving.";
@@ -2080,23 +2081,23 @@ namespace WTXModbus
             else
                 return "Error";
         }
-        private string comment_limit_status()
+        public string limitStatusStringComment()
         {
             switch (this.limitStatus)
             {
                 case 0:
-                    return "Weight within limits";
+                    return "Weight within limits.";
                 case 1:
-                    return "Lower than minimum";
+                    return "W1  U n d e r l o a d.";            // Alternative : "Lower than minimum"
                 case 2:
-                    return "Higher than maximum capacity";
+                    return "W1  O v e r l o a d.";  // Alternative : "Higher than maximum capacity" 
                 case 3:
-                    return "Higher than safe load limit";
+                    return "Higher than safe load limit.";
                 default:
                     return "Error.";
             }
         }
-        private string comment_weight_type()
+        public string weightTypeStringComment()
         {
             if (this.weightType == 0)
             {
@@ -2113,7 +2114,7 @@ namespace WTXModbus
 
                 return "error";
         }
-        private string comment_scale_range()
+        public string scaleRangeStringComment()
         {
             switch (this.scaleRange)
             {
@@ -2127,7 +2128,7 @@ namespace WTXModbus
                     return "error";
             }
         }
-        private string comment_application_mode()
+        public string applicationModeStringComment()
         {
             if (this.applicationMode == 0)
                 return "Standard";
@@ -2139,7 +2140,7 @@ namespace WTXModbus
 
                 return "error";
         }
-        private string comment_unit()
+        public string unitStringComment()
         {
             switch (this.unit)
             {
@@ -2155,7 +2156,7 @@ namespace WTXModbus
                     return "error";
             }
         }
-        private string comment_status()
+        public string statusStringComment()
         {
             if (this.status == 1)
                 return "Execution OK!";

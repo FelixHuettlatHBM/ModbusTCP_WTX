@@ -211,64 +211,6 @@ namespace WTXModbusGUIsimple
 
         }
 
-        // Returns a String containing the parameter value transformed with its correct number of decimals
-        // and its unit
-        private String ConvertValue2String(int value)
-        {
-            double temp = (double)value;
-            String format = "F" + WTXObj.decimals;
-            if (WTXObj.decimals > 0)
-            {
-                temp /= Math.Pow(10, WTXObj.decimals);// (double)(WTXObj.decimals * 10);
-
-            }
-            String unit;
-            switch (WTXObj.unit)
-            {
-                case 0:
-                    unit = "kg";
-                    break;
-                case 1:
-                    unit = "g";
-                    break;
-                case 2:
-                    unit = "t";
-                    break;
-                case 3:
-                    unit = "lb";
-                    break;
-                default:
-                    unit = "unknown unit";
-                    break;
-            }
-
-            String ret = temp.ToString(format, CultureInfo.InvariantCulture);
-            while (ret.Length < 9)
-            {
-                ret = " " + ret;
-            }
-
-            return ret + unit;
-        }
-
-        // Returns the limit status code as readable text string
-        private String ConvertLimitStatus(int limitStatus)
-        {
-            switch (limitStatus)
-            {
-                case 0:
-                    return "Weight within limits";
-                case 1:
-                    return "W1  U n d e r l o a d";
-                case 2:
-                    return "W1  O v e r l o a d";
-                case 3:
-                    return "Higher than safe load limit";
-                default:
-                    return "Error.";
-            }
-        }
-
         // Button Tare
         private void button2_Click(object sender, EventArgs e)
         {

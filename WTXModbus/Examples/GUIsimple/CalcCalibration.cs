@@ -33,19 +33,13 @@ namespace WTXModbusGUIsimple
         private double Capacity;
         private IFormatProvider Provider;
         private const double MultiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
-        private string str_comma_dot;
-
-        private int handshake_compare_optional;
-        private int status_compare_optional;
+        private string str_comma_dot;       
 
         // Constructor of class 'CalcCalibration' : 
         public CalcCalibration(WTX120 WTXObj, bool connected)
         {
             this.WTXObj = WTXObj;
-
-            this.handshake_compare_optional = 0;
-            this.status_compare_optional = 0;
-
+            
             Finished = false;
             //Provider for english number format
             Provider = CultureInfo.InvariantCulture;

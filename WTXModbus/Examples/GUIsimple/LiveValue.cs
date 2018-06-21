@@ -38,9 +38,7 @@ namespace WTXModbusGUIsimple
 
         private static ModbusConnection ModbusObj;
         private static WTX120 WTXObj;
-
-        private static int DefaultTimerInterval = 200;
-
+        
         private String IPAddress;
         private CalcCalibration CalcCalObj;
         private WeightCalibration WeightCalObj;

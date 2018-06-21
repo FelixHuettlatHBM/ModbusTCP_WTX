@@ -33,9 +33,6 @@ namespace WTXModbusGUIsimple
         private double CalibrationWeight;
         //private IFormatProvider Provider;
 
-        private int handshake_compare;     
-        private int status_compare;        
-
         private double PowCalibrationWeight; 
         private double potenz;
 
@@ -46,10 +43,7 @@ namespace WTXModbusGUIsimple
         {
             this.PowCalibrationWeight = 0.0;
             this.potenz = 0.0;
-
-            this.handshake_compare = 0;
-            this.status_compare = 0;
-
+            
             this.WTXObj = WTXObj;
             State = 0;
 

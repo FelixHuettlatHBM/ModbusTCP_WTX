@@ -125,7 +125,7 @@ namespace WTXModbusGUIsimple
                 Update();
 
                 string tempIpAddress = textBox1.Text;
-                WTXObj.getConnection.IP_Adress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
+                WTXObj.getConnection.IP_Address = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
 
                 WTXObj.getConnection.Connect();  // Equal to : ModbusObj.Connect();
 
@@ -140,7 +140,7 @@ namespace WTXModbusGUIsimple
                 }
                 else
                 {
-                    WTXObj.getConnection.IP_Adress = this.IPAddress;
+                    WTXObj.getConnection.IP_Address = this.IPAddress;
 
                     WTXObj.stopTimer();
                     

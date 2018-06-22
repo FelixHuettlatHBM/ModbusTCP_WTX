@@ -265,9 +265,12 @@ namespace WTXModbus
         {
             this.callback_obj = callbackParam;
 
+            /*
             data_written[0] = (ushort)((valueParam & 0x000000ff));
-
             getConnection.Write(wordNumber, data_written[0]);
+            */
+
+            getConnection.Write(wordNumber, (ushort)valueParam);
         }
 
         public void writeOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)

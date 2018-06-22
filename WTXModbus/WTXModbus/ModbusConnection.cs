@@ -30,9 +30,9 @@ namespace Hbm.Devices.WTXModbus
         private ushort[] data;
         private ushort[] previousData;
 
-        private ushort startAdress;
+        private ushort startAddress;
         private ushort numOfPoints;
-        private string iP_Adress;
+        private string iP_address;
         private int sending_interval;  
         private int port;
         private bool connected;
@@ -44,10 +44,10 @@ namespace Hbm.Devices.WTXModbus
         {
             this.connected = false;
             this.port = 502;
-            this.iP_Adress = ipAddress; //IP-address to establish a successful connection to the device
+            this.iP_address = ipAddress; //IP-address to establish a successful connection to the device
 
             this.numOfPoints = 38;
-            this.startAdress = 0;
+            this.startAddress = 0;
             sending_interval = 5;      
 
             previousData = new ushort[59];
@@ -90,7 +90,7 @@ namespace Hbm.Devices.WTXModbus
                     // Save the previous data before reading the new, actual one:
                     this.previousData = this.data;
                     // Read the actual data: e.Message's type - ushort[]  
-                    e.Args = master.ReadHoldingRegisters(this.StartAdress, this.getNumOfPoints);
+                    e.Args = master.ReadHoldingRegisters(this.startAddress, this.getNumOfPoints);
                     this.connected = true;
                 }
                 catch (System.ArgumentException)
@@ -118,7 +118,7 @@ namespace Hbm.Devices.WTXModbus
         {
             try
             {
-                client = new TcpClient(this.iP_Adress, this.port);
+                client = new TcpClient(this.iP_address, this.port);
                 master = ModbusIpMaster.CreateIp(client);
                 this.connected = true;
             }
@@ -155,16 +155,16 @@ namespace Hbm.Devices.WTXModbus
         }
 
         // Auto-properties (get and set) for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
-        public string IP_Adress
+        public string IP_Address
         {
-            get { return this.iP_Adress; }
-            set { this.iP_Adress = value; }
+            get { return this.iP_address; }
+            set { this.iP_address = value; }
         }
 
         public ushort StartAdress
         {
-            get { return this.startAdress; }
-            set { this.startAdress = value; }
+            get { return this.startAddress; }
+            set { this.startAddress = value; }
         }
 
         public ushort getNumOfPoints

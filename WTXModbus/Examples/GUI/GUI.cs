@@ -62,15 +62,25 @@ namespace WTXModbusExamples
         private int i;
         private int arrayLength;
 
+        string[] args;
+
         // Constructor of class GUI for the initialisation: 
-        public GUI(string[] args)
+        public GUI(string[] argsParam)
         {
+            // Initialize the GUI Form: 
+            InitializeComponent();           // Call of this method to initialize the form.
+
+            this.args = argsParam;
+
             //Get IPAddress and the timer interval from the command line of the VS project arguments (at "Debug").
-            if (args.Length > 0)
+            if (this.args.Length > 0)
             {
-                this.ipAddress = args[0];
+                this.ipAddress = this.args[0];
             }
-            if (args.Length > 1)
+            else
+                MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau.");
+
+            if (this.args.Length > 1)
             {
                 this.timerInterval = Convert.ToInt32(args[1]);
             }
@@ -79,11 +89,9 @@ namespace WTXModbusExamples
 
             ModbusObj = new ModbusConnection(ipAddress);
             WTXModbusObj = new WTX120(ModbusObj, this.timerInterval);
-            
-            is_standard =true;      // change between standard and application mode in the GUI. 
-            ModbusObj.IP_Address = ipAddress;
 
-            InitializeComponent();   // Call of this method to initialize the form.
+            is_standard = true;      // change between standard and application mode in the GUI. 
+            ModbusObj.IP_Address = ipAddress;
 
             this.dataStr = new string[59];
 
@@ -92,17 +100,17 @@ namespace WTXModbusExamples
                 this.dataStr[i] = "0";
             }
 
-            startToolStripMenuItem_Click(this, new EventArgs());                   
+            startToolStripMenuItem_Click(this, new EventArgs());
 
             startIndex = 8;   // Default setting for standard mode. 
             i = 0;
             arrayLength = 0;
-
         }
 
         // This method could also load the datagrid at the beginning of the application: For printing the datagrid on the beginning.
         private void GUI_Load_1(object sender, EventArgs e)
-        {         
+        {
+
         }
         
         // This method is called from the constructor and sets the columns and the rows of the data grid.
@@ -330,7 +338,6 @@ namespace WTXModbusExamples
                     }   
                     catch (Exception) { }
             }
-
         }
 
         // Button-Click event to close the application: 
@@ -427,21 +434,18 @@ namespace WTXModbusExamples
 
                 // Writing values to the WTX according to the data type : S32 or U08 or U16 (given in the GUI datagrid).
                 if (inputStr != "0")
-                {                   
+                {
                     if (dataGridView1.Rows[index].Cells[10].Value.ToString()=="S32")
                         WTXModbusObj.writeOutputWordS32(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
-
                     else
                         if(dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
-                            WTXModbusObj.writeOutputWordU08(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
-
+                            WTXModbusObj.writeOutputWordU08(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);           
                     else if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
                               WTXModbusObj.writeOutputWordU16(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
                 }
 
                 //WTXModbusObj.Async_Call(0x100, Write_DataReceived);
-            }
-          
+            }        
             WTXModbusObj.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
         }       
 

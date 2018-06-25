@@ -102,7 +102,7 @@ namespace WTXModbusGUIsimple
             WTXObj = new WTX120(ModbusObj, this.timerInterval);
             
             WTXObj.getConnection.getNumOfPoints = 6;
-
+            
             WTXObj.DataUpdateEvent += ValuesOnConsole;
 
             this.toolStripLabel1.Text = "disconnected";
@@ -159,7 +159,6 @@ namespace WTXModbusGUIsimple
         // Method executed after read from WTX by eventbased call from WTX120Modbus, UpdateEvent(..) 
         // Updates displayed values and states
         //public void ReadDataReceived(IDeviceValues deviceValues)
-
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
             if (WTXObj.limitStatus == 0)  //Check for Errors
@@ -173,7 +172,6 @@ namespace WTXModbusGUIsimple
                     + "Tara:"  + WTXObj.netGrossValueStringComment(taraValue        , WTXObj.decimals) + WTXObj.unitStringComment();
                     textBox2.TextAlign = HorizontalAlignment.Right;
                     pictureBox1.Image = Properties.Resources.NE107_DiagnosisActive;
-
                 }));
             }
             else
@@ -337,6 +335,11 @@ namespace WTXModbusGUIsimple
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

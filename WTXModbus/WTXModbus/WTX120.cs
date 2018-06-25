@@ -2061,14 +2061,14 @@ namespace WTXModbus
 
             switch (decimals)
             {
-                case 0: returnvalue = dvalue.ToString(); break;
-                case 1: returnvalue = dvalue.ToString("0.0"); break;
-                case 2: returnvalue = dvalue.ToString("0.00"); break;
-                case 3: returnvalue = dvalue.ToString("0.000"); break;
-                case 4: returnvalue = dvalue.ToString("0.0000"); break;
-                case 5: returnvalue = dvalue.ToString("0.00000"); break;
+                case 0: returnvalue = dvalue.ToString();           break;
+                case 1: returnvalue = dvalue.ToString("0.0");      break;
+                case 2: returnvalue = dvalue.ToString("0.00");     break;
+                case 3: returnvalue = dvalue.ToString("0.000");    break;
+                case 4: returnvalue = dvalue.ToString("0.0000");   break;
+                case 5: returnvalue = dvalue.ToString("0.00000");  break;
                 case 6: returnvalue = dvalue.ToString("0.000000"); break;
-                default: returnvalue = dvalue.ToString(); break;
+                default: returnvalue = dvalue.ToString();          break;
 
             }
             return returnvalue;

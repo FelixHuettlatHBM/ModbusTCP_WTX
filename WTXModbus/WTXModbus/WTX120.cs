@@ -1276,6 +1276,8 @@ namespace WTXModbus
                 }
             }
         }
+
+
         public override int maxDosingTime
         {
             get

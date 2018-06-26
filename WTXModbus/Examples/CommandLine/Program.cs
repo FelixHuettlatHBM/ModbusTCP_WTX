@@ -45,7 +45,9 @@ namespace WTXModbus
 
         private static ConsoleKeyInfo value_outputwords;
         private static ConsoleKeyInfo value_exitapplication;
-        
+
+        private static ConsoleKeyInfo writeOutputWord;
+
         private static string calibration_weight;
 
         private static string Preload_str, Capacity_str;
@@ -181,6 +183,9 @@ namespace WTXModbus
                     default: break;
 
                 }   // end switch-case
+
+                // switch-case for writing the additional output words of the filler application: 
+                inputWriteOutputWordsFiller();
 
                 value_exitapplication = Console.ReadKey();
                 if (value_exitapplication.KeyChar == 'e')
@@ -442,43 +447,113 @@ namespace WTXModbus
                         Console.WriteLine("Weight memory, Seq.Number:     " + WTX_obj.DeviceValues.weightMemSeqNumber.ToString() +  "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemSeqNumber);
                         Console.WriteLine("Weight memory, gross:          " + WTX_obj.DeviceValues.weightMemGross.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemGross);
                         Console.WriteLine("Weight memory, net:            " + WTX_obj.DeviceValues.weightMemNet.ToString() +        "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemNet);
+
+                        Console.WriteLine("\nPress 'a' again to hide the input words.");
                     }
                     
                     if(ShowAllOutputWords==true)
                     {
-                        Console.WriteLine("Residual flow time:            " + WTX_obj.ResidualFlowTime);
-                        Console.WriteLine("Target filling weight:         " + WTX_obj.targetFillingWeight);
-                        Console.WriteLine("Coarse flow cut-off point:     " + WTX_obj.coarseFlowCutOffPoint);
-                        Console.WriteLine("Fine flow cut-off point:       " + WTX_obj.fineFlowCutOffPoint);
+                        Console.WriteLine("\nOutput words:\n");
+                  
+                        Console.WriteLine(" 9) Residual flow time:            " + WTX_obj.ResidualFlowTime      + " Press '9' and a value to write");
+                        Console.WriteLine("10) Target filling weight:         " + WTX_obj.targetFillingWeight   + " Press '10' and a value to write");
+                        Console.WriteLine("12) Coarse flow cut-off point:     " + WTX_obj.coarseFlowCutOffPoint + " Press '12' and a value to write");
+                        Console.WriteLine("14) Fine flow cut-off point:       " + WTX_obj.fineFlowCutOffPoint   + " Press '14' and a value to write");
 
-                        Console.WriteLine("Minimum fine flow:             " + WTX_obj.minimumFineFlow);
-                        Console.WriteLine("Optimization of cut-off points:" + WTX_obj.optimizationOfCutOffPoints);
-                        Console.WriteLine("Maximum dosing time:           " + WTX_obj.maxDosingTime);
-                        Console.WriteLine("Start with fine flow:          " + WTX_obj.startWithFineFlow);
+                        Console.WriteLine("16) Minimum fine flow:             " + WTX_obj.minimumFineFlow   + " Press '16' and a value to write");
+                        Console.WriteLine("18) Optimization of cut-off points:" + WTX_obj.optimizationOfCutOffPoints + " Press '18' and a value to write");
+                        Console.WriteLine("19) Maximum dosing time:           " + WTX_obj.maxDosingTime     + " Press '19' and a value to write");
+                        Console.WriteLine("20) Start with fine flow:          " + WTX_obj.startWithFineFlow + " Press '20' and a value to write");
 
-                        Console.WriteLine("Coarse lockout time:           " + WTX_obj.coarseLockoutTime);
-                        Console.WriteLine("Fine lockout time:             " + WTX_obj.fineLockoutTime);
-                        Console.WriteLine("Tare mode:                     " + WTX_obj.tareMode);
-                        Console.WriteLine("Upper tolerance limit + :      " + WTX_obj.upperToleranceLimit);
+                        Console.WriteLine("21) Coarse lockout time:           " + WTX_obj.coarseLockoutTime + " Press '21' and a value to write");
+                        Console.WriteLine("22) Fine lockout time:             " + WTX_obj.fineLockoutTime   + " Press '22' and a value to write");
+                        Console.WriteLine("23) Tare mode:                     " + WTX_obj.tareMode + " Press '23' and a value to write");
+                        Console.WriteLine("24) Upper tolerance limit + :      " + WTX_obj.upperToleranceLimit + " Press '24' and a value to write");
 
-                        Console.WriteLine("Lower tolerance limit -:       " + WTX_obj.lowerToleranceLimit);
-                        Console.WriteLine("Minimum start weight:          " + WTX_obj.minimumStartWeight);
-                        Console.WriteLine("Empty weight:                  " + WTX_obj.emptyWeight);
-                        Console.WriteLine("Tare delay:                    " + WTX_obj.tareDelay);
+                        Console.WriteLine("26) Lower tolerance limit -:       " + WTX_obj.lowerToleranceLimit + " Press '26' and a value to write");
+                        Console.WriteLine("28) Minimum start weight:          " + WTX_obj.minimumStartWeight  + " Press '28' and a value to write");
+                        Console.WriteLine("30) Empty weight:                  " + WTX_obj.emptyWeight + " Press '30' and a value to write");
+                        Console.WriteLine("32) Tare delay:                    " + WTX_obj.tareDelay   + " Press '32' and a value to write");
 
-                        Console.WriteLine("Coarse flow monitoring time:   " + WTX_obj.coarseFlowMonitoringTime);
-                        Console.WriteLine("Coarse flow monitoring:        " + WTX_obj.coarseFlowMonitoring);
-                        Console.WriteLine("Fine flow monitoring:          " + WTX_obj.fineFlowMonitoring);
-                        Console.WriteLine("Fine flow monitoring time:     " + WTX_obj.fineFlowMonitoringTime);
+                        Console.WriteLine("33) Coarse flow monitoring time:   " + WTX_obj.coarseFlowMonitoringTime + " Press '33' and a value to write");
+                        Console.WriteLine("34) Coarse flow monitoring:        " + WTX_obj.coarseFlowMonitoring   + " Press '34' and a value to write");
+                        Console.WriteLine("36) Fine flow monitoring:          " + WTX_obj.fineFlowMonitoring     + " Press '36' and a value to write");
+                        Console.WriteLine("38) Fine flow monitoring time:     " + WTX_obj.fineFlowMonitoringTime + " Press '38' and a value to write");
 
-                        Console.WriteLine("Delay time after fine flow:    " + WTX_obj.delayTimeAfterFineFlow);
-                        Console.WriteLine("Systematic difference:         " + WTX_obj.systematicDifference);
-                        Console.WriteLine("Downwards dosing:              " + WTX_obj.downardsDosing);
-                        Console.WriteLine("Valve control:                 " + WTX_obj.valveControl);
-                        Console.WriteLine("Emptying mode:                 " + WTX_obj.emptyingMode);
+                        Console.WriteLine("40) Delay time after fine flow:    " + WTX_obj.delayTimeAfterFineFlow + " Press '40' and a value to write");
+                        Console.WriteLine("41) Systematic difference:         " + WTX_obj.systematicDifference + " Press '41' and a value to write");
+                        Console.WriteLine("42) Downwards dosing:              " + WTX_obj.downardsDosing + " Press '42' and a value to write");
+                        Console.WriteLine("43) Valve control:                 " + WTX_obj.valveControl   + " Press '43' and a value to write");
+                        Console.WriteLine("44) Emptying mode:                 " + WTX_obj.emptyingMode   + " Press '44' and a value to write");
+
+                        Console.WriteLine("\nPress 'o' again to hide the output words.");
+
                     }
                     
                 }
+            }
+        }
+
+        private static void inputWriteOutputWordsFiller()
+        {
+            int valueParam = 0;
+
+            char wordNumberChar  = writeOutputWord.KeyChar;
+            int wordNumberParam = Convert.ToInt32(wordNumberChar);
+
+            switch (wordNumberParam)
+            {
+                case 9: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 10: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 12: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 14: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 16: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 18: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 19: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 20: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 21: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 22: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 23: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 24: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 26: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 28: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 30: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 32: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 33: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 34: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 36: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 38: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 40: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 41: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 42: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 43: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                    break;
+                case 44: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived); 
+                    break;
+
             }
         }
 

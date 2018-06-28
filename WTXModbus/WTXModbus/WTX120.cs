@@ -52,7 +52,7 @@ namespace WTXModbus
         private bool isCalibrating;
         private bool isRefreshed;
 
-        private ModbusConnection ModbusConnObj;
+        private ModbusTCPConnection ModbusConnObj;
         private IDeviceValues thisValues;
 
         private ushort command;
@@ -71,7 +71,7 @@ namespace WTXModbus
          * @param : connection - object of class ModbusConnection, which is created in the console or GUI application.
          * @param : paramTimerInterval - timer interval for the periodic reading of the values, in milli-seconds. 
          */
-        public WTX120(ModbusConnection connection, int paramTimerInterval) : base(connection, paramTimerInterval)
+        public WTX120(ModbusTCPConnection connection, int paramTimerInterval) : base(connection, paramTimerInterval)
         {
             this.ModbusConnObj = connection;
 
@@ -107,7 +107,7 @@ namespace WTXModbus
         /* 
          *  This is a auto-property to get the object of ModbusConnection, which is committed to the constructor of this class. 
          */
-        public override ModbusConnection getConnection
+        public override ModbusTCPConnection getConnection
         {
             get
             {

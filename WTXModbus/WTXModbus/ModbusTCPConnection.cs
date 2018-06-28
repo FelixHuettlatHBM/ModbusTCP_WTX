@@ -22,7 +22,7 @@ namespace WTXModbus
     /// The data exchange for reading a register between class "ModbusConnection" and class "WTX120" is event-based. 
     /// This class publishes the event (MessageEvent) and read the register, afterwards it will be sent back to WTX120. 
     /// </summary>
-    public class ModbusConnection : IModbusConnection
+    public class ModbusTCPConnection : IModbusConnection
     {
         private ModbusIpMaster master;
         private TcpClient client;
@@ -39,7 +39,7 @@ namespace WTXModbus
         // Declaration of the event Eventhandler. For the message information from the register.
         public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
 
-        public ModbusConnection(string ipAddress)
+        public ModbusTCPConnection(string ipAddress)
         {
             this.connected = false;
             this.port = 502;

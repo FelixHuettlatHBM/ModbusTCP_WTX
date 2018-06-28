@@ -35,7 +35,7 @@ namespace WTXModbus
 
     static class Program
     {
-        private static ModbusConnection ModbusObj;
+        private static ModbusTCPConnection ModbusObj;
         private static WTX120 WTX_obj;
 
         private static string ipAddress;     // IP-adress, set as the first argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
@@ -99,7 +99,7 @@ namespace WTXModbus
 
             do // do-while loop for the connection establishment. If the connection is established successfully, the do-while loop is left/exit. 
             {
-                ModbusObj = new ModbusConnection(ipAddress);
+                ModbusObj = new ModbusTCPConnection(ipAddress);
 
                 WTX_obj = new WTX120(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
 

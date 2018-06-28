@@ -57,7 +57,7 @@
     <Compile Include="NetConnectionEventArgs.cs" />
     <Compile Include="DeviceAbstract.cs" />
     <Compile Include="IDeviceValues.cs" />
-    <Compile Include="ModbusConnection.cs" />
+    <Compile Include="ModbusTCPConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WTX120.cs" />
   </ItemGroup>

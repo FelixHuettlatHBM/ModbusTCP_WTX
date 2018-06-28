@@ -42,7 +42,7 @@ namespace WTXModbusExamples
     /// </summary>
     partial class GUI : Form
     {
-        private ModbusConnection ModbusObj;
+        private ModbusTCPConnection ModbusObj;
         private WTX120 WTXModbusObj;
 
         private SettingsForm Set_obj;
@@ -86,7 +86,7 @@ namespace WTXModbusExamples
             else
                 this.timerInterval = 200; // Default value for the timer interval.
 
-            ModbusObj = new ModbusConnection(ipAddress);
+            ModbusObj = new ModbusTCPConnection(ipAddress);
             WTXModbusObj = new WTX120(ModbusObj, this.timerInterval);
 
             is_standard = true;      // change between standard and application mode in the GUI. 

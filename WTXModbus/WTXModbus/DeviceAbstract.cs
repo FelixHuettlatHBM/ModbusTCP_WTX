@@ -24,7 +24,7 @@ namespace WTXModbus
 
         //private INetCommunication<uint, JToken> commObj;
 
-        public DeviceAbstract(ModbusConnection connection, int paramTimerInterval)
+        public DeviceAbstract(ModbusTCPConnection connection, int paramTimerInterval)
         {
             /*
             inputModbusJet = true;
@@ -51,7 +51,7 @@ namespace WTXModbus
             */
         }
 
-        public abstract ModbusConnection getConnection { get; }
+        public abstract ModbusTCPConnection getConnection { get; }
         public abstract IDeviceValues DeviceValues { get; }
 
         public abstract event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;

@@ -39,7 +39,7 @@ namespace WTXModbus
      *  The methods 'Calibrate' and 'Calculate' are also given in this class, which do the calibration with a nominal load, a dead load and 
      *  a individual weight.
      */
-    public class WTX120 : DeviceAbstract
+    public class WTX120 : BaseWTDevice
     {
         private string[] dataStr;
         private ushort[] data;
@@ -213,7 +213,7 @@ namespace WTXModbus
             return this;
         }
 
-        public DeviceAbstract getDeviceAbstract
+        public BaseWTDevice getDeviceAbstract
         {
             get
             {

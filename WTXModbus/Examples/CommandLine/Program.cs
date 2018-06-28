@@ -45,8 +45,6 @@ namespace WTXModbus
         private static ConsoleKeyInfo value_outputwords;
         private static ConsoleKeyInfo value_exitapplication;
 
-        private static ConsoleKeyInfo writeOutputWord;
-
         private static string calibration_weight;
 
         private static string Preload_str, Capacity_str;

@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="IModbusConnection.cs" />
     <Compile Include="NetConnectionEventArgs.cs" />
-    <Compile Include="DeviceAbstract.cs" />
+    <Compile Include="BaseWTDevice.cs" />
     <Compile Include="IDeviceData.cs" />
     <Compile Include="ModbusTCPConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

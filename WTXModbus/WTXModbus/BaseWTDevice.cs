@@ -19,12 +19,12 @@ using System.Threading.Tasks;
  */
 namespace WTXModbus
 {
-    public abstract class DeviceAbstract : IDeviceData
+    public abstract class BaseWTDevice : IDeviceData
     {
 
         //private INetCommunication<uint, JToken> commObj;
 
-        public DeviceAbstract(ModbusTCPConnection connection, int paramTimerInterval)
+        public BaseWTDevice(ModbusTCPConnection connection, int paramTimerInterval)
         {
             /*
             inputModbusJet = true;

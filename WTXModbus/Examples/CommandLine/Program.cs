@@ -615,7 +615,7 @@ namespace WTXModbus
          * If you do not want a timer you can put f.e. the printing method into 'Write_DataReceived' f.e. .
          */
          
-        private static void Write_DataReceived(IDeviceValues obj)
+        private static void Write_DataReceived(IDeviceData obj)
         {
             throw new NotImplementedException();
         }

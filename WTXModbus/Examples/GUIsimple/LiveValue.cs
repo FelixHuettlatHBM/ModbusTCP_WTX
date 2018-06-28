@@ -258,7 +258,7 @@ namespace WTXModbusGUIsimple
         }
 
         // CallbackMethod executed after write to WTX
-        public void WriteDataReceived(IDeviceValues deviceValues)
+        public void WriteDataReceived(IDeviceData deviceValues)
         {
             textBox2.Invoke(new Action(() =>
             {

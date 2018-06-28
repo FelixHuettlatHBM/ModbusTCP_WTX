@@ -19,7 +19,7 @@ using System.Threading.Tasks;
  */
 namespace WTXModbus
 {
-    public abstract class DeviceAbstract : IDeviceValues
+    public abstract class DeviceAbstract : IDeviceData
     {
 
         //private INetCommunication<uint, JToken> commObj;
@@ -52,7 +52,7 @@ namespace WTXModbus
         }
 
         public abstract ModbusTCPConnection getConnection { get; }
-        public abstract IDeviceValues DeviceValues { get; }
+        public abstract IDeviceData DeviceValues { get; }
 
         public abstract event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 

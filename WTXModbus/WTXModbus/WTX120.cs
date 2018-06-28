@@ -53,12 +53,12 @@ namespace WTXModbus
         private bool isRefreshed;
 
         private ModbusTCPConnection ModbusConnObj;
-        private IDeviceValues thisValues;
+        private IDeviceData thisValues;
 
         private ushort command;
         private bool compareDataChanged;
 
-        private Action<IDeviceValues> callback_obj;
+        private Action<IDeviceData> callback_obj;
         private ushort[] data_written;
         private int timerInterval;
 
@@ -125,7 +125,7 @@ namespace WTXModbus
          * and converted to strings, which is a preferred way in this application.  
          * 
          */
-        public void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceValues> callbackParam)
+        public void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
         {
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
 
@@ -159,7 +159,7 @@ namespace WTXModbus
          * @param : wordnumber - the word of the register which should be rewritten. commandParam - the command, 0x00=Reading everthying else is Writing
          * @param : callbackParam - the callback method which is called once the writing is finished (not used here for the synchronous reading). 
          */
-        public void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceValues> callbackParam)
+        public void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)
         {
             this.command = commandParam;
             this.callback_obj = callbackParam;
@@ -193,20 +193,20 @@ namespace WTXModbus
         // @param : sender - the object of this class. dowork_asynchronous - the argument of the event. 
         public void ReadDoWork(object sender, DoWorkEventArgs dowork_asynchronous)
         {
-            dowork_asynchronous.Result = (IDeviceValues)this.asyncReadData((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
+            dowork_asynchronous.Result = (IDeviceData)this.asyncReadData((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
             // dowork_asynchronous.Result contains all values defined in Interface IDevice_Values.
         }
 
         // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
         // @return: IDevice_Values - Interface, that contains all values for the device. 
-        private IDeviceValues asyncReadData(BackgroundWorker worker)
+        private IDeviceData asyncReadData(BackgroundWorker worker)
         {
             getConnection.Read();
 
             return this;
         }
 
-        public IDeviceValues syncReadData()
+        public IDeviceData syncReadData()
         {
             getConnection.Read();
 
@@ -223,7 +223,7 @@ namespace WTXModbus
 
         public void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.callback_obj((IDeviceValues)e.Result);         // Commit the interface
+            this.callback_obj((IDeviceData)e.Result);         // Commit the interface
         }
 
         public void WriteDoWork(object sender, DoWorkEventArgs e)
@@ -250,7 +250,7 @@ namespace WTXModbus
         }
 
 
-        public void writeOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this.callback_obj = callbackParam;
 
@@ -261,7 +261,7 @@ namespace WTXModbus
         }
 
 
-        public void writeOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this.callback_obj = callbackParam;
 
@@ -273,7 +273,7 @@ namespace WTXModbus
             getConnection.Write(wordNumber, (ushort)valueParam);
         }
 
-        public void writeOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceValues> callbackParam)
+        public void writeOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this.callback_obj = callbackParam;
 
@@ -337,7 +337,7 @@ namespace WTXModbus
          * It also couples the method 'UpdateEvent(..)' to the eventHandler 'RaiseDataEvent' from the class ModbusConnection,
          * signalizing that the data is read from the WTX device. 
          */
-        private void DataReceivedTimer(IDeviceValues Device_Values)
+        private void DataReceivedTimer(IDeviceData Device_Values)
         {
             getConnection.RaiseDataEvent += UpdateEvent;   // Subscribe to the event.
 
@@ -502,7 +502,7 @@ namespace WTXModbus
             set { this.isCalibrating = value; }
         }
 
-        public override IDeviceValues DeviceValues
+        public override IDeviceData DeviceValues
         {
             get
             {
@@ -2201,7 +2201,7 @@ namespace WTXModbus
             this.restartTimer();
         }
 
-        private void Write_DataReceived(IDeviceValues obj)
+        private void Write_DataReceived(IDeviceData obj)
         {
             //throw new NotImplementedException();
         }

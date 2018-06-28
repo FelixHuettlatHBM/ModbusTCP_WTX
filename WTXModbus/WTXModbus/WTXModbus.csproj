@@ -56,7 +56,7 @@
     <Compile Include="IModbusConnection.cs" />
     <Compile Include="NetConnectionEventArgs.cs" />
     <Compile Include="DeviceAbstract.cs" />
-    <Compile Include="IDeviceValues.cs" />
+    <Compile Include="IDeviceData.cs" />
     <Compile Include="ModbusTCPConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WTX120.cs" />

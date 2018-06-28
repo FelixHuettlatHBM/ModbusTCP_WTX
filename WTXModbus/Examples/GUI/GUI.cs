@@ -349,7 +349,7 @@ namespace WTXModbusExamples
         // the GUI is actualized.
         // A asynchronous call is used in the following button_Click methods. 
         // The callback method is Write_DataReceived, which is called once the command is written into the register of the device.      
-        public void Write_DataReceived(IDeviceValues Device_Values)
+        public void Write_DataReceived(IDeviceData Device_Values)
         {
             //this.dataStr = Device_Values.getDataStr;
             //this.reset_values();

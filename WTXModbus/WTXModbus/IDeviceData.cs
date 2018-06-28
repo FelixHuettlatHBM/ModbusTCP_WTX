@@ -27,7 +27,7 @@ namespace WTXModbus
     /// 
     /// Behind the variables the index of the arrays is given. 
     /// </summary>
-    public interface IDeviceValues
+    public interface IDeviceData
     {
         event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;   
 

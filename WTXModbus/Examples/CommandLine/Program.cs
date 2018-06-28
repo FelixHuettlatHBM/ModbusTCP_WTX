@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using System.Text;
 using System.Threading;
 using System.Timers;
-using Hbm.Devices.WTXModbus;
 using System.Globalization;
 
 namespace WTXModbus
@@ -130,6 +129,7 @@ namespace WTXModbus
             {
                 isCalibrating = false;
                 value_outputwords = Console.ReadKey();
+                int valueOutput = Convert.ToInt32(value_outputwords.KeyChar);
 
                 switch (value_outputwords.KeyChar)
                 {
@@ -184,8 +184,13 @@ namespace WTXModbus
 
                 }   // end switch-case
 
-                // switch-case for writing the additional output words of the filler application: 
-                inputWriteOutputWordsFiller();
+
+                //int valueOutput = Convert.ToInt32(value_outputwords.KeyChar);
+                int value = 0;
+                if (valueOutput >= 9)
+                {// switch-case for writing the additional output words of the filler application: 
+                    inputWriteOutputWordsFiller((ushort)valueOutput,value);
+                }
 
                 value_exitapplication = Console.ReadKey();
                 if (value_exitapplication.KeyChar == 'e')
@@ -494,66 +499,70 @@ namespace WTXModbus
             }
         }
 
-        private static void inputWriteOutputWordsFiller()
+        private static void inputWriteOutputWordsFiller(ushort wordNumberParam,int value)
         {
-            int valueParam = 0;
+            int valueToWrite = 0;
 
-            char wordNumberChar  = writeOutputWord.KeyChar;
-            int wordNumberParam = Convert.ToInt32(wordNumberChar);
+            // char wordNumberChar  = writeOutputWord.KeyChar;
+            // int wordNumberParam = Convert.ToInt32(wordNumberChar);
+
+            Console.WriteLine("Tip in the value to be written: ");
+            string s= Console.ReadLine();
+            valueToWrite = Convert.ToInt32(s);
 
             switch (wordNumberParam)
             {
-                case 9: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 9:  WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 10: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 10: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 12: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 12: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 14: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 14: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 16: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 16: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 18: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 18: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 19: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 19: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 20: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 20: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 21: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 21: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 22: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 22: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 23: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 23: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 24: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 24: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 26: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 26: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 28: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 28: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 30: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 30: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 32: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 32: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 33: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 33: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 34: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 34: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 36: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 36: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 38: WTX_obj.writeOutputWordU16(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 38: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 40: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 40: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 41: WTX_obj.writeOutputWordS32(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 41: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 42: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 42: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 43: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived);
+                case 43: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 44: WTX_obj.writeOutputWordU08(valueParam, (ushort) wordNumberParam, Write_DataReceived); 
+                case 44: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived); 
                     break;
-
+               
             }
         }
 

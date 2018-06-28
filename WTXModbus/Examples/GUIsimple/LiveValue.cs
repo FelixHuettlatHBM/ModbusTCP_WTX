@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 
-using Hbm.Devices.WTXModbus;
 using WTXModbus;
 
 namespace WTXModbusGUIsimple

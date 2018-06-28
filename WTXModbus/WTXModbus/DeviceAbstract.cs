@@ -1,4 +1,4 @@
-﻿using Hbm.Devices.WTXModbus;
+﻿
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
 
 /*
  *  This abstract class predefines the methods and auto-properties for the use in class 'WTX120' and it inherits from interface 
@@ -18,7 +17,6 @@ using System.Threading.Tasks;
  *  neccessary for JetBus is commented.
  *
  */
-
 namespace WTXModbus
 {
     public abstract class DeviceAbstract : IDeviceValues

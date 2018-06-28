@@ -6,11 +6,9 @@
  * 
  *  */
 
-
 using System;
-using WTXModbus;
 
-namespace Hbm.Devices.WTXModbus
+namespace WTXModbus
 {
     /// <summary>
     /// This is the interface for the values of the device. For example for the device WTX120. 

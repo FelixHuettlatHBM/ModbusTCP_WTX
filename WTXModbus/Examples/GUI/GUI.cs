@@ -10,7 +10,6 @@
 using System;
 using System.Windows.Forms;
 using System.IO;
-using Hbm.Devices.WTXModbus;
 using WTXModbusGUIsimple;
 using WTXModbus;
 using System.Threading;

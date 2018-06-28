@@ -10,9 +10,8 @@ using Modbus.Device;
 using System;
 using System.Net.Sockets;
 using System.Threading;
-using WTXModbus;
 
-namespace Hbm.Devices.WTXModbus
+namespace WTXModbus
 {
     /// <summary>
     /// This class establishs the communication to the device(here: device WTX120 ), starts/ends the connection,

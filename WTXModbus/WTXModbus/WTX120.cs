@@ -116,6 +116,19 @@ namespace WTXModbus
 
         }
 
+        // To establish a connection to the WTX device via class WTX120.
+        public override void connect()
+        {
+            this.ModbusConnObj.Connect();
+        }
+
+        // To terminate,break, a connection to the WTX device via class WTX120.
+        public override void disconnect()
+        {
+            this.ModbusConnObj.ResetDevice();
+        }
+
+
         /*
          * This method realizes an asynchronous call to read (command=0x00) and to write(else command!=0x00). It uses the 'BackgroundWorker Class' 
          * to execute an operation on a seperate thread. To set up background operations f.e. you have to raise the 'DoWork' event (here in 'DoWorkEventHandler')
@@ -2278,7 +2291,6 @@ namespace WTXModbus
                   Console.Write("Wait for setting the dead load into the WTX.");
                }
         }
-
 
     }
 }

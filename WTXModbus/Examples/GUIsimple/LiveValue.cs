@@ -126,7 +126,8 @@ namespace WTXModbusGUIsimple
                 string tempIpAddress = textBox1.Text;
                 WTXObj.getConnection.IP_Address = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
 
-                WTXObj.getConnection.Connect();  // Equal to : ModbusObj.Connect();
+                // The connection to the device should be established.   
+                WTXObj.connect();                                 // Alternative : WTX_obj.getConnection.Connect();  Equal to : ModbusObj.Connect();
 
                 if (WTXObj.getConnection.is_connected)
                 {

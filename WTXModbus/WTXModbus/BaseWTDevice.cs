@@ -54,6 +54,9 @@ namespace WTXModbus
         public abstract ModbusTCPConnection getConnection { get; }
         public abstract IDeviceData DeviceValues { get; }
 
+        public abstract void connect();
+        public abstract void disconnect();
+
         public abstract event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 
         public abstract void initialize_timer(int timer_interval);

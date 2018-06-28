@@ -25,7 +25,7 @@ namespace WTXModbus
     /// This class implements a console application instead of a windows form. An Object of the class 'ModbusConnection' and 'WTX120' are initialized as a publisher
     /// and subscriber. Afterwars a connection to the device is build and the timer/sending interval is set. 
     /// A timer with for example 500ms is created. After 500ms an event is triggered, which executes the method "OnTimedEvent" reading the register of the device
-    /// by an asynchronous call in the method "WTX_obj.Async_Call". As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
+    /// by an asynchronous call in the method "WTXObj.Async_Call". As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
     /// new data , which have already been interpreted in class 'WTX120', so the data is given as a string array. 
     /// The data is also printed on the console in the callback method "Read_DataReceived". 
     /// Being in the while-loop it is possible to select commands to the device. For example taring, change from gross to net value, stop dosing, zeroing and so on. 
@@ -36,7 +36,7 @@ namespace WTXModbus
     static class Program
     {
         private static ModbusTCPConnection ModbusObj;
-        private static WTX120 WTX_obj;
+        private static WTX120 WTXObj;
 
         private static string ipAddress;     // IP-adress, set as the first argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
         private static int timerInterval;    // timer interval, set as the second argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
@@ -99,11 +99,12 @@ namespace WTXModbus
             {
                 ModbusObj = new ModbusTCPConnection(ipAddress);
 
-                WTX_obj = new WTX120(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
+                WTXObj = new WTX120(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
 
-                WTX_obj.getConnection.Connect();
-          
-                if (WTX_obj.getConnection.is_connected == true)
+                // The connection to the device should be established.   
+                WTXObj.connect();                                 // Alternative : WTXObj.getConnection.Connect();  
+
+                if (WTXObj.getConnection.is_connected == true)
                 {
                     Console.WriteLine("\nThe connection has been established successfully.\nThe values of the WTX device are printed on the console ... :");
                 }
@@ -113,13 +114,13 @@ namespace WTXModbus
                     ipAddress = Console.ReadLine();
                 }
 
-            } while (WTX_obj.getConnection.is_connected==false);
+            } while (WTXObj.getConnection.is_connected==false);
 
 
             //thread1.Start();
 
             // Coupling the data via an event-based call - If the event in class WTX120 is triggered, the values are updated on the console: 
-            WTX_obj.DataUpdateEvent += ValuesOnConsole;     
+            WTXObj.DataUpdateEvent += ValuesOnConsole;     
 
             // This while loop is repeated till the user enters e. After 500ms the register of the device is read out. In the while-loop the user
             // can select commands, which are send immediately to the device. 
@@ -131,14 +132,14 @@ namespace WTXModbus
 
                 switch (value_outputwords.KeyChar)
                 {
-                    case '0': WTX_obj.Async_Call(0x1, Write_DataReceived);    break;    // Taring 
-                    case '1': WTX_obj.Async_Call(0x2, Write_DataReceived);    break;    // Gross/Net
-                    case '2': WTX_obj.Async_Call(0x40, Write_DataReceived);   break;    // Zeroing
-                    case '3': WTX_obj.Async_Call(0x80, Write_DataReceived);   break;    // Adjust zero 
-                    case '4': WTX_obj.Async_Call(0x100, Write_DataReceived);  break;    // Adjust nominal
-                    case '5': WTX_obj.Async_Call(0x800, Write_DataReceived);  break;    // Activate data
-                    case '6': WTX_obj.Async_Call(0x1000, Write_DataReceived); break;    // Manual taring
-                    case '7': WTX_obj.Async_Call(0x4000, Write_DataReceived); break;    // Record Weight
+                    case '0': WTXObj.Async_Call(0x1,   Write_DataReceived); break;    // Taring 
+                    case '1': WTXObj.Async_Call(0x2,   Write_DataReceived); break;    // Gross/Net
+                    case '2': WTXObj.Async_Call(0x40,  Write_DataReceived); break;    // Zeroing
+                    case '3': WTXObj.Async_Call(0x80,  Write_DataReceived); break;    // Adjust zero 
+                    case '4': WTXObj.Async_Call(0x100, Write_DataReceived); break;    // Adjust nominal
+                    case '5': WTXObj.Async_Call(0x800, Write_DataReceived); break;    // Activate data
+                    case '6': WTXObj.Async_Call(0x1000,Write_DataReceived); break;    // Manual taring
+                    case '7': WTXObj.Async_Call(0x4000,Write_DataReceived); break;    // Record Weight
 
                     // Fall für schreiben auf multiple Register:
                     case 'c':       // Calculate Calibration
@@ -151,13 +152,13 @@ namespace WTXModbus
                         if (ShowAllInputWords == false)
                         {
                             ShowAllInputWords = true;
-                            WTX_obj.Refreshed = true;
+                            WTXObj.Refreshed = true;
                         }
                         else
                             if (ShowAllInputWords == true)
                             {
                             ShowAllInputWords = false;
-                            WTX_obj.Refreshed = true;
+                            WTXObj.Refreshed = true;
                             }
                         break;
                   
@@ -166,23 +167,22 @@ namespace WTXModbus
                         if (ShowAllOutputWords == false)
                         {
                             ShowAllOutputWords = true;
-                            WTX_obj.Refreshed = true;
+                            WTXObj.Refreshed = true;
                         }
                         else
                             if (ShowAllOutputWords == true)
                             {
                             ShowAllOutputWords = false;
-                            WTX_obj.Refreshed = true;
+                            WTXObj.Refreshed = true;
                             }
 
-
-                        break;             
-
+                        break;     
+                        
                     default: break;
 
                 }   // end switch-case
 
-
+         
                 //int valueOutput = Convert.ToInt32(value_outputwords.KeyChar);
                 int value = 0;
                 if (valueOutput >= 9)
@@ -231,15 +231,15 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            //WTX_obj.stopTimer();      // The timer is stopped in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.stopTimer();      // The timer is stopped in the method 'Calculate(..)' in class WTX120.
 
             zero_load_nominal_load_input();
            
-            WTX_obj.Calculate(Preload,Capacity);
+            WTXObj.Calculate(Preload,Capacity);
             
             isCalibrating = false;
 
-            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
         }
 
         /*
@@ -251,7 +251,7 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            //WTX_obj.stopTimer();    // The timer is stopped in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.stopTimer();    // The timer is stopped in the method 'Calculate(..)' in class WTX120.
 
             Console.Clear();
             Console.WriteLine("\nPlease tip the value for the calibration weight and tip enter to confirm : ");
@@ -260,14 +260,14 @@ namespace WTXModbus
             Console.WriteLine("\nTo start : Set zero load and press any key for measuring zero and wait.");
             string another = Console.ReadLine();
 
-            WTX_obj.MeasureZero();
+            WTXObj.MeasureZero();
             Console.WriteLine("\n\nDead load measured.Put weight on scale, press any key and wait.");
 
             string another2 = Console.ReadLine();
 
-            WTX_obj.Calibrate(potencyCalibrationWeight(), calibration_weight);
+            WTXObj.Calibrate(potencyCalibrationWeight(), calibration_weight);
 
-            //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
 
             isCalibrating = false;
         }  
@@ -282,7 +282,7 @@ namespace WTXModbus
             str_comma_dot = calibration_weight.Replace(".", ","); // Transformation into a floating-point number.Thereby commas and dots can be used as input for the calibration weight.
             DoubleCalibrationWeight = double.Parse(str_comma_dot);                  
 
-            potenz = Math.Pow(10, WTX_obj.decimals); // Potentisation by 10^(decimals). 
+            potenz = Math.Pow(10, WTXObj.decimals); // Potentisation by 10^(decimals). 
             
             return (int) (DoubleCalibrationWeight * potenz); // Multiplying of the potentiated values with the calibration weight, ...
                                                              // ...casting to integer (easily possible because of the multiplying with ... 
@@ -295,18 +295,18 @@ namespace WTXModbus
             // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is 
             // not null (respectively empty) and if no calibration is done at that moment.
 
-            if (WTX_obj.DeviceValues != null && (isCalibrating==false))
+            if (WTXObj.DeviceValues != null && (isCalibrating==false))
             {
                 Console.Clear();
 
                 Console.WriteLine("Options to set the device : Enter the following keys:\nb-Choose the number of bytes read from the register |");
 
-                if (WTX_obj.DeviceValues.applicationMode == 0)  // If the WTX120 device is in standard application/mode.
+                if (WTXObj.DeviceValues.applicationMode == 0)  // If the WTX120 device is in standard application/mode.
                 {
                     Console.WriteLine("0-Taring | 1-Gross/net  | 2-Zeroing  | 3- Adjust zero | 4-Adjust nominal |\n5-Activate Data \t| 6-Manual taring \t      | 7-Weight storage\n");
                 }
                 else
-                    if (WTX_obj.DeviceValues.applicationMode == 1 || WTX_obj.DeviceValues.applicationMode == 2) // If the WTX120 device is in filler application/mode.
+                    if (WTXObj.DeviceValues.applicationMode == 1 || WTXObj.DeviceValues.applicationMode == 2) // If the WTX120 device is in filler application/mode.
                     {
 
                     if(ShowAllInputWords==false)
@@ -316,140 +316,140 @@ namespace WTXModbus
                         Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show only input word 0 to 5\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
                 }
 
-                if (WTX_obj.DeviceValues.applicationMode == 0)   // If the device is in the standard mode (standard=0; filler=1 or filler=2) 
+                if (WTXObj.DeviceValues.applicationMode == 0)   // If the device is in the standard mode (standard=0; filler=1 or filler=2) 
                 {
 
                     // The values are printed on the console according to the input - "numInputs": 
 
                     if (inputMode == 1)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.netGrossValueStringComment(WTX_obj.NetValue, WTX_obj.decimals) + "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
+                        Console.WriteLine("Net value:                     " + WTXObj.netGrossValueStringComment(WTXObj.NetValue, WTXObj.decimals) + "\t  As an Integer:  " + WTXObj.DeviceValues.NetValue);
                     }
                     else
                         if (inputMode == 2 || inputMode == 3 || inputMode == 4)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.netGrossValueStringComment(WTX_obj.NetValue, WTX_obj.decimals) +   "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                        Console.WriteLine("Gross value:                   " + WTX_obj.netGrossValueStringComment(WTX_obj.GrossValue, WTX_obj.decimals) + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
+                        Console.WriteLine("Net value:                     " + WTXObj.netGrossValueStringComment(WTXObj.NetValue, WTXObj.decimals) +   "\t  As an Integer:  " + WTXObj.DeviceValues.NetValue);
+                        Console.WriteLine("Gross value:                   " + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals) + "\t  As an Integer:  " + WTXObj.DeviceValues.GrossValue);
                     }
                     else
                             if (inputMode == 5)
                     {
-                        Console.WriteLine("Net value:                     " + WTX_obj.netGrossValueStringComment(WTX_obj.NetValue, WTX_obj.decimals) +   "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                        Console.WriteLine("Gross value:                   " + WTX_obj.netGrossValueStringComment(WTX_obj.GrossValue, WTX_obj.decimals) + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
-                        Console.WriteLine("General weight error:          " + WTX_obj.DeviceValues.generalWeightError.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.generalWeightError);
-                        Console.WriteLine("Scale alarm triggered:         " + WTX_obj.DeviceValues.limitStatus.ToString() +        "\t  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
-                        Console.WriteLine("Scale seal is open:            " + WTX_obj.DeviceValues.scaleSealIsOpen.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleSealIsOpen);
-                        Console.WriteLine("Manual tare:                   " + WTX_obj.DeviceValues.manualTare.ToString() +         "\t  As an Integer:  " + WTX_obj.DeviceValues.manualTare);
-                        Console.WriteLine("Weight type:                   " + WTX_obj.weightTypeStringComment() +                  "\t  As an Integer:  " + WTX_obj.DeviceValues.weightType);
-                        Console.WriteLine("Scale range:                   " + WTX_obj.scaleRangeStringComment() +                  "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleRange);
-                        Console.WriteLine("Zero required/True zero:       " + WTX_obj.DeviceValues.zeroRequired.ToString() +       "\t  As an Integer:  " + WTX_obj.DeviceValues.zeroRequired);
-                        Console.WriteLine("Weight within center of zero:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero);
-                        Console.WriteLine("Weight in zero range:          " + WTX_obj.DeviceValues.weightInZeroRange.ToString() +  "\t  As an Integer:  " + WTX_obj.DeviceValues.weightInZeroRange);
+                        Console.WriteLine("Net value:                     " + WTXObj.netGrossValueStringComment(WTXObj.NetValue, WTXObj.decimals) +   "\t  As an Integer:  " + WTXObj.DeviceValues.NetValue);
+                        Console.WriteLine("Gross value:                   " + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals) + "\t  As an Integer:  " + WTXObj.DeviceValues.GrossValue);
+                        Console.WriteLine("General weight error:          " + WTXObj.DeviceValues.generalWeightError.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.generalWeightError);
+                        Console.WriteLine("Scale alarm triggered:         " + WTXObj.DeviceValues.limitStatus.ToString() +        "\t  As an Integer:  " + WTXObj.DeviceValues.limitStatus);
+                        Console.WriteLine("Scale seal is open:            " + WTXObj.DeviceValues.scaleSealIsOpen.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.scaleSealIsOpen);
+                        Console.WriteLine("Manual tare:                   " + WTXObj.DeviceValues.manualTare.ToString() +         "\t  As an Integer:  " + WTXObj.DeviceValues.manualTare);
+                        Console.WriteLine("Weight type:                   " + WTXObj.weightTypeStringComment() +                  "\t  As an Integer:  " + WTXObj.DeviceValues.weightType);
+                        Console.WriteLine("Scale range:                   " + WTXObj.scaleRangeStringComment() +                  "\t  As an Integer:  " + WTXObj.DeviceValues.scaleRange);
+                        Console.WriteLine("Zero required/True zero:       " + WTXObj.DeviceValues.zeroRequired.ToString() +       "\t  As an Integer:  " + WTXObj.DeviceValues.zeroRequired);
+                        Console.WriteLine("Weight within center of zero:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero);
+                        Console.WriteLine("Weight in zero range:          " + WTXObj.DeviceValues.weightInZeroRange.ToString() +  "\t  As an Integer:  " + WTXObj.DeviceValues.weightInZeroRange);
 
-                        Console.WriteLine("Limit status:                  " + WTX_obj.limitStatusStringComment () + "  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
-                        Console.WriteLine("Weight moving:                 " + WTX_obj.weightMovingStringComment() + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
+                        Console.WriteLine("Limit status:                  " + WTXObj.limitStatusStringComment () + "  As an Integer:  " + WTXObj.DeviceValues.limitStatus);
+                        Console.WriteLine("Weight moving:                 " + WTXObj.weightMovingStringComment() + "  As an Integer:" + WTXObj.DeviceValues.weightMoving);
                     }
                     else
                     if (inputMode == 6 || inputMode == 38)
                     { 
-                        Console.WriteLine("Net value:                     " + WTX_obj.netGrossValueStringComment(WTX_obj.NetValue, WTX_obj.decimals) +  "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                        Console.WriteLine("Gross value:                   " + WTX_obj.netGrossValueStringComment(WTX_obj.GrossValue, WTX_obj.decimals)+ "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
-                        Console.WriteLine("General weight error:          " + WTX_obj.DeviceValues.generalWeightError.ToString() +                  "\t  As an Integer:  " + WTX_obj.DeviceValues.generalWeightError);
-                        Console.WriteLine("Scale alarm triggered:         " + WTX_obj.DeviceValues.limitStatus.ToString() +                         "\t  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
-                        Console.WriteLine("Scale seal is open:            " + WTX_obj.DeviceValues.scaleSealIsOpen.ToString() +                     "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleSealIsOpen);
-                        Console.WriteLine("Manual tare:                   " + WTX_obj.DeviceValues.manualTare.ToString() +        "\t  As an Integer:  " + WTX_obj.DeviceValues.manualTare);
-                        Console.WriteLine("Weight type:                   " + WTX_obj.weightTypeStringComment() +                 "\t  As an Integer:  " + WTX_obj.DeviceValues.weightType);
-                        Console.WriteLine("Scale range:                   " + WTX_obj.scaleRangeStringComment() +                 "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleRange);
-                        Console.WriteLine("Zero required/True zero:       " + WTX_obj.DeviceValues.zeroRequired.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.zeroRequired);
-                        Console.WriteLine("Weight within center of zero:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero);
-                        Console.WriteLine("Weight in zero range:          " + WTX_obj.DeviceValues.weightInZeroRange.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightInZeroRange);
-                        Console.WriteLine("Application mode:              " + WTX_obj.applicationModeStringComment() +            "\t  As an Integer:  " + WTX_obj.DeviceValues.applicationMode);
-                        Console.WriteLine("Decimal places:                " + WTX_obj.DeviceValues.decimals.ToString() +          "\t  As an Integer:  " + WTX_obj.DeviceValues.decimals);
-                        Console.WriteLine("Unit:                          " + WTX_obj.unitStringComment() +                       "\t  As an Integer:  " + WTX_obj.DeviceValues.unit);
-                        Console.WriteLine("Handshake:                     " + WTX_obj.DeviceValues.handshake.ToString() +         "\t  As an Integer:  " + WTX_obj.DeviceValues.handshake);
-                        Console.WriteLine("Status:                        " + WTX_obj.statusStringComment() +                     "\t  As an Integer:  " + WTX_obj.DeviceValues.status);
+                        Console.WriteLine("Net value:                     " + WTXObj.netGrossValueStringComment(WTXObj.NetValue, WTXObj.decimals) +  "\t  As an Integer:  " + WTXObj.DeviceValues.NetValue);
+                        Console.WriteLine("Gross value:                   " + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals)+ "\t  As an Integer:  " + WTXObj.DeviceValues.GrossValue);
+                        Console.WriteLine("General weight error:          " + WTXObj.DeviceValues.generalWeightError.ToString() +                  "\t  As an Integer:  " + WTXObj.DeviceValues.generalWeightError);
+                        Console.WriteLine("Scale alarm triggered:         " + WTXObj.DeviceValues.limitStatus.ToString() +                         "\t  As an Integer:  " + WTXObj.DeviceValues.limitStatus);
+                        Console.WriteLine("Scale seal is open:            " + WTXObj.DeviceValues.scaleSealIsOpen.ToString() +                     "\t  As an Integer:  " + WTXObj.DeviceValues.scaleSealIsOpen);
+                        Console.WriteLine("Manual tare:                   " + WTXObj.DeviceValues.manualTare.ToString() +        "\t  As an Integer:  " + WTXObj.DeviceValues.manualTare);
+                        Console.WriteLine("Weight type:                   " + WTXObj.weightTypeStringComment() +                 "\t  As an Integer:  " + WTXObj.DeviceValues.weightType);
+                        Console.WriteLine("Scale range:                   " + WTXObj.scaleRangeStringComment() +                 "\t  As an Integer:  " + WTXObj.DeviceValues.scaleRange);
+                        Console.WriteLine("Zero required/True zero:       " + WTXObj.DeviceValues.zeroRequired.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.zeroRequired);
+                        Console.WriteLine("Weight within center of zero:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero);
+                        Console.WriteLine("Weight in zero range:          " + WTXObj.DeviceValues.weightInZeroRange.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.weightInZeroRange);
+                        Console.WriteLine("Application mode:              " + WTXObj.applicationModeStringComment() +            "\t  As an Integer:  " + WTXObj.DeviceValues.applicationMode);
+                        Console.WriteLine("Decimal places:                " + WTXObj.DeviceValues.decimals.ToString() +          "\t  As an Integer:  " + WTXObj.DeviceValues.decimals);
+                        Console.WriteLine("Unit:                          " + WTXObj.unitStringComment() +                       "\t  As an Integer:  " + WTXObj.DeviceValues.unit);
+                        Console.WriteLine("Handshake:                     " + WTXObj.DeviceValues.handshake.ToString() +         "\t  As an Integer:  " + WTXObj.DeviceValues.handshake);
+                        Console.WriteLine("Status:                        " + WTXObj.statusStringComment() +                     "\t  As an Integer:  " + WTXObj.DeviceValues.status);
 
-                        Console.WriteLine("Limit status:                  " + WTX_obj.limitStatusStringComment()  + "  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
-                        Console.WriteLine("Weight moving:                 " + WTX_obj.weightMovingStringComment() + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
+                        Console.WriteLine("Limit status:                  " + WTXObj.limitStatusStringComment()  + "  As an Integer:  " + WTXObj.DeviceValues.limitStatus);
+                        Console.WriteLine("Weight moving:                 " + WTXObj.weightMovingStringComment() + "  As an Integer:" + WTXObj.DeviceValues.weightMoving);
                         
                     }
                     else
                         Console.WriteLine("\nWrong input for the number of bytes, which should be read from the register!\nPlease enter 'b' to choose again.");
                 }
                 else
-                    if (WTX_obj.DeviceValues.applicationMode == 2 || WTX_obj.DeviceValues.applicationMode == 1)
+                    if (WTXObj.DeviceValues.applicationMode == 2 || WTXObj.DeviceValues.applicationMode == 1)
                     {
-                    Console.WriteLine("Net value:                     " + WTX_obj.netGrossValueStringComment(WTX_obj.NetValue, WTX_obj.decimals) +   "\t  As an Integer:  " + WTX_obj.DeviceValues.NetValue);
-                    Console.WriteLine("Gross value:                   " + WTX_obj.netGrossValueStringComment(WTX_obj.GrossValue, WTX_obj.decimals) + "\t  As an Integer:  " + WTX_obj.DeviceValues.GrossValue);
-                    Console.WriteLine("General weight error:          " + WTX_obj.DeviceValues.generalWeightError.ToString() +                   "\t  As an Integer:  " + WTX_obj.DeviceValues.generalWeightError);
-                    Console.WriteLine("Scale alarm triggered:         " + WTX_obj.DeviceValues.limitStatus.ToString() +     "\t  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
-                    Console.WriteLine("Scale seal is open:            " + WTX_obj.DeviceValues.scaleSealIsOpen.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleSealIsOpen);
-                    Console.WriteLine("Manual tare:                   " + WTX_obj.DeviceValues.manualTare.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.manualTare);
-                    Console.WriteLine("Weight type:                   " + WTX_obj.weightTypeStringComment() +               "\t  As an Integer:  " + WTX_obj.DeviceValues.weightType);
-                    Console.WriteLine("Scale range:                   " + WTX_obj.scaleRangeStringComment() +               "\t  As an Integer:  " + WTX_obj.DeviceValues.scaleRange);
-                    Console.WriteLine("Zero required/True zero:       " + WTX_obj.DeviceValues.zeroRequired.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.zeroRequired);
-                    Console.WriteLine("Weight within center of zero:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.weightWithinTheCenterOfZero);
-                    Console.WriteLine("Weight in zero range:          " + WTX_obj.DeviceValues.weightInZeroRange.ToString() +           "\t  As an Integer:  " + WTX_obj.DeviceValues.weightInZeroRange);
-                    Console.WriteLine("Application mode:              " + WTX_obj.applicationModeStringComment() +           "\t  As an Integer:  " + WTX_obj.DeviceValues.applicationMode);
-                    Console.WriteLine("Decimal places:                " + WTX_obj.DeviceValues.decimals.ToString() +         "\t  As an Integer:  " + WTX_obj.DeviceValues.decimals);
-                    Console.WriteLine("Unit:                          " + WTX_obj.unitStringComment() +                      "\t  As an Integer:  " + WTX_obj.DeviceValues.unit);
-                    Console.WriteLine("Handshake:                     " + WTX_obj.DeviceValues.handshake.ToString() +        "\t  As an Integer:  " + WTX_obj.DeviceValues.handshake);
-                    Console.WriteLine("Status:                        " + WTX_obj.statusStringComment() +                    "\t  As an Integer:  " + WTX_obj.DeviceValues.status);
+                    Console.WriteLine("Net value:                     " + WTXObj.netGrossValueStringComment(WTXObj.NetValue, WTXObj.decimals) +   "\t  As an Integer:  " + WTXObj.DeviceValues.NetValue);
+                    Console.WriteLine("Gross value:                   " + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals) + "\t  As an Integer:  " + WTXObj.DeviceValues.GrossValue);
+                    Console.WriteLine("General weight error:          " + WTXObj.DeviceValues.generalWeightError.ToString() +                   "\t  As an Integer:  " + WTXObj.DeviceValues.generalWeightError);
+                    Console.WriteLine("Scale alarm triggered:         " + WTXObj.DeviceValues.limitStatus.ToString() +     "\t  As an Integer:  " + WTXObj.DeviceValues.limitStatus);
+                    Console.WriteLine("Scale seal is open:            " + WTXObj.DeviceValues.scaleSealIsOpen.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.scaleSealIsOpen);
+                    Console.WriteLine("Manual tare:                   " + WTXObj.DeviceValues.manualTare.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.manualTare);
+                    Console.WriteLine("Weight type:                   " + WTXObj.weightTypeStringComment() +               "\t  As an Integer:  " + WTXObj.DeviceValues.weightType);
+                    Console.WriteLine("Scale range:                   " + WTXObj.scaleRangeStringComment() +               "\t  As an Integer:  " + WTXObj.DeviceValues.scaleRange);
+                    Console.WriteLine("Zero required/True zero:       " + WTXObj.DeviceValues.zeroRequired.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.zeroRequired);
+                    Console.WriteLine("Weight within center of zero:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero);
+                    Console.WriteLine("Weight in zero range:          " + WTXObj.DeviceValues.weightInZeroRange.ToString() +           "\t  As an Integer:  " + WTXObj.DeviceValues.weightInZeroRange);
+                    Console.WriteLine("Application mode:              " + WTXObj.applicationModeStringComment() +           "\t  As an Integer:  " + WTXObj.DeviceValues.applicationMode);
+                    Console.WriteLine("Decimal places:                " + WTXObj.DeviceValues.decimals.ToString() +         "\t  As an Integer:  " + WTXObj.DeviceValues.decimals);
+                    Console.WriteLine("Unit:                          " + WTXObj.unitStringComment() +                      "\t  As an Integer:  " + WTXObj.DeviceValues.unit);
+                    Console.WriteLine("Handshake:                     " + WTXObj.DeviceValues.handshake.ToString() +        "\t  As an Integer:  " + WTXObj.DeviceValues.handshake);
+                    Console.WriteLine("Status:                        " + WTXObj.statusStringComment() +                    "\t  As an Integer:  " + WTXObj.DeviceValues.status);
 
-                    Console.WriteLine("Limit status:                  " + WTX_obj.limitStatusStringComment() +  "  As an Integer:  " + WTX_obj.DeviceValues.limitStatus);
-                    Console.WriteLine("Weight moving:                 " + WTX_obj.weightMovingStringComment() + "  As an Integer:" + WTX_obj.DeviceValues.weightMoving);
+                    Console.WriteLine("Limit status:                  " + WTXObj.limitStatusStringComment() +  "  As an Integer:  " + WTXObj.DeviceValues.limitStatus);
+                    Console.WriteLine("Weight moving:                 " + WTXObj.weightMovingStringComment() + "  As an Integer:" + WTXObj.DeviceValues.weightMoving);
 
                     if (ShowAllInputWords == true)
                     {
 
-                        Console.WriteLine("Digital input  1:              " + WTX_obj.DeviceValues.input1.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.input1);
-                        Console.WriteLine("Digital input  2:              " + WTX_obj.DeviceValues.input2.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.input2);
-                        Console.WriteLine("Digital input  3:              " + WTX_obj.DeviceValues.input3.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.input3);
-                        Console.WriteLine("Digital input  4:              " + WTX_obj.DeviceValues.input4.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.input4);
+                        Console.WriteLine("Digital input  1:              " + WTXObj.DeviceValues.input1.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.input1);
+                        Console.WriteLine("Digital input  2:              " + WTXObj.DeviceValues.input2.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.input2);
+                        Console.WriteLine("Digital input  3:              " + WTXObj.DeviceValues.input3.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.input3);
+                        Console.WriteLine("Digital input  4:              " + WTXObj.DeviceValues.input4.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.input4);
 
-                        Console.WriteLine("Digital output 1:              " + WTX_obj.DeviceValues.output1.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.output1);
-                        Console.WriteLine("Digital output 2:              " + WTX_obj.DeviceValues.output2.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.output2);
-                        Console.WriteLine("Digital output 3:              " + WTX_obj.DeviceValues.output3.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.output3);
-                        Console.WriteLine("Digital output 4:              " + WTX_obj.DeviceValues.output4.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.output4);
+                        Console.WriteLine("Digital output 1:              " + WTXObj.DeviceValues.output1.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.output1);
+                        Console.WriteLine("Digital output 2:              " + WTXObj.DeviceValues.output2.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.output2);
+                        Console.WriteLine("Digital output 3:              " + WTXObj.DeviceValues.output3.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.output3);
+                        Console.WriteLine("Digital output 4:              " + WTXObj.DeviceValues.output4.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.output4);
 
-                        Console.WriteLine("Coarse flow:                   " + WTX_obj.DeviceValues.coarseFlow.ToString() +  "\t  As an Integer:  " + WTX_obj.DeviceValues.coarseFlow);
-                        Console.WriteLine("Fine flow:                     " + WTX_obj.DeviceValues.fineFlow.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.fineFlow);
-                        Console.WriteLine("Ready:                         " + WTX_obj.DeviceValues.ready.ToString() +       "\t  As an Integer:  " + WTX_obj.DeviceValues.ready);
-                        Console.WriteLine("Re-dosing:                     " + WTX_obj.DeviceValues.reDosing.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.reDosing);
+                        Console.WriteLine("Coarse flow:                   " + WTXObj.DeviceValues.coarseFlow.ToString() +  "\t  As an Integer:  " + WTXObj.DeviceValues.coarseFlow);
+                        Console.WriteLine("Fine flow:                     " + WTXObj.DeviceValues.fineFlow.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.fineFlow);
+                        Console.WriteLine("Ready:                         " + WTXObj.DeviceValues.ready.ToString() +       "\t  As an Integer:  " + WTXObj.DeviceValues.ready);
+                        Console.WriteLine("Re-dosing:                     " + WTXObj.DeviceValues.reDosing.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.reDosing);
 
-                        Console.WriteLine("Emptying:                      " + WTX_obj.DeviceValues.emptying.ToString() +          "\t  As an Integer:  " + WTX_obj.DeviceValues.emptying);
-                        Console.WriteLine("Flow error:                    " + WTX_obj.DeviceValues.flowError.ToString() +         "\t  As an Integer:  " + WTX_obj.DeviceValues.flowError);
-                        Console.WriteLine("Alarm:                         " + WTX_obj.DeviceValues.alarm.ToString() +             "\t  As an Integer:  " + WTX_obj.DeviceValues.alarm);
-                        Console.WriteLine("ADC Overload/Unterload:        " + WTX_obj.DeviceValues.ADC_overUnderload.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.ADC_overUnderload);
+                        Console.WriteLine("Emptying:                      " + WTXObj.DeviceValues.emptying.ToString() +          "\t  As an Integer:  " + WTXObj.DeviceValues.emptying);
+                        Console.WriteLine("Flow error:                    " + WTXObj.DeviceValues.flowError.ToString() +         "\t  As an Integer:  " + WTXObj.DeviceValues.flowError);
+                        Console.WriteLine("Alarm:                         " + WTXObj.DeviceValues.alarm.ToString() +             "\t  As an Integer:  " + WTXObj.DeviceValues.alarm);
+                        Console.WriteLine("ADC Overload/Unterload:        " + WTXObj.DeviceValues.ADC_overUnderload.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.ADC_overUnderload);
 
-                        Console.WriteLine("Max.Dosing time:               " + WTX_obj.DeviceValues.maxDosingTime.ToString() +          "\t  As an Integer:  " + WTX_obj.DeviceValues.maxDosingTime);
-                        Console.WriteLine("Legal-for-trade operation:     " + WTX_obj.DeviceValues.legalTradeOp.ToString() +           "\t  As an Integer:  " + WTX_obj.DeviceValues.legalTradeOp);
-                        Console.WriteLine("Tolerance error+:              " + WTX_obj.DeviceValues.toleranceErrorPlus.ToString() +     "\t  As an Integer:  " + WTX_obj.DeviceValues.toleranceErrorPlus);
-                        Console.WriteLine("Tolerance error-:              " + WTX_obj.DeviceValues.toleranceErrorMinus.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.toleranceErrorMinus);
+                        Console.WriteLine("Max.Dosing time:               " + WTXObj.DeviceValues.maxDosingTime.ToString() +          "\t  As an Integer:  " + WTXObj.DeviceValues.maxDosingTime);
+                        Console.WriteLine("Legal-for-trade operation:     " + WTXObj.DeviceValues.legalTradeOp.ToString() +           "\t  As an Integer:  " + WTXObj.DeviceValues.legalTradeOp);
+                        Console.WriteLine("Tolerance error+:              " + WTXObj.DeviceValues.toleranceErrorPlus.ToString() +     "\t  As an Integer:  " + WTXObj.DeviceValues.toleranceErrorPlus);
+                        Console.WriteLine("Tolerance error-:              " + WTXObj.DeviceValues.toleranceErrorMinus.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.toleranceErrorMinus);
                                             
-                        Console.WriteLine("Status digital input 1:        " + WTX_obj.DeviceValues.statusInput1.ToString() +           "\t  As an Integer:  " + WTX_obj.DeviceValues.statusInput1);
-                        Console.WriteLine("General scale error:           " + WTX_obj.DeviceValues.generalScaleError.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.generalScaleError);
-                        Console.WriteLine("Filling process status:        " + WTX_obj.DeviceValues.fillingProcessStatus.ToString() +   "\t  As an Integer:  " + WTX_obj.DeviceValues.fillingProcessStatus);
-                        Console.WriteLine("Number of dosing results:      " + WTX_obj.DeviceValues.numberDosingResults.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.numberDosingResults);
+                        Console.WriteLine("Status digital input 1:        " + WTXObj.DeviceValues.statusInput1.ToString() +           "\t  As an Integer:  " + WTXObj.DeviceValues.statusInput1);
+                        Console.WriteLine("General scale error:           " + WTXObj.DeviceValues.generalScaleError.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.generalScaleError);
+                        Console.WriteLine("Filling process status:        " + WTXObj.DeviceValues.fillingProcessStatus.ToString() +   "\t  As an Integer:  " + WTXObj.DeviceValues.fillingProcessStatus);
+                        Console.WriteLine("Number of dosing results:      " + WTXObj.DeviceValues.numberDosingResults.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.numberDosingResults);
 
-                        Console.WriteLine("Dosing result:                 " + WTX_obj.DeviceValues.dosingResult.ToString() +           "\t  As an Integer:  " + WTX_obj.DeviceValues.dosingResult);
-                        Console.WriteLine("Mean value of dosing results:  " + WTX_obj.DeviceValues.meanValueDosingResults.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.meanValueDosingResults);
-                        Console.WriteLine("Standard deviation:            " + WTX_obj.DeviceValues.standardDeviation.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.standardDeviation);
-                        Console.WriteLine("Total weight:                  " + WTX_obj.DeviceValues.totalWeight.ToString() +            "\t  As an Integer:  " + WTX_obj.DeviceValues.totalWeight);
+                        Console.WriteLine("Dosing result:                 " + WTXObj.DeviceValues.dosingResult.ToString() +           "\t  As an Integer:  " + WTXObj.DeviceValues.dosingResult);
+                        Console.WriteLine("Mean value of dosing results:  " + WTXObj.DeviceValues.meanValueDosingResults.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.meanValueDosingResults);
+                        Console.WriteLine("Standard deviation:            " + WTXObj.DeviceValues.standardDeviation.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.standardDeviation);
+                        Console.WriteLine("Total weight:                  " + WTXObj.DeviceValues.totalWeight.ToString() +            "\t  As an Integer:  " + WTXObj.DeviceValues.totalWeight);
 
-                        Console.WriteLine("Fine flow cut-off point:       " + WTX_obj.DeviceValues.fineFlowCutOffPoint.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.fineFlowCutOffPoint);
-                        Console.WriteLine("Coarse flow cut-off point:     " + WTX_obj.DeviceValues.coarseFlowCutOffPoint.ToString() +  "\t  As an Integer:  " + WTX_obj.DeviceValues.coarseFlowCutOffPoint);
-                        Console.WriteLine("Current dosing time:           " + WTX_obj.DeviceValues.currentDosingTime.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.currentDosingTime);
-                        Console.WriteLine("Current coarse flow time:      " + WTX_obj.DeviceValues.currentCoarseFlowTime.ToString() +  "\t  As an Integer:  " + WTX_obj.DeviceValues.currentCoarseFlowTime);
-                        Console.WriteLine("Current fine flow time:        " + WTX_obj.DeviceValues.currentFineFlowTime.ToString() +    "\t  As an Integer:  " + WTX_obj.DeviceValues.currentFineFlowTime);
+                        Console.WriteLine("Fine flow cut-off point:       " + WTXObj.DeviceValues.fineFlowCutOffPoint.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.fineFlowCutOffPoint);
+                        Console.WriteLine("Coarse flow cut-off point:     " + WTXObj.DeviceValues.coarseFlowCutOffPoint.ToString() +  "\t  As an Integer:  " + WTXObj.DeviceValues.coarseFlowCutOffPoint);
+                        Console.WriteLine("Current dosing time:           " + WTXObj.DeviceValues.currentDosingTime.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.currentDosingTime);
+                        Console.WriteLine("Current coarse flow time:      " + WTXObj.DeviceValues.currentCoarseFlowTime.ToString() +  "\t  As an Integer:  " + WTXObj.DeviceValues.currentCoarseFlowTime);
+                        Console.WriteLine("Current fine flow time:        " + WTXObj.DeviceValues.currentFineFlowTime.ToString() +    "\t  As an Integer:  " + WTXObj.DeviceValues.currentFineFlowTime);
 
-                        Console.WriteLine("Parameter set (product):       " + WTX_obj.DeviceValues.parameterSetProduct.ToString() + "\t  As an Integer:  " + WTX_obj.DeviceValues.parameterSetProduct);
-                        Console.WriteLine("Weight memory, Day:            " + WTX_obj.DeviceValues.weightMemDay.ToString() +        "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemDay);
-                        Console.WriteLine("Weight memory, Month:          " + WTX_obj.DeviceValues.weightMemMonth.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemMonth);
-                        Console.WriteLine("Weight memory, Year:           " + WTX_obj.DeviceValues.weightMemYear.ToString() +       "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemYear);
-                        Console.WriteLine("Weight memory, Seq.Number:     " + WTX_obj.DeviceValues.weightMemSeqNumber.ToString() +  "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemSeqNumber);
-                        Console.WriteLine("Weight memory, gross:          " + WTX_obj.DeviceValues.weightMemGross.ToString() +      "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemGross);
-                        Console.WriteLine("Weight memory, net:            " + WTX_obj.DeviceValues.weightMemNet.ToString() +        "\t  As an Integer:  " + WTX_obj.DeviceValues.weightMemNet);
+                        Console.WriteLine("Parameter set (product):       " + WTXObj.DeviceValues.parameterSetProduct.ToString() + "\t  As an Integer:  " + WTXObj.DeviceValues.parameterSetProduct);
+                        Console.WriteLine("Weight memory, Day:            " + WTXObj.DeviceValues.weightMemDay.ToString() +        "\t  As an Integer:  " + WTXObj.DeviceValues.weightMemDay);
+                        Console.WriteLine("Weight memory, Month:          " + WTXObj.DeviceValues.weightMemMonth.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.weightMemMonth);
+                        Console.WriteLine("Weight memory, Year:           " + WTXObj.DeviceValues.weightMemYear.ToString() +       "\t  As an Integer:  " + WTXObj.DeviceValues.weightMemYear);
+                        Console.WriteLine("Weight memory, Seq.Number:     " + WTXObj.DeviceValues.weightMemSeqNumber.ToString() +  "\t  As an Integer:  " + WTXObj.DeviceValues.weightMemSeqNumber);
+                        Console.WriteLine("Weight memory, gross:          " + WTXObj.DeviceValues.weightMemGross.ToString() +      "\t  As an Integer:  " + WTXObj.DeviceValues.weightMemGross);
+                        Console.WriteLine("Weight memory, net:            " + WTXObj.DeviceValues.weightMemNet.ToString() +        "\t  As an Integer:  " + WTXObj.DeviceValues.weightMemNet);
 
                         Console.WriteLine("\nPress 'a' again to hide the input words.");
                     }
@@ -458,36 +458,36 @@ namespace WTXModbus
                     {
                         Console.WriteLine("\nOutput words:\n");
                   
-                        Console.WriteLine(" 9) Residual flow time:            " + WTX_obj.ResidualFlowTime      + " Press '9' and a value to write");
-                        Console.WriteLine("10) Target filling weight:         " + WTX_obj.targetFillingWeight   + " Press '10' and a value to write");
-                        Console.WriteLine("12) Coarse flow cut-off point:     " + WTX_obj.coarseFlowCutOffPoint + " Press '12' and a value to write");
-                        Console.WriteLine("14) Fine flow cut-off point:       " + WTX_obj.fineFlowCutOffPoint   + " Press '14' and a value to write");
+                        Console.WriteLine(" 9) Residual flow time:            " + WTXObj.ResidualFlowTime      + " Press '9' and a value to write");
+                        Console.WriteLine("10) Target filling weight:         " + WTXObj.targetFillingWeight   + " Press '10' and a value to write");
+                        Console.WriteLine("12) Coarse flow cut-off point:     " + WTXObj.coarseFlowCutOffPoint + " Press '12' and a value to write");
+                        Console.WriteLine("14) Fine flow cut-off point:       " + WTXObj.fineFlowCutOffPoint   + " Press '14' and a value to write");
 
-                        Console.WriteLine("16) Minimum fine flow:             " + WTX_obj.minimumFineFlow   + " Press '16' and a value to write");
-                        Console.WriteLine("18) Optimization of cut-off points:" + WTX_obj.optimizationOfCutOffPoints + " Press '18' and a value to write");
-                        Console.WriteLine("19) Maximum dosing time:           " + WTX_obj.maxDosingTime     + " Press '19' and a value to write");
-                        Console.WriteLine("20) Start with fine flow:          " + WTX_obj.startWithFineFlow + " Press '20' and a value to write");
+                        Console.WriteLine("16) Minimum fine flow:             " + WTXObj.minimumFineFlow   + " Press '16' and a value to write");
+                        Console.WriteLine("18) Optimization of cut-off points:" + WTXObj.optimizationOfCutOffPoints + " Press '18' and a value to write");
+                        Console.WriteLine("19) Maximum dosing time:           " + WTXObj.maxDosingTime     + " Press '19' and a value to write");
+                        Console.WriteLine("20) Start with fine flow:          " + WTXObj.startWithFineFlow + " Press '20' and a value to write");
 
-                        Console.WriteLine("21) Coarse lockout time:           " + WTX_obj.coarseLockoutTime + " Press '21' and a value to write");
-                        Console.WriteLine("22) Fine lockout time:             " + WTX_obj.fineLockoutTime   + " Press '22' and a value to write");
-                        Console.WriteLine("23) Tare mode:                     " + WTX_obj.tareMode + " Press '23' and a value to write");
-                        Console.WriteLine("24) Upper tolerance limit + :      " + WTX_obj.upperToleranceLimit + " Press '24' and a value to write");
+                        Console.WriteLine("21) Coarse lockout time:           " + WTXObj.coarseLockoutTime + " Press '21' and a value to write");
+                        Console.WriteLine("22) Fine lockout time:             " + WTXObj.fineLockoutTime   + " Press '22' and a value to write");
+                        Console.WriteLine("23) Tare mode:                     " + WTXObj.tareMode + " Press '23' and a value to write");
+                        Console.WriteLine("24) Upper tolerance limit + :      " + WTXObj.upperToleranceLimit + " Press '24' and a value to write");
 
-                        Console.WriteLine("26) Lower tolerance limit -:       " + WTX_obj.lowerToleranceLimit + " Press '26' and a value to write");
-                        Console.WriteLine("28) Minimum start weight:          " + WTX_obj.minimumStartWeight  + " Press '28' and a value to write");
-                        Console.WriteLine("30) Empty weight:                  " + WTX_obj.emptyWeight + " Press '30' and a value to write");
-                        Console.WriteLine("32) Tare delay:                    " + WTX_obj.tareDelay   + " Press '32' and a value to write");
+                        Console.WriteLine("26) Lower tolerance limit -:       " + WTXObj.lowerToleranceLimit + " Press '26' and a value to write");
+                        Console.WriteLine("28) Minimum start weight:          " + WTXObj.minimumStartWeight  + " Press '28' and a value to write");
+                        Console.WriteLine("30) Empty weight:                  " + WTXObj.emptyWeight + " Press '30' and a value to write");
+                        Console.WriteLine("32) Tare delay:                    " + WTXObj.tareDelay   + " Press '32' and a value to write");
 
-                        Console.WriteLine("33) Coarse flow monitoring time:   " + WTX_obj.coarseFlowMonitoringTime + " Press '33' and a value to write");
-                        Console.WriteLine("34) Coarse flow monitoring:        " + WTX_obj.coarseFlowMonitoring   + " Press '34' and a value to write");
-                        Console.WriteLine("36) Fine flow monitoring:          " + WTX_obj.fineFlowMonitoring     + " Press '36' and a value to write");
-                        Console.WriteLine("38) Fine flow monitoring time:     " + WTX_obj.fineFlowMonitoringTime + " Press '38' and a value to write");
+                        Console.WriteLine("33) Coarse flow monitoring time:   " + WTXObj.coarseFlowMonitoringTime + " Press '33' and a value to write");
+                        Console.WriteLine("34) Coarse flow monitoring:        " + WTXObj.coarseFlowMonitoring   + " Press '34' and a value to write");
+                        Console.WriteLine("36) Fine flow monitoring:          " + WTXObj.fineFlowMonitoring     + " Press '36' and a value to write");
+                        Console.WriteLine("38) Fine flow monitoring time:     " + WTXObj.fineFlowMonitoringTime + " Press '38' and a value to write");
 
-                        Console.WriteLine("40) Delay time after fine flow:    " + WTX_obj.delayTimeAfterFineFlow + " Press '40' and a value to write");
-                        Console.WriteLine("41) Systematic difference:         " + WTX_obj.systematicDifference + " Press '41' and a value to write");
-                        Console.WriteLine("42) Downwards dosing:              " + WTX_obj.downardsDosing + " Press '42' and a value to write");
-                        Console.WriteLine("43) Valve control:                 " + WTX_obj.valveControl   + " Press '43' and a value to write");
-                        Console.WriteLine("44) Emptying mode:                 " + WTX_obj.emptyingMode   + " Press '44' and a value to write");
+                        Console.WriteLine("40) Delay time after fine flow:    " + WTXObj.delayTimeAfterFineFlow + " Press '40' and a value to write");
+                        Console.WriteLine("41) Systematic difference:         " + WTXObj.systematicDifference + " Press '41' and a value to write");
+                        Console.WriteLine("42) Downwards dosing:              " + WTXObj.downardsDosing + " Press '42' and a value to write");
+                        Console.WriteLine("43) Valve control:                 " + WTXObj.valveControl   + " Press '43' and a value to write");
+                        Console.WriteLine("44) Emptying mode:                 " + WTXObj.emptyingMode   + " Press '44' and a value to write");
 
                         Console.WriteLine("\nPress 'o' again to hide the output words.");
 
@@ -510,55 +510,55 @@ namespace WTXModbus
 
             switch (wordNumberParam)
             {
-                case 9:  WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 9:  WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 10: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 10: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 12: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 12: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 14: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 14: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 16: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 16: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 18: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 18: WTXObj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 19: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 19: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 20: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 20: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 21: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 21: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 22: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 22: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 23: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 23: WTXObj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 24: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 24: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 26: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 26: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 28: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 28: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 30: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 30: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 32: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 32: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 33: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 33: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 34: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 34: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 36: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 36: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 38: WTX_obj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 38: WTXObj.writeOutputWordU16(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 40: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 40: WTXObj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 41: WTX_obj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 41: WTXObj.writeOutputWordS32(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 42: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 42: WTXObj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 43: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
+                case 43: WTXObj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived);
                     break;
-                case 44: WTX_obj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived); 
+                case 44: WTXObj.writeOutputWordU08(valueToWrite, (ushort) wordNumberParam, Write_DataReceived); 
                     break;
                
             }

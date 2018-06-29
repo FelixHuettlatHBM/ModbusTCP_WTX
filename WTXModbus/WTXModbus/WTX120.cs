@@ -531,7 +531,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 1)
+                    if (getConnection.getRegisterCount > 1)
                         return (data[1] + (data[0] << 16));
                     else
                         return 0;
@@ -549,7 +549,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 3)
+                    if (getConnection.getRegisterCount > 3)
                         return (data[3] + (data[2] << 16));
                     else
                         return 0;
@@ -566,7 +566,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return (data[4] & 0x1);
                     else
                         return 0;
@@ -583,7 +583,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x2) >> 1);
                     else
                         return 0;
@@ -600,7 +600,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0xC) >> 2);
                     else
                         return 0;
@@ -617,7 +617,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x10) >> 4);
                     else
                         return 0;
@@ -634,7 +634,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x20) >> 5);
                     else
                         return 0;
@@ -651,7 +651,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x40) >> 6);
                     else
                         return 0;
@@ -668,7 +668,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x80) >> 7);
                     else
                         return 0;
@@ -685,7 +685,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x300) >> 8);
                     else
                         return 0;
@@ -702,7 +702,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x400) >> 10);
                     else
                         return 0;
@@ -719,7 +719,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x800) >> 11);
                     else
                         return 0;
@@ -736,7 +736,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 4)
+                    if (getConnection.getRegisterCount > 4)
                         return ((data[4] & 0x1000) >> 12);
                     else
                         return 0;
@@ -753,7 +753,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 5)
+                    if (getConnection.getRegisterCount > 5)
                         return ((data[5] & 0x3) >> 1);
                     else
                         return 0;
@@ -770,7 +770,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 5)
+                    if (getConnection.getRegisterCount > 5)
                         return ((data[5] & 0x70) >> 4);
                     else
                         return 0;
@@ -787,7 +787,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 5)
+                    if (getConnection.getRegisterCount > 5)
                         return ((data[5] & 0x180) >> 7);
                     else
                         return 0;
@@ -804,7 +804,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 5)
+                    if (getConnection.getRegisterCount > 5)
                         return ((data[5] & 0x4000) >> 14);
                     else
                         return 0;
@@ -821,7 +821,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 5)
+                    if (getConnection.getRegisterCount > 5)
                         return ((data[5] & 0x8000) >> 15);
                     else
                         return 0;
@@ -851,7 +851,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 6)
+                    if (getConnection.getRegisterCount > 6)
                         return (data[6] & 0x1);
                     else
                         return 0;
@@ -870,7 +870,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 6)
+                    if (getConnection.getRegisterCount > 6)
                         return ((data[6] & 0x2) >> 1);
                     else
                         return 0;
@@ -887,7 +887,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 6)
+                    if (getConnection.getRegisterCount > 6)
                         return ((data[6] & 0x4) >> 2);
                     else
                         return 0;
@@ -904,7 +904,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 6)
+                    if (getConnection.getRegisterCount > 6)
                         return ((data[6] & 0x8) >> 3);
                     else
                         return 0;
@@ -921,7 +921,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 7)
+                    if (getConnection.getRegisterCount > 7)
                         return (data[7] & 0x1);
                     else
                         return 0;
@@ -938,7 +938,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 7)
+                    if (getConnection.getRegisterCount > 7)
                         return ((data[7] & 0x2) >> 1);
                     else
                         return 0;
@@ -955,7 +955,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 7)
+                    if (getConnection.getRegisterCount > 7)
                         return ((data[7] & 0x4) >> 2);
                     else
                         return 0;
@@ -972,7 +972,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 7)
+                    if (getConnection.getRegisterCount > 7)
                         return ((data[7] & 0x8) >> 3);
                     else
                         return 0;
@@ -989,7 +989,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return (data[8] & 0x1);
                     else
                         return 0;
@@ -1006,7 +1006,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x2) >> 1);
                     else
                         return 0;
@@ -1023,7 +1023,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x4) >> 2);
                     else
                         return 0;
@@ -1040,7 +1040,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x8) >> 3);
                     else
                         return 0;
@@ -1057,7 +1057,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 9)
+                    if (getConnection.getRegisterCount > 9)
                         return (data[9]);
                     else
                         return 0;
@@ -1074,7 +1074,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 10)
+                    if (getConnection.getRegisterCount > 10)
                         return (data[10]);
                     else
                         return 0;
@@ -1091,7 +1091,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 11)
+                    if (getConnection.getRegisterCount > 11)
                         return (data[11]);
                     else
                         return 0;
@@ -1108,7 +1108,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 12)
+                    if (getConnection.getRegisterCount > 12)
                         return (data[12]);
                     else
                         return 0;
@@ -1125,7 +1125,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 13)
+                    if (getConnection.getRegisterCount > 13)
                         return (data[13]);
                     else
                         return 0;
@@ -1142,7 +1142,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 14)
+                    if (getConnection.getRegisterCount > 14)
                         return (data[14]);
                     else
                         return 0;
@@ -1159,7 +1159,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return (data[8] & 0x1);
                     else
                         return 0;
@@ -1176,7 +1176,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x2) >> 1);
                     else
                         return 0;
@@ -1193,7 +1193,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x4) >> 2);
                     else
                         return 0;
@@ -1210,7 +1210,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x8) >> 3);
                     else
                         return 0;
@@ -1227,7 +1227,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x10) >> 4);
                     else
                         return 0;
@@ -1244,7 +1244,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x20) >> 5);
                     else
                         return 0;
@@ -1261,7 +1261,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x40) >> 6);
                     else
                         return 0;
@@ -1278,7 +1278,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x80) >> 7);
                     else
                         return 0;
@@ -1297,7 +1297,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x100) >> 8);
                     else
                         return 0;
@@ -1314,7 +1314,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x200) >> 9);
                     else
                         return 0;
@@ -1331,7 +1331,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x400) >> 10);
                     else
                         return 0;
@@ -1348,7 +1348,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x800) >> 11);
                     else
                         return 0;
@@ -1365,7 +1365,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x4000) >> 14);
                     else
                         return 0;
@@ -1382,7 +1382,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 8)
+                    if (getConnection.getRegisterCount > 8)
                         return ((data[8] & 0x8000) >> 15);
                     else
                         return 0;
@@ -1399,7 +1399,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 9)
+                    if (getConnection.getRegisterCount > 9)
                         return data[9];
                     else
                         return 0;
@@ -1416,7 +1416,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 11)
+                    if (getConnection.getRegisterCount > 11)
                         return data[11];
                     else
                         return 0;
@@ -1433,7 +1433,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 12)
+                    if (getConnection.getRegisterCount > 12)
                         return data[12];
                     else
                         return 0;
@@ -1450,7 +1450,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 14)
+                    if (getConnection.getRegisterCount > 14)
                         return data[14];
                     else
                         return 0;
@@ -1467,7 +1467,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 16)
+                    if (getConnection.getRegisterCount > 16)
                         return data[16];
                     else
                         return 0;
@@ -1484,7 +1484,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 18)
+                    if (getConnection.getRegisterCount > 18)
                         return data[18];
                     else
                         return 0;
@@ -1501,7 +1501,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 20)
+                    if (getConnection.getRegisterCount > 20)
                         return data[20];
                     else
                         return 0;
@@ -1518,7 +1518,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 22)
+                    if (getConnection.getRegisterCount > 22)
                         return data[22];
                     else
                         return 0;
@@ -1535,7 +1535,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 24)
+                    if (getConnection.getRegisterCount > 24)
                         return data[24];
                     else
                         return 0;
@@ -1552,7 +1552,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 25)
+                    if (getConnection.getRegisterCount > 25)
                         return data[25];
                     else
                         return 0;
@@ -1569,7 +1569,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 26)
+                    if (getConnection.getRegisterCount > 26)
                         return data[26];
                     else
                         return 0;
@@ -1586,7 +1586,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 27)
+                    if (getConnection.getRegisterCount > 27)
                         return data[27];
                     else
                         return 0;
@@ -1603,7 +1603,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 28)
+                    if (getConnection.getRegisterCount > 28)
                         return data[28];
                     else
                         return 0;
@@ -1620,7 +1620,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 29)
+                    if (getConnection.getRegisterCount > 29)
                         return data[29];
                     else
                         return 0;
@@ -1637,7 +1637,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 30)
+                    if (getConnection.getRegisterCount > 30)
                         return data[30];
                     else
                         return 0;
@@ -1654,7 +1654,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 31)
+                    if (getConnection.getRegisterCount > 31)
                         return data[31];
                     else
                         return 0;
@@ -1671,7 +1671,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 32)
+                    if (getConnection.getRegisterCount > 32)
                         return data[32];
                     else
                         return 0;
@@ -1688,7 +1688,7 @@ namespace WTXModbus
             {
                 try
                 {
-                    if (getConnection.getNumOfPoints > 33)
+                    if (getConnection.getRegisterCount > 33)
                         return data[33];
                     else
                         return 0;

@@ -23,7 +23,7 @@ namespace WTXModbus
 
             bool is_connected { get; }
             ushort StartAdress { get; set; }
-            ushort getNumOfPoints { get; set; }
+            ushort getRegisterCount { get; set; }
             string IP_Address { get; set; }
             int Sending_interval { get; set; }
             int Port { get; set; }

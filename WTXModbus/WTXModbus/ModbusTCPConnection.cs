@@ -89,7 +89,7 @@ namespace WTXModbus
                     // Save the previous data before reading the new, actual one:
                     this.previousData = this.data;
                     // Read the actual data: e.Message's type - ushort[]  
-                    e.Args = master.ReadHoldingRegisters(this.startAddress, this.getNumOfPoints);
+                    e.Args = master.ReadHoldingRegisters(this.startAddress, this.getRegisterCount);
                     this.connected = true;
                 }
                 catch (System.ArgumentException)
@@ -166,7 +166,7 @@ namespace WTXModbus
             set { this.startAddress = value; }
         }
 
-        public ushort getNumOfPoints
+        public ushort getRegisterCount
         {
             get { return this.numOfPoints; }
             set { this.numOfPoints = value; }

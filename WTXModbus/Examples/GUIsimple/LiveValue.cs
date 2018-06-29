@@ -100,7 +100,7 @@ namespace WTXModbusGUIsimple
 
             WTXObj = new WTX120(ModbusObj, this.timerInterval);
             
-            WTXObj.getConnection.getNumOfPoints = 6;
+            WTXObj.getConnection.getRegisterCount = 6;
             
             WTXObj.DataUpdateEvent += ValuesOnConsole;
 

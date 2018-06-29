@@ -290,7 +290,7 @@ namespace WTXModbusExamples
 
             toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IP_Address;
             toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getNumOfPoints; 
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getRegisterCount; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -766,7 +766,7 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            Set_obj = new SettingsForm(WTXObj.getConnection.IP_Address, this.timer1.Interval, WTXObj.getConnection.getNumOfPoints, this);
+            Set_obj = new SettingsForm(WTXObj.getConnection.IP_Address, this.timer1.Interval, WTXObj.getConnection.getRegisterCount, this);
             Set_obj.Show();
         }
 
@@ -781,8 +781,8 @@ namespace WTXModbusExamples
             WTXObj.getConnection.Sending_interval = Set_obj.get_sending_interval;     
             this.timer1.Interval = Set_obj.get_sending_interval;
 
-            WTXObj.getConnection.getNumOfPoints = Set_obj.get_number_inputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getNumOfPoints;
+            WTXObj.getConnection.getRegisterCount = Set_obj.get_number_inputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getRegisterCount;
         }
 
         // This method changes the GUI concerning the application mode.

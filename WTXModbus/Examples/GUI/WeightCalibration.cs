@@ -1,10 +1,11 @@
 ﻿/* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 03/2018
+ * TCP/MODBUS Interface for WTX120_Modbus | 03/2018
  * 
  * Author : Felix Retsch 
  * 
  *  */
+
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WTXModbus;
+
 
 namespace WTXModbusGUIsimple
 {
@@ -27,7 +28,7 @@ namespace WTXModbusGUIsimple
 
     public partial class WeightCalibration : Form
     {
-        private WTX120 WTXObj;
+        private HBM.WT.API.WTX.WTXModbus WTXObj;
         private int State;
         private double CalibrationWeight;
         //private IFormatProvider Provider;
@@ -38,7 +39,7 @@ namespace WTXModbusGUIsimple
         private string str_comma_dot;
 
         // Constructor of class WeightCalibration: 
-        public WeightCalibration(WTX120 WTXObj, bool connected)
+        public WeightCalibration(HBM.WT.API.WTX.WTXModbus WTXObj, bool connected)
         {
             this.PowCalibrationWeight = 0.0;
             this.potenz = 0.0;

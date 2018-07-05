@@ -1,12 +1,10 @@
 ﻿/* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 01/2018
+ * TCP/MODBUS Interface for WTX120_Modbus | 01/2018
  * 
  * Author : Felix Huettl 
  * 
  *  */
-
-
 using System;
 using System.Windows.Forms;
 using System.IO;
@@ -15,14 +13,18 @@ using WTXModbus;
 using System.Threading;
 using System.ComponentModel;
 
+using HBM.WT.API.WTX;
+using HBM.WT.API.COMMON;
+using HBM.WT.API.WTX.Modbus;
+
 namespace WTXModbusExamples
 {
     /// <summary>
-    /// First, objects of class 'ModbusConnection' and 'WTX120' are created to establish a connection and data transfer to the device (WTX120). 
+    /// First, objects of class 'ModbusConnection' and 'WTX120_Modbus' are created to establish a connection and data transfer to the device (WTX120_Modbus). 
     /// Class 'ModbusConnection' has the purpose to establish a connection, to read from the device (its register)
-    /// and to write to the device (its register). Class 'WTX120' creates timer to read and update periodically the values of the WTX in a certain timer
-    /// interval given in the constructor of class 'WTX120' while generating an object of it. Class 'WTX120' has all the values, 
-    /// which will be interpreted from the read bytes and class 'WTX120' manages the asynchronous data transfer to GUI and the eventbased data transfer #
+    /// and to write to the device (its register). Class 'WTX120_Modbus' creates timer to read and update periodically the values of the WTX in a certain timer
+    /// interval given in the constructor of class 'WTX120_Modbus' while generating an object of it. Class 'WTX120_Modbus' has all the values, 
+    /// which will be interpreted from the read bytes and class 'WTX120_Modbus' manages the asynchronous data transfer to GUI and the eventbased data transfer #
     /// to class ModbusConnection. 
     ///  
     /// This class 'GUI' represents a window or a dialog box that makes up the application's user interface for the values and their description of the device.
@@ -33,7 +35,7 @@ namespace WTXModbusExamples
     /// Beside a form the GUI could also be a console application by applying that in program.cs instead of a windows form (see on Git).
     /// Therefore the design of the classes and its relations are seperated in 
     /// connection specific classes and interfaces (class ModbusConnection, interface "IModbusConnection")
-    /// and in a device specific class and in a device specific interface (class "WTX120", interface "IDevice_Values").
+    /// and in a device specific class and in a device specific interface (class "WTX120_Modbus", interface "IDevice_Values").
     ///  
     /// In the Windows form, there are several buttons to activate events for the output words, a menu bar on the top to start/stop the application, to save the values,
     /// to show help (like the manual) and to change the settings.
@@ -42,8 +44,11 @@ namespace WTXModbusExamples
     /// </summary>
     partial class GUI : Form
     {
-        private ModbusTCPConnection ModbusObj;
-        private WTX120 WTXObj;
+        private static ModbusConnection ModbusObj;
+
+        private static HBM.WT.API.WTX.WTXModbus WTXObj;
+
+        //private static WTXModbus WTXObj;
 
         private SettingsForm Set_obj;
 
@@ -86,11 +91,11 @@ namespace WTXModbusExamples
             else
                 this.timerInterval = 200; // Default value for the timer interval.
 
-            ModbusObj = new ModbusTCPConnection(ipAddress);
-            WTXObj = new WTX120(ModbusObj, this.timerInterval);
+            ModbusObj = new ModbusConnection(ipAddress);
+            WTXObj = new HBM.WT.API.WTX.WTXModbus(ModbusObj, this.timerInterval);
 
             is_standard = true;      // change between standard and application mode in the GUI. 
-            ModbusObj.IP_Address = ipAddress;
+            ModbusObj.getIPAddress = ipAddress;
 
             this.dataStr = new string[59];
 
@@ -271,11 +276,11 @@ namespace WTXModbusExamples
         }
 
         // This automatic property returns an instance of this class. It has usage in the class "Settings_Form".
-        public WTX120 get_dataviewer
+        public HBM.WT.API.WTX.WTXModbus get_dataviewer
         {
             get
             {
-                return this.WTXObj;
+                return WTXObj;
             }
         }
 
@@ -288,9 +293,9 @@ namespace WTXModbusExamples
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IP_Address;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
             toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getRegisterCount; 
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getNumOfPoints; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -303,9 +308,9 @@ namespace WTXModbusExamples
             if (WTXObj.getConnection.is_connected == false)
                 toolStripStatusLabel1.Text = "Disconnected";
             
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IP_Address;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
             toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14];                 // index 14 refers to application mode of the Device
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IP_Address;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
 
             //Changing the width of a column:
             /*foreach (DataGridViewTextBoxColumn c in dataGridView1.Columns)
@@ -510,13 +515,13 @@ namespace WTXModbusExamples
             WTXObj.Async_Call(0x8000, Write_DataReceived);        // Bit .15
         }
 
-        // This event starts the timer and the periodical fetch of values from the device (here: WTX120).
+        // This event starts the timer and the periodical fetch of values from the device (here: WTX120_Modbus).
         // The timer interval is set in the connection specific class "ModbusConnection".
         // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first. 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {           
             // First the connection to the device should be established.   
-            WTXObj.connect();       // Alternative : WTXObj.getConnection.Connect();
+            WTXObj.Connect();       // Alternative : WTXObj.getConnection.Connect();
 
             this.dataStr = WTXObj.getDataStr;
 
@@ -746,7 +751,7 @@ namespace WTXModbusExamples
 
                 System.IO.File.Delete(@full_path);
 
-                System.IO.File.AppendAllText(@full_path, " PLC Interface , Input words WTX120 -> SPS , Application : " + this.dataStr[14] + "\n\n\n");// index 14 ("this.dataStr[14]") refers to application mode of the Device
+                System.IO.File.AppendAllText(@full_path, " PLC Interface , Input words WTX120_Modbus -> SPS , Application : " + this.dataStr[14] + "\n\n\n");// index 14 ("this.dataStr[14]") refers to application mode of the Device
                 System.IO.File.AppendAllText(@full_path, "\nWord|\n" + "Name|\n" + "Type|\n" + "Bit|\n" + "Interface Call Routine|\n" + "List Call Routine|\n" + "Content|\n" + "Value\n\n");
 
                 for (int x=0;x < (dataGridView1.RowCount-1); x++)       // Iterating through the whole data grid: 
@@ -766,7 +771,7 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            Set_obj = new SettingsForm(WTXObj.getConnection.IP_Address, this.timer1.Interval, WTXObj.getConnection.getRegisterCount, this);
+            Set_obj = new SettingsForm(WTXObj.getConnection.getIPAddress, this.timer1.Interval, WTXObj.getConnection.getNumOfPoints, this);
             Set_obj.Show();
         }
 
@@ -775,14 +780,14 @@ namespace WTXModbusExamples
         // After updating the values the tool bar labels on the bottom (f.e. "toolStripStatusLabel2") is rewritten with the new values. 
         public void setting()
         {
-            WTXObj.getConnection.IP_Address = Set_obj.get_IP_address;
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IP_Address;
+            WTXObj.getConnection.getIPAddress = Set_obj.get_IP_address;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
 
             WTXObj.getConnection.Sending_interval = Set_obj.get_sending_interval;     
             this.timer1.Interval = Set_obj.get_sending_interval;
 
-            WTXObj.getConnection.getRegisterCount = Set_obj.get_number_inputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getRegisterCount;
+            WTXObj.getConnection.getNumOfPoints = Set_obj.get_number_inputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getNumOfPoints;
         }
 
         // This method changes the GUI concerning the application mode.

@@ -1,6 +1,6 @@
 ﻿/* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 02/2018
+ * TCP/MODBUS Interface for WTX120_Modbus | 02/2018
  * 
  * Author : Felix Retsch 
  * 
@@ -17,14 +17,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 
-using WTXModbus;
+using HBM.WT.API.WTX;
+using HBM.WT.API.COMMON;
+using HBM.WT.API.WTX.Modbus;
 
 namespace WTXModbusGUIsimple
 {
     /// <summary>
-    /// This class creates a window, which shows live the measurement values from a via ModbusTCP connected WTX120.
+    /// This class creates a window, which shows live the measurement values from a via ModbusTCP connected WTX120_Modbus.
     /// 
-    /// First you have to insert the IP-Address of the WTX120, then press "Connect". If the connection could be established
+    /// First you have to insert the IP-Address of the WTX120_Modbus, then press "Connect". If the connection could be established
     /// the Net, Gross and Tara values are displayed in nearly real-time. The buttons "Tare" and "Zero" do the same as if you would
     /// use the buttons on the WTX. "Gross/Net" switches the displayed value on the WTX' display.
     /// 
@@ -35,8 +37,8 @@ namespace WTXModbusGUIsimple
     {
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
-        private static ModbusTCPConnection ModbusObj;
-        private static WTX120 WTXObj;
+        private static ModbusConnection ModbusObj;
+        private static WTXModbus WTXObj;
         
         private String IPAddress;
         private CalcCalibration CalcCalObj;
@@ -96,11 +98,11 @@ namespace WTXModbusGUIsimple
         // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
-            ModbusObj = new ModbusTCPConnection(this.IPAddress);
+            ModbusObj = new ModbusConnection(this.IPAddress);
 
-            WTXObj = new WTX120(ModbusObj, this.timerInterval);
+            WTXObj = new WTXModbus(ModbusObj, this.timerInterval);
             
-            WTXObj.getConnection.getRegisterCount = 6;
+            WTXObj.getConnection.getNumOfPoints = 6;
             
             WTXObj.DataUpdateEvent += ValuesOnConsole;
 
@@ -124,10 +126,10 @@ namespace WTXModbusGUIsimple
                 Update();
 
                 string tempIpAddress = textBox1.Text;
-                WTXObj.getConnection.IP_Address = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
+                WTXObj.getConnection.getIPAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
 
                 // The connection to the device should be established.   
-                WTXObj.connect();                                 // Alternative : WTX_obj.getConnection.Connect();  Equal to : ModbusObj.Connect();
+                WTXObj.Connect();                                 // Alternative : WTX_obj.getConnection.Connect();  Equal to : ModbusObj.Connect();
 
                 if (WTXObj.getConnection.is_connected)
                 {
@@ -140,7 +142,7 @@ namespace WTXModbusGUIsimple
                 }
                 else
                 {
-                    WTXObj.getConnection.IP_Address = this.IPAddress;
+                    WTXObj.getConnection.getIPAddress = this.IPAddress;
 
                     WTXObj.stopTimer();
                     

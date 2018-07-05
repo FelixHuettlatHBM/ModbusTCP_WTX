@@ -1,6 +1,6 @@
 ﻿/* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 02/2018
+ * TCP/MODBUS Interface for WTX120_Modbus | 02/2018
  * 
  * Author : Felix Retsch 
  * 
@@ -17,7 +17,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WTXModbus;
+
+using HBM.WT.API.WTX.Modbus;
+using HBM.WT.API.WTX;
 
 namespace WTXModbusGUIsimple
 {
@@ -25,7 +27,7 @@ namespace WTXModbusGUIsimple
     // based on know values for dead load and nominal load in mV/V
     public partial class CalcCalibration : Form
     {
-        private WTX120 WTXObj;
+        private HBM.WT.API.WTX.WTXModbus WTXObj;
 
         private bool Finished;
         private double Preload;
@@ -35,7 +37,7 @@ namespace WTXModbusGUIsimple
         private string str_comma_dot;
               
         // Constructor of class 'CalcCalibration' : 
-        public CalcCalibration(WTX120 WTXObj, bool connected)
+        public CalcCalibration(HBM.WT.API.WTX.WTXModbus WTXObj, bool connected)
         {
             this.WTXObj = WTXObj;
             
@@ -133,7 +135,7 @@ namespace WTXModbusGUIsimple
         // Once the writing is finished, this method is called. So the handshake and status bits are updated if
         // the user is interested in the data transfer between application and WTX device. 
         // Updating the handshake and status bit here is not necessary, because the data transfer is done
-        // in class 'WTX120' and 'ModbusConnection'. 
+        // in class 'WTX120_Modbus' and 'ModbusConnection'. 
         // By this optional example it is also shown how data can be simply called in another way:
         // By 'obj.NetValue', 'obj.GrossValue' or 'obj.handshake'.
 

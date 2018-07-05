@@ -1,11 +1,11 @@
 ﻿
 /* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 01/2018
+ * TCP/MODBUS Interface for WTX120_Modbus | 01/2018
  * 
  * Author : Felix Huettl 
  * 
- * Console application for WTX120 MODBUS TCPIP 
+ * Console application for WTX120_Modbus MODBUS TCPIP 
  * 
  *  */
 
@@ -19,14 +19,19 @@ using System.Threading;
 using System.Timers;
 using System.Globalization;
 
+using HBM.WT.API.WTX.Modbus;
+using HBM.WT.API.WTX;
+using HBM.WT.API.COMMON;
+
+
 namespace WTXModbus
 {
     /// <summary>
-    /// This class implements a console application instead of a windows form. An Object of the class 'ModbusConnection' and 'WTX120' are initialized as a publisher
+    /// This class implements a console application instead of a windows form. An Object of the class 'ModbusConnection' and 'WTX120_Modbus' are initialized as a publisher
     /// and subscriber. Afterwars a connection to the device is build and the timer/sending interval is set. 
     /// A timer with for example 500ms is created. After 500ms an event is triggered, which executes the method "OnTimedEvent" reading the register of the device
     /// by an asynchronous call in the method "WTXObj.Async_Call". As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
-    /// new data , which have already been interpreted in class 'WTX120', so the data is given as a string array. 
+    /// new data , which have already been interpreted in class 'WTX120_Modbus', so the data is given as a string array. 
     /// The data is also printed on the console in the callback method "Read_DataReceived". 
     /// Being in the while-loop it is possible to select commands to the device. For example taring, change from gross to net value, stop dosing, zeroing and so on. 
     /// 
@@ -35,9 +40,9 @@ namespace WTXModbus
 
     static class Program
     {
-        private static ModbusTCPConnection ModbusObj;
-        private static WTX120 WTXObj;
-
+        private static ModbusConnection ModbusObj;
+        private static HBM.WT.API.WTX.WTXModbus WTXObj;
+        
         private static string ipAddress;     // IP-adress, set as the first argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
         private static int timerInterval;    // timer interval, set as the second argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
         private static ushort inputMode;     // inputMode (number of input bytes), set as the third argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
@@ -56,7 +61,7 @@ namespace WTXModbus
         private static string str_comma_dot;
         private static double DoubleCalibrationWeight, potenz;
 
-        private static bool isCalibrating;  // For checking if the WTX120 device is calculating at a moment after the command has been send. If 'isCalibrating' is true, the values are not printed on the console. 
+        private static bool isCalibrating;  // For checking if the WTX120_Modbus device is calculating at a moment after the command has been send. If 'isCalibrating' is true, the values are not printed on the console. 
         private static bool ShowAllInputWords;
         private static bool ShowAllOutputWords;
 
@@ -97,12 +102,12 @@ namespace WTXModbus
 
             do // do-while loop for the connection establishment. If the connection is established successfully, the do-while loop is left/exit. 
             {
-                ModbusObj = new ModbusTCPConnection(ipAddress);
-
-                WTXObj = new WTX120(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
+                ModbusObj = new ModbusConnection(ipAddress);
+                
+                WTXObj = new HBM.WT.API.WTX.WTXModbus(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
 
                 // The connection to the device should be established.   
-                WTXObj.connect();                                 // Alternative : WTXObj.getConnection.Connect();  
+                WTXObj.Connect();                                 // Alternative : WTXObj.getConnection.Connect();  
 
                 if (WTXObj.getConnection.is_connected == true)
                 {
@@ -119,7 +124,7 @@ namespace WTXModbus
 
             //thread1.Start();
 
-            // Coupling the data via an event-based call - If the event in class WTX120 is triggered, the values are updated on the console: 
+            // Coupling the data via an event-based call - If the event in class WTX120_Modbus is triggered, the values are updated on the console: 
             WTXObj.DataUpdateEvent += ValuesOnConsole;     
 
             // This while loop is repeated till the user enters e. After 500ms the register of the device is read out. In the while-loop the user
@@ -231,7 +236,7 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            //WTXObj.stopTimer();      // The timer is stopped in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.stopTimer();      // The timer is stopped in the method 'Calculate(..)' in class WTX120_Modbus.
 
             zero_load_nominal_load_input();
            
@@ -239,7 +244,7 @@ namespace WTXModbus
             
             isCalibrating = false;
 
-            //WTXObj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120_Modbus.
         }
 
         /*
@@ -251,7 +256,7 @@ namespace WTXModbus
         {
             isCalibrating = true;
 
-            //WTXObj.stopTimer();    // The timer is stopped in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.stopTimer();    // The timer is stopped in the method 'Calculate(..)' in class WTX120_Modbus.
 
             Console.Clear();
             Console.WriteLine("\nPlease tip the value for the calibration weight and tip enter to confirm : ");
@@ -267,7 +272,7 @@ namespace WTXModbus
 
             WTXObj.Calibrate(potencyCalibrationWeight(), calibration_weight);
 
-            //WTXObj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120.
+            //WTXObj.restartTimer();   // The timer is restarted in the method 'Calculate(..)' in class WTX120_Modbus.
 
             isCalibrating = false;
         }  
@@ -301,12 +306,12 @@ namespace WTXModbus
 
                 Console.WriteLine("Options to set the device : Enter the following keys:\nb-Choose the number of bytes read from the register |");
 
-                if (WTXObj.DeviceValues.applicationMode == 0)  // If the WTX120 device is in standard application/mode.
+                if (WTXObj.DeviceValues.applicationMode == 0)  // If the WTX120_Modbus device is in standard application/mode.
                 {
                     Console.WriteLine("0-Taring | 1-Gross/net  | 2-Zeroing  | 3- Adjust zero | 4-Adjust nominal |\n5-Activate Data \t| 6-Manual taring \t      | 7-Weight storage\n");
                 }
                 else
-                    if (WTXObj.DeviceValues.applicationMode == 1 || WTXObj.DeviceValues.applicationMode == 2) // If the WTX120 device is in filler application/mode.
+                    if (WTXObj.DeviceValues.applicationMode == 1 || WTXObj.DeviceValues.applicationMode == 2) // If the WTX120_Modbus device is in filler application/mode.
                     {
 
                     if(ShowAllInputWords==false)
@@ -608,7 +613,7 @@ namespace WTXModbus
 
         /*
          * This method is a callback method for the asnchronous writing via the method 'Async_Call', which is called once the writing is done. Here, in that case the 
-         * callback method 'Write_DataReceived' is empty, there is no need to print the values on the console twice because the timer in class 'WTX120' does that already 
+         * callback method 'Write_DataReceived' is empty, there is no need to print the values on the console twice because the timer in class 'WTX120_Modbus' does that already 
          * in a short time intervall. 
          * If you do not want a timer you can put f.e. the printing method into 'Write_DataReceived' f.e. .
          */

@@ -1,0 +1,3103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ISO15745ProfileContainer xmlns="http://www.canopen.org/xml/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.canopen.org/xml/1.0 CANopen.xsd">
+	<ISO15745Profile>
+		<ProfileHeader>
+			<ProfileIdentification>CAN device profile</ProfileIdentification>
+			<ProfileRevision>1</ProfileRevision>
+			<ProfileName></ProfileName>
+			<ProfileSource></ProfileSource>
+			<ProfileClassID>Device</ProfileClassID>
+			<ISO15745Reference>
+				<ISO15745Part>1</ISO15745Part>
+				<ISO15745Edition>1</ISO15745Edition>
+				<ProfileTechnology>CANopen</ProfileTechnology>
+			</ISO15745Reference>
+		</ProfileHeader>
+		<ProfileBody xsi:type="ProfileBody_Device_CANopen" fileName="FIT7_P80_01_03_COS.xdd" fileCreator="Edgar Schachler, HBM" fileCreationDate="2016-03-09" fileCreationTime="11:58:00" fileModificationDate="2016-03-09" fileModificationTime="11:58:52" fileModifiedBy="Edgar Schachler, HBM" fileVersion="1" supportedLanguages="en">
+			<DeviceIdentity>
+				<vendorName readOnly="true">HBM GmbH</vendorName>
+				<vendorID readOnly="true">0x0000011D</vendorID>
+				<vendorText readOnly="true">
+					<label lang="en"/>
+				</vendorText>
+				<deviceFamily readOnly="true">
+					<label lang="en"/>
+				</deviceFamily>
+				<productFamily readOnly="true"></productFamily>
+				<productName readOnly="true">FIT7</productName>
+				<productID readOnly="true">0x00000508</productID>
+				<productText readOnly="true">
+					<description lang="en">FileDescription=EDS for the CANopen Digital Transducer Electronics|EdsVersion=4.0|FileRevison=3|RevisionNum=0x00000050|Comments=This EDS-File is auto generated|</description>
+				</productText>
+				<orderNumber readOnly="true">1-FIT7</orderNumber>
+				<version versionType="SW" readOnly="true"></version>
+				<version versionType="FW" readOnly="true"></version>
+				<version versionType="HW" readOnly="true"></version>
+				<specificationRevision readOnly="true"></specificationRevision>
+				<instanceName readOnly="true"></instanceName>
+			</DeviceIdentity>
+			<DeviceManager>
+				<indicatorList>
+					<LEDList>
+						<LED LEDcolors="monocolor" LEDtype="device">
+							<label lang="en"/>
+							<LEDstate uniqueID="LED_State_1" state="off" LEDcolor="green">
+								<label lang="en"/>
+							</LEDstate>
+						</LED>
+					</LEDList>
+				</indicatorList>
+			</DeviceManager>
+			<DeviceFunction>
+				<capabilities>
+					<characteristicsList>
+						<characteristic>
+							<characteristicName>
+								<label lang="en"/>
+							</characteristicName>
+							<characteristicContent>
+								<label lang="en"/>
+							</characteristicContent>
+						</characteristic>
+					</characteristicsList>
+				</capabilities>
+			</DeviceFunction>
+			<ApplicationProcess>
+
+				<parameterList>
+					<parameter uniqueID="UID_PARAM_1000" access="read">
+						<label lang="en">device type</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1001" access="read">
+						<label lang="en">error register</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1002" access="read">
+						<label lang="en">manufacturer status register</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1005" access="readWrite">
+						<label lang="en">COB-ID SYNC message</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x00000080"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101001" access="readWrite">
+						<label lang="en">save all parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101002" access="readWrite">
+						<label lang="en">save communication parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101003" access="readWrite">
+						<label lang="en">save application parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101004" access="readWrite">
+						<label lang="en">save manufacturer parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101101" access="readWrite">
+						<label lang="en">restore all default parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101102" access="readWrite">
+						<label lang="en">restore communication default parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101103" access="readWrite">
+						<label lang="en">restore application default parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101104" access="readWrite">
+						<label lang="en">restore manufacturer default parameters</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1014" access="readWrite">
+						<label lang="en">COB-ID Emergency message</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x00000080"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1017" access="readWrite">
+						<label lang="en">Producer Heartbeat</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x00000000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101801" access="read">
+						<label lang="en">vendor id</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x0000011D"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101802" access="read">
+						<label lang="en">product code</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x00000508"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101803" access="read">
+						<label lang="en">revision number</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x00000050"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_101804" access="read">
+						<label lang="en">serial number</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_140001" access="readWrite">
+						<label lang="en">ParameterName=COB-ID used by PDO</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x00000200"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_140002" access="readWrite">
+						<label lang="en">Transmission Type</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_160001" access="read">
+						<label lang="en">1.mapped object (STW)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000A10"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180001" access="readWrite">
+						<label lang="en">ParameterName=COB-ID used by PDO</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x00000180"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180002" access="readWrite">
+						<label lang="en">Transmission Type</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180101" access="readWrite">
+						<label lang="en">ParameterName=COB-ID used by PDO</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x00000280"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180102" access="readWrite">
+						<label lang="en">Transmission Type</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180201" access="readWrite">
+						<label lang="en">ParameterName=COB-ID used by PDO</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x00000380"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180202" access="readWrite">
+						<label lang="en">Transmission Type</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180301" access="readWrite">
+						<label lang="en">ParameterName=COB-ID used by PDO</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x00000480"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180302" access="readWrite">
+						<label lang="en">Transmission Type</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180401" access="readWrite">
+						<label lang="en">ParameterName=COB-ID used by PDO</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="$NodeID+0x80000300"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_180402" access="readWrite">
+						<label lang="en">Transmission Type</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0001" access="const">
+						<label lang="en">1.mapped object (MSVV)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000120"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0002" access="const">
+						<label lang="en">2.mapped object (MSVS)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000210"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0101" access="const">
+						<label lang="en">1.mapped object (MAVV)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000320"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0102" access="const">
+						<label lang="en">2.mapped object (MAVS)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000410"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0201" access="const">
+						<label lang="en">1.mapped object (FRSV)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000520"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0202" access="const">
+						<label lang="en">2.mapped object (FRSS)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000610"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0301" access="const">
+						<label lang="en">1.mapped object (PVA)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20200420"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0302" access="const">
+						<label lang="en">2.mapped object (PVA2)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20200520"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_1a0401" access="const">
+						<label lang="en">1.mapped object (ALS)</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0x20000D20"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200001" access="read">
+						<label lang="en">MSVV - MeasuredValue</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200002" access="read">
+						<label lang="en">MSVS - MeasuredValueStatus</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200003" access="read">
+						<label lang="en">MAVV - TriggerMeasurement</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200004" access="read">
+						<label lang="en">MAVS - TriggerMeasurementStatus</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200005" access="read">
+						<label lang="en">FRSV - DosingResult</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200006" access="read">
+						<label lang="en">FRSS - DosingResultStatus</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200007" access="read">
+						<label lang="en">ESR - EventStatusRegister</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20000a" access="write">
+						<label lang="en">STW - ControlWord</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20000b" access="read">
+						<label lang="en">SDO - ActualDosingStatus</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20000c" access="read">
+						<label lang="en">BSY - BusyFlag</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20000d" access="read">
+						<label lang="en">ALS - AlarmStatus</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20000e" access="read">
+						<label lang="en">MFO - FineFlowLastCycle</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20000f" access="read">
+						<label lang="en">RFO - ResidualFlowLastCycle</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200010" access="read">
+						<label lang="en">DYN - DynamicMinimum</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200011" access="read">
+						<label lang="en">DYM - DynamicMaximum</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200013" access="readWrite">
+						<label lang="en">FRT - FilterSetlingTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200014" access="read">
+						<label lang="en">FLO - FlowRate</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200016" access="readWrite">
+						<label lang="en">STB - ControlByte</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_200017" access="readWrite">
+						<label lang="en">STW1 - AlternateControlWord</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201001" access="readWrite">
+						<label lang="en">ASF - FilterSelection</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="5"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201003" access="readWrite">
+						<label lang="en">CDL - Zeroing</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201004" access="readWrite">
+						<label lang="en">DZT - DynamicZeroTrackingType</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201005" access="readWrite">
+						<label lang="en">FMD - FilterMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201006" access="readWrite">
+						<label lang="en">ICR - InternalConversionRate</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="2"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201007" access="readWrite">
+						<label lang="en">IMD - InputMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201008" access="readWrite">
+						<label lang="en">ZSE - AutomaticZeroOnStartup</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201009" access="readWrite">
+						<label lang="en">ZTR - AutomaticZeroTracking</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20100a" access="readWrite">
+						<label lang="en">DZT2 - DynamicZeroTrackingTime</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20100b" access="readWrite">
+						<label lang="en">CDT - ZeroingDelay</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20100c" access="readWrite">
+						<label lang="en">MAC - MovingAverageFilter</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20100f" access="readWrite">
+						<label lang="en">AFF - ASFShadowFilter</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="2"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201010" access="read">
+						<label lang="en">FST - SetlingTimeFilter</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201011" access="readWrite">
+						<label lang="en">FRF - FFTFifoSize</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201012" access="readWrite">
+						<label lang="en">FRM - FFTFifoMask</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201013" access="readWrite">
+						<label lang="en">TMA - MaximumSetlingTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_201014" access="read">
+						<label lang="en">TMS - SetlingTimeCorrection</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202001" access="readWrite">
+						<label lang="en">CPV - ClearPeakValueMemory</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202002" access="readWrite">
+						<label lang="en">CTR - ClearTriggerEvents</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202003" access="readWrite">
+						<label lang="en">POR - PortCommand</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202004" access="read">
+						<label lang="en">PVA - PeakValueMin</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202005" access="read">
+						<label lang="en">PVA2 - PeakValueMax</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202006" access="readWrite">
+						<label lang="en">PVS - PeakValueMemoryOnOff</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202007" access="readWrite">
+						<label lang="en">PVS1 - PeakValueMemoryGrossNet</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202008" access="readWrite">
+						<label lang="en">TRC - TriggerSettingsOnOff</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202009" access="readWrite">
+						<label lang="en">TRC1 - TriggerType</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20200a" access="readWrite">
+						<label lang="en">TRC2 - TriggerLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20200b" access="readWrite">
+						<label lang="en">TRC3 - TriggerDelayTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20200c" access="readWrite">
+						<label lang="en">TRC4 - TriggerMeasurementTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20200d" access="readWrite">
+						<label lang="en">TRF - CorrectionFactorTriggerResult</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1000000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20200e" access="read">
+						<label lang="en">TRM - TriggerResultMeanValue</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20200f" access="read">
+						<label lang="en">TRN - TriggerResultCounts</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202010" access="read">
+						<label lang="en">TRS - TriggerResultStandardDeviation</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202011" access="readWrite">
+						<label lang="en">PTN - PosttriggerNumber</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="5"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202012" access="read">
+						<label lang="en">RIO - ReadIO</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202013" access="read">
+						<label lang="en">SP1 - Speed1</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202014" access="read">
+						<label lang="en">SP2 - Speed2</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202015" access="read">
+						<label lang="en">SPM - SpeedMean</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202016" access="read">
+						<label lang="en">LEW - LengthOfGood</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202017" access="read">
+						<label lang="en">TCY - CycleTime</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202018" access="read">
+						<label lang="en">IS1 - InputState1</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202019" access="read">
+						<label lang="en">IS2 - InputState2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20201a" access="read">
+						<label lang="en">IS3 - InputState3</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20201b" access="read">
+						<label lang="en">IS4 - InputState4</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20201c" access="read">
+						<label lang="en">IS5 - InputState5</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20201d" access="read">
+						<label lang="en">IS6 - InputState6</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20201e" access="readWrite">
+						<label lang="en">OS1 - OutputState1</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20201f" access="readWrite">
+						<label lang="en">OS2 - OutputState2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202020" access="readWrite">
+						<label lang="en">OS3 - OutputState3</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202021" access="readWrite">
+						<label lang="en">OS4 - OutputState4</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202022" access="readWrite">
+						<label lang="en">OS5 - OutputState5</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202023" access="readWrite">
+						<label lang="en">OS6 - OutputState6</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202024" access="readWrite">
+						<label lang="en">TSW - SoftwareTrigger</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202101" access="readWrite">
+						<label lang="en">OM1 - OutputMode1</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202102" access="readWrite">
+						<label lang="en">OM2 - OutputMode2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202103" access="readWrite">
+						<label lang="en">OM3 - OutputMode3</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202104" access="readWrite">
+						<label lang="en">OM4 - OutputMode4</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202105" access="readWrite">
+						<label lang="en">OM5 - OutputMode5</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202106" access="readWrite">
+						<label lang="en">OM6 - OutputMode6</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202107" access="readWrite">
+						<label lang="en">IOM - IoMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202201" access="readWrite">
+						<label lang="en">IM1 - InputMode1</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_202202" access="readWrite">
+						<label lang="en">IM2 - InputMode2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203001" access="readWrite">
+						<label lang="en">LIV - LimitValue1On/Off</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203002" access="readWrite">
+						<label lang="en">LIV4 - LimitValue1Signal</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203003" access="readWrite">
+						<label lang="en">LIV8 - LimitValue1Onlevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203004" access="readWrite">
+						<label lang="en">LIVC - LimitValue1OffLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203005" access="readWrite">
+						<label lang="en">LIV1 - LimitValue2On/Off</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203006" access="readWrite">
+						<label lang="en">LIV5 - LimitValue2Signal</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203007" access="readWrite">
+						<label lang="en">LIV9 - LimitValue2Onlevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203008" access="readWrite">
+						<label lang="en">LIVD - LimitValue2OffLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203009" access="readWrite">
+						<label lang="en">LIV2 - LimitValue3On/Off</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20300a" access="readWrite">
+						<label lang="en">LIV6 - LimitValue3Signal</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20300b" access="readWrite">
+						<label lang="en">LIVA - LimitValue3OnLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20300c" access="readWrite">
+						<label lang="en">LIVE - LimitValue3OffLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20300d" access="readWrite">
+						<label lang="en">LIV3 - LimitValue4On/Off</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20300e" access="readWrite">
+						<label lang="en">LIV7 - LimitValue4Signal</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20300f" access="readWrite">
+						<label lang="en">LIVB - LimitValue4Onlevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203010" access="readWrite">
+						<label lang="en">LIVF - LimitValue4OffLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203011" access="readWrite">
+						<label lang="en">AT1 - LimitSwitch1ActivationTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203012" access="readWrite">
+						<label lang="en">AT2 - LimitSwitch2ActivationTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203013" access="readWrite">
+						<label lang="en">AT3 - LimitSwitch3ActivationTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203014" access="readWrite">
+						<label lang="en">AT4 - LimitSwitch4ActivationTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203015" access="readWrite">
+						<label lang="en">DT1 - LimitSwitch1DelayTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203016" access="readWrite">
+						<label lang="en">DT2 - LimitSwitch2DelayTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203017" access="readWrite">
+						<label lang="en">DT3 - LimitSwitch3DelayTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203018" access="readWrite">
+						<label lang="en">DT4 - LimitSwitch4DelayTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203019" access="readWrite">
+						<label lang="en">RTB - RetriggerToleranceBand</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20301a" access="readWrite">
+						<label lang="en">MVC - RetriggerNumOfFracMeanValues</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20301b" access="readWrite">
+						<label lang="en">TVT - TriggerValidTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20301c" access="readWrite">
+						<label lang="en">TSL - TriggerStopLevel</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20301d" access="readWrite">
+						<label lang="en">TST - TriggerStopTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20301e" access="readWrite">
+						<label lang="en">PTD - PostTriggerDelay</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20301f" access="readWrite">
+						<label lang="en">DIS - Distance</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203020" access="readWrite">
+						<label lang="en">LEN - Length</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_203021" access="readWrite">
+						<label lang="en">POL - Polarity</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_204001" access="readWrite">
+						<label lang="en">TAR - Taring</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_204002" access="readWrite">
+						<label lang="en">TAS - GrossNetSelection</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_204003" access="readWrite">
+						<label lang="en">TAV - TareValue</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_204004" access="readWrite">
+						<label lang="en">TNS - TaraAutoStore</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_205001" access="readWrite">
+						<label lang="en">ADF - AdaptiveNoiseSuppression</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_205002" access="readWrite">
+						<label lang="en">MIF - MinInterferenceFreq</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="50"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_205003" access="readWrite">
+						<label lang="en">MIS - MinInterferenceStep</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_205004" access="readWrite">
+						<label lang="en">MIL - MinInterferenceLevel</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_20520e" access="readWrite">
+						<label lang="en">FDA - FFTDataAvalb</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_210001" access="readWrite">
+						<label lang="en">SFA - SensorFullScaleAdjust</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1000000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_210002" access="readWrite">
+						<label lang="en">SZA - SensorZeroScaleAdjust</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211001" access="readWrite">
+						<label lang="en">CWT - CalibrationWeight</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1000000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211002" access="read">
+						<label lang="en">CWT1 - CalibrationWeightOld</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211003" access="readWrite">
+						<label lang="en">DPT - DecimalPoint</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211004" access="readWrite">
+						<label lang="en">HRN - HighResolutionMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211005" access="readWrite">
+						<label lang="en">HSM - HighSpeedMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211006" access="readWrite">
+						<label lang="en">LDW - LoadCellDeadWeight</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211007" access="readWrite">
+						<label lang="en">LWT - LoadCellWeight</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1000000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211008" access="readWrite">
+						<label lang="en">MRA - MultiRangeChangeOverPoint</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_211009" access="readWrite">
+						<label lang="en">MTD - StandstillMonitoring</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_21100a" access="readWrite">
+						<label lang="en">NOV - NominalValueScaling</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_21100b" access="readWrite">
+						<label lang="en">RSN - ResolutionIncrement</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_212001" access="readWrite">
+						<label lang="en">LIC - LinearizationCoeffScale1</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_212002" access="readWrite">
+						<label lang="en">LIC1 - LinearizationCoeffScale2</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1000000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_212003" access="readWrite">
+						<label lang="en">LIC2 - LinearizationCoeffScale3</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_212004" access="readWrite">
+						<label lang="en">LIC3 - LinearizationCoeffScale4</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220001" access="readWrite">
+						<label lang="en">WDP - WriteDosingParameters</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220002" access="readWrite">
+						<label lang="en">RDP - ReadDosingParameters</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220004" access="readWrite">
+						<label lang="en">DMD - DosingMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220005" access="readWrite">
+						<label lang="en">EMD - EmptyingMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220006" access="readWrite">
+						<label lang="en">OMD - OutputModeDosing</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220007" access="readWrite">
+						<label lang="en">OSN - Optimization</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220008" access="readWrite">
+						<label lang="en">RDS - Redosing</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22000a" access="readWrite">
+						<label lang="en">SDF - SpecialDosingFunctions</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22000b" access="readWrite">
+						<label lang="en">TMD - TareModeForDosing</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22000c" access="readWrite">
+						<label lang="en">VCT - ValveControl</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22000d" access="read">
+						<label lang="en">FNB - FillingWeightNumber</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22000e" access="readWrite">
+						<label lang="en">FPS - FeinstromPrediktion</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22000f" access="readWrite">
+						<label lang="en">ATP - AdaptionSperrUndNachstromZeit</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220011" access="readWrite">
+						<label lang="en">ARP - AdaptionNachstomzeit</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220012" access="readWrite">
+						<label lang="en">AFP - AdationFeinstromzeit</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_220014" access="readWrite">
+						<label lang="en">AST - AdaptionTarierUndNachstromZeit</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221001" access="readWrite">
+						<label lang="en">CBK - CoarseFlowBagBrkMonWeight</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221002" access="readWrite">
+						<label lang="en">CFD - CoarseFlowCutoffPoint</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221003" access="readWrite">
+						<label lang="en">EWT - EmptyWeight</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221004" access="readWrite">
+						<label lang="en">FBK - BagBreakageMonitoringFineFlow</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221005" access="readWrite">
+						<label lang="en">FFD - FineFlowCutOffPoint</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221006" access="readWrite">
+						<label lang="en">FFM - MinimumFineFlowComponent</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221007" access="readWrite">
+						<label lang="en">FWT - FillingWeight</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221008" access="readWrite">
+						<label lang="en">LTL - LowerToleranceLimit</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_221009" access="readWrite">
+						<label lang="en">SYD - SystematicDosingWeightDiff</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22100a" access="readWrite">
+						<label lang="en">UTL - UpperToleranceLimit</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22100b" access="readWrite">
+						<label lang="en">MSW - MSW - MinimumStartWeigth</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22100c" access="readWrite">
+						<label lang="en">CTO - ZeroingTolerance</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222001" access="readWrite">
+						<label lang="en">CBT - CoarsFlowBagBrkMonitoringTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222002" access="readWrite">
+						<label lang="en">EPT - EmpytingTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222003" access="readWrite">
+						<label lang="en">FBT - BagBreakageMoitoringFineFlow</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222004" access="readWrite">
+						<label lang="en">LTC - LockoutTimeCoarseFlow</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222005" access="readWrite">
+						<label lang="en">LTF - LockoutTimeFineFlow</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222006" access="readWrite">
+						<label lang="en">MDT - MaximumDosingTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222007" access="readWrite">
+						<label lang="en">RFT - ReflowTimeForDosing</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222008" access="readWrite">
+						<label lang="en">STT - StabilizationTimeForDosing</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_222009" access="readWrite">
+						<label lang="en">TAD - TareDelayForDosing</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22200a" access="readWrite">
+						<label lang="en">FFL - FirstFineFlowTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22200b" access="readWrite">
+						<label lang="en">DL1 - DosingDelay1</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22200c" access="readWrite">
+						<label lang="en">DL2 - DosingDelay2</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22200d" access="readWrite">
+						<label lang="en">FPT - FeinstromPrediktion</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22200e" access="readWrite">
+						<label lang="en">CD1 - ZeroingTime1</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_22200f" access="readWrite">
+						<label lang="en">CD2 - ZeroingTime2</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223001" access="read">
+						<label lang="en">CFT - ActualCoarseFlowTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223002" access="readWrite">
+						<label lang="en">CSN - ClearDosingTotalAndCounter</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223003" access="read">
+						<label lang="en">DST - ActualDosingTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223004" access="read">
+						<label lang="en">FFT - ActualFineFlowTime</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223005" access="read">
+						<label lang="en">NDS - NumberOfDosings</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223006" access="read">
+						<label lang="en">SDM - DosingResultsMeanValue</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223007" access="read">
+						<label lang="en">SDS - StandardDeviation</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_223008" access="read">
+						<label lang="en">SUM - CummulativeWeight</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_224001" access="readWrite">
+						<label lang="en">BRK - StopDosing</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_224002" access="readWrite">
+						<label lang="en">RUN - StartDosing</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_230001" access="readWrite">
+						<label lang="en">CRC - ExternalCheckSum</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_230002" access="readWrite">
+						<label lang="en">LFT - LegalForTrade</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_230003" access="read">
+						<label lang="en">TCR - TradeCounter</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_230004" access="read">
+						<label lang="en">PZN - ProgramCheckNumber</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_230005" access="read">
+						<label lang="en">PLY - ProgramPolynom</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_240001" access="readWrite">
+						<label lang="en">GCA - GravitationFactorOnFactoryLoc</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="981029"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_240003" access="readWrite">
+						<label lang="en">GDE - GravitationFactorOnuserLoc</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="981029"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_245002" access="readWrite">
+						<label lang="en">TDD - SaveRestoreParameters</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+          <parameter uniqueID="UID_PARAM_245003" access="readWrite">
+						<label lang="en">CEP - Clear EEPROM</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246001" access="readWrite">
+						<label lang="en">CTM - TimeConstantCreepMiddle</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246002" access="readWrite">
+						<label lang="en">CTS - TimeConstantCreepShort</label>
+						<UINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246005" access="readWrite">
+						<label lang="en">POM - RushInCompensationMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246006" access="readWrite">
+						<label lang="en">POA - RushInCompensationBase</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246007" access="readWrite">
+						<label lang="en">POT - RushInCompensationExponent</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246008" access="readWrite">
+						<label lang="en">POO - RushInCompensationOffset</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_246009" access="readWrite">
+						<label lang="en">TMK - TempCompensationSource</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_247001" access="readWrite">
+						<label lang="en">TCC - TemperatureCompensation1</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="100000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_247002" access="readWrite">
+						<label lang="en">TCC1 - TemperatureCompensation2</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_247003" access="readWrite">
+						<label lang="en">TCC2 - TemperatureCompensation3</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_248001" access="readWrite">
+						<label lang="en">TCM - CreepCorrectionMiddle1</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_248002" access="readWrite">
+						<label lang="en">TCM1 - CreepCorrectionMiddle2</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_248003" access="readWrite">
+						<label lang="en">TCM2 - CreepCorrectionMiddle3</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_249001" access="readWrite">
+						<label lang="en">TCS - CreepCorrectionShort1</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_249002" access="readWrite">
+						<label lang="en">TCS1 - CreepCorrectionShort2</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_249003" access="readWrite">
+						<label lang="en">TCS2 - CreepCorrectionShort3</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a001" access="readWrite">
+						<label lang="en">TCZ - TemperatureCompensationZero1</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a002" access="readWrite">
+						<label lang="en">TCZ1 - TemperatureCompensationZero2</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a003" access="readWrite">
+						<label lang="en">TCZ2 - TemperatureCompensationZero3</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a101" access="readWrite">
+						<label lang="en">DHY - HystereseCompensation</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a102" access="readWrite">
+						<label lang="en">LWL - LoadCycleLevelLow</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="250000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a103" access="readWrite">
+						<label lang="en">LWH - LoadCycleLevelHigh</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="750000"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24a104" access="read">
+						<label lang="en">LWZ - LoadCycleCounter</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24b003" access="read">
+						<label lang="en">TYP - AmplifierType</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c001" access="readWrite">
+						<label lang="en">FCI - FilterType</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c002" access="readWrite">
+						<label lang="en">FCI1 - NumberOfCoefficients1</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c003" access="readWrite">
+						<label lang="en">FCI2 - NumberOfCoefficients2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c004" access="readWrite">
+						<label lang="en">FCI3 - NumberOfMeanValues</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c005" access="readWrite">
+						<label lang="en">FTL - FastTrackLevel</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c006" access="readWrite">
+						<label lang="en">NTF - Notchfilter1</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c007" access="readWrite">
+						<label lang="en">NTF1 - Notchfilter2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24c008" access="readWrite">
+						<label lang="en">FTM - FastTrackMode</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_24d001" access="readWrite">
+						<label lang="en">FCIX - FIRKoefficents</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250001" access="read">
+						<label lang="en">AOV - ADUOverflowCounter</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250002" access="read">
+						<label lang="en">SOV - SensorOverflowCounter</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_25000e" access="readWrite">
+						<label lang="en">SWV - SoftwareVersion</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250101" access="read">
+						<label lang="en">SF1 - InterferenceFreq1</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250102" access="read">
+						<label lang="en">SF2 - InterferenceFreq2</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250103" access="read">
+						<label lang="en">SF3 - InterferenceFreq3</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250104" access="read">
+						<label lang="en">SF4 - InterferenceFreq4</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250105" access="read">
+						<label lang="en">SF5 - InterferenceFreq5</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250106" access="read">
+						<label lang="en">SF6 - InterferenceFreq6</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250107" access="read">
+						<label lang="en">SF7 - InterferenceFreq7</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250108" access="read">
+						<label lang="en">SF8 - InterferenceFreq8</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250109" access="read">
+						<label lang="en">SF9 - InterferenceFreq9</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250201" access="read">
+						<label lang="en">SA1 - InterferenceAmplitude1</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250202" access="read">
+						<label lang="en">SA2 - InterferenceAmplitude2</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250203" access="read">
+						<label lang="en">SA3 - InterferenceAmplitude3</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250204" access="read">
+						<label lang="en">SA4 - InterferenceAmplitude4</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250205" access="read">
+						<label lang="en">SA5 - InterferenceAmplitude5</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250206" access="read">
+						<label lang="en">SA6 - InterferenceAmplitude6</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250207" access="read">
+						<label lang="en">SA7 - InterferenceAmplitude7</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250208" access="read">
+						<label lang="en">SA8 - InterferenceAmplitude8</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_250209" access="read">
+						<label lang="en">SA9 - InterferenceAmplitude9</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_25020a" access="write">
+						<label lang="en">CLE - ResetFFTMinMax</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_25020b" access="read">
+						<label lang="en">MAX - FFTMaxValue</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_25020c" access="read">
+						<label lang="en">MIM - FFTMinValue</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_25020d" access="readWrite">
+						<label lang="en">NFA - NotchFrequrncy</label>
+						<DINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_26000a" access="readWrite">
+						<label lang="en">STR - TerminatorCOM</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_260016" access="read">
+						<label lang="en">SWV - SoftwareVersion</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_260020" access="readWrite">
+						<label lang="en">HNR - HardwareNumber</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_260022" access="read">
+						<label lang="en">SWI - SoftwareType</label>
+						<UDINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_260023" access="readWrite">
+						<label lang="en">SPL - IoThresholdLevel</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="1"/>
+					</parameter>
+					<parameter uniqueID="UID_PARAM_2d0002" access="read">
+						<label lang="en">SDO2 - DosingResult2</label>
+						<USINT/>
+						<denotation>
+							<label lang="en"></label>
+						</denotation>
+						<defaultValue value="0"/>
+					</parameter>
+          <parameter uniqueID="UID_PARAM_270001" access="readWrite">
+            <label lang="en">DGA - Diagnostic Activation</label>
+            <USINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_270004" access="readWrite">
+            <label lang="en">DGL - Diagnostic Trigger Level</label>
+            <DINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_270002" access="readWrite">
+            <label lang="en">DGN - Diagnostic Number</label>
+            <USINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_270006" access="readWrite">
+            <label lang="en">DGP - Diagnostic Buffer Pointer</label>
+            <UINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_270007" access="read">
+            <label lang="en">DGR - Diagnostic Read</label>
+            <DINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_270003" access="readWrite">
+            <label lang="en">DGS - Diagnostic Start and Status</label>
+            <USINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_270005" access="readWrite">
+            <label lang="en">DGV - Type Diagnostic Value</label>
+            <USINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_245011" access="readWrite">
+            <label lang="en">DWE - Diagnosis Buffer Enable</label>
+            <USINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+          <parameter uniqueID="UID_PARAM_245012" access="write">
+            <label lang="en">DWR - Write Diagnostic Byte</label>
+            <DINT/>
+            <denotation>
+              <label lang="en"></label>
+            </denotation>
+            <defaultValue value="0"/>
+          </parameter>
+				</parameterList>
+
+			</ApplicationProcess>
+		</ProfileBody>
+	</ISO15745Profile>
+	<ISO15745Profile>
+		<ProfileHeader>
+			<ProfileIdentification>CAN comm net profile</ProfileIdentification>
+			<ProfileRevision>1</ProfileRevision>
+			<ProfileName></ProfileName>
+			<ProfileSource></ProfileSource>
+			<ProfileClassID>CommunicationNetwork</ProfileClassID>
+			<ISO15745Reference>
+				<ISO15745Part>1</ISO15745Part>
+				<ISO15745Edition>1</ISO15745Edition>
+				<ProfileTechnology>CANopen</ProfileTechnology>
+			</ISO15745Reference>
+		</ProfileHeader>
+		<ProfileBody xsi:type="ProfileBody_CommunicationNetwork_CANopen" fileName="FIT7_P80_01_03_COS.xdd" fileCreator="Edgar Schachler, HBM" fileCreationDate="2016-03-09" fileCreationTime="11:58:00" fileModificationDate="2016-03-09" fileModificationTime="11:58:52" fileModifiedBy="Edgar Schachler, HBM" fileVersion="1" supportedLanguages="en">
+			<ApplicationLayers>
+				<identity>
+					<vendorID>0x0000011D</vendorID>
+					<productID>0x00000508</productID>
+				</identity>
+				<CANopenObjectList>
+					<CANopenObject index="1000" name="device type" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1000"/>
+					<CANopenObject index="1001" name="error register" objectType="7" dataType="0005" PDOmapping="no" uniqueIDRef="UID_PARAM_1001"/>
+					<CANopenObject index="1002" name="manufacturer status register" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1002"/>
+					<CANopenObject index="1005" name="COB-ID SYNC message" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1005"/>
+					<CANopenObject index="1008" name="manufacturer device name" objectType="7" dataType="0009" accessType="const" PDOmapping="no"/>
+					<CANopenObject index="1009" name="manufacturer hardware version" objectType="7" dataType="0009" accessType="const" PDOmapping="no"/>
+					<CANopenObject index="100A" name="manufacturer software version" objectType="7" dataType="0009" accessType="const" PDOmapping="no"/>
+					<CANopenObject index="1010" name="store parameters" objectType="8" subNumber="5">
+						<CANopenSubObject subIndex="00" name="largest supported Subindex" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004"/>
+						<CANopenSubObject subIndex="01" name="save all parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101001"/>
+						<CANopenSubObject subIndex="02" name="save communication parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101002"/>
+						<CANopenSubObject subIndex="03" name="save application parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101003"/>
+						<CANopenSubObject subIndex="04" name="save manufacturer parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101004"/>
+					</CANopenObject>
+					<CANopenObject index="1011" name="restore parameters" objectType="8" subNumber="5">
+						<CANopenSubObject subIndex="00" name="largest supported Subindex" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004"/>
+						<CANopenSubObject subIndex="01" name="restore all default parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101101"/>
+						<CANopenSubObject subIndex="02" name="restore communication default parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101102"/>
+						<CANopenSubObject subIndex="03" name="restore application default parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101103"/>
+						<CANopenSubObject subIndex="04" name="restore manufacturer default parameters" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_101104"/>
+					</CANopenObject>
+					<CANopenObject index="1014" name="COB-ID Emergency message" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1014"/>
+					<CANopenObject index="1017" name="Producer Heartbeat" objectType="7" dataType="0006" PDOmapping="no" uniqueIDRef="UID_PARAM_1017"/>
+					<CANopenObject index="1018" name="identity object" objectType="9" subNumber="5">
+						<CANopenSubObject subIndex="00" name="number of entries" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="vendor id" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_101801"/>
+						<CANopenSubObject subIndex="02" name="product code" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_101802"/>
+						<CANopenSubObject subIndex="03" name="revision number" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_101803"/>
+						<CANopenSubObject subIndex="04" name="serial number" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_101804"/>
+					</CANopenObject>
+					<CANopenObject index="1400" name="RPDO 1 Comm Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="largest supported Subindex" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="ParameterName=COB-ID used by PDO" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_140001"/>
+						<CANopenSubObject subIndex="02" name="Transmission Type" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_140002"/>
+					</CANopenObject>
+					<CANopenObject index="1600" name="RPDO 1 Mapping Parameter" objectType="9" subNumber="2">
+						<CANopenSubObject subIndex="00" name="Number of mapped objects" objectType="7" dataType="0005" accessType="const" defaultValue="0x00000001" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="1.mapped object (STW)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_160001"/>
+					</CANopenObject>
+					<CANopenObject index="1800" name="TPDO 1 Comm Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="number of supported entries" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="ParameterName=COB-ID used by PDO" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_180001"/>
+						<CANopenSubObject subIndex="02" name="Transmission Type" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_180002"/>
+					</CANopenObject>
+					<CANopenObject index="1801" name="TPDO 2 Comm Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="number of supported entries" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="ParameterName=COB-ID used by PDO" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_180101"/>
+						<CANopenSubObject subIndex="02" name="Transmission Type" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_180102"/>
+					</CANopenObject>
+					<CANopenObject index="1802" name="TPDO 3 Comm Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="number of supported entries" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="ParameterName=COB-ID used by PDO" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_180201"/>
+						<CANopenSubObject subIndex="02" name="Transmission Type" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_180202"/>
+					</CANopenObject>
+					<CANopenObject index="1803" name="TPDO 4 Comm Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="number of supported entries" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="ParameterName=COB-ID used by PDO" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_180301"/>
+						<CANopenSubObject subIndex="02" name="Transmission Type" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_180302"/>
+					</CANopenObject>
+					<CANopenObject index="1804" name="TPDO 5 Comm Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="number of supported entries" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="ParameterName=COB-ID used by PDO" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_180401"/>
+						<CANopenSubObject subIndex="02" name="Transmission Type" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_180402"/>
+					</CANopenObject>
+					<CANopenObject index="1A00" name="TPDO 1 Mapping Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of mapped objects" objectType="7" dataType="0005" accessType="const" defaultValue="0x00000002" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="1.mapped object (MSVV)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0001"/>
+						<CANopenSubObject subIndex="02" name="2.mapped object (MSVS)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0002"/>
+					</CANopenObject>
+					<CANopenObject index="1A01" name="TPDO 2 Mapping Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of mapped objects" objectType="7" dataType="0005" accessType="const" defaultValue="0x00000002" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="1.mapped object (MAVV)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0101"/>
+						<CANopenSubObject subIndex="02" name="2.mapped object (MAVS)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0102"/>
+					</CANopenObject>
+					<CANopenObject index="1A02" name="TPDO 3 Mapping Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of mapped objects" objectType="7" dataType="0005" accessType="const" defaultValue="0x00000002" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="1.mapped object (FRSV)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0201"/>
+						<CANopenSubObject subIndex="02" name="2.mapped object (FRSS)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0202"/>
+					</CANopenObject>
+					<CANopenObject index="1A03" name="TPDO 4 Mapping Parameter" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of mapped objects" objectType="7" dataType="0005" accessType="const" defaultValue="0x00000002" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="1.mapped object (PVA)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0301"/>
+						<CANopenSubObject subIndex="02" name="2.mapped object (PVA2)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0302"/>
+					</CANopenObject>
+					<CANopenObject index="1A04" name="TPDO 5 Mapping Parameter" objectType="9" subNumber="2">
+						<CANopenSubObject subIndex="00" name="Number of mapped objects" objectType="7" dataType="0005" accessType="const" defaultValue="0x00000001" PDOmapping="no"/>
+						<CANopenSubObject subIndex="01" name="1.mapped object (ALS)" objectType="7" dataType="0007" PDOmapping="no" uniqueIDRef="UID_PARAM_1a0401"/>
+					</CANopenObject>
+					<CANopenObject index="2000" name="CanOpenGroup 2000" objectType="9" subNumber="20">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000017"/>
+						<CANopenSubObject subIndex="01" name="MSVV - MeasuredValue" objectType="7" dataType="0004" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_200001"/>
+						<CANopenSubObject subIndex="02" name="MSVS - MeasuredValueStatus" objectType="7" dataType="0006" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_200002"/>
+						<CANopenSubObject subIndex="03" name="MAVV - TriggerMeasurement" objectType="7" dataType="0004" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_200003"/>
+						<CANopenSubObject subIndex="04" name="MAVS - TriggerMeasurementStatus" objectType="7" dataType="0006" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_200004"/>
+						<CANopenSubObject subIndex="05" name="FRSV - DosingResult" objectType="7" dataType="0004" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_200005"/>
+						<CANopenSubObject subIndex="06" name="FRSS - DosingResultStatus" objectType="7" dataType="0006" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_200006"/>
+						<CANopenSubObject subIndex="07" name="ESR - EventStatusRegister" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_200007"/>
+						<CANopenSubObject subIndex="0a" name="STW - ControlWord" objectType="7" dataType="0006" PDOmapping="RPDO" uniqueIDRef="UID_PARAM_20000a"/>
+						<CANopenSubObject subIndex="0b" name="SDO - ActualDosingStatus" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20000b"/>
+						<CANopenSubObject subIndex="0c" name="BSY - BusyFlag" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20000c"/>
+						<CANopenSubObject subIndex="0d" name="ALS - AlarmStatus" objectType="7" dataType="0007" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_20000d"/>
+						<CANopenSubObject subIndex="0e" name="MFO - FineFlowLastCycle" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20000e"/>
+						<CANopenSubObject subIndex="0f" name="RFO - ResidualFlowLastCycle" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20000f"/>
+						<CANopenSubObject subIndex="10" name="DYN - DynamicMinimum" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_200010"/>
+						<CANopenSubObject subIndex="11" name="DYM - DynamicMaximum" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_200011"/>
+						<CANopenSubObject subIndex="13" name="FRT - FilterSetlingTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_200013"/>
+						<CANopenSubObject subIndex="14" name="FLO - FlowRate" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_200014"/>
+						<CANopenSubObject subIndex="16" name="STB - ControlByte" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_200016"/>
+						<CANopenSubObject subIndex="17" name="STW1 - AlternateControlWord" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_200017"/>
+					</CANopenObject>
+					<CANopenObject index="2010" name="CanOpenGroup 2010" objectType="9" subNumber="18">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000014"/>
+						<CANopenSubObject subIndex="01" name="ASF - FilterSelection" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201001"/>
+						<CANopenSubObject subIndex="03" name="CDL - Zeroing" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_201003"/>
+						<CANopenSubObject subIndex="04" name="DZT - DynamicZeroTrackingType" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201004"/>
+						<CANopenSubObject subIndex="05" name="FMD - FilterMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201005"/>
+						<CANopenSubObject subIndex="06" name="ICR - InternalConversionRate" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201006"/>
+						<CANopenSubObject subIndex="07" name="IMD - InputMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201007"/>
+						<CANopenSubObject subIndex="08" name="ZSE - AutomaticZeroOnStartup" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201008"/>
+						<CANopenSubObject subIndex="09" name="ZTR - AutomaticZeroTracking" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201009"/>
+						<CANopenSubObject subIndex="0a" name="DZT2 - DynamicZeroTrackingTime" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20100a"/>
+						<CANopenSubObject subIndex="0b" name="CDT - ZeroingDelay" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_20100b"/>
+						<CANopenSubObject subIndex="0c" name="MAC - MovingAverageFilter" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20100c"/>
+						<CANopenSubObject subIndex="0f" name="AFF - ASFShadowFilter" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20100f"/>
+						<CANopenSubObject subIndex="10" name="FST - SetlingTimeFilter" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_201010"/>
+						<CANopenSubObject subIndex="11" name="FRF - FFTFifoSize" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201011"/>
+						<CANopenSubObject subIndex="12" name="FRM - FFTFifoMask" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201012"/>
+						<CANopenSubObject subIndex="13" name="TMA - MaximumSetlingTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_201013"/>
+						<CANopenSubObject subIndex="14" name="TMS - SetlingTimeCorrection" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_201014"/>
+					</CANopenObject>
+					<CANopenObject index="2020" name="CanOpenGroup 2020" objectType="9" subNumber="37">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000024"/>
+						<CANopenSubObject subIndex="01" name="CPV - ClearPeakValueMemory" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202001"/>
+						<CANopenSubObject subIndex="02" name="CTR - ClearTriggerEvents" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202002"/>
+						<CANopenSubObject subIndex="03" name="POR - PortCommand" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202003"/>
+						<CANopenSubObject subIndex="04" name="PVA - PeakValueMin" objectType="7" dataType="0004" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_202004"/>
+						<CANopenSubObject subIndex="05" name="PVA2 - PeakValueMax" objectType="7" dataType="0004" PDOmapping="TPDO" uniqueIDRef="UID_PARAM_202005"/>
+						<CANopenSubObject subIndex="06" name="PVS - PeakValueMemoryOnOff" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202006"/>
+						<CANopenSubObject subIndex="07" name="PVS1 - PeakValueMemoryGrossNet" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202007"/>
+						<CANopenSubObject subIndex="08" name="TRC - TriggerSettingsOnOff" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202008"/>
+						<CANopenSubObject subIndex="09" name="TRC1 - TriggerType" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202009"/>
+						<CANopenSubObject subIndex="0a" name="TRC2 - TriggerLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20200a"/>
+						<CANopenSubObject subIndex="0b" name="TRC3 - TriggerDelayTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_20200b"/>
+						<CANopenSubObject subIndex="0c" name="TRC4 - TriggerMeasurementTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_20200c"/>
+						<CANopenSubObject subIndex="0d" name="TRF - CorrectionFactorTriggerResult" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_20200d"/>
+						<CANopenSubObject subIndex="0e" name="TRM - TriggerResultMeanValue" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20200e"/>
+						<CANopenSubObject subIndex="0f" name="TRN - TriggerResultCounts" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_20200f"/>
+						<CANopenSubObject subIndex="10" name="TRS - TriggerResultStandardDeviation" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_202010"/>
+						<CANopenSubObject subIndex="11" name="PTN - PosttriggerNumber" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202011"/>
+						<CANopenSubObject subIndex="12" name="RIO - ReadIO" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_202012"/>
+						<CANopenSubObject subIndex="13" name="SP1 - Speed1" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_202013"/>
+						<CANopenSubObject subIndex="14" name="SP2 - Speed2" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_202014"/>
+						<CANopenSubObject subIndex="15" name="SPM - SpeedMean" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_202015"/>
+						<CANopenSubObject subIndex="16" name="LEW - LengthOfGood" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_202016"/>
+						<CANopenSubObject subIndex="17" name="TCY - CycleTime" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_202017"/>
+						<CANopenSubObject subIndex="18" name="IS1 - InputState1" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202018"/>
+						<CANopenSubObject subIndex="19" name="IS2 - InputState2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202019"/>
+						<CANopenSubObject subIndex="1a" name="IS3 - InputState3" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20201a"/>
+						<CANopenSubObject subIndex="1b" name="IS4 - InputState4" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20201b"/>
+						<CANopenSubObject subIndex="1c" name="IS5 - InputState5" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20201c"/>
+						<CANopenSubObject subIndex="1d" name="IS6 - InputState6" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20201d"/>
+						<CANopenSubObject subIndex="1e" name="OS1 - OutputState1" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20201e"/>
+						<CANopenSubObject subIndex="1f" name="OS2 - OutputState2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20201f"/>
+						<CANopenSubObject subIndex="20" name="OS3 - OutputState3" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202020"/>
+						<CANopenSubObject subIndex="21" name="OS4 - OutputState4" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202021"/>
+						<CANopenSubObject subIndex="22" name="OS5 - OutputState5" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202022"/>
+						<CANopenSubObject subIndex="23" name="OS6 - OutputState6" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202023"/>
+						<CANopenSubObject subIndex="24" name="TSW - SoftwareTrigger" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202024"/>
+					</CANopenObject>
+					<CANopenObject index="2021" name="CanOpenGroup 2021" objectType="9" subNumber="8">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000007"/>
+						<CANopenSubObject subIndex="01" name="OM1 - OutputMode1" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202101"/>
+						<CANopenSubObject subIndex="02" name="OM2 - OutputMode2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202102"/>
+						<CANopenSubObject subIndex="03" name="OM3 - OutputMode3" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202103"/>
+						<CANopenSubObject subIndex="04" name="OM4 - OutputMode4" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202104"/>
+						<CANopenSubObject subIndex="05" name="OM5 - OutputMode5" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202105"/>
+						<CANopenSubObject subIndex="06" name="OM6 - OutputMode6" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202106"/>
+						<CANopenSubObject subIndex="07" name="IOM - IoMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202107"/>
+					</CANopenObject>
+					<CANopenObject index="2022" name="CanOpenGroup 2022" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="IM1 - InputMode1" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202201"/>
+						<CANopenSubObject subIndex="02" name="IM2 - InputMode2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_202202"/>
+					</CANopenObject>
+					<CANopenObject index="2030" name="CanOpenGroup 2030" objectType="9" subNumber="34">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000021"/>
+						<CANopenSubObject subIndex="01" name="LIV - LimitValue1On/Off" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_203001"/>
+						<CANopenSubObject subIndex="02" name="LIV4 - LimitValue1Signal" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_203002"/>
+						<CANopenSubObject subIndex="03" name="LIV8 - LimitValue1Onlevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_203003"/>
+						<CANopenSubObject subIndex="04" name="LIVC - LimitValue1OffLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_203004"/>
+						<CANopenSubObject subIndex="05" name="LIV1 - LimitValue2On/Off" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_203005"/>
+						<CANopenSubObject subIndex="06" name="LIV5 - LimitValue2Signal" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_203006"/>
+						<CANopenSubObject subIndex="07" name="LIV9 - LimitValue2Onlevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_203007"/>
+						<CANopenSubObject subIndex="08" name="LIVD - LimitValue2OffLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_203008"/>
+						<CANopenSubObject subIndex="09" name="LIV2 - LimitValue3On/Off" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_203009"/>
+						<CANopenSubObject subIndex="0a" name="LIV6 - LimitValue3Signal" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20300a"/>
+						<CANopenSubObject subIndex="0b" name="LIVA - LimitValue3OnLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20300b"/>
+						<CANopenSubObject subIndex="0c" name="LIVE - LimitValue3OffLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20300c"/>
+						<CANopenSubObject subIndex="0d" name="LIV3 - LimitValue4On/Off" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20300d"/>
+						<CANopenSubObject subIndex="0e" name="LIV7 - LimitValue4Signal" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20300e"/>
+						<CANopenSubObject subIndex="0f" name="LIVB - LimitValue4Onlevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20300f"/>
+						<CANopenSubObject subIndex="10" name="LIVF - LimitValue4OffLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_203010"/>
+						<CANopenSubObject subIndex="11" name="AT1 - LimitSwitch1ActivationTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203011"/>
+						<CANopenSubObject subIndex="12" name="AT2 - LimitSwitch2ActivationTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203012"/>
+						<CANopenSubObject subIndex="13" name="AT3 - LimitSwitch3ActivationTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203013"/>
+						<CANopenSubObject subIndex="14" name="AT4 - LimitSwitch4ActivationTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203014"/>
+						<CANopenSubObject subIndex="15" name="DT1 - LimitSwitch1DelayTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203015"/>
+						<CANopenSubObject subIndex="16" name="DT2 - LimitSwitch2DelayTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203016"/>
+						<CANopenSubObject subIndex="17" name="DT3 - LimitSwitch3DelayTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203017"/>
+						<CANopenSubObject subIndex="18" name="DT4 - LimitSwitch4DelayTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_203018"/>
+						<CANopenSubObject subIndex="19" name="RTB - RetriggerToleranceBand" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_203019"/>
+						<CANopenSubObject subIndex="1a" name="MVC - RetriggerNumOfFracMeanValues" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_20301a"/>
+						<CANopenSubObject subIndex="1b" name="TVT - TriggerValidTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_20301b"/>
+						<CANopenSubObject subIndex="1c" name="TSL - TriggerStopLevel" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_20301c"/>
+						<CANopenSubObject subIndex="1d" name="TST - TriggerStopTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_20301d"/>
+						<CANopenSubObject subIndex="1e" name="PTD - PostTriggerDelay" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20301e"/>
+						<CANopenSubObject subIndex="1f" name="DIS - Distance" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_20301f"/>
+						<CANopenSubObject subIndex="20" name="LEN - Length" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_203020"/>
+						<CANopenSubObject subIndex="21" name="POL - Polarity" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_203021"/>
+					</CANopenObject>
+					<CANopenObject index="2040" name="CanOpenGroup 2040" objectType="9" subNumber="5">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004"/>
+						<CANopenSubObject subIndex="01" name="TAR - Taring" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_204001"/>
+						<CANopenSubObject subIndex="02" name="TAS - GrossNetSelection" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_204002"/>
+						<CANopenSubObject subIndex="03" name="TAV - TareValue" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_204003"/>
+						<CANopenSubObject subIndex="04" name="TNS - TaraAutoStore" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_204004"/>
+					</CANopenObject>
+					<CANopenObject index="2050" name="CanOpenGroup 2050" objectType="9" subNumber="5">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004"/>
+						<CANopenSubObject subIndex="01" name="ADF - AdaptiveNoiseSuppression" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_205001"/>
+						<CANopenSubObject subIndex="02" name="MIF - MinInterferenceFreq" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_205002"/>
+						<CANopenSubObject subIndex="03" name="MIS - MinInterferenceStep" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_205003"/>
+						<CANopenSubObject subIndex="04" name="MIL - MinInterferenceLevel" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_205004"/>
+					</CANopenObject>
+					<CANopenObject index="2052" name="CanOpenGroup 2052" objectType="9" subNumber="2">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000E"/>
+						<CANopenSubObject subIndex="0e" name="FDA - FFTDataAvalb" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_20520e"/>
+					</CANopenObject>
+					<CANopenObject index="2100" name="CanOpenGroup 2100" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="SFA - SensorFullScaleAdjust" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_210001"/>
+						<CANopenSubObject subIndex="02" name="SZA - SensorZeroScaleAdjust" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_210002"/>
+					</CANopenObject>
+					<CANopenObject index="2110" name="CanOpenGroup 2110" objectType="9" subNumber="12">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000B"/>
+						<CANopenSubObject subIndex="01" name="CWT - CalibrationWeight" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_211001"/>
+						<CANopenSubObject subIndex="02" name="CWT1 - CalibrationWeightOld" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_211002"/>
+						<CANopenSubObject subIndex="03" name="DPT - DecimalPoint" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_211003"/>
+						<CANopenSubObject subIndex="04" name="HRN - HighResolutionMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_211004"/>
+						<CANopenSubObject subIndex="05" name="HSM - HighSpeedMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_211005"/>
+						<CANopenSubObject subIndex="06" name="LDW - LoadCellDeadWeight" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_211006"/>
+						<CANopenSubObject subIndex="07" name="LWT - LoadCellWeight" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_211007"/>
+						<CANopenSubObject subIndex="08" name="MRA - MultiRangeChangeOverPoint" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_211008"/>
+						<CANopenSubObject subIndex="09" name="MTD - StandstillMonitoring" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_211009"/>
+						<CANopenSubObject subIndex="0a" name="NOV - NominalValueScaling" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_21100a"/>
+						<CANopenSubObject subIndex="0b" name="RSN - ResolutionIncrement" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_21100b"/>
+					</CANopenObject>
+					<CANopenObject index="2120" name="CanOpenGroup 2120" objectType="9" subNumber="5">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004"/>
+						<CANopenSubObject subIndex="01" name="LIC - LinearizationCoeffScale1" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_212001"/>
+						<CANopenSubObject subIndex="02" name="LIC1 - LinearizationCoeffScale2" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_212002"/>
+						<CANopenSubObject subIndex="03" name="LIC2 - LinearizationCoeffScale3" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_212003"/>
+						<CANopenSubObject subIndex="04" name="LIC3 - LinearizationCoeffScale4" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_212004"/>
+					</CANopenObject>
+					<CANopenObject index="2200" name="CanOpenGroup 2200" objectType="9" subNumber="17">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000014"/>
+						<CANopenSubObject subIndex="01" name="WDP - WriteDosingParameters" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220001"/>
+						<CANopenSubObject subIndex="02" name="RDP - ReadDosingParameters" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220002"/>
+						<CANopenSubObject subIndex="04" name="DMD - DosingMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220004"/>
+						<CANopenSubObject subIndex="05" name="EMD - EmptyingMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220005"/>
+						<CANopenSubObject subIndex="06" name="OMD - OutputModeDosing" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220006"/>
+						<CANopenSubObject subIndex="07" name="OSN - Optimization" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220007"/>
+						<CANopenSubObject subIndex="08" name="RDS - Redosing" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220008"/>
+						<CANopenSubObject subIndex="0a" name="SDF - SpecialDosingFunctions" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22000a"/>
+						<CANopenSubObject subIndex="0b" name="TMD - TareModeForDosing" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22000b"/>
+						<CANopenSubObject subIndex="0c" name="VCT - ValveControl" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22000c"/>
+						<CANopenSubObject subIndex="0d" name="FNB - FillingWeightNumber" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22000d"/>
+						<CANopenSubObject subIndex="0e" name="FPS - FeinstromPrediktion" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22000e"/>
+						<CANopenSubObject subIndex="0f" name="ATP - AdaptionSperrUndNachstromZeit" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22000f"/>
+						<CANopenSubObject subIndex="11" name="ARP - AdaptionNachstomzeit" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220011"/>
+						<CANopenSubObject subIndex="12" name="AFP - AdationFeinstromzeit" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220012"/>
+						<CANopenSubObject subIndex="14" name="AST - AdaptionTarierUndNachstromZeit" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_220014"/>
+					</CANopenObject>
+					<CANopenObject index="2210" name="CanOpenGroup 2210" objectType="9" subNumber="13">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000C"/>
+						<CANopenSubObject subIndex="01" name="CBK - CoarseFlowBagBrkMonWeight" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221001"/>
+						<CANopenSubObject subIndex="02" name="CFD - CoarseFlowCutoffPoint" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221002"/>
+						<CANopenSubObject subIndex="03" name="EWT - EmptyWeight" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221003"/>
+						<CANopenSubObject subIndex="04" name="FBK - BagBreakageMonitoringFineFlow" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221004"/>
+						<CANopenSubObject subIndex="05" name="FFD - FineFlowCutOffPoint" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221005"/>
+						<CANopenSubObject subIndex="06" name="FFM - MinimumFineFlowComponent" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221006"/>
+						<CANopenSubObject subIndex="07" name="FWT - FillingWeight" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221007"/>
+						<CANopenSubObject subIndex="08" name="LTL - LowerToleranceLimit" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221008"/>
+						<CANopenSubObject subIndex="09" name="SYD - SystematicDosingWeightDiff" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_221009"/>
+						<CANopenSubObject subIndex="0a" name="UTL - UpperToleranceLimit" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_22100a"/>
+						<CANopenSubObject subIndex="0b" name="MSW - MSW - MinimumStartWeigth" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_22100b"/>
+						<CANopenSubObject subIndex="0c" name="CTO - ZeroingTolerance" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_22100c"/>
+					</CANopenObject>
+					<CANopenObject index="2220" name="CanOpenGroup 2220" objectType="9" subNumber="16">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000F"/>
+						<CANopenSubObject subIndex="01" name="CBT - CoarsFlowBagBrkMonitoringTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222001"/>
+						<CANopenSubObject subIndex="02" name="EPT - EmpytingTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222002"/>
+						<CANopenSubObject subIndex="03" name="FBT - BagBreakageMoitoringFineFlow" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222003"/>
+						<CANopenSubObject subIndex="04" name="LTC - LockoutTimeCoarseFlow" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222004"/>
+						<CANopenSubObject subIndex="05" name="LTF - LockoutTimeFineFlow" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222005"/>
+						<CANopenSubObject subIndex="06" name="MDT - MaximumDosingTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222006"/>
+						<CANopenSubObject subIndex="07" name="RFT - ReflowTimeForDosing" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222007"/>
+						<CANopenSubObject subIndex="08" name="STT - StabilizationTimeForDosing" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222008"/>
+						<CANopenSubObject subIndex="09" name="TAD - TareDelayForDosing" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_222009"/>
+						<CANopenSubObject subIndex="0a" name="FFL - FirstFineFlowTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_22200a"/>
+						<CANopenSubObject subIndex="0b" name="DL1 - DosingDelay1" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_22200b"/>
+						<CANopenSubObject subIndex="0c" name="DL2 - DosingDelay2" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_22200c"/>
+						<CANopenSubObject subIndex="0d" name="FPT - FeinstromPrediktion" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_22200d"/>
+						<CANopenSubObject subIndex="0e" name="CD1 - ZeroingTime1" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_22200e"/>
+						<CANopenSubObject subIndex="0f" name="CD2 - ZeroingTime2" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_22200f"/>
+					</CANopenObject>
+					<CANopenObject index="2230" name="CanOpenGroup 2230" objectType="9" subNumber="9">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000008"/>
+						<CANopenSubObject subIndex="01" name="CFT - ActualCoarseFlowTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_223001"/>
+						<CANopenSubObject subIndex="02" name="CSN - ClearDosingTotalAndCounter" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_223002"/>
+						<CANopenSubObject subIndex="03" name="DST - ActualDosingTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_223003"/>
+						<CANopenSubObject subIndex="04" name="FFT - ActualFineFlowTime" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_223004"/>
+						<CANopenSubObject subIndex="05" name="NDS - NumberOfDosings" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_223005"/>
+						<CANopenSubObject subIndex="06" name="SDM - DosingResultsMeanValue" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_223006"/>
+						<CANopenSubObject subIndex="07" name="SDS - StandardDeviation" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_223007"/>
+						<CANopenSubObject subIndex="08" name="SUM - CummulativeWeight" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_223008"/>
+					</CANopenObject>
+					<CANopenObject index="2240" name="CanOpenGroup 2240" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="01" name="BRK - StopDosing" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_224001"/>
+						<CANopenSubObject subIndex="02" name="RUN - StartDosing" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_224002"/>
+					</CANopenObject>
+					<CANopenObject index="2300" name="CanOpenGroup 2300" objectType="9" subNumber="6">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000005"/>
+						<CANopenSubObject subIndex="01" name="CRC - ExternalCheckSum" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_230001"/>
+						<CANopenSubObject subIndex="02" name="LFT - LegalForTrade" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_230002"/>
+						<CANopenSubObject subIndex="03" name="TCR - TradeCounter" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_230003"/>
+						<CANopenSubObject subIndex="04" name="PZN - ProgramCheckNumber" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_230004"/>
+						<CANopenSubObject subIndex="05" name="PLY - ProgramPolynom" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_230005"/>
+					</CANopenObject>
+					<CANopenObject index="2400" name="CanOpenGroup 2400" objectType="9" subNumber="3">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000003"/>
+						<CANopenSubObject subIndex="01" name="GCA - GravitationFactorOnFactoryLoc" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_240001"/>
+						<CANopenSubObject subIndex="03" name="GDE - GravitationFactorOnuserLoc" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_240003"/>
+					</CANopenObject>
+					<CANopenObject index="2450" name="CanOpenGroup 2450" objectType="9" subNumber="5">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000005"/>
+						<CANopenSubObject subIndex="02" name="TDD - SaveRestoreParameters" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_245002"/>
+            <CANopenSubObject subIndex="03" name="CEP - Clear EEPROM" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_245003"/>
+            <CANopenSubObject subIndex="11" name="DWE - Diagnosis Buffer Enable" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_245011"/>
+            <CANopenSubObject subIndex="12" name="DWR - Write Diagnostic Byte" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_245012"/>
+					</CANopenObject>
+					<CANopenObject index="2460" name="CanOpenGroup 2460" objectType="9" subNumber="8">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000009"/>
+						<CANopenSubObject subIndex="01" name="CTM - TimeConstantCreepMiddle" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_246001"/>
+						<CANopenSubObject subIndex="02" name="CTS - TimeConstantCreepShort" objectType="7" dataType="0006" uniqueIDRef="UID_PARAM_246002"/>
+						<CANopenSubObject subIndex="05" name="POM - RushInCompensationMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_246005"/>
+						<CANopenSubObject subIndex="06" name="POA - RushInCompensationBase" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_246006"/>
+						<CANopenSubObject subIndex="07" name="POT - RushInCompensationExponent" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_246007"/>
+						<CANopenSubObject subIndex="08" name="POO - RushInCompensationOffset" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_246008"/>
+						<CANopenSubObject subIndex="09" name="TMK - TempCompensationSource" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_246009"/>
+					</CANopenObject>
+					<CANopenObject index="2470" name="CanOpenGroup 2470" objectType="9" subNumber="4">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000003"/>
+						<CANopenSubObject subIndex="01" name="TCC - TemperatureCompensation1" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_247001"/>
+						<CANopenSubObject subIndex="02" name="TCC1 - TemperatureCompensation2" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_247002"/>
+						<CANopenSubObject subIndex="03" name="TCC2 - TemperatureCompensation3" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_247003"/>
+					</CANopenObject>
+					<CANopenObject index="2480" name="CanOpenGroup 2480" objectType="9" subNumber="4">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000003"/>
+						<CANopenSubObject subIndex="01" name="TCM - CreepCorrectionMiddle1" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_248001"/>
+						<CANopenSubObject subIndex="02" name="TCM1 - CreepCorrectionMiddle2" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_248002"/>
+						<CANopenSubObject subIndex="03" name="TCM2 - CreepCorrectionMiddle3" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_248003"/>
+					</CANopenObject>
+					<CANopenObject index="2490" name="CanOpenGroup 2490" objectType="9" subNumber="4">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000003"/>
+						<CANopenSubObject subIndex="01" name="TCS - CreepCorrectionShort1" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_249001"/>
+						<CANopenSubObject subIndex="02" name="TCS1 - CreepCorrectionShort2" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_249002"/>
+						<CANopenSubObject subIndex="03" name="TCS2 - CreepCorrectionShort3" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_249003"/>
+					</CANopenObject>
+					<CANopenObject index="24A0" name="CanOpenGroup 24A0" objectType="9" subNumber="4">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000003"/>
+						<CANopenSubObject subIndex="01" name="TCZ - TemperatureCompensationZero1" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_24a001"/>
+						<CANopenSubObject subIndex="02" name="TCZ1 - TemperatureCompensationZero2" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_24a002"/>
+						<CANopenSubObject subIndex="03" name="TCZ2 - TemperatureCompensationZero3" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_24a003"/>
+					</CANopenObject>
+					<CANopenObject index="24A1" name="CanOpenGroup 24A1" objectType="9" subNumber="5">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000004"/>
+						<CANopenSubObject subIndex="01" name="DHY - HystereseCompensation" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24a101"/>
+						<CANopenSubObject subIndex="02" name="LWL - LoadCycleLevelLow" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_24a102"/>
+						<CANopenSubObject subIndex="03" name="LWH - LoadCycleLevelHigh" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_24a103"/>
+						<CANopenSubObject subIndex="04" name="LWZ - LoadCycleCounter" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_24a104"/>
+					</CANopenObject>
+					<CANopenObject index="24B0" name="CanOpenGroup 24B0" objectType="9" subNumber="2">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000003"/>
+						<CANopenSubObject subIndex="03" name="TYP - AmplifierType" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24b003"/>
+					</CANopenObject>
+					<CANopenObject index="24C0" name="CanOpenGroup 24C0" objectType="9" subNumber="9">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000008"/>
+						<CANopenSubObject subIndex="01" name="FCI - FilterType" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c001"/>
+						<CANopenSubObject subIndex="02" name="FCI1 - NumberOfCoefficients1" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c002"/>
+						<CANopenSubObject subIndex="03" name="FCI2 - NumberOfCoefficients2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c003"/>
+						<CANopenSubObject subIndex="04" name="FCI3 - NumberOfMeanValues" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c004"/>
+						<CANopenSubObject subIndex="05" name="FTL - FastTrackLevel" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_24c005"/>
+						<CANopenSubObject subIndex="06" name="NTF - Notchfilter1" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c006"/>
+						<CANopenSubObject subIndex="07" name="NTF1 - Notchfilter2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c007"/>
+						<CANopenSubObject subIndex="08" name="FTM - FastTrackMode" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_24c008"/>
+					</CANopenObject>
+					<CANopenObject index="24D0" name="CanOpenGroup 24D0" objectType="9" subNumber="2">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000001"/>
+						<CANopenSubObject subIndex="01" name="FCIX - FIRKoefficents" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_24d001"/>
+					</CANopenObject>
+					<CANopenObject index="2500" name="CanOpenGroup 2500" objectType="9" subNumber="4">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000E"/>
+						<CANopenSubObject subIndex="01" name="AOV - ADUOverflowCounter" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250001"/>
+						<CANopenSubObject subIndex="02" name="SOV - SensorOverflowCounter" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250002"/>
+						<CANopenSubObject subIndex="0e" name="SWV - SoftwareVersion" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_25000e"/>
+					</CANopenObject>
+					<CANopenObject index="2501" name="CanOpenGroup 2501" objectType="9" subNumber="10">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000009"/>
+						<CANopenSubObject subIndex="01" name="SF1 - InterferenceFreq1" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250101"/>
+						<CANopenSubObject subIndex="02" name="SF2 - InterferenceFreq2" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250102"/>
+						<CANopenSubObject subIndex="03" name="SF3 - InterferenceFreq3" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250103"/>
+						<CANopenSubObject subIndex="04" name="SF4 - InterferenceFreq4" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250104"/>
+						<CANopenSubObject subIndex="05" name="SF5 - InterferenceFreq5" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250105"/>
+						<CANopenSubObject subIndex="06" name="SF6 - InterferenceFreq6" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250106"/>
+						<CANopenSubObject subIndex="07" name="SF7 - InterferenceFreq7" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250107"/>
+						<CANopenSubObject subIndex="08" name="SF8 - InterferenceFreq8" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250108"/>
+						<CANopenSubObject subIndex="09" name="SF9 - InterferenceFreq9" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250109"/>
+					</CANopenObject>
+					<CANopenObject index="2502" name="CanOpenGroup 2502" objectType="9" subNumber="14">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000D"/>
+						<CANopenSubObject subIndex="01" name="SA1 - InterferenceAmplitude1" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250201"/>
+						<CANopenSubObject subIndex="02" name="SA2 - InterferenceAmplitude2" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250202"/>
+						<CANopenSubObject subIndex="03" name="SA3 - InterferenceAmplitude3" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250203"/>
+						<CANopenSubObject subIndex="04" name="SA4 - InterferenceAmplitude4" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250204"/>
+						<CANopenSubObject subIndex="05" name="SA5 - InterferenceAmplitude5" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250205"/>
+						<CANopenSubObject subIndex="06" name="SA6 - InterferenceAmplitude6" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250206"/>
+						<CANopenSubObject subIndex="07" name="SA7 - InterferenceAmplitude7" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250207"/>
+						<CANopenSubObject subIndex="08" name="SA8 - InterferenceAmplitude8" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250208"/>
+						<CANopenSubObject subIndex="09" name="SA9 - InterferenceAmplitude9" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_250209"/>
+						<CANopenSubObject subIndex="0a" name="CLE - ResetFFTMinMax" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_25020a"/>
+						<CANopenSubObject subIndex="0b" name="MAX - FFTMaxValue" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_25020b"/>
+						<CANopenSubObject subIndex="0c" name="MIM - FFTMinValue" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_25020c"/>
+						<CANopenSubObject subIndex="0d" name="NFA - NotchFrequrncy" objectType="7" dataType="0004" uniqueIDRef="UID_PARAM_25020d"/>
+					</CANopenObject>
+					<CANopenObject index="2520" name="CanOpenGroup 2520" objectType="9" subNumber="7">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x0000000B"/>
+						<CANopenSubObject subIndex="01" name="IDN - IDN-String" objectType="7" dataType="0009" accessType="rw" defaultValue="0"/>
+						<CANopenSubObject subIndex="02" name="NAM - NameString" objectType="7" dataType="0009" accessType="ro" defaultValue="0"/>
+						<CANopenSubObject subIndex="04" name="ENU - EngineeringUnit" objectType="7" dataType="0009" accessType="rw" defaultValue="0"/>
+						<CANopenSubObject subIndex="05" name="PDT - BuiltString" objectType="7" dataType="0009" accessType="ro" defaultValue="0"/>
+						<CANopenSubObject subIndex="0a" name="HWV - HardwareVersion" objectType="7" dataType="0009" accessType="ro" defaultValue="0"/>
+						<CANopenSubObject subIndex="0b" name="LTM - OIMLLegalForTradeMode" objectType="7" dataType="0009" accessType="ro" defaultValue="0"/>
+					</CANopenObject>
+					<CANopenObject index="2600" name="CanOpenGroup 2600" objectType="9" subNumber="6">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000023"/>
+						<CANopenSubObject subIndex="0a" name="STR - TerminatorCOM" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_26000a"/>
+						<CANopenSubObject subIndex="16" name="SWV - SoftwareVersion" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_260016"/>
+						<CANopenSubObject subIndex="20" name="HNR - HardwareNumber" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_260020"/>
+						<CANopenSubObject subIndex="22" name="SWI - SoftwareType" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_260022"/>
+						<CANopenSubObject subIndex="23" name="SPL - IoThresholdLevel" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_260023"/>
+					</CANopenObject>
+					<CANopenObject index="2D00" name="CanOpenGroup 2D00" objectType="9" subNumber="2">
+						<CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000002"/>
+						<CANopenSubObject subIndex="02" name="SDO2 - DosingResult2" objectType="7" dataType="0005" uniqueIDRef="UID_PARAM_2d0002"/>
+					</CANopenObject>
+          <CANopenObject index="2700" name="CanOpenGroup 2700" objectType="9" subNumber="7">
+            <CANopenSubObject subIndex="00" name="Number of Input Blocks" objectType="7" dataType="0005" accessType="ro" defaultValue="0x00000007"/>
+            <CANopenSubObject subIndex="01" name="DGA - Diagnostic Activation" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270001"/>
+            <CANopenSubObject subIndex="02" name="DGN - Diagnostic Number" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270002"/>
+            <CANopenSubObject subIndex="03" name="DGS - Diagnostic Start and Status" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270003"/>
+            <CANopenSubObject subIndex="04" name="DGL - Diagnostic Trigger Level" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270004"/>
+            <CANopenSubObject subIndex="05" name="DGA - DGV - Type Diagnostic Value" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270005"/>
+            <CANopenSubObject subIndex="06" name="DGP - Diagnostic Buffer Pointer" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270006"/>
+            <CANopenSubObject subIndex="07" name="DGR - Diagnostic Read" objectType="7" dataType="0007" uniqueIDRef="UID_PARAM_270007"/>
+          </CANopenObject>
+				</CANopenObjectList>
+				<dummyUsage>
+					<dummy entry="Dummy0001=0"/>
+					<dummy entry="Dummy0002=1"/>
+					<dummy entry="Dummy0003=1"/>
+					<dummy entry="Dummy0004=1"/>
+					<dummy entry="Dummy0005=1"/>
+					<dummy entry="Dummy0006=1"/>
+					<dummy entry="Dummy0007=1"/>
+				</dummyUsage>
+			</ApplicationLayers>
+			<TransportLayers>
+				<PhysicalLayer>
+					<baudRate>
+						<supportedBaudRate value="10 Kbps"/>
+						<supportedBaudRate value="20 Kbps"/>
+						<supportedBaudRate value="50 Kbps"/>
+						<supportedBaudRate value="125 Kbps"/>
+						<supportedBaudRate value="250 Kbps"/>
+						<supportedBaudRate value="500 Kbps"/>
+						<supportedBaudRate value="1000 Kbps"/>
+					</baudRate>
+				</PhysicalLayer>
+			</TransportLayers>
+			<NetworkManagement>
+				<CANopenGeneralFeatures groupMessaging="false" dynamicChannels="0" selfStartingDevice="false" SDORequestingDevice="false" granularity="0" nrOfRxPDO="1" nrOfTxPDO="5" bootUpSlave="false" layerSettingServiceSlave="true"/>
+				<CANopenMasterFeatures bootUpMaster="false" flyingMaster="false" SDOManager="false" configurationManager="false" layerSettingServiceMaster="true"/>
+				<deviceCommissioning nodeID="0" nodeName="" actualBaudRate="125" networkNumber="0" networkName="" CANopenManager="false"/>
+			</NetworkManagement>
+		</ProfileBody>
+	</ISO15745Profile>
+</ISO15745ProfileContainer>

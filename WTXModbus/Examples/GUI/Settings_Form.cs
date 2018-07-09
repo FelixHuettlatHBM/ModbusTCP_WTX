@@ -1,6 +1,6 @@
 ﻿/* @@@@ HOTTINGER BALDWIN MESSTECHNIK - DARMSTADT @@@@@
  * 
- * TCP/MODBUS Interface for WTX120 | 01/2018
+ * TCP/MODBUS Interface for WTX120_Modbus | 01/2018
  * 
  * Author : Felix Huettl 
  * 

@@ -1,0 +1,15 @@
+CANLib/bin
+CANLib/obj
+CANLib_Test/bin
+CANLib_Test/obj
+
+*/bin
+*/obj
+*/Results
+
+*bin
+*obj
+
+
+*.suo
+packages/

@@ -11,14 +11,16 @@ namespace HBM.WT.API.COMMON
 {
 
     public abstract class BaseWTDevice : IDeviceData
-    {/*
+    {
+        
+        /*
         private Action<IDeviceData> callback_obj;
 
         private ushort command;
 
         private string ipAddr;
 
-        private ModbusConnection ModbusConnObj;
+        private ModbusTCPConnection ModbusConnObj;
 
         protected INetConnection m_Connection;
 
@@ -29,6 +31,7 @@ namespace HBM.WT.API.COMMON
         private int timeoutMS;
         private bool inputModbusJet;
         */
+
         private INetConnection connection;
 
         //private INetCommunication<uint, JToken> commObj;
@@ -42,17 +45,15 @@ namespace HBM.WT.API.COMMON
 
             this.ipAddr = "172.19.103.8";
 
-            this.ModbusConnObj = new ModbusConnection(ipAddr);
+            this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
 */
             
-
-
-            //this.NetObj = new ModbusConnection(ipAddr);
+            //this.NetObj = new ModbusTCPConnection(ipAddr);
 
             /*
             if (inputModbusJet == true)
             { 
-                this.ModbusConnObj = new ModbusConnection(ipAddr);
+                this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
                 }
             else
                 if (inputModbusJet == false)
@@ -71,9 +72,6 @@ namespace HBM.WT.API.COMMON
             this.connection = connection;
         }
 
-        // Neu : 7.5.18
-
-
         public abstract event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 
         public abstract event Func<object, EventArgs, Task> Shutdown;
@@ -82,7 +80,7 @@ namespace HBM.WT.API.COMMON
 
         public abstract ushort[] getValuesAsync();        // Neu : 4.5 für eventbasierten asynchronen Abruf der Daten
 
-        public abstract ModbusConnection getConnection{ get;  }
+        public abstract ModbusTCPConnection getConnection{ get;  }
 
         public abstract void Connect();
         public abstract void Disconnect();

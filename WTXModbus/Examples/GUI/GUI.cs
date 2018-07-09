@@ -20,12 +20,12 @@ using HBM.WT.API.WTX.Modbus;
 namespace WTXModbusExamples
 {
     /// <summary>
-    /// First, objects of class 'ModbusConnection' and 'WTX120_Modbus' are created to establish a connection and data transfer to the device (WTX120_Modbus). 
-    /// Class 'ModbusConnection' has the purpose to establish a connection, to read from the device (its register)
+    /// First, objects of class 'ModbusTCPConnection' and 'WTX120_Modbus' are created to establish a connection and data transfer to the device (WTX120_Modbus). 
+    /// Class 'ModbusTCPConnection' has the purpose to establish a connection, to read from the device (its register)
     /// and to write to the device (its register). Class 'WTX120_Modbus' creates timer to read and update periodically the values of the WTX in a certain timer
     /// interval given in the constructor of class 'WTX120_Modbus' while generating an object of it. Class 'WTX120_Modbus' has all the values, 
     /// which will be interpreted from the read bytes and class 'WTX120_Modbus' manages the asynchronous data transfer to GUI and the eventbased data transfer #
-    /// to class ModbusConnection. 
+    /// to class ModbusTCPConnection. 
     ///  
     /// This class 'GUI' represents a window or a dialog box that makes up the application's user interface for the values and their description of the device.
     /// It uses a datagrid to put the description and the periodically updated values together. The description shown in the form and initialized in
@@ -34,7 +34,7 @@ namespace WTXModbusExamples
     /// 
     /// Beside a form the GUI could also be a console application by applying that in program.cs instead of a windows form (see on Git).
     /// Therefore the design of the classes and its relations are seperated in 
-    /// connection specific classes and interfaces (class ModbusConnection, interface "IModbusConnection")
+    /// connection specific classes and interfaces (class ModbusTCPConnection, interface "IModbusConnection")
     /// and in a device specific class and in a device specific interface (class "WTX120_Modbus", interface "IDevice_Values").
     ///  
     /// In the Windows form, there are several buttons to activate events for the output words, a menu bar on the top to start/stop the application, to save the values,
@@ -44,7 +44,7 @@ namespace WTXModbusExamples
     /// </summary>
     partial class GUI : Form
     {
-        private static ModbusConnection ModbusObj;
+        private static ModbusTCPConnection ModbusObj;
 
         private static HBM.WT.API.WTX.WTXModbus WTXObj;
 
@@ -91,7 +91,7 @@ namespace WTXModbusExamples
             else
                 this.timerInterval = 200; // Default value for the timer interval.
 
-            ModbusObj = new ModbusConnection(ipAddress);
+            ModbusObj = new ModbusTCPConnection(ipAddress);
             WTXObj = new HBM.WT.API.WTX.WTXModbus(ModbusObj, this.timerInterval);
 
             is_standard = true;      // change between standard and application mode in the GUI. 
@@ -516,7 +516,7 @@ namespace WTXModbusExamples
         }
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120_Modbus).
-        // The timer interval is set in the connection specific class "ModbusConnection".
+        // The timer interval is set in the connection specific class "ModbusTCPConnection".
         // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first. 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {           

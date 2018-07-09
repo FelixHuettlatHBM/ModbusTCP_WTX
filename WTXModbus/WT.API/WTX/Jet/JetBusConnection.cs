@@ -30,6 +30,7 @@ namespace HBM.WT.API.WTX.Jet
 
         #region constructors
 
+        // Constructor: Without ssh certification. 
         public JetBusConnection(string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMS = 5000) {
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, certificationCallback);
             m_Peer = new JetPeer(jetConnection);
@@ -38,7 +39,9 @@ namespace HBM.WT.API.WTX.Jet
             FetchAll();
         }
 
+        // Constructor: With ssh certification as a parameter (NetConnectionSecurity) . 
         public JetBusConnection(string ipAddr, RemoteCertificateValidationCallback certificationCallback, int timeoutMS = 5000) {
+
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             m_Peer = new JetPeer(jetConnection);
 

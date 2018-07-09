@@ -339,7 +339,7 @@ namespace HBM.WT.API.WTX
 
         public override BaseWTDevice getDeviceAbstract => throw new NotImplementedException();
 
-        public override ModbusConnection getConnection => throw new NotImplementedException();
+        public override ModbusTCPConnection getConnection => throw new NotImplementedException();
 
         public override IDeviceData DeviceValues => throw new NotImplementedException();
 

@@ -1,7 +1,7 @@
 ﻿using HBM.WT.API.COMMON;
 using System;
 
-namespace HBM.WT.API.WTX
+namespace HBM.WT.API  // Ohne WTX!!
 {
     /// <summary>
     /// Define the common communication-interface

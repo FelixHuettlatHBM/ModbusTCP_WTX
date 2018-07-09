@@ -37,7 +37,7 @@ namespace WTXModbusGUIsimple
     {
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
-        private static ModbusConnection ModbusObj;
+        private static ModbusTCPConnection ModbusObj;
         private static WTXModbus WTXObj;
         
         private String IPAddress;
@@ -98,7 +98,7 @@ namespace WTXModbusGUIsimple
         // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
-            ModbusObj = new ModbusConnection(this.IPAddress);
+            ModbusObj = new ModbusTCPConnection(this.IPAddress);
 
             WTXObj = new WTXModbus(ModbusObj, this.timerInterval);
             

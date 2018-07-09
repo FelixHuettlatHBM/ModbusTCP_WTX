@@ -1,4 +1,5 @@
 ﻿
+using HBM.WT.API;
 using HBM.WT.API.COMMON;
 using HBM.WT.API.WTX;
 using HBM.WT.API.WTX.Jet;
@@ -120,12 +121,12 @@ namespace WtConsole
 
                         ipAddr = args[1];
                         
-                        s_Connection = new ModbusConnection(ipAddr);
+                        s_Connection = new ModbusTCPConnection(ipAddr);
 
 
                         WTXObj = new HBM.WT.API.WTX.WTXModbus(s_Connection, 100);
 
-                        // Konstruktor neu : Obj. von ModbusConnection, Timer Intervall
+                        // Konstruktor neu : Obj. von ModbusTCPConnection, Timer Intervall
 
                         previous_data_str_arr = new string[59];
 

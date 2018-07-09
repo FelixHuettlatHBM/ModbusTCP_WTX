@@ -27,7 +27,7 @@ using HBM.WT.API.COMMON;
 namespace WTXModbus
 {
     /// <summary>
-    /// This class implements a console application instead of a windows form. An Object of the class 'ModbusConnection' and 'WTX120_Modbus' are initialized as a publisher
+    /// This class implements a console application instead of a windows form. An Object of the class 'ModbusTCPConnection' and 'WTX120_Modbus' are initialized as a publisher
     /// and subscriber. Afterwars a connection to the device is build and the timer/sending interval is set. 
     /// A timer with for example 500ms is created. After 500ms an event is triggered, which executes the method "OnTimedEvent" reading the register of the device
     /// by an asynchronous call in the method "WTXObj.Async_Call". As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
@@ -40,7 +40,7 @@ namespace WTXModbus
 
     static class Program
     {
-        private static ModbusConnection ModbusObj;
+        private static ModbusTCPConnection ModbusObj;
         private static HBM.WT.API.WTX.WTXModbus WTXObj;
         
         private static string ipAddress;     // IP-adress, set as the first argument in the VS project properties menu as an argument or in the console application as an input(which is commented out in the following) 
@@ -102,7 +102,7 @@ namespace WTXModbus
 
             do // do-while loop for the connection establishment. If the connection is established successfully, the do-while loop is left/exit. 
             {
-                ModbusObj = new ModbusConnection(ipAddress);
+                ModbusObj = new ModbusTCPConnection(ipAddress);
                 
                 WTXObj = new HBM.WT.API.WTX.WTXModbus(ModbusObj, timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
 

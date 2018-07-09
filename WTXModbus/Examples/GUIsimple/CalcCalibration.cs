@@ -134,7 +134,7 @@ namespace WTXModbusGUIsimple
         // Once the writing is finished, this method is called. So the handshake and status bits are updated if
         // the user is interested in the data transfer between application and WTX device. 
         // Updating the handshake and status bit here is not necessary, because the data transfer is done
-        // in class 'WTX120_Modbus' and 'ModbusConnection'. 
+        // in class 'WTX120_Modbus' and 'ModbusTCPConnection'. 
         // By this optional example it is also shown how data can be simply called in another way:
         // By 'obj.NetValue', 'obj.GrossValue' or 'obj.handshake'.
 

@@ -45,7 +45,7 @@ namespace HBM.WT.API.WTX
 
         private string ipAddr;
 
-        private ModbusConnection ModbusConnObj;
+        private ModbusTCPConnection ModbusConnObj;
 
         private INetConnection m_Connection;
 
@@ -109,7 +109,7 @@ namespace HBM.WT.API.WTX
 
             this.ipAddr = "172.19.103.8";
 
-            this.ModbusConnObj = new ModbusConnection(ipAddr);
+            this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
 
             this.previousData = new ushort[59];
             this.dataStr = new string[59];
@@ -146,7 +146,7 @@ namespace HBM.WT.API.WTX
 
             this.initialize_timer(paramTimerInterval);
          }
-        public override ModbusConnection getConnection
+        public override ModbusTCPConnection getConnection
         {
             get
             {

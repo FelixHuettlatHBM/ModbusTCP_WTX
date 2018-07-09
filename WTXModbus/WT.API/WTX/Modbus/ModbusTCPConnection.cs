@@ -1,6 +1,7 @@
 ﻿
 using HBM.WT.API.COMMON;
 using HBM.WT.API.WTX;
+
 using Modbus.Device;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace HBM.WT.API.WTX.Modbus
     /// The data exchange for reading a register between class "Modbus_TCP" and class "WTX_120" is event-based. 
     /// This class publishes the event (MessageEvent) and read the register, afterwards it will be sent back to WTX120. 
     /// </summary>
-    public class ModbusConnection : INetConnection    //IModbusConnection
+    public class ModbusTCPConnection : INetConnection    //IModbusConnection
     {
         private ModbusIpMaster master;
         private TcpClient client;
@@ -44,7 +45,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         public virtual event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent; // virtual new due to tesing - 3.5.2018
 
-        public ModbusConnection(string ipAddress)
+        public ModbusTCPConnection(string ipAddress)
         {
             this.connected = false;
             this.port = 502;

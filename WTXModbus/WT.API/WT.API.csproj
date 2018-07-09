@@ -69,11 +69,11 @@
     <Compile Include="IDeviceData.cs" />
     <Compile Include="WTX\INetConnection.cs" />
     <Compile Include="WTX\Jet\JetBusConnection.cs" />
-    <Compile Include="WTX\Modbus\ModbusConnection.cs" />
+    <Compile Include="WTX\Modbus\ModbusTCPConnection.cs" />
     <Compile Include="NetConnectionEventArgs.cs" />
     <Compile Include="NetConnectionSecurity.cs" />
-    <Compile Include="WTX\WTX120Jet.cs" />
-    <Compile Include="WTX\WTX120Modbus.cs" />
+    <Compile Include="WTX\WTXJet.cs" />
+    <Compile Include="WTX\WTXModbus.cs" />
     <Compile Include="BaseWTDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

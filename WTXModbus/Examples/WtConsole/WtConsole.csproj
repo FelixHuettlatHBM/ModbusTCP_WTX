@@ -53,7 +53,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WTXInterface\WT.API.csproj">
+    <ProjectReference Include="..\..\WT.API\WT.API.csproj">
       <Project>{3da03496-08a9-492e-bfc8-1ece852b20f0}</Project>
       <Name>WT.API</Name>
     </ProjectReference>

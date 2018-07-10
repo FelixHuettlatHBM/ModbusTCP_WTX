@@ -5,3 +5,4 @@ packages
 *.ide
 /WTXModbus/Examples/MyWTX
 WTXModbus/MyWTX.sln
+.axoCover

@@ -1,5 +1,5 @@
 ﻿
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 using HBM.WT.API.WTX.Modbus;
 using System;
 using System.Collections.Generic;
@@ -99,7 +99,6 @@ namespace HBM.WT.API.WTX
                 handlerTasks[i] = ((Func<object, EventArgs, Task>)invocationList[i])(this, EventArgs.Empty);
 
             await Task.WhenAll(handlerTasks);
-
 
         }
 

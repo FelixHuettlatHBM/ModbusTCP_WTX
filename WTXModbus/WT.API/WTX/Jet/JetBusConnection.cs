@@ -2,18 +2,18 @@
 using System.Text;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using Hbm.Devices.Jet;
 using System.Threading;
 using System.Net.Security;
-using HBM.WT.API.COMMON;
-using HBM.WT.API.WTX;
+using HBM.WT.API;
+using Hbm.Devices.Jet;
 
 namespace HBM.WT.API.WTX.Jet
 {
     /// <summary>
     /// Use this class du handle a connection over Ethernet.
     /// </summary>
-    public class JetBusConnection : INetConnection, IDisposable {
+    public class JetBusConnection : INetConnection, IDisposable
+    {
         #region member
         protected JetPeer m_Peer;
 
@@ -24,7 +24,9 @@ namespace HBM.WT.API.WTX.Jet
         private int m_TimeoutMS;
 
         public event EventHandler BusActivityDetection;
+        //public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent
         public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
+
 
         #endregion
 
@@ -95,7 +97,8 @@ namespace HBM.WT.API.WTX.Jet
             WaitOne(2);
         }
 
-        protected virtual void FetchAll() {
+        protected virtual void FetchAll()
+        {
             Matcher matcher = new Matcher();
             FetchId id;
             m_Peer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token) {

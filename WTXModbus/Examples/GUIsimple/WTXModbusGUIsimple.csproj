@@ -32,9 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="NModbus4">
       <HintPath>..\..\..\..\WeighingLibs\packages\NModbus4.3.0.0-alpha2\lib\net45\NModbus4.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 46937da769e79973f57ad3b8af24b2014b5ba707
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />

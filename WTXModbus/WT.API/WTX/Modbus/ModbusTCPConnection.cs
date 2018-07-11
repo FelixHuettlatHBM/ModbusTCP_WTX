@@ -1,5 +1,5 @@
 ﻿
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 using HBM.WT.API.WTX;
 
 using Modbus.Device;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HBM.WT.API.COMMON
+namespace HBM.WT.API
 {
     public enum EventArgType
     {

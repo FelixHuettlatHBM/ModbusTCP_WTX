@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using System.Globalization;
 
 using HBM.WT.API.WTX;
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 using HBM.WT.API.WTX.Modbus;
 
 namespace WTXModbusGUIsimple

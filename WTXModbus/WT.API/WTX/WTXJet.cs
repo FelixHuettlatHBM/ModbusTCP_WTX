@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 using HBM.WT.API.WTX.Modbus;
 
 namespace HBM.WT.API.WTX
@@ -107,9 +106,10 @@ namespace HBM.WT.API.WTX
 
         public override void UpdateEvent(object sender, NetConnectionEventArgs<ushort[]> e) { }
 
+        
         public override void Async_Call(ushort commandParam, Action<IDeviceData> callbackParam)
         {
-            throw new NotImplementedException();
+           throw new NotImplementedException();
         }
 
         public override void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)
@@ -134,17 +134,17 @@ namespace HBM.WT.API.WTX
 
         public override void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+           throw new NotImplementedException();
         }
 
         public override void WriteDoWork(object sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         
 
@@ -337,11 +337,13 @@ namespace HBM.WT.API.WTX
 
 
 
-        public override BaseWTDevice getDeviceAbstract => throw new NotImplementedException();
+        public override BaseWTDevice getDeviceAbstract { get; }
 
-        public override ModbusTCPConnection getConnection => throw new NotImplementedException();
 
-        public override IDeviceData DeviceValues => throw new NotImplementedException();
+        public override ModbusTCPConnection getConnection { get; }
+
+
+        public override IDeviceData DeviceValues { get; }
 
         public override string[] getDataStr
         {

@@ -1,4 +1,4 @@
-﻿using HBM.WT.API.COMMON;
+﻿using HBM.WT.API;
 using System;
 
 namespace HBM.WT.API  
@@ -6,7 +6,8 @@ namespace HBM.WT.API
     /// <summary>
     /// Define the common communication-interface
     /// </summary>
-    public interface INetConnection {
+    public interface INetConnection
+    {
 
         T Read<T>(object index);
 

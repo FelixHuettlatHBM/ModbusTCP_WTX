@@ -31,8 +31,8 @@ namespace HBM.WT.API.WTX.Modbus
 
         private ushort startAdress;
         private ushort numOfPoints;
-        private string iP_Address;
-        private int sending_interval;  // Timer1.Interval = Sending Interval 
+        private string iPAddress;
+        private int sendingInterval;  // Timer1.Interval = Sending Interval 
         private int port;
         private bool connected;    
 
@@ -47,11 +47,11 @@ namespace HBM.WT.API.WTX.Modbus
         {
             this.connected = false;
             this.port = 502;
-            this.iP_Address = ipAddress; //IP-address to establish a successful connection to the device
+            this.iPAddress = ipAddress; //IP-address to establish a successful connection to the device
 
             this.numOfPoints = 38;
             this.startAdress = 0;
-            sending_interval = 5;       // Timer1.Interval = Sending Interval 
+            sendingInterval = 5;       // Timer1.Interval = Sending Interval 
         }
 
         // Alternative : Without Generics 
@@ -109,7 +109,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         public virtual ushort[] ReadRegister()
         {
-            return (master.ReadHoldingRegisters(this.StartAdress, this.getNumOfPoints));
+            return (master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints));
         }
 
 
@@ -138,7 +138,7 @@ namespace HBM.WT.API.WTX.Modbus
         {
             try
             {
-                client = new TcpClient(this.iP_Address, this.port);
+                client = new TcpClient(this.iPAddress, this.port);
                 master = ModbusIpMaster.CreateIp(client);
                 this.connected = true;
             }
@@ -155,7 +155,7 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
 
-        public virtual ushort[] getDataRead
+        public virtual ushort[] getAllRegisters  // 11.7 - Umbennnen: getAllRegisters
         {
             get
             {
@@ -177,10 +177,10 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
         // Getter/Setter for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
-        public virtual string getIPAddress     // virtual neu 
+        public virtual string IPAddress     // virtual neu 
         {
-            get { return this.iP_Address; }
-            set { this.iP_Address = value; }
+            get { return this.iPAddress; }
+            set { this.iPAddress = value; }
         }
 
         public virtual ushort StartAdress   // virtual neu 
@@ -189,16 +189,16 @@ namespace HBM.WT.API.WTX.Modbus
             set { this.startAdress = value; }
         }
 
-        public virtual ushort getNumOfPoints    // virtual neu 
+        public virtual ushort NumOfPoints    // virtual neu 
         {
             get { return this.numOfPoints; }
             set { this.numOfPoints = value; }
         }
 
-        public virtual int Sending_interval // virtual neu 
+        public virtual int SendingInterval // virtual neu 
         {
-            get { return this.sending_interval; }
-            set { this.sending_interval = value; }
+            get { return this.sendingInterval; }
+            set { this.sendingInterval = value; }
         }
 
         public virtual int Port // virtual neu 
@@ -207,7 +207,7 @@ namespace HBM.WT.API.WTX.Modbus
             set { this.port = value; }
         }
 
-        public virtual bool is_connected
+        public virtual bool isConnected
         {
             get { return this.connected; }
         }

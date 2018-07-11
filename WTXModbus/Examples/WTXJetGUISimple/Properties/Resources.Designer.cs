@@ -45,53 +45,48 @@ namespace WTXJetGUISimple.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        ///   Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+        ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
-        internal static System.Drawing.Bitmap NE107_DiagnosisActive
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("NE107_DiagnosisActive", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap NE107_DiagnosisPassive
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("NE107_DiagnosisPassive", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap NE107_OutOfSpecification
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("NE107_OutOfSpecification", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-            /// <summary>
-            ///   Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-            ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
-            /// </summary>
-            [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NE107_DiagnosisActive {
+            get {
+                object obj = ResourceManager.GetObject("NE107_DiagnosisActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NE107_DiagnosisPassive {
+            get {
+                object obj = ResourceManager.GetObject("NE107_DiagnosisPassive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NE107_OutOfSpecification {
+            get {
+                object obj = ResourceManager.GetObject("NE107_OutOfSpecification", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

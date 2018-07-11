@@ -95,7 +95,7 @@ namespace WTXModbusExamples
             WTXObj = new HBM.WT.API.WTX.WTXModbus(ModbusObj, this.timerInterval);
 
             is_standard = true;      // change between standard and application mode in the GUI. 
-            ModbusObj.getIPAddress = ipAddress;
+            ModbusObj.IPAddress = ipAddress;
 
             this.dataStr = new string[59];
 
@@ -267,7 +267,7 @@ namespace WTXModbusExamples
             label1.Text = "Only for Standard application:";       // label for information : Only output words for standard application
             label2.Text = "Only for Filler application:";         // label for information : Only output words for filler application 
             toolStripStatusLabel5.Text = "38";
-            if (WTXObj.getConnection.is_connected == true)
+            if (WTXObj.getConnection.isConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
@@ -288,14 +288,14 @@ namespace WTXModbusExamples
         // For the connection status, IP address, application mode and number of inputs. 
         private void GUI_Load(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.is_connected == true)
+            if (WTXObj.getConnection.isConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
             toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getNumOfPoints; 
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.NumOfPoints; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -303,14 +303,14 @@ namespace WTXModbusExamples
         // "dataStr" array to actualize every element of the data grid in the standard or filler application. 
         public void refresh_values()
         {     
-            if (WTXObj.getConnection.is_connected == true)
+            if (WTXObj.getConnection.isConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
-            if (WTXObj.getConnection.is_connected == false)
+            if (WTXObj.getConnection.isConnected == false)
                 toolStripStatusLabel1.Text = "Disconnected";
             
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
             toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14];                 // index 14 refers to application mode of the Device
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
 
             //Changing the width of a column:
             /*foreach (DataGridViewTextBoxColumn c in dataGridView1.Columns)
@@ -771,7 +771,7 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            Set_obj = new SettingsForm(WTXObj.getConnection.getIPAddress, this.timer1.Interval, WTXObj.getConnection.getNumOfPoints, this);
+            Set_obj = new SettingsForm(WTXObj.getConnection.IPAddress, this.timer1.Interval, WTXObj.getConnection.NumOfPoints, this);
             Set_obj.Show();
         }
 
@@ -780,14 +780,14 @@ namespace WTXModbusExamples
         // After updating the values the tool bar labels on the bottom (f.e. "toolStripStatusLabel2") is rewritten with the new values. 
         public void setting()
         {
-            WTXObj.getConnection.getIPAddress = Set_obj.get_IP_address;
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.getIPAddress;
+            WTXObj.getConnection.IPAddress = Set_obj.get_IP_address;
+            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
 
-            WTXObj.getConnection.Sending_interval = Set_obj.get_sending_interval;     
+            WTXObj.getConnection.SendingInterval = Set_obj.get_sending_interval;     
             this.timer1.Interval = Set_obj.get_sending_interval;
 
-            WTXObj.getConnection.getNumOfPoints = Set_obj.get_number_inputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.getNumOfPoints;
+            WTXObj.getConnection.NumOfPoints = Set_obj.get_number_inputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.NumOfPoints;
         }
 
         // This method changes the GUI concerning the application mode.
@@ -822,7 +822,7 @@ namespace WTXModbusExamples
         {
             WTXObj.stopTimer();
 
-            CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.is_connected);
+            CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.isConnected);
             DialogResult res = CalcCalObj.ShowDialog();
 
             WTXObj.restartTimer();
@@ -836,7 +836,7 @@ namespace WTXModbusExamples
         {
             WTXObj.stopTimer();
 
-            WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.is_connected);
+            WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.isConnected);
             DialogResult res = WeightCalObj.ShowDialog();
 
             WTXObj.restartTimer();

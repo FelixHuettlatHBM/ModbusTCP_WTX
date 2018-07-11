@@ -134,7 +134,7 @@ namespace WtConsole
 
                         WTXObj.getConnection.Connect();
                         
-                        WTXObj.getConnection.Sending_interval = timer_interval;
+                        WTXObj.getConnection.SendingInterval = timer_interval;
 
                         //WTXObj.isDataReceived = false;
 
@@ -334,7 +334,7 @@ namespace WtConsole
 
             } else
             {
-                parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+                //parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
                
             }
 

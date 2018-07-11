@@ -110,7 +110,7 @@ namespace HBM.WT.API.WTX.Jet
                 // Wake up the waiting thread where call the konstruktor to connect the session
                 //
                 m_SuccessEvent.Set();
-                BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + m_TokenBuffer.Count));
+                BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + m_TokenBuffer.Count));  // erstmal rausnehmen 
             }, m_TimeoutMS);
             WaitOne(3);
         }

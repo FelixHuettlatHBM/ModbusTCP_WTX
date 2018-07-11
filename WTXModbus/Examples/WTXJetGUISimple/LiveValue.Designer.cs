@@ -93,6 +93,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = global::WTXJetGUISimple.Properties.Resources.NE107_DiagnosisPassive;
             this.pictureBox1.Location = new System.Drawing.Point(272, 107);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(50, 50);

@@ -276,7 +276,7 @@ namespace WTXGUISimple
             }
             else
             {
-                parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+                //parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
             }
 
 

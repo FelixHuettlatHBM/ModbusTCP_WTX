@@ -73,6 +73,15 @@ namespace WTXGUISimple
 
             // Setting the connection for jetbus: 
 
+            if (args.Length > 0)
+            {
+                if (args[0] == "modbus" || args[0] == "Modbus")
+                    toolStripStatusLabel2.Text = "Modbus";
+
+                if (args[0] == "jet" || args[0] == "Jet")
+                    toolStripStatusLabel2.Text = "Jetbus";
+            }
+
             timerInterval = 200;
 
             ipAddr = "wss://" + args[1];
@@ -318,6 +327,16 @@ namespace WTXGUISimple
         }
 
         private void LiveValue_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
         {
 
         }

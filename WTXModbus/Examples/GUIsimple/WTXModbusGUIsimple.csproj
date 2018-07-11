@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NModbus4, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\WeighingLibs\packages\NModbus4.3.0.0-alpha2\lib\net45\NModbus4.dll</HintPath>
+    <Reference Include="NModbus4">
+      <HintPath>..\..\..\..\WeighingLibs\packages\NModbus4.3.0.0-alpha2\lib\net45\NModbus4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -114,7 +113,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WTXInterface\WT.API.csproj">
+    <ProjectReference Include="..\..\WT.API\WT.API.csproj">
       <Project>{3da03496-08a9-492e-bfc8-1ece852b20f0}</Project>
       <Name>WT.API</Name>
     </ProjectReference>

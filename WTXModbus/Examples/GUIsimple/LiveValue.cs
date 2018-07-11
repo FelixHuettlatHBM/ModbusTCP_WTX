@@ -18,8 +18,8 @@ using System.Windows.Forms;
 using System.Globalization;
 
 using HBM.WT.API.WTX;
-using HBM.WT.API.COMMON;
 using HBM.WT.API.WTX.Modbus;
+using HBM.WT.API;
 
 namespace WTXModbusGUIsimple
 {
@@ -37,7 +37,7 @@ namespace WTXModbusGUIsimple
     {
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
-        private static ModbusConnection ModbusObj;
+        private static ModbusTCPConnection ModbusObj;
         private static WTXModbus WTXObj;
         
         private String IPAddress;
@@ -72,16 +72,23 @@ namespace WTXModbusGUIsimple
             this.IPAddress = "172.19.103.8"; ; // Default Setting
             this.timerInterval = 500;          // Default setting
 
-
             if (args.Length > 0)
             {
-                this.IPAddress = args[0];                
-                textBox1.Text  = args[0];
-            }
+                if (args[0] == "modbus" || args[0] == "Modbus")
+                    toolStripLabel4.Text = "Modbus";
 
+                if (args[0] == "jet" || args[0] == "Jet")
+                    toolStripLabel4.Text = "Jetbus";
+            }
             if (args.Length > 1)
             {
-                this.timerInterval = Convert.ToInt32(args[1]);
+                this.IPAddress = args[1];                
+                textBox1.Text  = args[1];
+            }
+
+            if (args.Length > 2)
+            {
+                this.timerInterval = Convert.ToInt32(args[2]);
             }
             else
                 this.timerInterval = 200; // Default value for the timer interval. 
@@ -98,11 +105,11 @@ namespace WTXModbusGUIsimple
         // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
-            ModbusObj = new ModbusConnection(this.IPAddress);
+            ModbusObj = new ModbusTCPConnection(this.IPAddress);
 
             WTXObj = new WTXModbus(ModbusObj, this.timerInterval);
             
-            WTXObj.getConnection.getNumOfPoints = 6;
+            WTXObj.getConnection.NumOfPoints = 6;
             
             WTXObj.DataUpdateEvent += ValuesOnConsole;
 
@@ -126,23 +133,23 @@ namespace WTXModbusGUIsimple
                 Update();
 
                 string tempIpAddress = textBox1.Text;
-                WTXObj.getConnection.getIPAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
+                WTXObj.getConnection.IPAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
 
                 // The connection to the device should be established.   
                 WTXObj.Connect();                                 // Alternative : WTX_obj.getConnection.Connect();  Equal to : ModbusObj.Connect();
 
-                if (WTXObj.getConnection.is_connected)
+                if (WTXObj.getConnection.isConnected)
                 {
                     WTXObj.restartTimer();
                     IPAddress = tempIpAddress;
                     this.toolStripLabel1.Text = "connected";
                     RenameButtonGrossNet();
-                    WTXObj.getConnection.Sending_interval = this.timerInterval;
+                    WTXObj.getConnection.SendingInterval = this.timerInterval;
 
                 }
                 else
                 {
-                    WTXObj.getConnection.getIPAddress = this.IPAddress;
+                    WTXObj.getConnection.IPAddress = this.IPAddress;
 
                     WTXObj.stopTimer();
                     
@@ -212,7 +219,7 @@ namespace WTXModbusGUIsimple
         // Button Tare
         private void button2_Click(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.is_connected)
+            if (WTXObj.getConnection.isConnected)
             {
                 RenameButtonGrossNet();
                 WTXObj.Async_Call(0x1, WriteDataReceived);
@@ -230,7 +237,7 @@ namespace WTXModbusGUIsimple
         // Button Zero
         private void button3_Click(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.is_connected)
+            if (WTXObj.getConnection.isConnected)
             { 
                 WTXObj.Async_Call(0x40, WriteDataReceived);
             }
@@ -246,7 +253,7 @@ namespace WTXModbusGUIsimple
         // Button Gross/Net
         private void button4_Click(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.is_connected)
+            if (WTXObj.getConnection.isConnected)
             {
                 WTXObj.Async_Call(0x2, WriteDataReceived);
                 RenameButtonGrossNet();
@@ -300,7 +307,7 @@ namespace WTXModbusGUIsimple
         {
             WTXObj.stopTimer();
 
-            CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.is_connected);
+            CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.isConnected);
             DialogResult res = CalcCalObj.ShowDialog();
 
             WTXObj.restartTimer();
@@ -312,7 +319,7 @@ namespace WTXModbusGUIsimple
         {
             WTXObj.stopTimer();
 
-            WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.is_connected);
+            WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.isConnected);
             DialogResult res = WeightCalObj.ShowDialog();
 
             WTXObj.restartTimer();
@@ -340,6 +347,11 @@ namespace WTXModbusGUIsimple
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripLabel4_Click(object sender, EventArgs e)
         {
 
         }

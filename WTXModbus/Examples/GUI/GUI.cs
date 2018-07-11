@@ -76,17 +76,26 @@ namespace WTXModbusExamples
 
             this.args = argsParam;
 
-            //Get IPAddress and the timer interval from the command line of the VS project arguments (at "Debug").
-            if (this.args.Length > 0)
+            if (args.Length > 0)
             {
-                this.ipAddress = this.args[0];
+                if (args[0] == "modbus" || args[0] == "Modbus")
+                    toolStripStatusLabel6.Text = "Modbus";
+
+                if (args[0] == "jet" || args[0] == "Jet")
+                    toolStripStatusLabel6.Text = "Jetbus";
+            }
+
+            //Get IPAddress and the timer interval from the command line of the VS project arguments (at "Debug").
+            if (this.args.Length > 1)
+            {
+                this.ipAddress = this.args[1];
             }
             else
                 MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau.");
 
-            if (this.args.Length > 1)
+            if (this.args.Length > 2)
             {
-                this.timerInterval = Convert.ToInt32(args[1]);
+                this.timerInterval = Convert.ToInt32(args[2]);
             }
             else
                 this.timerInterval = 200; // Default value for the timer interval.
@@ -901,5 +910,9 @@ namespace WTXModbusExamples
 
         }
 
+        private void toolStripStatusLabel6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

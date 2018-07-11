@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using System.Globalization;
 
 using HBM.WT.API.WTX;
-using HBM.WT.API;
+using HBM.WT.API.COMMON;
 using HBM.WT.API.WTX.Modbus;
 
 namespace WTXModbusGUIsimple
@@ -37,7 +37,7 @@ namespace WTXModbusGUIsimple
     {
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
-        private static ModbusTCPConnection ModbusObj;
+        private static ModbusConnection ModbusObj;
         private static WTXModbus WTXObj;
         
         private String IPAddress;
@@ -98,7 +98,7 @@ namespace WTXModbusGUIsimple
         // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
-            ModbusObj = new ModbusTCPConnection(this.IPAddress);
+            ModbusObj = new ModbusConnection(this.IPAddress);
 
             WTXObj = new WTXModbus(ModbusObj, this.timerInterval);
             

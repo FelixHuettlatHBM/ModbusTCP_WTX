@@ -255,7 +255,7 @@ namespace HBM.WT.API.WTX.Jet
         }
         #endregion
 
-        public void ResetDevice() {
+        public void DisconnectDevice() {
             throw new NotImplementedException();
         }
 
@@ -295,6 +295,16 @@ namespace HBM.WT.API.WTX.Jet
             Dispose(true);
             // uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
+        }
+
+        public void WriteArray2Reg(ushort index, ushort[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteWord2Reg(ushort index, ushort data)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

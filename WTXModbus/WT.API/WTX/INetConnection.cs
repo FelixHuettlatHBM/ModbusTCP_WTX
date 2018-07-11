@@ -13,11 +13,15 @@ namespace HBM.WT.API
 
         void Write<T>(object index, T data);
 
+        void WriteArray2Reg(ushort index, ushort[] data);
+
+        void WriteWord2Reg(ushort index, ushort data);
+
         event EventHandler BusActivityDetection;
 
         event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
 
-        void ResetDevice();
+        void DisconnectDevice();
     }
 
     /// <summary>

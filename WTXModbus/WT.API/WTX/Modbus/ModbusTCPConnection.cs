@@ -58,14 +58,14 @@ namespace HBM.WT.API.WTX.Modbus
 
         // This method is called from the device class "WTX120" and calls the method ReadRegisterPublishing(e:MessageEvent)
         // to create a new MessageEvent to read the register of the device. 
-        /*
-         * public void ReadRegister()
+        
+        public void ReadRegister()
         {
             if (this.connected == true)
-                this.ReadRegisterPublishing(new MessageEvent(this.data));
+                this.ReadRegisterPublishing(new NetConnectionEventArgs<ushort[]>(EventArgType.Data, this.data));
         }
-        */
         
+        /*
         public T Read<T>(object index)
         {
             if (this.connected == true)
@@ -74,6 +74,7 @@ namespace HBM.WT.API.WTX.Modbus
             return (T)Convert.ChangeType(0, typeof(T));
 
         }
+        */
 
         // This method publishes the event (MessageEvent) and read the register, afterwards the message(from the register) will be sent back to WTX120.  
         // This method is declared as a virtual method to allow derived class to override the event call.
@@ -86,7 +87,7 @@ namespace HBM.WT.API.WTX.Modbus
                 // Read the data: e.Message's type - ushort[]  
                 //e.Args = masterParam.ReadHoldingRegisters(this.StartAdress, this.getNumOfPoints);
 
-                e.Args = this.ReadRegister();
+                e.Args = master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints);
                 this.connected = true;
                 }
                 catch (System.ArgumentException)
@@ -104,17 +105,6 @@ namespace HBM.WT.API.WTX.Modbus
                 //this.data = e.Message;
                 this.data = e.Args;
 
-                this.SendRegisterPublishing(e);      
-        }
-
-        public virtual ushort[] ReadRegister()
-        {
-            return (master.ReadHoldingRegisters(this.StartAdress, this.NumOfPoints));
-        }
-
-
-        public void SendRegisterPublishing(NetConnectionEventArgs<ushort[]> e)
-        {
             // copy of the event to avoid that a race condition is prevented, if the former subscriber directly logs off after the last
             // condition( and after if(handler!=null) ) and before the event is triggered. 
 
@@ -149,13 +139,13 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
         // This method closes the connection to the device.
-        public void ResetDevice()
+        public void DisconnectDevice()
         {
             client.Close();
         }
 
 
-        public virtual ushort[] getAllRegisters  // 11.7 - Umbennnen: getAllRegisters
+        public virtual ushort[] getAllRegisters  
         {
             get
             {
@@ -163,45 +153,42 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-        public void Write(ushort index, ushort[] data)
+        public void WriteArray2Reg(ushort index, ushort[] data)
         {
             this.master.WriteMultipleRegisters(index, data);
         }
 
-        public void Write<T>(object index, T data)
+        public void WriteWord2Reg(ushort index, ushort data)
         {
-            ushort dataTransformed = (ushort)Convert.ToInt16(data);
-            ushort indexUShort = (ushort)Convert.ToInt16(index);
-
-            this.master.WriteSingleRegister(indexUShort, dataTransformed);
+            this.master.WriteSingleRegister(index, data);
         }
 
         // Getter/Setter for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
-        public virtual string IPAddress     // virtual neu 
+        public virtual string IPAddress    
         {
             get { return this.iPAddress; }
             set { this.iPAddress = value; }
         }
 
-        public virtual ushort StartAdress   // virtual neu 
+        public virtual ushort StartAdress  
         {
             get { return this.startAdress; }
             set { this.startAdress = value; }
         }
 
-        public virtual ushort NumOfPoints    // virtual neu 
+        public virtual ushort NumOfPoints  
         {
             get { return this.numOfPoints; }
             set { this.numOfPoints = value; }
         }
 
-        public virtual int SendingInterval // virtual neu 
+        public virtual int SendingInterval 
         {
             get { return this.sendingInterval; }
             set { this.sendingInterval = value; }
         }
 
-        public virtual int Port // virtual neu 
+        public virtual int Port 
         {
             get { return this.port; }
             set { this.port = value; }
@@ -210,6 +197,16 @@ namespace HBM.WT.API.WTX.Modbus
         public virtual bool isConnected
         {
             get { return this.connected; }
+        }
+
+        // Only for the purpose to fulfill the methods from the interface 'INetConnection', which are implemented by 'JetbusConnection'. 
+        public T Read<T>(object index)
+        {
+            throw new NotImplementedException();
+        }
+        public void Write<T>(object index, T data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

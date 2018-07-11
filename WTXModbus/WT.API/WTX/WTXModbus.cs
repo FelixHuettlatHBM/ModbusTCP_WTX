@@ -157,7 +157,7 @@ namespace HBM.WT.API.WTX
         // To terminate,break, a connection to the WTX device via class WTX120_Modbus.
         public override void Disconnect()
         {
-            this.ModbusConnObj.ResetDevice();
+            this.ModbusConnObj.DisconnectDevice();
         }
 
         public override void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
@@ -196,7 +196,7 @@ namespace HBM.WT.API.WTX
             this.callback_obj = callbackParam;
 
             if (this.command == 0x00)
-                this.ModbusConnObj.Read<ushort>(0);
+                this.ModbusConnObj.ReadRegister();
 
             else
             {
@@ -206,7 +206,7 @@ namespace HBM.WT.API.WTX
                 while (this.handshake == 0)
                 {
                     Thread.Sleep(100);
-                    this.ModbusConnObj.Read<ushort>(0);
+                    this.ModbusConnObj.ReadRegister();
                     //this.JetConnObj.Read();
                 }
 
@@ -219,7 +219,7 @@ namespace HBM.WT.API.WTX
                 while (/*this.status == 1 &&*/ this.handshake == 1)
                 {
                     Thread.Sleep(100);
-                    this.ModbusConnObj.Read<ushort>(0);
+                    this.ModbusConnObj.ReadRegister();
                     //this.JetConnObj.Read();
                 }
             }
@@ -238,7 +238,7 @@ namespace HBM.WT.API.WTX
         // @return: IDevice_Values - Interface, that contains all values for the device. 
         public override IDeviceData asyncReadData(BackgroundWorker worker)
         {
-            this.ModbusConnObj.Read<ushort>(0);
+            this.ModbusConnObj.ReadRegister();
 
             return this;
         }
@@ -246,7 +246,7 @@ namespace HBM.WT.API.WTX
         // Neu : 8.3.2018
         public override IDeviceData syncReadData()
         {
-            this.ModbusConnObj.Read<ushort>(0);
+            this.ModbusConnObj.ReadRegister();
             //this.JetConnObj.Read();
 
             return this;

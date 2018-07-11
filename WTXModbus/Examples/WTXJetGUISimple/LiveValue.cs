@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Timers;
 
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 using HBM.WT.API.WTX;
 using WTXJetGUISimple.Properties;
 using HBM.WT.API.WTX.Jet;
@@ -233,7 +233,7 @@ namespace WTXGUISimple
 
         private static int ShowProperties(string[] args)
         {
-            HBM.WT.API.COMMON.BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
 
             //HBM.WT.API.COMMON.BaseWTDevice parameter = new Hbm.Wt.WTXInterface.WTX120_Jet.WTX120_Jet(s_Connection, 100);
             // Before : //Hbm.Wt.WTXInterface.DeviceAbstract parameter = new Hbm.Wt.WTXInterface.WTX120_Jet.WTX120_Jet(s_Connection,100);
@@ -267,7 +267,7 @@ namespace WTXGUISimple
 
         private static int TestDeviceLayer(string[] arg)
         {
-            HBM.WT.API.COMMON.BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
 
             if (true)
             {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HBM.WT.API.COMMON
+namespace HBM.WT.API
 {
     /// <summary>
     /// This is the interface for the values of the device. For example for the device WTX120. 

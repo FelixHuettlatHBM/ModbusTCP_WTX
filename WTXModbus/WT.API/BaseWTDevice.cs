@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace HBM.WT.API.COMMON
+namespace HBM.WT.API
 {
 
     public abstract class BaseWTDevice : IDeviceData

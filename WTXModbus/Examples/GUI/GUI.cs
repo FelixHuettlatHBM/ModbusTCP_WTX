@@ -14,7 +14,7 @@ using System.Threading;
 using System.ComponentModel;
 
 using HBM.WT.API.WTX;
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 using HBM.WT.API.WTX.Modbus;
 
 namespace WTXModbusExamples

@@ -2,7 +2,7 @@
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-namespace HBM.WT.API.COMMON
+namespace HBM.WT.API
 {
     public class NetConnectionSecurity
     {

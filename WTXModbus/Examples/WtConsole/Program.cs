@@ -1,7 +1,5 @@
 ﻿
 using HBM.WT.API;
-using HBM.WT.API.COMMON;
-using HBM.WT.API.WTX;
 using HBM.WT.API.WTX.Jet;
 using HBM.WT.API.WTX.Modbus;
 
@@ -20,7 +18,7 @@ namespace WtConsole
 {
     class Program
     {
-        private static HBM.WT.API.COMMON.BaseWTDevice WTXObj;
+        private static BaseWTDevice WTXObj;
 
         private static System.Timers.Timer aTimer;
         private static String ipAddr;
@@ -302,7 +300,7 @@ namespace WtConsole
 
         private static int ShowProperties (string[] args) {
 
-            HBM.WT.API.COMMON.BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
 
             Type type = parameter.GetType();
 
@@ -328,13 +326,15 @@ namespace WtConsole
             //Hbm.Wt.WTXInterface.WTX120_Jet.ParameterProperty parameter = 
             //    new Hbm.Wt.WTXInterface.WTX120_Jet.ParameterProperty(s_Connection);
 
-            HBM.WT.API.COMMON.BaseWTDevice parameter;
+            BaseWTDevice parameter;
 
-            if (true) {
+            if (true)
+            {
 
                 parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
 
-            } else {
+            } else
+            {
                 parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
                
             }

@@ -21,7 +21,7 @@ using System.Globalization;
 
 using HBM.WT.API.WTX.Modbus;
 using HBM.WT.API.WTX;
-using HBM.WT.API.COMMON;
+using HBM.WT.API;
 
 
 namespace WTXModbus

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using Hbm.Devices.Jet;
 using Newtonsoft.Json.Linq;
-using System.Threading;
+using System;
+using System.Collections.Generic;
 using System.Net.Security;
-using HBM.WT.API;
-using Hbm.Devices.Jet;
+using System.Text;
+using System.Threading;
 
 namespace HBM.WT.API.WTX.Jet
 {
@@ -15,13 +14,13 @@ namespace HBM.WT.API.WTX.Jet
     public class JetBusConnection : INetConnection, IDisposable
     {
         #region member
-        protected JetPeer m_Peer;
+        protected JetPeer MPeer;
 
-        private Dictionary<string, JToken> m_TokenBuffer = new Dictionary<string, JToken>();
+        private Dictionary<string, JToken> _mTokenBuffer = new Dictionary<string, JToken>();
 
-        private AutoResetEvent m_SuccessEvent = new AutoResetEvent(false);
-        private Exception m_Exception = null;
-        private int m_TimeoutMS;
+        private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
+        private Exception _mException = null;
+        private int _mTimeoutMs;
 
         public event EventHandler BusActivityDetection;
         //public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent
@@ -33,42 +32,42 @@ namespace HBM.WT.API.WTX.Jet
         #region constructors
 
         // Constructor: Without ssh certification. 
-        public JetBusConnection(string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMS = 5000) {
+        public JetBusConnection(string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) {
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, certificationCallback);
-            m_Peer = new JetPeer(jetConnection);
+            MPeer = new JetPeer(jetConnection);
 
-            ConnectOnPeer(user, passwd, timeoutMS);
+            ConnectOnPeer(user, passwd, timeoutMs);
             FetchAll();
         }
 
         // Constructor: With ssh certification as a parameter (NetConnectionSecurity) . 
-        public JetBusConnection(string ipAddr, RemoteCertificateValidationCallback certificationCallback, int timeoutMS = 5000) {
+        public JetBusConnection(string ipAddr, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) {
 
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
-            m_Peer = new JetPeer(jetConnection);
+            MPeer = new JetPeer(jetConnection);
 
-            ConnectOnPeer(timeoutMS);
+            ConnectOnPeer(timeoutMs);
             FetchAll();
         }
 
-        public JetBusConnection(string ipAddr, string user, string passwd, int timeoutMS = 5000) 
-            : this(ipAddr, user, passwd, NetConnectionSecurity.RemoteCertificationCheck, timeoutMS){ }
+        public JetBusConnection(string ipAddr, string user, string passwd, int timeoutMs = 5000) 
+            : this(ipAddr, user, passwd, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs){ }
 
-        public JetBusConnection(string ipAddr, int timeoutMS = 5000) 
-            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMS) { }
+        public JetBusConnection(string ipAddr, int timeoutMs = 5000) 
+            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs) { }
 
         #endregion
 
         #region support functions
 
-        protected virtual void ConnectOnPeer(int timeoutMS = 5000) {
-            m_Peer.Connect(delegate (bool connected) {
+        protected virtual void ConnectOnPeer(int timeoutMs = 5000) {
+            MPeer.Connect(delegate (bool connected) {
                 if (!connected) {
-                    m_Exception = new Exception("Connection failed.");
+                    _mException = new Exception("Connection failed.");
                 }
-                m_SuccessEvent.Set();
-            }, timeoutMS);
-            m_TimeoutMS = timeoutMS;
+                _mSuccessEvent.Set();
+            }, timeoutMs);
+            _mTimeoutMs = timeoutMs;
 
             // 
             // Das WaitOne und der Timeout bezieht sich auf die gesamte Routine einschließlich aller
@@ -77,23 +76,23 @@ namespace HBM.WT.API.WTX.Jet
             WaitOne();
         }
 
-        protected virtual void ConnectOnPeer(string user, string passwd, int timeoutMS = 5000) {
-            m_Peer.Connect(delegate (bool connected) {
+        protected virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000) {
+            MPeer.Connect(delegate (bool connected) {
                 if (connected) {
-                    m_Peer.Authenticate(user, passwd, delegate (bool success, JToken token) {
+                    MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {
                         if (!success) {
                             JetBusException exception = new JetBusException(token);
-                            m_Exception = new InterfaceException(exception, (uint)exception.Error);
+                            _mException = new InterfaceException(exception, (uint)exception.Error);
                         }
-                        m_SuccessEvent.Set();
-                    }, m_TimeoutMS);
+                        _mSuccessEvent.Set();
+                    }, _mTimeoutMs);
                 }
                 else {
-                    m_Exception = new Exception("Connection failed");
-                    m_SuccessEvent.Set();
+                    _mException = new Exception("Connection failed");
+                    _mSuccessEvent.Set();
                 }
-            }, timeoutMS);
-            m_TimeoutMS = timeoutMS;
+            }, timeoutMs);
+            _mTimeoutMs = timeoutMs;
             WaitOne(2);
         }
 
@@ -101,30 +100,30 @@ namespace HBM.WT.API.WTX.Jet
         {
             Matcher matcher = new Matcher();
             FetchId id;
-            m_Peer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token) {
+            MPeer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token) {
                 if (!success) {
                     JetBusException exception = new JetBusException(token);
-                    m_Exception = new InterfaceException(exception, (uint)exception.Error);
+                    _mException = new InterfaceException(exception, (uint)exception.Error);
                 }
                 //
                 // Wake up the waiting thread where call the konstruktor to connect the session
                 //
-                m_SuccessEvent.Set();
-                BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + m_TokenBuffer.Count));  // erstmal rausnehmen 
-            }, m_TimeoutMS);
+                _mSuccessEvent.Set();
+                BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));  // erstmal rausnehmen 
+            }, _mTimeoutMs);
             WaitOne(3);
         }
 
         protected virtual void WaitOne(int timeoutMultiplier = 1) {
-            if (!m_SuccessEvent.WaitOne(m_TimeoutMS * timeoutMultiplier)) {
+            if (!_mSuccessEvent.WaitOne(_mTimeoutMs * timeoutMultiplier)) {
                 //
                 // Timeout-Exception
                 //
                 throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
             }
-            if (m_Exception != null) {
-                Exception exception = m_Exception;
-                m_Exception = null;
+            if (_mException != null) {
+                Exception exception = _mException;
+                _mException = null;
                 throw exception;
             }
         }
@@ -139,12 +138,12 @@ namespace HBM.WT.API.WTX.Jet
         /// <param name="data"></param>
         protected virtual void OnFetchData(JToken data) {
             string path = data["path"].ToString();
-            lock (m_TokenBuffer) {
+            lock (_mTokenBuffer) {
                 switch (data["event"].ToString()) {
-                    case "add": m_TokenBuffer.Add(path, data["value"]); break;
-                    case "fetch": m_TokenBuffer[path] = data["value"]; break;
+                    case "add": _mTokenBuffer.Add(path, data["value"]); break;
+                    case "fetch": _mTokenBuffer[path] = data["value"]; break;
                     case "change":
-                        m_TokenBuffer[path] = data["value"];
+                        _mTokenBuffer[path] = data["value"];
                         break;
                 }
                 BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, data.ToString()));
@@ -162,9 +161,9 @@ namespace HBM.WT.API.WTX.Jet
         /// <param name="index"></param>
         /// <returns></returns>
         protected virtual JToken ReadObj(object index) {
-            lock (m_TokenBuffer) {
-                if (m_TokenBuffer.ContainsKey(index.ToString())) {
-                    return m_TokenBuffer[index.ToString()];
+            lock (_mTokenBuffer) {
+                if (_mTokenBuffer.ContainsKey(index.ToString())) {
+                    return _mTokenBuffer[index.ToString()];
                 }
                 else {
                     throw new InterfaceException(
@@ -188,7 +187,7 @@ namespace HBM.WT.API.WTX.Jet
             SetData(index, jValue);
         }
 
-        public int ReadINT(object index) {
+        public int ReadInt(object index) {
             try {
                 return Convert.ToInt32(ReadObj(index));
             }
@@ -197,7 +196,7 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public long ReadDINT(object index) {
+        public long ReadDint(object index) {
             try {
                 return Convert.ToInt64(ReadObj(index));
             }
@@ -206,7 +205,7 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public string ReadASC(object index) {
+        public string ReadAsc(object index) {
             return ReadObj(index).ToString();
         }
 
@@ -225,14 +224,14 @@ namespace HBM.WT.API.WTX.Jet
             // will be calling the JetPeer.Set(...) to change the foreign object.
             //
             try {
-                JObject request = m_Peer.Set(path.ToString(), value, delegate (bool success, JToken token) {
+                JObject request = MPeer.Set(path.ToString(), value, delegate (bool success, JToken token) {
                     if (!success) {
                         JetBusException exception = new JetBusException(token);
-                        m_Exception = new InterfaceException(exception, (uint)exception.Error);
+                        _mException = new InterfaceException(exception, (uint)exception.Error);
                     }
-                    m_SuccessEvent.Set();
+                    _mSuccessEvent.Set();
                     BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Set data: " + success));
-                }, m_TimeoutMS);
+                }, _mTimeoutMs);
             }
             catch (Exception e) {
                 throw new InterfaceException(e, 0x01);
@@ -240,16 +239,16 @@ namespace HBM.WT.API.WTX.Jet
             WaitOne();
         }
 
-        public void WriteINT(object index, int data) {
+        public void WriteInt(object index, int data) {
             JValue value = new JValue(data);
             SetData(index, value);
         }
 
-        public void WriteDINT(object index, long data) {
+        public void WriteDint(object index, long data) {
             JValue value = new JValue(data);
             SetData(index, value);
         }
-        public void WriteASC(object index, string data) {
+        public void WriteAsc(object index, string data) {
             JValue value = new JValue(data);
             SetData(index, value);
         }
@@ -261,9 +260,9 @@ namespace HBM.WT.API.WTX.Jet
 
         public string BufferToString() {
             StringBuilder sb = new StringBuilder();
-            lock (m_TokenBuffer) {
+            lock (_mTokenBuffer) {
                 int i = 0;
-                foreach (var item in m_TokenBuffer) {
+                foreach (var item in _mTokenBuffer) {
                     sb.Append(i.ToString("D3")).Append(" # ").Append(item).Append("\r\n");
                     i++;
                 }
@@ -272,20 +271,20 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         public void Disconnect() {
-            m_Peer.Disconnect();
+            MPeer.Disconnect();
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing) {
-            if (!disposedValue) { 
+            if (!_disposedValue) { 
                 if (disposing) {
                     // dispose managed state (managed objects).
-                    m_SuccessEvent.Close();
-                    m_SuccessEvent.Dispose();
+                    _mSuccessEvent.Close();
+                    _mSuccessEvent.Dispose();
                 }
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
@@ -311,19 +310,19 @@ namespace HBM.WT.API.WTX.Jet
 
     public class JetBusException : Exception
     {
-        private int m_Error;
-        private string m_Message;
+        private int _mError;
+        private string _mMessage;
 
         public JetBusException(JToken token) {
-            m_Error = int.Parse(token["error"]["code"].ToString());
-            m_Message = token["error"]["message"].ToString();
+            _mError = int.Parse(token["error"]["code"].ToString());
+            _mMessage = token["error"]["message"].ToString();
         }
 
-        public int Error { get { return m_Error; } }
+        public int Error { get { return _mError; } }
 
         public override string Message {
             get {
-                return m_Message + " [ 0x" + m_Error.ToString("X") + " ]";
+                return _mMessage + " [ 0x" + _mError.ToString("X") + " ]";
             }
         }
     }

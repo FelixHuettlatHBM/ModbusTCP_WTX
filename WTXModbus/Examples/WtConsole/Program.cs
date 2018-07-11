@@ -18,19 +18,19 @@ namespace WtConsole
 {
     class Program
     {
-        private static BaseWTDevice WTXObj;
+        private static BaseWtDevice _wtxObj;
 
-        private static String ipAddr;
-        private static int timer_interval;
-        private static bool compare_test;
-        private static string[] previous_data_str_arr;
+        private static String _ipAddr;
+        private static int _timerInterval;
+        private static bool _compareTest;
+        private static string[] _previousDataStrArr;
 
-        private static ConsoleKeyInfo value_exitapplication;
+        private static ConsoleKeyInfo _valueExitapplication;
 
-        private static string previousNetValue;
+        private static string _previousNetValue;
         //private static string[] data_str_arr;
 
-        static string MENU_REQUEST = "folow instructions: \n \r"
+        static string _menuRequest = "folow instructions: \n \r"
             + "<read> <parameter> \n"
             + "<write> <parameter> <value> \n"
             + "<test> \n"
@@ -38,20 +38,20 @@ namespace WtConsole
             + "<quit> \n";
 
         delegate int SelectFunktion(string[] args);
-        static Dictionary<string, SelectFunktion> FUNKTON_SELECT = new Dictionary<string, SelectFunktion> {
+        static Dictionary<string, SelectFunktion> _funktonSelect = new Dictionary<string, SelectFunktion> {
             { "read", ReadParameter },
             { "write", WriteParameter },
             { "show" , ShowProperties },
             { "test" , TestDeviceLayer },
         };
 
-        static INetConnection s_Connection;
+        static INetConnection _sConnection;
         
         static void Main(string[] args) {
 
-            previousNetValue = "";
-            timer_interval = 500;
-            compare_test = true;
+            _previousNetValue = "";
+            _timerInterval = 500;
+            _compareTest = true;
 
             Thread thread1 = new Thread(new ThreadStart(InputOutput));
 
@@ -85,24 +85,24 @@ namespace WtConsole
                         */
                     case "-jet":
 
-                        ipAddr = "wss://" + args[1];
-                        Console.Write("Initialize Jet-Peer to address " + ipAddr + "...");
+                        _ipAddr = "wss://" + args[1];
+                        Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
 
-                        s_Connection = new JetBusConnection(ipAddr, "Administrator", "wtx", delegate { return true; });
+                        _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
 
                         Console.WriteLine("OK");
  
                         //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;
 
                         Console.WriteLine("Parameter are fetching: ");
-                        Console.Write((s_Connection as JetBusConnection).BufferToString());
+                        Console.Write((_sConnection as JetBusConnection).BufferToString());
                         
-                        WTXObj = new HBM.WT.API.WTX.WTXJet(s_Connection);
+                        _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
                         Console.WriteLine("Parameter fetched");
-                        Console.WriteLine("Net value : "   + WTXObj.NetValue);
-                        Console.WriteLine("Gross value : " + WTXObj.GrossValue);                    
-                        Console.WriteLine("Decimals : "    + WTXObj.decimals);
+                        Console.WriteLine("Net value : "   + _wtxObj.NetValue);
+                        Console.WriteLine("Gross value : " + _wtxObj.GrossValue);                    
+                        Console.WriteLine("Decimals : "    + _wtxObj.Decimals);
 
                         //Console.WriteLine("Weight moving : " + WTXObj.weight_moving);
 
@@ -116,25 +116,25 @@ namespace WtConsole
 
                     case "-modbus":
 
-                        ipAddr = args[1];
+                        _ipAddr = args[1];
                         
-                        s_Connection = new ModbusTCPConnection(ipAddr);
+                        _sConnection = new ModbusTcpConnection(_ipAddr);
 
 
-                        WTXObj = new HBM.WT.API.WTX.WTXModbus(s_Connection, 100);
+                        _wtxObj = new HBM.WT.API.WTX.WtxModbus(_sConnection, 100);
 
                         // Konstruktor neu : Obj. von ModbusTCPConnection, Timer Intervall
 
-                        previous_data_str_arr = new string[59];
+                        _previousDataStrArr = new string[59];
 
                         for (int i = 0; i < 59; i++)
-                            previous_data_str_arr[i] = "0";
+                            _previousDataStrArr[i] = "0";
 
                         // Start asynchronous data transfer : Method - Nur bei einer Änderung Werte ausgeben - Was abrufbar ist aus der Klasse Program zu WTX120_Modbus
 
-                        WTXObj.getConnection.Connect();
+                        _wtxObj.GetConnection.Connect();
                         
-                        WTXObj.getConnection.SendingInterval = timer_interval;
+                        _wtxObj.GetConnection.SendingInterval = _timerInterval;
 
                         //WTXObj.isDataReceived = false;
 
@@ -152,7 +152,7 @@ namespace WtConsole
                         //Thread.Sleep(2000);
 
                         
-                        WTXObj.DataUpdateEvent += AsyncUpdateData;
+                        _wtxObj.DataUpdateEvent += AsyncUpdateData;
 
                         //WTXObj.Shutdown += Handler1;
                         //WTXObj.OnShutdown().Wait();
@@ -168,14 +168,14 @@ namespace WtConsole
                     {
                         try
                         {
-                            Console.Write(MENU_REQUEST);
+                            Console.Write(_menuRequest);
                             Console.Write("/> ");
                             input = Console.ReadLine().Split(new char[] { ' ' });
 
-                            if (FUNKTON_SELECT.ContainsKey(input[0].ToLower()))
+                            if (_funktonSelect.ContainsKey(input[0].ToLower()))
                             {
 
-                                FUNKTON_SELECT[input[0].ToLower()](input);
+                                _funktonSelect[input[0].ToLower()](input);
                                 Console.ReadLine();
                             }
                             else
@@ -224,7 +224,7 @@ namespace WtConsole
 
         private static void InputOutput()
         {
-                value_exitapplication = Console.ReadKey();
+                _valueExitapplication = Console.ReadKey();
         }
 
         private static void S_Connection_BusActivityDetection(object sender, EventArgs e)
@@ -237,50 +237,50 @@ namespace WtConsole
         private static void AsyncUpdateData(object arg1, NetConnectionEventArgs<ushort[]> arg2)
         {
             
-            compare_test = true;
-            if (previousNetValue != WTXObj.getDataStr[0])                   
-                compare_test = false;
+            _compareTest = true;
+            if (_previousNetValue != _wtxObj.GetDataStr[0])                   
+                _compareTest = false;
             else
-                compare_test = true;
+                _compareTest = true;
         
-            if ( (compare_test == false) && ( WTXObj.DeviceValues!=null ))
+            if ( (_compareTest == false) && ( _wtxObj.DeviceValues!=null ))
             //if(! (previous_data_str_arr.Equals(WTXObj.getDataStr) ))
             //if(ParamValues != null)
             {
 
                 Console.Clear();
             
-                Console.WriteLine("Net value:                     " + WTXObj.getDataStr[0] +   "\t  As an Integer:  " + WTXObj.DeviceValues.NetValue);        
-                Console.WriteLine("Gross value:                   " + WTXObj.getDataStr[1] +   "\t  As an Integer:  " + WTXObj.DeviceValues.GrossValue);    
-                Console.WriteLine("General weight error:          " + WTXObj.getDataStr[2] +   "\t  As an Integer:  " + WTXObj.DeviceValues.generalWeightError);    
-                Console.WriteLine("Scale alarm triggered:         " + WTXObj.getDataStr[3] +   "\t  As an Integer:  " + WTXObj.DeviceValues.limitStatus);    
-                Console.WriteLine("Scale seal is open:            " + WTXObj.getDataStr[6]   + "\t  As an Integer:  " + WTXObj.DeviceValues.scaleSealIsOpen);
-                Console.WriteLine("Manual tare:                   " + WTXObj.getDataStr[7]   + "\t  As an Integer:  " + WTXObj.DeviceValues.manualTare);
-                Console.WriteLine("Weight type:                   " + WTXObj.getDataStr[8]   + "\t  As an Integer:  " + WTXObj.DeviceValues.weightType);
-                Console.WriteLine("Scale range:                   " + WTXObj.getDataStr[9]   + "\t  As an Integer:  " + WTXObj.DeviceValues.scaleRange);
-                Console.WriteLine("Zero required/True zero:       " + WTXObj.getDataStr[10]  + "\t  As an Integer:  " + WTXObj.DeviceValues.zeroRequired);
-                Console.WriteLine("Weight within center of zero:  " + WTXObj.getDataStr[11]  + "\t  As an Integer:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero);
-                Console.WriteLine("Weight in zero range:          " + WTXObj.getDataStr[12]  + "\t  As an Integer:  " + WTXObj.DeviceValues.weightWithinTheCenterOfZero);
-                Console.WriteLine("Application mode:              " + WTXObj.getDataStr[13]  + "\t  As an Integer:  " + WTXObj.DeviceValues.applicationMode);
-                Console.WriteLine("Decimal places:                " + WTXObj.getDataStr[14]  + "\t  As an Integer:  " + WTXObj.DeviceValues.decimals);
-                Console.WriteLine("Unit:                          " + WTXObj.getDataStr[15]  + "\t  As an Integer:  " + WTXObj.DeviceValues.unit);
-                Console.WriteLine("Handshake:                     " + WTXObj.getDataStr[16]  + "\t  As an Integer:  " + WTXObj.DeviceValues.handshake);
-                Console.WriteLine("Status:                        " + WTXObj.getDataStr[17]  + "\t  As an Integer:  " + WTXObj.DeviceValues.status);
-                Console.WriteLine("Limit status:                  " + WTXObj.getDataStr[4]  + "  As an Integer:  "    + WTXObj.DeviceValues.limitStatus);
-                Console.WriteLine("Weight moving:                 " + WTXObj.getDataStr[5]  + "  As an Integer:"      + WTXObj.DeviceValues.weightMoving);
+                Console.WriteLine("Net value:                     " + _wtxObj.GetDataStr[0] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.NetValue);        
+                Console.WriteLine("Gross value:                   " + _wtxObj.GetDataStr[1] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.GrossValue);    
+                Console.WriteLine("General weight error:          " + _wtxObj.GetDataStr[2] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.GeneralWeightError);    
+                Console.WriteLine("Scale alarm triggered:         " + _wtxObj.GetDataStr[3] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.LimitStatus);    
+                Console.WriteLine("Scale seal is open:            " + _wtxObj.GetDataStr[6]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.ScaleSealIsOpen);
+                Console.WriteLine("Manual tare:                   " + _wtxObj.GetDataStr[7]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.ManualTare);
+                Console.WriteLine("Weight type:                   " + _wtxObj.GetDataStr[8]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.WeightType);
+                Console.WriteLine("Scale range:                   " + _wtxObj.GetDataStr[9]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.ScaleRange);
+                Console.WriteLine("Zero required/True zero:       " + _wtxObj.GetDataStr[10]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.ZeroRequired);
+                Console.WriteLine("Weight within center of zero:  " + _wtxObj.GetDataStr[11]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.WeightWithinTheCenterOfZero);
+                Console.WriteLine("Weight in zero range:          " + _wtxObj.GetDataStr[12]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.WeightWithinTheCenterOfZero);
+                Console.WriteLine("Application mode:              " + _wtxObj.GetDataStr[13]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.ApplicationMode);
+                Console.WriteLine("Decimal places:                " + _wtxObj.GetDataStr[14]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Decimals);
+                Console.WriteLine("Unit:                          " + _wtxObj.GetDataStr[15]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Unit);
+                Console.WriteLine("Handshake:                     " + _wtxObj.GetDataStr[16]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Handshake);
+                Console.WriteLine("Status:                        " + _wtxObj.GetDataStr[17]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Status);
+                Console.WriteLine("Limit status:                  " + _wtxObj.GetDataStr[4]  + "  As an Integer:  "    + _wtxObj.DeviceValues.LimitStatus);
+                Console.WriteLine("Weight moving:                 " + _wtxObj.GetDataStr[5]  + "  As an Integer:"      + _wtxObj.DeviceValues.WeightMoving);
 
                 Console.WriteLine("\n Press any key to exit");
 
                 
             }
-            previous_data_str_arr = WTXObj.getDataStr;
-            previousNetValue = WTXObj.getDataStr[0];            
+            _previousDataStrArr = _wtxObj.GetDataStr;
+            _previousNetValue = _wtxObj.GetDataStr[0];            
         }
 
             private static int ReadParameter(string[] args) {
             Console.Write(args[0] + "Read... ");
             if (args.Length < 2) return -1;
-            int intValue = s_Connection.Read<int>(args[1]);
+            int intValue = _sConnection.Read<int>(args[1]);
             
             Console.WriteLine(intValue);
             return 0;
@@ -291,7 +291,7 @@ namespace WtConsole
             if (args.Length < 3) return -1;
 
             int value = Convert.ToInt32(args[2]);
-            s_Connection.Write<int>(args[1], value);
+            _sConnection.Write<int>(args[1], value);
             Console.WriteLine("OK");
 
             return 0;
@@ -299,7 +299,7 @@ namespace WtConsole
 
         private static int ShowProperties (string[] args) {
 
-            BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            BaseWtDevice parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             Type type = parameter.GetType();
 
@@ -313,7 +313,7 @@ namespace WtConsole
            
         }
 
-        private static uint StringToID(string arg) {
+        private static uint StringToId(string arg) {
             if (arg.Contains("0x")) {
                 return Convert.ToUInt32(arg, 16);
             } else {
@@ -325,12 +325,12 @@ namespace WtConsole
             //Hbm.Wt.WTXInterface.WTX120_Jet.ParameterProperty parameter = 
             //    new Hbm.Wt.WTXInterface.WTX120_Jet.ParameterProperty(s_Connection);
 
-            BaseWTDevice parameter;
+            BaseWtDevice parameter;
 
             if (true)
             {
 
-                parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+                parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             } else
             {

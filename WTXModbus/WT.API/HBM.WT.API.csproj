@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDeviceData.cs" />
-    <Compile Include="WTX\INetConnection.cs" />
+    <Compile Include="INetConnection.cs" />
     <Compile Include="WTX\Jet\JetBusConnection.cs" />
     <Compile Include="WTX\Modbus\ModbusTCPConnection.cs" />
     <Compile Include="NetConnectionEventArgs.cs" />

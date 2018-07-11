@@ -17,26 +17,26 @@ namespace HBM.WT.API
     /// <typeparam name="T"></typeparam>
     public class NetConnectionEventArgs<T> : EventArgs
     {
-        private EventArgType m_Type;
-        private T m_Args;
+        private readonly EventArgType _mType;
+        private T _mArgs;
 
         public NetConnectionEventArgs(EventArgType type, T args)
         {
-            m_Type = type;
-            m_Args = args;
+            _mType = type;
+            _mArgs = args;
         }
 
-        public EventArgType Type { get { return m_Type; } }
+        public EventArgType Type { get { return _mType; } }
 
         public T Args
         {
             get
             {
-                return m_Args;
+                return _mArgs;
             }
             set
             {
-                m_Args = value;
+                _mArgs = value;
             }
         }
     }

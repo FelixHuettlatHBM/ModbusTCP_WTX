@@ -24,15 +24,15 @@ namespace WTXGUISimple
 
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
-        private static WTXJet WTXObj;
+        private static WtxJet _wtxObj;
 
-        private static System.Timers.Timer aTimer;
-        private static String ipAddr;
-        private static int timerInterval;
+        private static System.Timers.Timer _aTimer;
+        private static String _ipAddr;
+        private static int _timerInterval;
 
-        static INetConnection s_Connection;
+        static INetConnection _sConnection;
 
-        static string MENU_REQUEST = "folow instructions: \n \r"
+        static string _menuRequest = "folow instructions: \n \r"
     + "<read> <parameter> \n"
     + "<write> <parameter> <value> \n"
     + "<test> \n"
@@ -40,7 +40,7 @@ namespace WTXGUISimple
     + "<quit> \n";
 
         delegate int SelectFunktion(string[] args);
-        static Dictionary<string, SelectFunktion> FUNKTON_SELECT = new Dictionary<string, SelectFunktion> {
+        static Dictionary<string, SelectFunktion> _funktonSelect = new Dictionary<string, SelectFunktion> {
             { "read", ReadParameter },
             { "write", WriteParameter },
             { "show" , ShowProperties },
@@ -82,49 +82,49 @@ namespace WTXGUISimple
                     toolStripStatusLabel2.Text = "Jetbus";
             }
 
-            timerInterval = 200;
+            _timerInterval = 200;
 
-            ipAddr = "wss://" + args[1];
-            Console.Write("Initialize Jet-Peer to address " + ipAddr + "...");
+            _ipAddr = "wss://" + args[1];
+            Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
 
-            s_Connection = new JetBusConnection(ipAddr, "Administrator", "wtx", delegate { return true; });
+            _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
 
             //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;
 
             Console.WriteLine("Parameter are fetching: ");
 
-            Console.Write((s_Connection as JetBusConnection).BufferToString());
+            Console.Write((_sConnection as JetBusConnection).BufferToString());
 
-            WTXObj = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
             
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;  // Check, ob der Verbindungsaufbau erfolgreich war? 
 
-            initializeTimerJetbus(timerInterval);
+            InitializeTimerJetbus(_timerInterval);
         }
 
         // This method initializes the with the timer interval as a parameter: 
-        private void initializeTimerJetbus(int timerInterval)
+        private void InitializeTimerJetbus(int timerInterval)
         {
             // Create a timer with an interval of 500ms. 
-            aTimer = new System.Timers.Timer(timerInterval);
+            _aTimer = new System.Timers.Timer(timerInterval);
 
             // Connect the elapsed event for the timer. 
-            aTimer.Elapsed += jetbusOnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            _aTimer.Elapsed += JetbusOnTimedEvent;
+            _aTimer.AutoReset = true;
+            _aTimer.Enabled = true;
         }
 
         // Event method, which will be triggered after a interval of the timer is elapsed- 
         // After triggering (after 500ms) the register is read. 
-        private void jetbusOnTimedEvent(Object source, ElapsedEventArgs e)
+        private void JetbusOnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            int taraValue = WTXObj.GrossValue - WTXObj.NetValue;
+            int taraValue = _wtxObj.GrossValue - _wtxObj.NetValue;
 
             textBox2.Invoke(new Action(() =>
             {
-                textBox2.Text = "Net:" + WTXObj.netGrossValueStringComment(WTXObj.NetValue, WTXObj.decimals) + WTXObj.unitStringComment() + Environment.NewLine
-                + "Gross:" + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals) + WTXObj.unitStringComment() + Environment.NewLine
-                + "Tara:" + WTXObj.netGrossValueStringComment(taraValue, WTXObj.decimals) + WTXObj.unitStringComment();
+                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment();
                 textBox2.TextAlign = HorizontalAlignment.Right;
 
                 pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;
@@ -133,20 +133,20 @@ namespace WTXGUISimple
 
 
         // This method initializes the with the timer interval as a parameter: 
-        private void initializeTimerModbus(int timer_interval)
+        private void InitializeTimerModbus(int timerInterval)
         {
             // Create a timer with an interval of 500ms. 
-            aTimer = new System.Timers.Timer(timerInterval);
+            _aTimer = new System.Timers.Timer(_timerInterval);
 
             // Connect the elapsed event for the timer. 
-            aTimer.Elapsed += modbusOnTimedEventModbus;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            _aTimer.Elapsed += ModbusOnTimedEventModbus;
+            _aTimer.AutoReset = true;
+            _aTimer.Enabled = true;
         }
 
         // Event method, which will be triggered after a interval of the timer is elapsed- 
         // After triggering (after 500ms) the register is read. 
-        private void modbusOnTimedEventModbus(Object source, ElapsedEventArgs e)
+        private void ModbusOnTimedEventModbus(Object source, ElapsedEventArgs e)
         {
 
             // ++++ !!! Only for Modbus so far !!! +++ :
@@ -155,13 +155,13 @@ namespace WTXGUISimple
         }
 
         // This is a callback-method, which will be called after the reading of the register is finished. 
-        public void Read_DataReceived(IDeviceData Device_Values)
+        public void Read_DataReceived(IDeviceData deviceValues)
         {
-            int taraValue = WTXObj.GrossValue - WTXObj.NetValue;
+            int taraValue = _wtxObj.GrossValue - _wtxObj.NetValue;
 
             textBox2.Invoke(new Action(() =>
             {
-                textBox2.Text = "Net value : " + WTXObj.NetValue + " t" + Environment.NewLine + "Gross value : " + WTXObj.GrossValue + " t" + Environment.NewLine + "Tara value : " + taraValue + " t";
+                textBox2.Text = "Net value : " + _wtxObj.NetValue + " t" + Environment.NewLine + "Gross value : " + _wtxObj.GrossValue + " t" + Environment.NewLine + "Tara value : " + taraValue + " t";
 
                 pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;
 
@@ -221,7 +221,7 @@ namespace WTXGUISimple
         {
             Console.Write(args[0] + "Read... ");
             if (args.Length < 2) return -1;
-            int intValue = s_Connection.Read<int>(args[1]);
+            int intValue = _sConnection.Read<int>(args[1]);
 
             Console.WriteLine(intValue);
             return 0;
@@ -233,7 +233,7 @@ namespace WTXGUISimple
             if (args.Length < 3) return -1;
 
             int value = Convert.ToInt32(args[2]);
-            s_Connection.Write<int>(args[1], value);
+            _sConnection.Write<int>(args[1], value);
             Console.WriteLine("OK");
 
             return 0;
@@ -241,7 +241,7 @@ namespace WTXGUISimple
 
         private static int ShowProperties(string[] args)
         {
-            BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            BaseWtDevice parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             //HBM.WT.API.COMMON.BaseWTDevice parameter = new Hbm.Wt.WTXInterface.WTX120_Jet.WTX120_Jet(s_Connection, 100);
             // Before : //Hbm.Wt.WTXInterface.DeviceAbstract parameter = new Hbm.Wt.WTXInterface.WTX120_Jet.WTX120_Jet(s_Connection,100);
@@ -261,7 +261,7 @@ namespace WTXGUISimple
 
         }
 
-        private static uint StringToID(string arg)
+        private static uint StringToId(string arg)
         {
             if (arg.Contains("0x"))
             {
@@ -275,11 +275,11 @@ namespace WTXGUISimple
 
         private static int TestDeviceLayer(string[] arg)
         {
-            BaseWTDevice parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+            BaseWtDevice parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             if (true)
             {
-                parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
+                parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
                 
 
             }

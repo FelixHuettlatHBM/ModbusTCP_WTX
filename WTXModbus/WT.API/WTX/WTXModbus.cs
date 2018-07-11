@@ -1,53 +1,44 @@
-﻿
-using HBM.WT.API;
-using HBM.WT.API.WTX.Modbus;
+﻿using HBM.WT.API.WTX.Modbus;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
-
 namespace HBM.WT.API.WTX
 {
-    public class WTXModbus : BaseWTDevice     // ParameterProperty umändern 
+
+    public class WtxModbus : BaseWtDevice     // ParameterProperty umändern 
     {
         //public ParameterProperty(INetConnection connection) : base(connection) { }
         //public override int MeasureValue { get { return m_Connection.Read<int>(ParameterEnum.MeasuredValue.ToString()); } }
 
-        private string[] dataStr;
-        private ushort[] previousData;
-        private ushort[] data;
-        private ushort[] outputData;
-        private ushort[] data_written;
+        private string[] _dataStr;
+        private ushort[] _previousData;
+        private ushort[] _data;
+        private ushort[] _outputData;
+        private ushort[] _dataWritten;
 
-        private bool isNet;
-        private bool isCalibrating;
-        private bool isRefreshed;
-        private bool compareDataChanged;
+        private bool _isNet;
+        private bool _isCalibrating;
+        private bool _isRefreshed;
+        private bool _compareDataChanged;
 
-        private int timerInterval;
+        private int _timerInterval;
 
-        private System.Timers.Timer aTimer;
+        private System.Timers.Timer _aTimer;
 
-        private Action<IDeviceData> callback_obj;
+        private Action<IDeviceData> _callbackObj;
 
-        private ushort command;
+        private ushort _command;
 
-        private string ipAddr;
+        private string _ipAddr;
 
-        private ModbusTCPConnection ModbusConnObj;
+        ModbusTcpConnection _connection;
 
-        private INetConnection m_Connection;
+        IDeviceData _thisValues;
 
-        INetConnection thisConnection;
-
-        IDeviceData thisValues;
-
-        private bool dataReceived;
+        private bool _dataReceived;
 
         // Neu : 4.5.2018 - für asynchronen Aufruf - Eventbasiert
 
@@ -96,83 +87,76 @@ namespace HBM.WT.API.WTX
 
         }
 
-        public WTXModbus(INetConnection connection,int paramTimerInterval) : base(connection)
+        public WtxModbus(ModbusTcpConnection connection,int paramTimerInterval)
          {
-            m_Connection = connection;
+            _connection = connection;
 
-            this.ipAddr = "172.19.103.8";
+            this._ipAddr = "172.19.103.8";
 
-            this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
+            this._connection = new ModbusTcpConnection(_ipAddr);
 
-            this.previousData = new ushort[59];
-            this.dataStr = new string[59];
-            this.data = new ushort[59];
-            this.outputData = new ushort[43]; // Output data length for filler application, also used for the standard application.
-            this.data_written = new ushort[2];
+            this._previousData = new ushort[59];
+            this._dataStr = new string[59];
+            this._data = new ushort[59];
+            this._outputData = new ushort[43]; // Output data length for filler application, also used for the standard application.
+            this._dataWritten = new ushort[2];
 
             for (int i = 0; i < 59; i++)
             {
-                dataStr[i] = "0";
-                data[i] = 0;
-                this.previousData[i] = 0;
+                _dataStr[i] = "0";
+                _data[i] = 0;
+                this._previousData[i] = 0;
             }
 
             for (int i = 0; i < 43; i++)
             {
-                this.outputData[i] = 0;
+                this._outputData[i] = 0;
             }
 
-            this.compareDataChanged = false;
-            this.isCalibrating = false;
-            this.isRefreshed = false;
-            this.isNet = false;
-            this.dataReceived = false;
+            this._compareDataChanged = false;
+            this._isCalibrating = false;
+            this._isRefreshed = false;
+            this._isNet = false;
+            this._dataReceived = false;
 
-            this.timerInterval = 0;
+            this._timerInterval = 0;
 
 
             // For the connection and initializing of the timer: 
 
-            thisConnection = connection;
+             _connection = connection;
 
-            getConnection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
+             _connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
 
             this.initialize_timer(paramTimerInterval);
          }
-        public override ModbusTCPConnection getConnection
-        {
-            get
-            {
-                return this.ModbusConnObj;
-            }
 
-        }
 
         // To establish a connection to the WTX device via class WTX120_Modbus.
         public override void Connect()
         {
-            this.ModbusConnObj.Connect();
+            _connection.Connect();
         }
 
         // To terminate,break, a connection to the WTX device via class WTX120_Modbus.
         public override void Disconnect()
         {
-            this.ModbusConnObj.DisconnectDevice();
+            this._connection.Disconnect();
         }
 
         public override void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
         {
-            this.dataReceived = false;
+            this._dataReceived = false;
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
 
             //this.wordNumber = wordNumberParam;
-            this.command = commandParam;
-            this.callback_obj = callbackParam;
+            this._command = commandParam;
+            this._callbackObj = callbackParam;
 
             bgWorker.WorkerSupportsCancellation = true;  // Specify whether you want the background operation to allow cancellation and to report progress.
             bgWorker.WorkerReportsProgress = true;
 
-            if (this.command == 0x00)       // command=0x00 , read data from register 
+            if (this._command == 0x00)       // command=0x00 , read data from register 
             {
                 bgWorker.DoWork += new DoWorkEventHandler(this.ReadDoWork);  // To set up for a background operation, an event handler, "DoWorkEventHandler" is added.
                 bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.ReadCompleted);  // Create an event handler for the RunWorkerCompleted event (method "Read_Completed"). 
@@ -191,35 +175,35 @@ namespace HBM.WT.API.WTX
         // Neu - 8.3.2018 - Ohne Backgroundworker - Ohne Asynchronität
         public override void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
         {
-            this.dataReceived = false;
-            this.command = commandParam;
-            this.callback_obj = callbackParam;
+            this._dataReceived = false;
+            this._command = commandParam;
+            this._callbackObj = callbackParam;
 
-            if (this.command == 0x00)
-                this.ModbusConnObj.ReadRegister();
+            if (this._command == 0x00)
+                this._connection.ReadRegister();
 
             else
             {
                 // (1) Sending of a command:        
-                getConnection.Write(wordNumber, this.command);  // Alternativ : 1.Parameter = wordNumber
+                _connection.Write(wordNumber, this._command);  // Alternativ : 1.Parameter = wordNumber
 
-                while (this.handshake == 0)
+                while (this.Handshake == 0)
                 {
                     Thread.Sleep(100);
-                    this.ModbusConnObj.ReadRegister();
+                    this._connection.ReadRegister();
                     //this.JetConnObj.Read();
                 }
 
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
-                if (this.handshake == 1)
+                if (this.Handshake == 1)
                 {
-                    this.ModbusConnObj.Write(wordNumber, 0x00);      // Alternativ : 1.Parameter = wordNumber
+                    this._connection.Write(wordNumber, 0x00);      // Alternativ : 1.Parameter = wordNumber
                     //this.JetConnObj.Write(0, 1);        // Parameter: uint index, uint data. 
                 }
-                while (/*this.status == 1 &&*/ this.handshake == 1)
+                while (/*this.status == 1 &&*/ this.Handshake == 1)
                 {
                     Thread.Sleep(100);
-                    this.ModbusConnObj.ReadRegister();
+                    this._connection.ReadRegister();
                     //this.JetConnObj.Read();
                 }
             }
@@ -227,26 +211,26 @@ namespace HBM.WT.API.WTX
 
         // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 
         // @param : sender - the object of this class. dowork_asynchronous - the argument of the event. 
-        public override void ReadDoWork(object sender, DoWorkEventArgs dowork_asynchronous)
+        public override void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous)
         {
-            this.dataReceived = false;
-            dowork_asynchronous.Result = (IDeviceData)this.asyncReadData((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
+            this._dataReceived = false;
+            doworkAsynchronous.Result = (IDeviceData)this.AsyncReadData((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
             // dowork_asynchronous.Result contains all values defined in Interface IDevice_Values.
         }
 
         // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
         // @return: IDevice_Values - Interface, that contains all values for the device. 
-        public override IDeviceData asyncReadData(BackgroundWorker worker)
+        public override IDeviceData AsyncReadData(BackgroundWorker worker)
         {
-            this.ModbusConnObj.ReadRegister();
+            this._connection.ReadRegister();
 
             return this;
         }
 
         // Neu : 8.3.2018
-        public override IDeviceData syncReadData()
+        public override IDeviceData SyncReadData()
         {
-            this.ModbusConnObj.ReadRegister();
+            this._connection.ReadRegister();
             //this.JetConnObj.Read();
 
             return this;
@@ -256,11 +240,11 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return thisValues;
+                return _thisValues;
             }
         }
 
-        public override BaseWTDevice getDeviceAbstract
+        public override BaseWtDevice GetDeviceAbstract
         {
             get
             {
@@ -272,25 +256,25 @@ namespace HBM.WT.API.WTX
         {
             //EventHandler<RunWorkerCompletedEventArgs> handler = DataUpdateEvent;        // Neu : 4.5.18
 
-            this.callback_obj((IDeviceData)e.Result);         // Interface commited via callback. 
+            this._callbackObj((IDeviceData)e.Result);         // Interface commited via callback. 
 
             // For synchronous check that data is received:
-            dataReceived = true;
+            _dataReceived = true;
 
             // For asynchronous check that data is received:
             //if (handler != null)
             //    handler(this, e);
         }
 
-        public override bool isDataReceived
+        public override bool IsDataReceived
         {
             get
             {
-                return this.dataReceived;
+                return this._dataReceived;
             }
             set
             {
-                this.dataReceived = value;
+                this._dataReceived = value;
             }
         }
 
@@ -298,57 +282,57 @@ namespace HBM.WT.API.WTX
         {
             // (1) Sending of a command:        
 
-            this.ModbusConnObj.Write(0, this.command);
+            this._connection.Write(0, this._command);
             //this.JetConnObj.Write(0,1);
 
-            while (this.handshake == 0) ;
+            while (this.Handshake == 0);
 
             // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
-            if (this.handshake == 1)
+            if (this.Handshake == 1)
             {
-                this.ModbusConnObj.Write(0, 0x00);
+                this._connection.Write(0, 0x00);
                 //this.JetConnObj.Write(0,1);
 
                 //this.NetObj.Write<ushort>(0, 0x00);
             }
-            while (/*this.status == 1 && */this.handshake == 1) ;
+            while (/*this.status == 1 && */this.Handshake == 1);
         }
 
         public override void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.callback_obj(this);         // Neu : 21.11.2017         Interface übergeben. 
+            this._callbackObj(this);         // Neu : 21.11.2017         Interface übergeben. 
         }
 
-        public void writeOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
+        public void WriteOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
-            this.callback_obj = callbackParam;
+            this._callbackObj = callbackParam;
 
-            data_written[0] = (ushort)((valueParam & 0xffff0000) >> 16);
-            data_written[1] = (ushort)(valueParam & 0x0000ffff);
+            _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
+            _dataWritten[1] = (ushort)(valueParam & 0x0000ffff);
 
-            getConnection.Write(wordNumber, data_written);
+            _connection.Write(wordNumber, _dataWritten);
         }
 
 
-        public void writeOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
+        public void WriteOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
-            this.callback_obj = callbackParam;
+            this._callbackObj = callbackParam;
 
             /*
             data_written[0] = (ushort)((valueParam & 0x000000ff));
-            getConnection.Write(wordNumber, data_written[0]);
+            this._connection.Write(wordNumber, data_written[0]);
             */
 
-            getConnection.Write(wordNumber, (ushort)valueParam);
+            _connection.Write(wordNumber, (ushort)valueParam);
         }
 
-        public void writeOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
+        public void WriteOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
-            this.callback_obj = callbackParam;
+            this._callbackObj = callbackParam;
 
-            data_written[0] = (ushort)((valueParam & 0xffff0000) >> 16);
+            _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
 
-            getConnection.Write(wordNumber, data_written[0]);
+            _connection.Write(wordNumber, _dataWritten[0]);
         }
 
         
@@ -359,40 +343,40 @@ namespace HBM.WT.API.WTX
             // an exception is catched and a default value for the timer interval is set, the timer tries to start again. 
             try
             {
-                aTimer = new System.Timers.Timer(paramTimerInterval);
+                _aTimer = new System.Timers.Timer(paramTimerInterval);
             }
             catch (ArgumentException)
             {
-                this.timerInterval = 100;   // In case if the timer interval is not valid, an 'ArgumentException' is catched and a default value for
+                this._timerInterval = 100;   // In case if the timer interval is not valid, an 'ArgumentException' is catched and a default value for
                                             // the timer interval is set. 
-                aTimer = new System.Timers.Timer(this.timerInterval);
+                _aTimer = new System.Timers.Timer(this._timerInterval);
             }
             // Connect the elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
+            _aTimer.Elapsed += OnTimedEvent;
 
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-            aTimer.Start();
+            _aTimer.AutoReset = true;
+            _aTimer.Enabled = true;
+            _aTimer.Start();
         }
 
         /*
         * This method stops the timer, for example in case for the calibration.
         */
-        public void stopTimer()
+        public void StopTimer()
         {
-            aTimer.Elapsed -= OnTimedEvent;
-            aTimer.Enabled = false;
-            aTimer.Stop();
+            _aTimer.Elapsed -= OnTimedEvent;
+            _aTimer.Enabled = false;
+            _aTimer.Stop();
         }
 
         /*
          * This method restarts the timer, for example in case for the calibration.
          */
-        public void restartTimer()
+        public void RestartTimer()
         {
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.Enabled = true;
-            aTimer.Start();
+            _aTimer.Elapsed += OnTimedEvent;
+            _aTimer.Enabled = true;
+            _aTimer.Start();
         }
 
         // Event method, which will be triggered after a interval of the timer is elapsed- 
@@ -404,11 +388,11 @@ namespace HBM.WT.API.WTX
             //thisConnection.RaiseDataEvent += UpdateEvent;   // Subscribe to the event.
         }
 
-        private void DataReceivedTimer(IDeviceData Device_Values)
+        private void DataReceivedTimer(IDeviceData deviceValues)
         {
-            thisValues = Device_Values;
+            _thisValues = deviceValues;
 
-            int previousNetValue = Device_Values.NetValue;
+            int previousNetValue = deviceValues.NetValue;
             
         }
 
@@ -418,108 +402,108 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public override ushort[] getValuesAsync()
+        public override ushort[] GetValuesAsync()
         {
-            return data;
+            return _data;
         }
 
 
         //public override void UpdateEvent(object sender, MessageEvent<ushort> e)
         public override void UpdateEvent(object sender, NetConnectionEventArgs<ushort[]> e)
         {
-            this.data = e.Args;
+            this._data = e.Args;
 
             //this.data = e.Message;        // Mit MessageEvent 
 
-            this.getDataStr[0] = this.netGrossValueStringComment(this.NetValue, this.decimals);  // 1 equal to "Net measured" as a parameter
-            this.getDataStr[1] = this.netGrossValueStringComment(this.GrossValue, this.decimals);  // 2 equal to "Gross measured" as a parameter
+            this.GetDataStr[0] = this.NetGrossValueStringComment(this.NetValue, this.Decimals);  // 1 equal to "Net measured" as a parameter
+            this.GetDataStr[1] = this.NetGrossValueStringComment(this.GrossValue, this.Decimals);  // 2 equal to "Gross measured" as a parameter
 
-            this.getDataStr[2] = this.generalWeightError.ToString();
-            this.getDataStr[3] = this.scaleAlarmTriggered.ToString();
-            this.getDataStr[4] = this.limitStatusStringComment();
-            this.getDataStr[5] = this.weightMovingStringComment();
+            this.GetDataStr[2] = this.GeneralWeightError.ToString();
+            this.GetDataStr[3] = this.ScaleAlarmTriggered.ToString();
+            this.GetDataStr[4] = this.LimitStatusStringComment();
+            this.GetDataStr[5] = this.WeightMovingStringComment();
 
-            this.getDataStr[6] = this.scaleSealIsOpen.ToString();
-            this.getDataStr[7] = this.manualTare.ToString();
-            this.getDataStr[8] = this.weightTypeStringComment();
-            this.getDataStr[9] = this.scaleRangeStringComment();
+            this.GetDataStr[6] = this.ScaleSealIsOpen.ToString();
+            this.GetDataStr[7] = this.ManualTare.ToString();
+            this.GetDataStr[8] = this.WeightTypeStringComment();
+            this.GetDataStr[9] = this.ScaleRangeStringComment();
 
-            this.getDataStr[10] = this.zeroRequired.ToString();
-            this.getDataStr[11] = this.weightWithinTheCenterOfZero.ToString();
-            this.getDataStr[12] = this.weightInZeroRange.ToString();
-            this.getDataStr[13] = this.applicationModeStringComment();
+            this.GetDataStr[10] = this.ZeroRequired.ToString();
+            this.GetDataStr[11] = this.WeightWithinTheCenterOfZero.ToString();
+            this.GetDataStr[12] = this.WeightInZeroRange.ToString();
+            this.GetDataStr[13] = this.ApplicationModeStringComment();
 
-            this.getDataStr[14] = this.decimals.ToString();
-            this.getDataStr[15] = this.unitStringComment();
-            this.getDataStr[16] = this.handshake.ToString();
-            this.getDataStr[17] = this.statusStringComment();
+            this.GetDataStr[14] = this.Decimals.ToString();
+            this.GetDataStr[15] = this.UnitStringComment();
+            this.GetDataStr[16] = this.Handshake.ToString();
+            this.GetDataStr[17] = this.StatusStringComment();
 
-            this.getDataStr[18] = this.input1.ToString();
-            this.getDataStr[19] = this.input2.ToString();
-            this.getDataStr[20] = this.input3.ToString();
-            this.getDataStr[21] = this.input4.ToString();
+            this.GetDataStr[18] = this.Input1.ToString();
+            this.GetDataStr[19] = this.Input2.ToString();
+            this.GetDataStr[20] = this.Input3.ToString();
+            this.GetDataStr[21] = this.Input4.ToString();
 
-            this.getDataStr[22] = this.output1.ToString();
-            this.getDataStr[23] = this.output2.ToString();
-            this.getDataStr[24] = this.output3.ToString();
-            this.getDataStr[25] = this.output4.ToString();
+            this.GetDataStr[22] = this.Output1.ToString();
+            this.GetDataStr[23] = this.Output2.ToString();
+            this.GetDataStr[24] = this.Output3.ToString();
+            this.GetDataStr[25] = this.Output4.ToString();
 
-            if (this.applicationMode == 0)
+            if (this.ApplicationMode == 0)
             {
-                this.getDataStr[26] = this.limitStatus1.ToString();
-                this.getDataStr[27] = this.limitStatus2.ToString();
-                this.getDataStr[28] = this.limitStatus3.ToString();
-                this.getDataStr[29] = this.limitStatus4.ToString();
+                this.GetDataStr[26] = this.LimitStatus1.ToString();
+                this.GetDataStr[27] = this.LimitStatus2.ToString();
+                this.GetDataStr[28] = this.LimitStatus3.ToString();
+                this.GetDataStr[29] = this.LimitStatus4.ToString();
 
-                this.getDataStr[30] = this.weightMemDay.ToString();
-                this.getDataStr[31] = this.weightMemMonth.ToString();
-                this.getDataStr[32] = this.weightMemYear.ToString();
-                this.getDataStr[33] = this.weightMemSeqNumber.ToString();
-                this.getDataStr[34] = this.weightMemGross.ToString();
-                this.getDataStr[35] = this.weightMemNet.ToString();
+                this.GetDataStr[30] = this.WeightMemDay.ToString();
+                this.GetDataStr[31] = this.WeightMemMonth.ToString();
+                this.GetDataStr[32] = this.WeightMemYear.ToString();
+                this.GetDataStr[33] = this.WeightMemSeqNumber.ToString();
+                this.GetDataStr[34] = this.WeightMemGross.ToString();
+                this.GetDataStr[35] = this.WeightMemNet.ToString();
             }
             else
-                if (this.applicationMode == 2 || this.applicationMode == 0) // in filler mode 
+                if (this.ApplicationMode == 2 || this.ApplicationMode == 0) // in filler mode 
             {
-                this.getDataStr[26] = this.coarseFlow.ToString();
-                this.getDataStr[27] = this.fineFlow.ToString();
-                this.getDataStr[28] = this.ready.ToString();
-                this.getDataStr[29] = this.reDosing.ToString();
+                this.GetDataStr[26] = this.CoarseFlow.ToString();
+                this.GetDataStr[27] = this.FineFlow.ToString();
+                this.GetDataStr[28] = this.Ready.ToString();
+                this.GetDataStr[29] = this.ReDosing.ToString();
 
-                this.getDataStr[30] = this.emptying.ToString();
-                this.getDataStr[31] = this.flowError.ToString();
-                this.getDataStr[32] = this.alarm.ToString();
-                this.getDataStr[33] = this.ADC_overUnderload.ToString();
+                this.GetDataStr[30] = this.Emptying.ToString();
+                this.GetDataStr[31] = this.FlowError.ToString();
+                this.GetDataStr[32] = this.Alarm.ToString();
+                this.GetDataStr[33] = this.AdcOverUnderload.ToString();
 
-                this.getDataStr[34] = this.maxDosingTime.ToString();
-                this.getDataStr[35] = this.legalTradeOp.ToString();
-                this.getDataStr[36] = this.toleranceErrorPlus.ToString();
-                this.getDataStr[37] = this.toleranceErrorMinus.ToString();
+                this.GetDataStr[34] = this.MaxDosingTime.ToString();
+                this.GetDataStr[35] = this.LegalTradeOp.ToString();
+                this.GetDataStr[36] = this.ToleranceErrorPlus.ToString();
+                this.GetDataStr[37] = this.ToleranceErrorMinus.ToString();
 
-                this.getDataStr[38] = this.status.ToString();
-                this.getDataStr[39] = this.generalScaleError.ToString();
-                this.getDataStr[40] = this.fillingProcessStatus.ToString();
-                this.getDataStr[41] = this.numberDosingResults.ToString();
+                this.GetDataStr[38] = this.Status.ToString();
+                this.GetDataStr[39] = this.GeneralScaleError.ToString();
+                this.GetDataStr[40] = this.FillingProcessStatus.ToString();
+                this.GetDataStr[41] = this.NumberDosingResults.ToString();
 
-                this.getDataStr[42] = this.dosingResult.ToString();
-                this.getDataStr[43] = this.meanValueDosingResults.ToString();
-                this.getDataStr[44] = this.standardDeviation.ToString();
-                this.getDataStr[45] = this.totalWeight.ToString();
+                this.GetDataStr[42] = this.DosingResult.ToString();
+                this.GetDataStr[43] = this.MeanValueDosingResults.ToString();
+                this.GetDataStr[44] = this.StandardDeviation.ToString();
+                this.GetDataStr[45] = this.TotalWeight.ToString();
 
-                this.getDataStr[46] = this.fineFlowCutOffPoint.ToString();
-                this.getDataStr[47] = this.coarseFlowCutOffPoint.ToString();
-                this.getDataStr[48] = this.currentDosingTime.ToString();
-                this.getDataStr[49] = this.currentCoarseFlowTime.ToString();
+                this.GetDataStr[46] = this.FineFlowCutOffPoint.ToString();
+                this.GetDataStr[47] = this.CoarseFlowCutOffPoint.ToString();
+                this.GetDataStr[48] = this.CurrentDosingTime.ToString();
+                this.GetDataStr[49] = this.CurrentCoarseFlowTime.ToString();
 
-                this.getDataStr[50] = this.currentFineFlowTime.ToString();
-                this.getDataStr[51] = this.parameterSetProduct.ToString();
+                this.GetDataStr[50] = this.CurrentFineFlowTime.ToString();
+                this.GetDataStr[51] = this.ParameterSetProduct.ToString();
 
-                this.getDataStr[52] = this.filler_weight_memory_day.ToString();
-                this.getDataStr[53] = this.filler_weight_memory_month.ToString();
-                this.getDataStr[54] = this.filler_weight_memory_year.ToString();
-                this.getDataStr[55] = this.filler_weight_memory_seq_number.ToString();
-                this.getDataStr[56] = this.filler_weight_memory_gross.ToString();
-                this.getDataStr[57] = this.filler_weight_memory_net.ToString();
+                this.GetDataStr[52] = this.FillerWeightMemoryDay.ToString();
+                this.GetDataStr[53] = this.FillerWeightMemoryMonth.ToString();
+                this.GetDataStr[54] = this.FillerWeightMemoryYear.ToString();
+                this.GetDataStr[55] = this.FillerWeightMemorySeqNumber.ToString();
+                this.GetDataStr[56] = this.FillerWeightMemoryGross.ToString();
+                this.GetDataStr[57] = this.FillerWeightMemoryNet.ToString();
             }
 
             // Vorher: 
@@ -535,14 +519,14 @@ namespace HBM.WT.API.WTX
 
 
 
-            compareDataChanged = false;
+            _compareDataChanged = false;
 
-            e.Args = this.data;
+            e.Args = this._data;
 
             for (int index = 0; index < 6; index++)
             {
-                if (this.previousData[index] != this.data[index])
-                    compareDataChanged = true;
+                if (this._previousData[index] != this._data[index])
+                    _compareDataChanged = true;
             }
             // If one value of the data changes, the boolean value 'compareDataChanged' will be set to true and the data will be 
             // updated in the following, as well as the GUI form. ('compareDataChanged' is for the purpose of comparision.)
@@ -550,17 +534,17 @@ namespace HBM.WT.API.WTX
             // The data is only invoked by the event 'DataUpdateEvent' if the data has been changed. The comparision is made by...
             // ... the arrays 'previousData' and 'data' with the boolean 
 
-            if ((this.compareDataChanged == true) || (this.isCalibrating == true) || this.isRefreshed == true)   // 'isCalibrating' indicates if a calibration is done just before ...
+            if ((this._compareDataChanged == true) || (this._isCalibrating == true) || this._isRefreshed == true)   // 'isCalibrating' indicates if a calibration is done just before ...
             {                                                                                                    // and the data should be send to the GUI/console and be printed out. 
                                                                                                                  // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
 
                 DataUpdateEvent?.Invoke(this, e);
 
-                this.isCalibrating = false;
+                this._isCalibrating = false;
                 this.Refreshed = false;
             }
 
-            this.previousData = this.data;
+            this._previousData = this._data;
 
             // As an alternative to 'DataUpdateEvent?.Invoke(this, e);' : Both implementations do the same.  
             /*
@@ -573,14 +557,14 @@ namespace HBM.WT.API.WTX
 
         public bool Refreshed
         {
-            get { return this.isRefreshed; }
-            set { this.isRefreshed = value; }
+            get { return this._isRefreshed; }
+            set { this._isRefreshed = value; }
         }
 
-        public bool dataChanged
+        public bool DataChanged
         {
-            get { return this.compareDataChanged; }
-            set { this.compareDataChanged = value; }
+            get { return this._compareDataChanged; }
+            set { this._compareDataChanged = value; }
         }
 
 
@@ -593,8 +577,8 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 1)
-                        return (data[1] + (data[0] << 16));
+                    if (this._connection.NumOfPoints > 1)
+                        return (_data[1] + (_data[0] << 16));
                     else
                         return 0;
                 }
@@ -611,8 +595,8 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 3)
-                        return (data[3] + (data[2] << 16));
+                    if (this._connection.NumOfPoints > 3)
+                        return (_data[3] + (_data[2] << 16));
                     else
                         return 0;
                 }
@@ -622,14 +606,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int generalWeightError
+        public override int GeneralWeightError
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return (data[4] & 0x1);
+                    if (this._connection.NumOfPoints > 4)
+                        return (_data[4] & 0x1);
                     else
                         return 0;
                 }
@@ -639,14 +623,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int scaleAlarmTriggered
+        public override int ScaleAlarmTriggered
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x2) >> 1);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x2) >> 1);
                     else
                         return 0;
                 }
@@ -656,14 +640,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int limitStatus
+        public override int LimitStatus
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0xC) >> 2);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0xC) >> 2);
                     else
                         return 0;
                 }
@@ -673,14 +657,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMoving
+        public override int WeightMoving
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x10) >> 4);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x10) >> 4);
                     else
                         return 0;
                 }
@@ -690,14 +674,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int scaleSealIsOpen
+        public override int ScaleSealIsOpen
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x20) >> 5);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x20) >> 5);
                     else
                         return 0;
                 }
@@ -707,14 +691,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int manualTare
+        public override int ManualTare
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x40) >> 6);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x40) >> 6);
                     else
                         return 0;
                 }
@@ -724,14 +708,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightType
+        public override int WeightType
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x80) >> 7);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x80) >> 7);
                     else
                         return 0;
                 }
@@ -741,14 +725,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int scaleRange
+        public override int ScaleRange
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x300) >> 8);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x300) >> 8);
                     else
                         return 0;
                 }
@@ -758,14 +742,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int zeroRequired
+        public override int ZeroRequired
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x400) >> 10);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x400) >> 10);
                     else
                         return 0;
                 }
@@ -775,14 +759,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightWithinTheCenterOfZero
+        public override int WeightWithinTheCenterOfZero
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x800) >> 11);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x800) >> 11);
                     else
                         return 0;
                 }
@@ -792,14 +776,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightInZeroRange
+        public override int WeightInZeroRange
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 4)
-                        return ((data[4] & 0x1000) >> 12);
+                    if (this._connection.NumOfPoints > 4)
+                        return ((_data[4] & 0x1000) >> 12);
                     else
                         return 0;
                 }
@@ -809,14 +793,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int applicationMode
+        public override int ApplicationMode
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 5)
-                        return ((data[5] & 0x3) >> 1);
+                    if (this._connection.NumOfPoints > 5)
+                        return ((_data[5] & 0x3) >> 1);
                     else
                         return 0;
                 }
@@ -826,14 +810,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int decimals
+        public override int Decimals
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 5)
-                        return ((data[5] & 0x70) >> 4);
+                    if (this._connection.NumOfPoints > 5)
+                        return ((_data[5] & 0x70) >> 4);
                     else
                         return 0;
                 }
@@ -843,14 +827,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int unit
+        public override int Unit
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 5)
-                        return ((data[5] & 0x180) >> 7);
+                    if (this._connection.NumOfPoints > 5)
+                        return ((_data[5] & 0x180) >> 7);
                     else
                         return 0;
                 }
@@ -860,14 +844,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int handshake
+        public override int Handshake
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 5)
-                        return ((data[5] & 0x4000) >> 14);
+                    if (this._connection.NumOfPoints > 5)
+                        return ((_data[5] & 0x4000) >> 14);
                     else
                         return 0;
                 }
@@ -877,14 +861,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int status
+        public override int Status
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 5)
-                        return ((data[5] & 0x8000) >> 15);
+                    if (this._connection.NumOfPoints > 5)
+                        return ((_data[5] & 0x8000) >> 15);
                     else
                         return 0;
                 }
@@ -895,38 +879,38 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        public override ushort[] getDataUshort
+        public override ushort[] GetDataUshort
         {
             get
             {
-                return this.data;
+                return this._data;
             }
             set
             {
-                this.data = value;
+                this._data = value;
             }
         }
 
-        public override string[] getDataStr
+        public override string[] GetDataStr
         {
             get
             {
-                return this.dataStr;
+                return this._dataStr;
             }
             set
             {
-                this.dataStr = value;
+                this._dataStr = value;
             }
         }
 
-        public override int input1
+        public override int Input1
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 6)
-                        return (data[6] & 0x1);
+                    if (this._connection.NumOfPoints > 6)
+                        return (_data[6] & 0x1);
                     else
                         return 0;
                 }
@@ -938,14 +922,14 @@ namespace HBM.WT.API.WTX
 
 
         }
-        public override int input2
+        public override int Input2
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 6)
-                        return ((data[6] & 0x2) >> 1);
+                    if (this._connection.NumOfPoints > 6)
+                        return ((_data[6] & 0x2) >> 1);
                     else
                         return 0;
                 }
@@ -955,14 +939,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int input3
+        public override int Input3
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 6)
-                        return ((data[6] & 0x4) >> 2);
+                    if (this._connection.NumOfPoints > 6)
+                        return ((_data[6] & 0x4) >> 2);
                     else
                         return 0;
                 }
@@ -972,14 +956,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int input4
+        public override int Input4
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 6)
-                        return ((data[6] & 0x8) >> 3);
+                    if (this._connection.NumOfPoints > 6)
+                        return ((_data[6] & 0x8) >> 3);
                     else
                         return 0;
                 }
@@ -989,14 +973,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int output1
+        public override int Output1
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 7)
-                        return (data[7] & 0x1);
+                    if (this._connection.NumOfPoints > 7)
+                        return (_data[7] & 0x1);
                     else
                         return 0;
                 }
@@ -1006,14 +990,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int output2
+        public override int Output2
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 7)
-                        return ((data[7] & 0x2) >> 1);
+                    if (this._connection.NumOfPoints > 7)
+                        return ((_data[7] & 0x2) >> 1);
                     else
                         return 0;
                 }
@@ -1023,14 +1007,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int output3
+        public override int Output3
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 7)
-                        return ((data[7] & 0x4) >> 2);
+                    if (this._connection.NumOfPoints > 7)
+                        return ((_data[7] & 0x4) >> 2);
                     else
                         return 0;
                 }
@@ -1040,14 +1024,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int output4
+        public override int Output4
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 7)
-                        return ((data[7] & 0x8) >> 3);
+                    if (this._connection.NumOfPoints > 7)
+                        return ((_data[7] & 0x8) >> 3);
                     else
                         return 0;
                 }
@@ -1057,14 +1041,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int limitStatus1
+        public override int LimitStatus1
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return (data[8] & 0x1);
+                    if (this._connection.NumOfPoints > 8)
+                        return (_data[8] & 0x1);
                     else
                         return 0;
                 }
@@ -1074,14 +1058,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int limitStatus2
+        public override int LimitStatus2
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x2) >> 1);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x2) >> 1);
                     else
                         return 0;
                 }
@@ -1091,14 +1075,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int limitStatus3
+        public override int LimitStatus3
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x4) >> 2);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x4) >> 2);
                     else
                         return 0;
                 }
@@ -1108,14 +1092,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int limitStatus4
+        public override int LimitStatus4
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x8) >> 3);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x8) >> 3);
                     else
                         return 0;
                 }
@@ -1125,14 +1109,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMemDay
+        public override int WeightMemDay
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 9)
-                        return (data[9]);
+                    if (this._connection.NumOfPoints > 9)
+                        return (_data[9]);
                     else
                         return 0;
                 }
@@ -1142,14 +1126,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMemMonth
+        public override int WeightMemMonth
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 10)
-                        return (data[10]);
+                    if (this._connection.NumOfPoints > 10)
+                        return (_data[10]);
                     else
                         return 0;
                 }
@@ -1159,14 +1143,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMemYear
+        public override int WeightMemYear
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 11)
-                        return (data[11]);
+                    if (this._connection.NumOfPoints > 11)
+                        return (_data[11]);
                     else
                         return 0;
                 }
@@ -1176,14 +1160,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMemSeqNumber
+        public override int WeightMemSeqNumber
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 12)
-                        return (data[12]);
+                    if (this._connection.NumOfPoints > 12)
+                        return (_data[12]);
                     else
                         return 0;
                 }
@@ -1193,14 +1177,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMemGross
+        public override int WeightMemGross
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 13)
-                        return (data[13]);
+                    if (this._connection.NumOfPoints > 13)
+                        return (_data[13]);
                     else
                         return 0;
                 }
@@ -1210,14 +1194,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int weightMemNet
+        public override int WeightMemNet
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 14)
-                        return (data[14]);
+                    if (this._connection.NumOfPoints > 14)
+                        return (_data[14]);
                     else
                         return 0;
                 }
@@ -1227,14 +1211,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int coarseFlow
+        public override int CoarseFlow
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return (data[8] & 0x1);
+                    if (this._connection.NumOfPoints > 8)
+                        return (_data[8] & 0x1);
                     else
                         return 0;
                 }
@@ -1244,14 +1228,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int fineFlow
+        public override int FineFlow
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x2) >> 1);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x2) >> 1);
                     else
                         return 0;
                 }
@@ -1261,14 +1245,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int ready
+        public override int Ready
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x4) >> 2);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x4) >> 2);
                     else
                         return 0;
                 }
@@ -1278,14 +1262,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int reDosing
+        public override int ReDosing
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x8) >> 3);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x8) >> 3);
                     else
                         return 0;
                 }
@@ -1295,14 +1279,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int emptying
+        public override int Emptying
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x10) >> 4);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x10) >> 4);
                     else
                         return 0;
                 }
@@ -1312,14 +1296,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int flowError
+        public override int FlowError
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x20) >> 5);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x20) >> 5);
                     else
                         return 0;
                 }
@@ -1329,14 +1313,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int alarm
+        public override int Alarm
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x40) >> 6);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x40) >> 6);
                     else
                         return 0;
                 }
@@ -1346,14 +1330,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int ADC_overUnderload
+        public override int AdcOverUnderload
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x80) >> 7);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x80) >> 7);
                     else
                         return 0;
                 }
@@ -1365,14 +1349,14 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public override int maxDosingTime
+        public override int MaxDosingTime
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x100) >> 8);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x100) >> 8);
                     else
                         return 0;
                 }
@@ -1382,14 +1366,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int legalTradeOp
+        public override int LegalTradeOp
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x200) >> 9);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x200) >> 9);
                     else
                         return 0;
                 }
@@ -1399,14 +1383,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int toleranceErrorPlus
+        public override int ToleranceErrorPlus
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x400) >> 10);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x400) >> 10);
                     else
                         return 0;
                 }
@@ -1416,14 +1400,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int toleranceErrorMinus
+        public override int ToleranceErrorMinus
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x800) >> 11);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x800) >> 11);
                     else
                         return 0;
                 }
@@ -1433,14 +1417,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int statusInput1
+        public override int StatusInput1
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x4000) >> 14);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x4000) >> 14);
                     else
                         return 0;
                 }
@@ -1450,14 +1434,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int generalScaleError
+        public override int GeneralScaleError
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 8)
-                        return ((data[8] & 0x8000) >> 15);
+                    if (this._connection.NumOfPoints > 8)
+                        return ((_data[8] & 0x8000) >> 15);
                     else
                         return 0;
                 }
@@ -1467,14 +1451,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int fillingProcessStatus
+        public override int FillingProcessStatus
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 9)
-                        return data[9];
+                    if (this._connection.NumOfPoints > 9)
+                        return _data[9];
                     else
                         return 0;
                 }
@@ -1484,14 +1468,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int numberDosingResults
+        public override int NumberDosingResults
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 11)
-                        return data[11];
+                    if (this._connection.NumOfPoints > 11)
+                        return _data[11];
                     else
                         return 0;
                 }
@@ -1501,14 +1485,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int dosingResult
+        public override int DosingResult
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 12)
-                        return data[12];
+                    if (this._connection.NumOfPoints > 12)
+                        return _data[12];
                     else
                         return 0;
                 }
@@ -1518,14 +1502,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int meanValueDosingResults
+        public override int MeanValueDosingResults
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 14)
-                        return data[14];
+                    if (this._connection.NumOfPoints > 14)
+                        return _data[14];
                     else
                         return 0;
                 }
@@ -1535,14 +1519,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int standardDeviation
+        public override int StandardDeviation
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 16)
-                        return data[16];
+                    if (this._connection.NumOfPoints > 16)
+                        return _data[16];
                     else
                         return 0;
                 }
@@ -1552,14 +1536,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int totalWeight
+        public override int TotalWeight
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 18)
-                        return data[18];
+                    if (this._connection.NumOfPoints > 18)
+                        return _data[18];
                     else
                         return 0;
                 }
@@ -1569,14 +1553,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int fineFlowCutOffPoint
+        public override int FineFlowCutOffPoint
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 20)
-                        return data[20];
+                    if (this._connection.NumOfPoints > 20)
+                        return _data[20];
                     else
                         return 0;
                 }
@@ -1586,14 +1570,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int coarseFlowCutOffPoint
+        public override int CoarseFlowCutOffPoint
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 22)
-                        return data[22];
+                    if (this._connection.NumOfPoints > 22)
+                        return _data[22];
                     else
                         return 0;
                 }
@@ -1603,14 +1587,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int currentDosingTime
+        public override int CurrentDosingTime
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 24)
-                        return data[24];
+                    if (this._connection.NumOfPoints > 24)
+                        return _data[24];
                     else
                         return 0;
                 }
@@ -1620,14 +1604,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int currentCoarseFlowTime
+        public override int CurrentCoarseFlowTime
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 25)
-                        return data[25];
+                    if (this._connection.NumOfPoints > 25)
+                        return _data[25];
                     else
                         return 0;
                 }
@@ -1637,14 +1621,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int currentFineFlowTime
+        public override int CurrentFineFlowTime
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 26)
-                        return data[26];
+                    if (this._connection.NumOfPoints > 26)
+                        return _data[26];
                     else
                         return 0;
                 }
@@ -1654,14 +1638,14 @@ namespace HBM.WT.API.WTX
                 }
             }
         }
-        public override int parameterSetProduct
+        public override int ParameterSetProduct
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 27)
-                        return data[27];
+                    if (this._connection.NumOfPoints > 27)
+                        return _data[27];
                     else
                         return 0;
                 }
@@ -1673,14 +1657,14 @@ namespace HBM.WT.API.WTX
         }
 
         
-        public int filler_weight_memory_day
+        public int FillerWeightMemoryDay
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 28)
-                        return data[28];
+                    if (this._connection.NumOfPoints > 28)
+                        return _data[28];
                     else
                         return 0;
                 }
@@ -1691,17 +1675,17 @@ namespace HBM.WT.API.WTX
             }
             set
             {
-                this.data[62] = (ushort)value;
+                this._data[62] = (ushort)value;
             }
         }
-        public int filler_weight_memory_month
+        public int FillerWeightMemoryMonth
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 29)
-                        return data[29];
+                    if (this._connection.NumOfPoints > 29)
+                        return _data[29];
                     else
                         return 0;
                 }
@@ -1712,17 +1696,17 @@ namespace HBM.WT.API.WTX
             }
             set
             {
-                this.data[63] = (ushort)value;
+                this._data[63] = (ushort)value;
             }
         }
-        public int filler_weight_memory_year
+        public int FillerWeightMemoryYear
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 30)
-                        return data[30];
+                    if (this._connection.NumOfPoints > 30)
+                        return _data[30];
                     else
                         return 0;
                 }
@@ -1733,18 +1717,18 @@ namespace HBM.WT.API.WTX
             }
             set
             {
-                this.data[64] = (ushort)value;
+                this._data[64] = (ushort)value;
             }
 
         }
-        public int filler_weight_memory_seq_number
+        public int FillerWeightMemorySeqNumber
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 31)
-                        return data[31];
+                    if (this._connection.NumOfPoints > 31)
+                        return _data[31];
                     else
                         return 0;
                 }
@@ -1755,17 +1739,17 @@ namespace HBM.WT.API.WTX
             }
             set
             {
-                this.data[65] = (ushort)value;
+                this._data[65] = (ushort)value;
             }
         }
-        public int filler_weight_memory_gross
+        public int FillerWeightMemoryGross
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 32)
-                        return data[32];
+                    if (this._connection.NumOfPoints > 32)
+                        return _data[32];
                     else
                         return 0;
                 }
@@ -1776,17 +1760,17 @@ namespace HBM.WT.API.WTX
             }
             set
             {
-                this.data[66] = (ushort)value;
+                this._data[66] = (ushort)value;
             }
         }
-        public int filler_weight_memory_net
+        public int FillerWeightMemoryNet
         {
             get
             {
                 try
                 {
-                    if (getConnection.NumOfPoints > 33)
-                        return data[33];
+                    if (this._connection.NumOfPoints > 33)
+                        return _data[33];
                     else
                         return 0;
                 }
@@ -1797,364 +1781,364 @@ namespace HBM.WT.API.WTX
             }
             set
             {
-                this.data[67] = (ushort)value;
+                this._data[67] = (ushort)value;
             }
         }
 
         // Get and Set-Properties of the output words, for the standard and filler application. (To be continued on 04-06-2018 for all the rest...)
 
-        public override int manualTareValue
+        public override int ManualTareValue
         {
             get
             {
-                return this.outputData[0];
+                return this._outputData[0];
             }
             set
             {
-                this.outputData[0] = (ushort)value;
+                this._outputData[0] = (ushort)value;
             }
         }
 
-        public override int limitValue1Input
+        public override int LimitValue1Input
         {
             get
             {
-                return this.outputData[1];
+                return this._outputData[1];
             }
             set
             {
-                this.outputData[1] = (ushort)value;
+                this._outputData[1] = (ushort)value;
             }
         }
 
-        public override int limitValue1Mode
+        public override int LimitValue1Mode
         {
             get
             {
-                return this.outputData[2];
+                return this._outputData[2];
             }
             set
             {
-                this.outputData[2] = (ushort)value;
+                this._outputData[2] = (ushort)value;
             }
         }
 
-        public override int limitValue1ActivationLevelLowerBandLimit
+        public override int LimitValue1ActivationLevelLowerBandLimit
         {
             get
             {
-                return this.outputData[3];
+                return this._outputData[3];
             }
             set
             {
-                this.outputData[3] = (ushort)value;
+                this._outputData[3] = (ushort)value;
             }
         }
 
-        public override int limitValue1HysteresisBandHeight
+        public override int LimitValue1HysteresisBandHeight
         {
             get
             {
-                return this.outputData[4];
+                return this._outputData[4];
             }
             set
             {
-                this.outputData[4] = (ushort)value;
-            }
-        }
-
-
-
-        public override int limitValue2Source
-        {
-            get
-            {
-                return this.outputData[5];
-            }
-            set
-            {
-                this.outputData[5] = (ushort)value;
-            }
-        }
-
-        public override int limitValue2Mode
-        {
-            get
-            {
-                return this.outputData[6];
-            }
-            set
-            {
-                this.outputData[6] = (ushort)value;
-            }
-        }
-
-        public override int limitValue2ActivationLevelLowerBandLimit
-        {
-            get
-            {
-                return this.outputData[7];
-            }
-            set
-            {
-                this.outputData[7] = (ushort)value;
-            }
-        }
-
-        public override int limitValue2HysteresisBandHeight
-        {
-            get
-            {
-                return this.outputData[8];
-            }
-            set
-            {
-                this.outputData[8] = (ushort)value;
+                this._outputData[4] = (ushort)value;
             }
         }
 
 
 
-        public override int limitValue3Source
+        public override int LimitValue2Source
         {
             get
             {
-                return this.outputData[9];
+                return this._outputData[5];
             }
             set
             {
-                this.outputData[9] = (ushort)value;
+                this._outputData[5] = (ushort)value;
             }
         }
 
-        public override int limitValue3Mode
+        public override int LimitValue2Mode
         {
             get
             {
-                return this.outputData[10];
+                return this._outputData[6];
             }
             set
             {
-                this.outputData[10] = (ushort)value;
+                this._outputData[6] = (ushort)value;
             }
         }
 
-        public override int limitValue3ActivationLevelLowerBandLimit
+        public override int LimitValue2ActivationLevelLowerBandLimit
         {
             get
             {
-                return this.outputData[11];
+                return this._outputData[7];
             }
             set
             {
-                this.outputData[11] = (ushort)value;
+                this._outputData[7] = (ushort)value;
             }
         }
 
-        public override int limitValue3HysteresisBandHeight
+        public override int LimitValue2HysteresisBandHeight
         {
             get
             {
-                return this.outputData[12];
+                return this._outputData[8];
             }
             set
             {
-                this.outputData[12] = (ushort)value;
+                this._outputData[8] = (ushort)value;
             }
         }
 
 
-        public override int limitValue4Source
+
+        public override int LimitValue3Source
         {
             get
             {
-                return this.outputData[13];
+                return this._outputData[9];
             }
             set
             {
-                this.outputData[13] = (ushort)value;
+                this._outputData[9] = (ushort)value;
             }
         }
 
-        public override int limitValue4Mode
+        public override int LimitValue3Mode
         {
             get
             {
-                return this.outputData[14];
+                return this._outputData[10];
             }
             set
             {
-                this.outputData[14] = (ushort)value;
+                this._outputData[10] = (ushort)value;
             }
         }
 
-        public override int limitValue4ActivationLevelLowerBandLimit
+        public override int LimitValue3ActivationLevelLowerBandLimit
         {
             get
             {
-                return this.outputData[15];
+                return this._outputData[11];
             }
             set
             {
-                this.outputData[15] = (ushort)value;
+                this._outputData[11] = (ushort)value;
             }
         }
 
-        public override int limitValue4HysteresisBandHeight
+        public override int LimitValue3HysteresisBandHeight
         {
             get
             {
-                return this.outputData[16];
+                return this._outputData[12];
             }
             set
             {
-                this.outputData[16] = (ushort)value;
+                this._outputData[12] = (ushort)value;
+            }
+        }
+
+
+        public override int LimitValue4Source
+        {
+            get
+            {
+                return this._outputData[13];
+            }
+            set
+            {
+                this._outputData[13] = (ushort)value;
+            }
+        }
+
+        public override int LimitValue4Mode
+        {
+            get
+            {
+                return this._outputData[14];
+            }
+            set
+            {
+                this._outputData[14] = (ushort)value;
+            }
+        }
+
+        public override int LimitValue4ActivationLevelLowerBandLimit
+        {
+            get
+            {
+                return this._outputData[15];
+            }
+            set
+            {
+                this._outputData[15] = (ushort)value;
+            }
+        }
+
+        public override int LimitValue4HysteresisBandHeight
+        {
+            get
+            {
+                return this._outputData[16];
+            }
+            set
+            {
+                this._outputData[16] = (ushort)value;
             }
         }
 
 
         public override int ResidualFlowTime
         {
-            get { return this.outputData[17]; }
-            set { this.outputData[17] = (ushort)value; }
+            get { return this._outputData[17]; }
+            set { this._outputData[17] = (ushort)value; }
         }
 
-        public override int targetFillingWeight
+        public override int TargetFillingWeight
         {
-            get { return this.outputData[18]; }
-            set { this.outputData[18] = (ushort)value; }
+            get { return this._outputData[18]; }
+            set { this._outputData[18] = (ushort)value; }
         }
 
-        public override int coarseFlowCutOffPointSet
+        public override int CoarseFlowCutOffPointSet
         {
-            get { return this.outputData[19]; }
-            set { this.outputData[19] = (ushort)value; }
+            get { return this._outputData[19]; }
+            set { this._outputData[19] = (ushort)value; }
         }
 
-        public override int fineFlowCutOffPointSet
+        public override int FineFlowCutOffPointSet
         {
-            get { return this.outputData[20]; }
-            set { this.outputData[20] = (ushort)value; }
+            get { return this._outputData[20]; }
+            set { this._outputData[20] = (ushort)value; }
         }
-        public override int minimumFineFlow
+        public override int MinimumFineFlow
         {
-            get { return this.outputData[21]; }
-            set { this.outputData[21] = (ushort)value; }
-        }
-
-        public override int optimizationOfCutOffPoints
-        {
-            get { return this.outputData[22]; }
-            set { this.outputData[22] = (ushort)value; }
-        }
-        public override int maximumDosingTime
-        {
-            get { return this.outputData[23]; }
-            set { this.outputData[23] = (ushort)value; }
-        }
-        public override int startWithFineFlow
-        {
-            get { return this.outputData[24]; }
-            set { this.outputData[24] = (ushort)value; }
-        }
-        public override int coarseLockoutTime
-        {
-            get { return this.outputData[25]; }
-            set { this.outputData[25] = (ushort)value; }
-        }
-        public override int fineLockoutTime
-        {
-            get { return this.outputData[26]; }
-            set { this.outputData[26] = (ushort)value; }
-        }
-        public override int tareMode
-        {
-            get { return this.outputData[27]; }
-            set { this.outputData[27] = (ushort)value; }
-        }
-        public override int upperToleranceLimit
-        {
-            get { return this.outputData[28]; }
-            set { this.outputData[28] = (ushort)value; }
-        }
-        public override int lowerToleranceLimit
-        {
-            get { return this.outputData[29]; }
-            set { this.outputData[29] = (ushort)value; }
-        }
-        public override int minimumStartWeight
-        {
-            get { return this.outputData[30]; }
-            set { this.outputData[30] = (ushort)value; }
-        }
-        public override int emptyWeight
-        {
-            get { return this.outputData[31]; }
-            set { this.outputData[31] = (ushort)value; }
-        }
-        public override int tareDelay
-        {
-            get { return this.outputData[32]; }
-            set { this.outputData[32] = (ushort)value; }
-        }
-        public override int coarseFlowMonitoringTime
-        {
-            get { return this.outputData[33]; }
-            set { this.outputData[33] = (ushort)value; }
-        }
-        public override int coarseFlowMonitoring
-        {
-            get { return this.outputData[34]; }
-            set { this.outputData[34] = (ushort)value; }
-        }
-        public override int fineFlowMonitoring
-        {
-            get { return this.outputData[35]; }
-            set { this.outputData[35] = (ushort)value; }
-        }
-        public override int fineFlowMonitoringTime
-        {
-            get { return this.outputData[36]; }
-            set { this.outputData[36] = (ushort)value; }
-        }
-        public override int delayTimeAfterFineFlow
-        {
-            get { return this.outputData[37]; }
-            set { this.outputData[37] = (ushort)value; }
-        }
-        public override int activationTimeAfterFineFlow
-        {
-            get { return this.outputData[38]; }
-            set { this.outputData[38] = (ushort)value; }
-        }
-        public override int systematicDifference
-        {
-            get { return this.outputData[39]; }
-            set { this.outputData[39] = (ushort)value; }
-        }
-        public override int downardsDosing
-        {
-            get { return this.outputData[40]; }
-            set { this.outputData[40] = (ushort)value; }
-        }
-        public override int valveControl
-        {
-            get { return this.outputData[41]; }
-            set { this.outputData[41] = (ushort)value; }
-        }
-        public override int emptyingMode
-        {
-            get { return this.outputData[42]; }
-            set { this.outputData[42] = (ushort)value; }
+            get { return this._outputData[21]; }
+            set { this._outputData[21] = (ushort)value; }
         }
 
+        public override int OptimizationOfCutOffPoints
+        {
+            get { return this._outputData[22]; }
+            set { this._outputData[22] = (ushort)value; }
+        }
+        public override int MaximumDosingTime
+        {
+            get { return this._outputData[23]; }
+            set { this._outputData[23] = (ushort)value; }
+        }
+        public override int StartWithFineFlow
+        {
+            get { return this._outputData[24]; }
+            set { this._outputData[24] = (ushort)value; }
+        }
+        public override int CoarseLockoutTime
+        {
+            get { return this._outputData[25]; }
+            set { this._outputData[25] = (ushort)value; }
+        }
+        public override int FineLockoutTime
+        {
+            get { return this._outputData[26]; }
+            set { this._outputData[26] = (ushort)value; }
+        }
+        public override int TareMode
+        {
+            get { return this._outputData[27]; }
+            set { this._outputData[27] = (ushort)value; }
+        }
+        public override int UpperToleranceLimit
+        {
+            get { return this._outputData[28]; }
+            set { this._outputData[28] = (ushort)value; }
+        }
+        public override int LowerToleranceLimit
+        {
+            get { return this._outputData[29]; }
+            set { this._outputData[29] = (ushort)value; }
+        }
+        public override int MinimumStartWeight
+        {
+            get { return this._outputData[30]; }
+            set { this._outputData[30] = (ushort)value; }
+        }
+        public override int EmptyWeight
+        {
+            get { return this._outputData[31]; }
+            set { this._outputData[31] = (ushort)value; }
+        }
+        public override int TareDelay
+        {
+            get { return this._outputData[32]; }
+            set { this._outputData[32] = (ushort)value; }
+        }
+        public override int CoarseFlowMonitoringTime
+        {
+            get { return this._outputData[33]; }
+            set { this._outputData[33] = (ushort)value; }
+        }
+        public override int CoarseFlowMonitoring
+        {
+            get { return this._outputData[34]; }
+            set { this._outputData[34] = (ushort)value; }
+        }
+        public override int FineFlowMonitoring
+        {
+            get { return this._outputData[35]; }
+            set { this._outputData[35] = (ushort)value; }
+        }
+        public override int FineFlowMonitoringTime
+        {
+            get { return this._outputData[36]; }
+            set { this._outputData[36] = (ushort)value; }
+        }
+        public override int DelayTimeAfterFineFlow
+        {
+            get { return this._outputData[37]; }
+            set { this._outputData[37] = (ushort)value; }
+        }
+        public override int ActivationTimeAfterFineFlow
+        {
+            get { return this._outputData[38]; }
+            set { this._outputData[38] = (ushort)value; }
+        }
+        public override int SystematicDifference
+        {
+            get { return this._outputData[39]; }
+            set { this._outputData[39] = (ushort)value; }
+        }
+        public override int DownardsDosing
+        {
+            get { return this._outputData[40]; }
+            set { this._outputData[40] = (ushort)value; }
+        }
+        public override int ValveControl
+        {
+            get { return this._outputData[41]; }
+            set { this._outputData[41] = (ushort)value; }
+        }
+        public override int EmptyingMode
+        {
+            get { return this._outputData[42]; }
+            set { this._outputData[42] = (ushort)value; }
+        }
 
 
-        public bool get_is_net
+
+        public bool GetIsNet
         {
             get
             {
-                return this.isNet;
+                return this._isNet;
             }
         }
 
@@ -2165,7 +2149,7 @@ namespace HBM.WT.API.WTX
         // In the following methods the different options for the single integer values are used to define and
         // interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
 
-        public string netGrossValueStringComment(int value, int decimals)
+        public string NetGrossValueStringComment(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";
@@ -2185,19 +2169,19 @@ namespace HBM.WT.API.WTX
             return returnvalue;
         }
 
-        public string weightMovingStringComment()
+        public string WeightMovingStringComment()
         {
-            if (this.weightMoving == 0)
+            if (this.WeightMoving == 0)
                 return "0=Weight is not moving.";
             else
-                if (this.weightMoving == 1)
+                if (this.WeightMoving == 1)
                 return "1=Weight is moving";
             else
                 return "Error";
         }
-        public string limitStatusStringComment()
+        public string LimitStatusStringComment()
         {
-            switch (this.limitStatus)
+            switch (this.LimitStatus)
             {
                 case 0:
                     return "Weight within limits";
@@ -2211,26 +2195,26 @@ namespace HBM.WT.API.WTX
                     return "Error.";
             }
         }
-        public string weightTypeStringComment()
+        public string WeightTypeStringComment()
         {
-            if (this.weightType == 0)
+            if (this.WeightType == 0)
             {
-                this.isNet = false;
+                this._isNet = false;
                 return "gross";
             }
             else
-                if (this.weightType == 1)
+                if (this.WeightType == 1)
             {
-                this.isNet = true;
+                this._isNet = true;
                 return "net";
             }
             else
 
                 return "error";
         }
-        public string scaleRangeStringComment()
+        public string ScaleRangeStringComment()
         {
-            switch (this.scaleRange)
+            switch (this.ScaleRange)
             {
                 case 0:
                     return "Range 1";
@@ -2242,21 +2226,21 @@ namespace HBM.WT.API.WTX
                     return "error";
             }
         }
-        public string applicationModeStringComment()
+        public string ApplicationModeStringComment()
         {
-            if (this.applicationMode == 0)
+            if (this.ApplicationMode == 0)
                 return "Standard";
             else
 
-                if (this.applicationMode == 2 || this.applicationMode == 1)  // Will be changed to '2', so far '1'. 
+                if (this.ApplicationMode == 2 || this.ApplicationMode == 1)  // Will be changed to '2', so far '1'. 
                 return "Filler";
             else
 
                 return "error";
         }
-        public string unitStringComment()
+        public string UnitStringComment()
         {
-            switch (this.unit)
+            switch (this.Unit)
             {
                 case 0:
                     return "kg";
@@ -2270,12 +2254,12 @@ namespace HBM.WT.API.WTX
                     return "error";
             }
         }
-        public string statusStringComment()
+        public string StatusStringComment()
         {
-            if (this.status == 1)
+            if (this.Status == 1)
                 return "Execution OK!";
             else
-                if (this.status != 1)
+                if (this.Status != 1)
                 return "Execution not OK!";
             else
                 return "error.";
@@ -2285,23 +2269,23 @@ namespace HBM.WT.API.WTX
 
 
         // This method sets the value for the nominal weight in the WTX.
-        public void Calibrate(int calibrationValue, string calibration_weight_Str)
+        public void Calibrate(int calibrationValue, string calibrationWeightStr)
         {
             //write reg 46, CalibrationWeight         
 
-            this.writeOutputWordS32(calibrationValue, 46, Write_DataReceived);
+            this.WriteOutputWordS32(calibrationValue, 46, Write_DataReceived);
 
             //write reg 50, 0x7FFFFFFF
 
-            this.writeOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
+            this.WriteOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
 
             Console.Write(".");
 
             this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
 
-            this.restartTimer();
+            this.RestartTimer();
 
-            this.isCalibrating = true;
+            this._isCalibrating = true;
 
             // Check if the values of the WTX device are equal to the calibration value. It is also checked within a certain interval if the measurement is noisy.
             if ((this.NetValue != calibrationValue || this.GrossValue != calibrationValue))
@@ -2334,39 +2318,39 @@ namespace HBM.WT.API.WTX
 
         // Calculates the values for deadload and nominal load in d from the inputs in mV/V
         // and writes the into the WTX registers.
-        public void Calculate(double Preload, double Capacity)
+        public void Calculate(double preload, double capacity)
         {
-            double MultiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
+            double multiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
 
-            double DPreload = Preload * MultiplierMv2D;
-            double DNominalLoad = DPreload + (Capacity * MultiplierMv2D);
+            double dPreload = preload * multiplierMv2D;
+            double dNominalLoad = dPreload + (capacity * multiplierMv2D);
 
-            this.stopTimer();
+            this.StopTimer();
 
             //write reg 48, DPreload;         
 
-            this.writeOutputWordS32(Convert.ToInt32(DPreload), 48, Write_DataReceived);
+            this.WriteOutputWordS32(Convert.ToInt32(dPreload), 48, Write_DataReceived);
 
             this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
 
             //write reg 50, DNominalLoad;          
 
-            this.writeOutputWordS32(Convert.ToInt32(DNominalLoad), 50, Write_DataReceived);
+            this.WriteOutputWordS32(Convert.ToInt32(dNominalLoad), 50, Write_DataReceived);
 
             this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
 
-            this.isCalibrating = true;
+            this._isCalibrating = true;
 
-            this.restartTimer();
+            this.RestartTimer();
         }
 
         public void MeasureZero()
         {
-            this.stopTimer();
+            this.StopTimer();
 
             //todo: write reg 48, 0x7FFFFFFF
 
-            this.writeOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);
+            this.WriteOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);
 
             Console.Write(".");
 
@@ -2392,8 +2376,8 @@ namespace HBM.WT.API.WTX
 
         public bool Calibrating
         {
-            get { return this.isCalibrating; }
-            set { this.isCalibrating = value; }
+            get { return this._isCalibrating; }
+            set { this._isCalibrating = value; }
         }
     }
 }

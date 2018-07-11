@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using HBM.WT.API;
-using HBM.WT.API.WTX.Modbus;
+using HBM.WT.API.WTX.Jet;
+
 
 namespace HBM.WT.API.WTX
 {
@@ -17,31 +17,30 @@ namespace HBM.WT.API.WTX
 
     };
 
-    public class WTXJet : BaseWTDevice
+    public class WtxJet : BaseWtDevice
     {
-        private string[] data_str_arr;
-        private ushort[] data;
-        private INetConnection m_Connection;
-        private string ipAddr;
-        private bool dataReceived;
+        private string[] _dataStrArr;
+        private ushort[] _data;
+        private JetBusConnection _connection;
+        private bool _dataReceived;
 
         public override event Func<object, EventArgs, Task> Shutdown;
         public override event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
 
         private struct ParameterKeys
         {
-            public const string MeasuredValue = "601A/01";      // _601A_01 
+            public const string MEASURED_VALUE = "601A/01";      // _601A_01 
             
-            public const string GrossValue = "6144/00";
-            public const string ZeroValue  = "6142/00";
-            public const string TareValue  = "6143/00";
-            public const string Decimals   = "6013/01";
+            public const string GROSS_VALUE = "6144/00";
+            public const string ZERO_VALUE  = "6142/00";
+            public const string TARE_VALUE  = "6143/00";
+            public const string DECIMALS   = "6013/01";
 
-            public const string dosingCounter= "NDS";
-            public const string dosingStatus = "SDO";
-            public const string dosingResult = "FRS1";
+            public const string DOSING_COUNTER= "NDS";
+            public const string DOSING_STATUS = "SDO";
+            public const string DOSING_RESULT = "FRS1";
 
-            public const string weightMovingDetection = "6153/00";
+            public const string WEIGHT_MOVING_DETECTION = "6153/00";
         }
 
         /*
@@ -66,38 +65,36 @@ namespace HBM.WT.API.WTX
         
         */
 
-        public WTXJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
+        public WtxJet(JetBusConnection connection)  // ParameterProperty umändern 
         {
-            m_Connection = connection;
-
-            this.ipAddr = "172.19.103.8";
-
-            this.dataReceived = false;
-            data_str_arr = new string[59];
-            data = new ushort[59];
+            _connection = connection;
+            
+            this._dataReceived = false;
+            _dataStrArr = new string[59];
+            _data = new ushort[59];
 
             for (int index = 0; index < 59; index++)
-                data[index] = 0x00;
+                _data[index] = 0x00;
 
-            m_Connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
+            _connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
         }
 
 
-        public override void initialize_timer(int timer_interval)
+        public override void initialize_timer(int timerInterval)
         {
             throw new NotImplementedException();
         }
 
 
-        public override bool isDataReceived
+        public override bool IsDataReceived
         {
             get
             {
-                return this.dataReceived;
+                return this._dataReceived;
             }
             set
             {
-                this.dataReceived = value;
+                this._dataReceived = value;
             }
         }
         public override void Calibration(ushort command)
@@ -117,17 +114,17 @@ namespace HBM.WT.API.WTX
             throw new NotImplementedException();
         }
 
-        public override void ReadDoWork(object sender, DoWorkEventArgs dowork_asynchronous)
+        public override void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous)
         {
             throw new NotImplementedException();
         }
 
-        public override IDeviceData asyncReadData(BackgroundWorker worker)
+        public override IDeviceData AsyncReadData(BackgroundWorker worker)
         {
             throw new NotImplementedException();
         }
 
-        public override IDeviceData syncReadData()
+        public override IDeviceData SyncReadData()
         {
             throw new NotImplementedException();
         }
@@ -153,20 +150,20 @@ namespace HBM.WT.API.WTX
             throw new NotImplementedException();
         }
 
-        public override ushort[] getValuesAsync()
+        public override ushort[] GetValuesAsync()
         {
             throw new NotImplementedException();
         }
 
         //public override void UpdateEvent(object sender, MessageEvent<ushort> e) { }
 
-        public override ushort[] getDataUshort { get { return new ushort[1]; } set { this.data = value;    } }
+        public override ushort[] GetDataUshort { get { return new ushort[1]; } set { this._data = value;    } }
 
         public override int NetValue
         {
             get
             {
-                return this.m_Connection.Read<int>(ParameterKeys.MeasuredValue);
+                return this._connection.Read<int>(ParameterKeys.MEASURED_VALUE);
             }
         }
 
@@ -175,185 +172,182 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.m_Connection.Read<int>(ParameterKeys.GrossValue);        // GrossValue = "6144/00";
+                return this._connection.Read<int>(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
             }
             
         }
 
-        public override int generalWeightError { get { return 1; } }       // data[3]
-        public override int scaleAlarmTriggered { get { return 1; } }      // data[4]
-        public override int limitStatus { get { return 1; } }               // data[5]
+        public override int GeneralWeightError { get { return 1; } }       // data[3]
+        public override int ScaleAlarmTriggered { get { return 1; } }      // data[4]
+        public override int LimitStatus { get { return 1; } }               // data[5]
 
-        public override int weightMoving
+        public override int WeightMoving
         {
             get
             {
-                return this.m_Connection.Read<int>(ParameterKeys.weightMovingDetection);
+                return this._connection.Read<int>(ParameterKeys.WEIGHT_MOVING_DETECTION);
             }
         }              // data[6]
 
 
-        public override int scaleSealIsOpen { get { return 1; } }         // data[7]
-        public override int manualTare { get { return 1; } }                // data[8]
-        public override int weightType { get { return 1; } }                // data[9]
-        public override int scaleRange { get { return 1; } }                // data[10]
-        public override int zeroRequired { get { return 1; } }              // data[11]
-        public override int weightWithinTheCenterOfZero { get { return 1; } }   // data[12]
-        public override int weightInZeroRange { get { return 1; } }               // data[13]
-        public override int applicationMode { get { return 1; } }           // data[14]
+        public override int ScaleSealIsOpen { get { return 1; } }         // data[7]
+        public override int ManualTare { get { return 1; } }                // data[8]
+        public override int WeightType { get { return 1; } }                // data[9]
+        public override int ScaleRange { get { return 1; } }                // data[10]
+        public override int ZeroRequired { get { return 1; } }              // data[11]
+        public override int WeightWithinTheCenterOfZero { get { return 1; } }   // data[12]
+        public override int WeightInZeroRange { get { return 1; } }               // data[13]
+        public override int ApplicationMode { get { return 1; } }           // data[14]
 
-        public override int decimals
+        public override int Decimals
         {
             get
             {
-                return m_Connection.Read<int>(ParameterKeys.Decimals);   // Decimals = "DPT";
+                return _connection.Read<int>(ParameterKeys.DECIMALS);   // Decimals = "DPT";
             }
         }     // data[15]
 
-        public override int unit { get { return 1; }}                       // data[16]
-        public override int handshake { get { return 1; }}                  // data[17]
-        public override int status { get { return 1; }}                     // data[18]
+        public override int Unit { get { return 1; }}                       // data[16]
+        public override int Handshake { get { return 1; }}                  // data[17]
+        public override int Status { get { return 1; }}                     // data[18]
 
-        public override int input1 { get { return 1; } }            // data[19]    // IS1
-        public override int input2 { get { return 1; } }            // data[20]    // IS2
-        public override int input3 { get { return 1; } }            // data[21]    // IS3
-        public override int input4 { get { return 1; } }            // data[22]    // IS4 
-        public override int output1 { get { return 1; } }           // data[23]    // OS1
-        public override int output2 { get { return 1; } }           // data[24]    // OS2
-        public override int output3 { get { return 1; } }           // data[25]    // OS3
-        public override int output4 { get { return 1; } }           // data[26]    // OS4 
+        public override int Input1 { get { return 1; } }            // data[19]    // IS1
+        public override int Input2 { get { return 1; } }            // data[20]    // IS2
+        public override int Input3 { get { return 1; } }            // data[21]    // IS3
+        public override int Input4 { get { return 1; } }            // data[22]    // IS4 
+        public override int Output1 { get { return 1; } }           // data[23]    // OS1
+        public override int Output2 { get { return 1; } }           // data[24]    // OS2
+        public override int Output3 { get { return 1; } }           // data[25]    // OS3
+        public override int Output4 { get { return 1; } }           // data[26]    // OS4 
 
-        public override int limitStatus1 { get { return 1; } }       // data[27]
-        public override int limitStatus2 { get { return 1; } }       // data[28]
-        public override int limitStatus3 { get { return 1; } }       // data[29]
-        public override int limitStatus4 { get { return 1; } }       // data[30]
+        public override int LimitStatus1 { get { return 1; } }       // data[27]
+        public override int LimitStatus2 { get { return 1; } }       // data[28]
+        public override int LimitStatus3 { get { return 1; } }       // data[29]
+        public override int LimitStatus4 { get { return 1; } }       // data[30]
 
-        public override int weightMemDay { get { return 1; } }          // data[31]
-        public override int weightMemMonth { get { return 1; } }        // data[32]
-        public override int weightMemYear { get { return 1; } }         // data[33]
-        public override int weightMemSeqNumber { get { return 1; } }   // data[34]
-        public override int weightMemGross { get { return 1; } }        // data[35]
-        public override int weightMemNet { get { return 1; } }          // data[36]
+        public override int WeightMemDay { get { return 1; } }          // data[31]
+        public override int WeightMemMonth { get { return 1; } }        // data[32]
+        public override int WeightMemYear { get { return 1; } }         // data[33]
+        public override int WeightMemSeqNumber { get { return 1; } }   // data[34]
+        public override int WeightMemGross { get { return 1; } }        // data[35]
+        public override int WeightMemNet { get { return 1; } }          // data[36]
 
-        public override int coarseFlow { get { return 1; } }                // data[37]
-        public override int fineFlow { get { return 1; } }                  // data[38]
-        public override int ready { get { return 1; } }                      // data[39]
-        public override int reDosing { get { return 1; } }                  // data[40]
-        public override int emptying { get { return 1; } }                   // data[41]
-        public override int flowError { get { return 1; } }                 // data[42]
-        public override int alarm { get { return 1; } }                      // data[43]
-        public override int ADC_overUnderload { get { return 1; } }     // data[44]
-        public override int maxDosingTime { get { return 1; } }            // data[45]
-        public override int legalTradeOp { get { return 1; } }  // data[46]
-        public override int toleranceErrorPlus { get { return 1; } }       // data[47]
-        public override int toleranceErrorMinus { get { return 1; } }      // data[48]
-        public override int statusInput1 { get { return 1; } }     // data[49]
-        public override int generalScaleError { get { return 1; } }        // data[50]
+        public override int CoarseFlow { get { return 1; } }                // data[37]
+        public override int FineFlow { get { return 1; } }                  // data[38]
+        public override int Ready { get { return 1; } }                      // data[39]
+        public override int ReDosing { get { return 1; } }                  // data[40]
+        public override int Emptying { get { return 1; } }                   // data[41]
+        public override int FlowError { get { return 1; } }                 // data[42]
+        public override int Alarm { get { return 1; } }                      // data[43]
+        public override int AdcOverUnderload { get { return 1; } }     // data[44]
+        public override int MaxDosingTime { get { return 1; } }            // data[45]
+        public override int LegalTradeOp { get { return 1; } }  // data[46]
+        public override int ToleranceErrorPlus { get { return 1; } }       // data[47]
+        public override int ToleranceErrorMinus { get { return 1; } }      // data[48]
+        public override int StatusInput1 { get { return 1; } }     // data[49]
+        public override int GeneralScaleError { get { return 1; } }        // data[50]
 
-        public override int fillingProcessStatus
+        public override int FillingProcessStatus
         {
             get
             {
-                return this.m_Connection.Read<int>(ParameterKeys.dosingStatus);
+                return this._connection.Read<int>(ParameterKeys.DOSING_STATUS);
             }
         }             // data[51]
 
-        public override int numberDosingResults
+        public override int NumberDosingResults
         {
             get
             {
-                return this.m_Connection.Read<int>(ParameterKeys.dosingCounter);
+                return this._connection.Read<int>(ParameterKeys.DOSING_COUNTER);
             }
         }            // data[52]
 
-        public override int dosingResult
+        public override int DosingResult
         {
             get
             {
-                return this.m_Connection.Read<int>(ParameterKeys.dosingResult);
+                return this._connection.Read<int>(ParameterKeys.DOSING_RESULT);
             }
         }           // data[53]
 
-        public override int meanValueDosingResults { get { return 1; } }      // data[54]
-        public override int standardDeviation { get { return 1; } }                // data[55]
-        public override int totalWeight { get { return 1; } }                      // data[56]
-        public override int fineFlowCutOffPoint { get { return 1; } }           // data[57]
-        public override int coarseFlowCutOffPoint { get { return 1; } }         // data[58]
-        public override int currentDosingTime { get { return 1; } }                // data[59]
-        public override int currentCoarseFlowTime { get { return 1; } }           // data[60]
-        public override int currentFineFlowTime { get { return 1; } }             // data[61]
-        public override int parameterSetProduct { get { return 1; } }                     // data[62]
+        public override int MeanValueDosingResults { get { return 1; } }      // data[54]
+        public override int StandardDeviation { get { return 1; } }                // data[55]
+        public override int TotalWeight { get { return 1; } }                      // data[56]
+        public override int FineFlowCutOffPoint { get { return 1; } }           // data[57]
+        public override int CoarseFlowCutOffPoint { get { return 1; } }         // data[58]
+        public override int CurrentDosingTime { get { return 1; } }                // data[59]
+        public override int CurrentCoarseFlowTime { get { return 1; } }           // data[60]
+        public override int CurrentFineFlowTime { get { return 1; } }             // data[61]
+        public override int ParameterSetProduct { get { return 1; } }                     // data[62]
 
-        public override int manualTareValue { get; set; }
-        public override int limitValue1Input { get; set; }
-        public override int limitValue1Mode { get; set; }
-        public override int limitValue1ActivationLevelLowerBandLimit { get; set; }
-        public override int limitValue1HysteresisBandHeight { get; set; }
+        public override int ManualTareValue { get; set; }
+        public override int LimitValue1Input { get; set; }
+        public override int LimitValue1Mode { get; set; }
+        public override int LimitValue1ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue1HysteresisBandHeight { get; set; }
 
         // Output words for the standard application: Not used so far
 
-        public override int limitValue2Source { get; set; }
-        public override int limitValue2Mode { get; set; }
-        public override int limitValue2ActivationLevelLowerBandLimit { get; set; }
-        public override int limitValue2HysteresisBandHeight { get; set; }
-        public override int limitValue3Source { get; set; }
-        public override int limitValue3Mode { get; set; }
-        public override int limitValue3ActivationLevelLowerBandLimit { get; set; }
-        public override int limitValue3HysteresisBandHeight { get; set; }
-        public override int limitValue4Source { get; set; }
-        public override int limitValue4Mode { get; set; }
-        public override int limitValue4ActivationLevelLowerBandLimit { get; set; }
-        public override int limitValue4HysteresisBandHeight { get; set; }
+        public override int LimitValue2Source { get; set; }
+        public override int LimitValue2Mode { get; set; }
+        public override int LimitValue2ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue2HysteresisBandHeight { get; set; }
+        public override int LimitValue3Source { get; set; }
+        public override int LimitValue3Mode { get; set; }
+        public override int LimitValue3ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue3HysteresisBandHeight { get; set; }
+        public override int LimitValue4Source { get; set; }
+        public override int LimitValue4Mode { get; set; }
+        public override int LimitValue4ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue4HysteresisBandHeight { get; set; }
 
         // Output words for the filler application: Not used so far
 
 
         public override int ResidualFlowTime { get; set; }
-        public override int targetFillingWeight { get; set; }
-        public override int coarseFlowCutOffPointSet { get; set; }
-        public override int fineFlowCutOffPointSet { get; set; }
-        public override int minimumFineFlow { get; set; }
-        public override int optimizationOfCutOffPoints { get; set; }
-        public override int maximumDosingTime { get; set; }
-        public override int startWithFineFlow { get; set; }
-        public override int coarseLockoutTime { get; set; }
-        public override int fineLockoutTime { get; set; }
-        public override int tareMode { get; set; }
-        public override int upperToleranceLimit { get; set; }
-        public override int lowerToleranceLimit { get; set; }
-        public override int minimumStartWeight { get; set; }
-        public override int emptyWeight { get; set; }
-        public override int tareDelay { get; set; }
-        public override int coarseFlowMonitoringTime { get; set; }
-        public override int coarseFlowMonitoring { get; set; }
-        public override int fineFlowMonitoring { get; set; }
-        public override int fineFlowMonitoringTime { get; set; }
-        public override int delayTimeAfterFineFlow { get; set; }
-        public override int activationTimeAfterFineFlow { get; set; }
-        public override int systematicDifference { get; set; }
-        public override int downardsDosing { get; set; }
-        public override int valveControl { get; set; }
-        public override int emptyingMode { get; set; }
+        public override int TargetFillingWeight { get; set; }
+        public override int CoarseFlowCutOffPointSet { get; set; }
+        public override int FineFlowCutOffPointSet { get; set; }
+        public override int MinimumFineFlow { get; set; }
+        public override int OptimizationOfCutOffPoints { get; set; }
+        public override int MaximumDosingTime { get; set; }
+        public override int StartWithFineFlow { get; set; }
+        public override int CoarseLockoutTime { get; set; }
+        public override int FineLockoutTime { get; set; }
+        public override int TareMode { get; set; }
+        public override int UpperToleranceLimit { get; set; }
+        public override int LowerToleranceLimit { get; set; }
+        public override int MinimumStartWeight { get; set; }
+        public override int EmptyWeight { get; set; }
+        public override int TareDelay { get; set; }
+        public override int CoarseFlowMonitoringTime { get; set; }
+        public override int CoarseFlowMonitoring { get; set; }
+        public override int FineFlowMonitoring { get; set; }
+        public override int FineFlowMonitoringTime { get; set; }
+        public override int DelayTimeAfterFineFlow { get; set; }
+        public override int ActivationTimeAfterFineFlow { get; set; }
+        public override int SystematicDifference { get; set; }
+        public override int DownardsDosing { get; set; }
+        public override int ValveControl { get; set; }
+        public override int EmptyingMode { get; set; }
 
 
 
-        public override BaseWTDevice getDeviceAbstract { get; }
+        public override BaseWtDevice GetDeviceAbstract { get; }
 
-
-        public override ModbusTCPConnection getConnection { get; }
-
-
+        
         public override IDeviceData DeviceValues { get; }
 
-        public override string[] getDataStr
+        public override string[] GetDataStr
         {
             get
             {
-                return this.data_str_arr;
+                return this._dataStrArr;
             }
             set
             {
-                this.data_str_arr = value;
+                this._dataStrArr = value;
             }
         }
 
@@ -361,7 +355,7 @@ namespace HBM.WT.API.WTX
 *In the following methods the different options for the single integer values are used to define and
 *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
 */
-        public string netGrossValueStringComment(int value, int decimals)
+        public string NetGrossValueStringComment(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";
@@ -381,9 +375,9 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public string unitStringComment()
+        public string UnitStringComment()
         {
-            switch (this.unit)
+            switch (this.Unit)
             {
                 case 0:
                     return "kg";
@@ -470,12 +464,12 @@ namespace HBM.WT.API.WTX
                 }
         */
 
-        public string statusStringComment()
+        public string StatusStringComment()
         {
-            if (this.status == 1)
+            if (this.Status == 1)
                 return "Execution OK!";
             else
-                if (this.status != 1)
+                if (this.Status != 1)
                 return "Execution not OK!";
             else
                 return "error.";

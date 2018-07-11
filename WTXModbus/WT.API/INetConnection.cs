@@ -1,5 +1,4 @@
-﻿using HBM.WT.API;
-using System;
+﻿using System;
 
 namespace HBM.WT.API  
 {
@@ -21,7 +20,6 @@ namespace HBM.WT.API
 
         event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
 
-        void DisconnectDevice();
     }
 
     /// <summary>
@@ -29,19 +27,17 @@ namespace HBM.WT.API
     /// </summary>
     public class InterfaceException : Exception
     {
-        private uint m_Error;
-
-        public InterfaceException(Exception innerException, uint error) 
-            :base(innerException.Message, innerException) {
-
-            m_Error = error;
+        public InterfaceException(Exception innerException, uint error) : base(innerException.Message, innerException)
+        {
+            Error = error;
         }
 
-        public InterfaceException(uint error) {
-            m_Error = error;
+        public InterfaceException(uint error)
+        {
+            Error = error;
         }
 
-        public uint Error { get { return m_Error; } }
+        public uint Error { get; }
     }
 
 

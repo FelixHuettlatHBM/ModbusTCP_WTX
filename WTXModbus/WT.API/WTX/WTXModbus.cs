@@ -13,12 +13,6 @@ using System.Timers;
 
 namespace HBM.WT.API.WTX
 {
-    /*
-    public enum ParameterEnum : uint
-    {
-        MeasuredValue = 0x200001,
-    }
-    */
     public class WTXModbus : BaseWTDevice     // ParameterProperty umändern 
     {
         //public ParameterProperty(INetConnection connection) : base(connection) { }

@@ -20,7 +20,6 @@ namespace WtConsole
     {
         private static BaseWTDevice WTXObj;
 
-        private static System.Timers.Timer aTimer;
         private static String ipAddr;
         private static int timer_interval;
         private static bool compare_test;

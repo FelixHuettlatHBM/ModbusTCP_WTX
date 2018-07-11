@@ -16,7 +16,6 @@ using HBM.WT.API;
 using HBM.WT.API.WTX;
 using WTXJetGUISimple.Properties;
 using HBM.WT.API.WTX.Jet;
-using HBM.WT.API;
 
 namespace WTXGUISimple
 {

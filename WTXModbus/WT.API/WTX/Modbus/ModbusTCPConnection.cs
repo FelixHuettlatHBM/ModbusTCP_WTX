@@ -34,9 +34,7 @@ namespace HBM.WT.API.WTX.Modbus
         private string iP_Address;
         private int sending_interval;  // Timer1.Interval = Sending Interval 
         private int port;
-        private bool connected;
-
-        private System.Timers.Timer aTimer;
+        private bool connected;    
 
         // Declaration of the event Eventhandler. For the message information from the register.
         // public event EventHandler<MessageEvent<ushort>> RaiseDataEvent;
@@ -56,6 +54,8 @@ namespace HBM.WT.API.WTX.Modbus
             sending_interval = 5;       // Timer1.Interval = Sending Interval 
         }
 
+        // Alternative : Without Generics 
+
         // This method is called from the device class "WTX120" and calls the method ReadRegisterPublishing(e:MessageEvent)
         // to create a new MessageEvent to read the register of the device. 
         /*
@@ -65,9 +65,7 @@ namespace HBM.WT.API.WTX.Modbus
                 this.ReadRegisterPublishing(new MessageEvent(this.data));
         }
         */
-
-
-        // Neu : 29.3.2018
+        
         public T Read<T>(object index)
         {
             if (this.connected == true)

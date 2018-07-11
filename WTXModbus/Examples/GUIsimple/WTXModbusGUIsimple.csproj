@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NModbus4, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\WeighingLibs\packages\NModbus4.3.0.0-alpha2\lib\net45\NModbus4.dll</HintPath>
+    <Reference Include="NModbus4">
+      <HintPath>..\..\..\..\WeighingLibs\packages\NModbus4.3.0.0-alpha2\lib\net45\NModbus4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

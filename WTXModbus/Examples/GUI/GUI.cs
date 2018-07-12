@@ -276,7 +276,7 @@ namespace WTXModbusExamples
             label1.Text = "Only for Standard application:";       // label for information : Only output words for standard application
             label2.Text = "Only for Filler application:";         // label for information : Only output words for filler application 
             toolStripStatusLabel5.Text = "38";
-            if (_wtxObj.GetConnection.IsConnected == true)
+            if (_wtxObj.Connection.IsConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
@@ -297,14 +297,14 @@ namespace WTXModbusExamples
         // For the connection status, IP address, application mode and number of inputs. 
         private void GUI_Load(object sender, EventArgs e)
         {
-            if (_wtxObj.GetConnection.IsConnected == true)
+            if (_wtxObj.Connection.IsConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.GetConnection.IpAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
             toolStripStatusLabel3.Text = "Mode : " + this._dataStr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.GetConnection.NumOfPoints; 
+            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.Connection.NumOfPoints; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -312,14 +312,14 @@ namespace WTXModbusExamples
         // "dataStr" array to actualize every element of the data grid in the standard or filler application. 
         public void refresh_values()
         {     
-            if (_wtxObj.GetConnection.IsConnected == true)
+            if (_wtxObj.Connection.IsConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
-            if (_wtxObj.GetConnection.IsConnected == false)
+            if (_wtxObj.Connection.IsConnected == false)
                 toolStripStatusLabel1.Text = "Disconnected";
             
-            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.GetConnection.IpAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
             toolStripStatusLabel3.Text = "Mode : " + this._dataStr[14];                 // index 14 refers to application mode of the Device
-            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.GetConnection.IpAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
 
             //Changing the width of a column:
             /*foreach (DataGridViewTextBoxColumn c in dataGridView1.Columns)
@@ -780,7 +780,7 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            _setObj = new SettingsForm(_wtxObj.GetConnection.IpAddress, this.timer1.Interval, _wtxObj.GetConnection.NumOfPoints, this);
+            _setObj = new SettingsForm(_wtxObj.Connection.IpAddress, this.timer1.Interval, _wtxObj.Connection.NumOfPoints, this);
             _setObj.Show();
         }
 
@@ -789,14 +789,14 @@ namespace WTXModbusExamples
         // After updating the values the tool bar labels on the bottom (f.e. "toolStripStatusLabel2") is rewritten with the new values. 
         public void Setting()
         {
-            _wtxObj.GetConnection.IpAddress = _setObj.GetIpAddress;
-            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.GetConnection.IpAddress;
+            _wtxObj.Connection.IpAddress = _setObj.GetIpAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
 
-            _wtxObj.GetConnection.SendingInterval = _setObj.GetSendingInterval;     
+            _wtxObj.Connection.SendingInterval = _setObj.GetSendingInterval;     
             this.timer1.Interval = _setObj.GetSendingInterval;
 
-            _wtxObj.GetConnection.NumOfPoints = _setObj.GetNumberInputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.GetConnection.NumOfPoints;
+            _wtxObj.Connection.NumOfPoints = _setObj.GetNumberInputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.Connection.NumOfPoints;
         }
 
         // This method changes the GUI concerning the application mode.
@@ -831,7 +831,7 @@ namespace WTXModbusExamples
         {
             _wtxObj.StopTimer();
 
-            _calcCalObj = new CalcCalibration(_wtxObj, _wtxObj.GetConnection.IsConnected);
+            _calcCalObj = new CalcCalibration(_wtxObj, _wtxObj.Connection.IsConnected);
             DialogResult res = _calcCalObj.ShowDialog();
 
             _wtxObj.RestartTimer();
@@ -845,7 +845,7 @@ namespace WTXModbusExamples
         {
             _wtxObj.StopTimer();
 
-            _weightCalObj = new WeightCalibration(_wtxObj, _wtxObj.GetConnection.IsConnected);
+            _weightCalObj = new WeightCalibration(_wtxObj, _wtxObj.Connection.IsConnected);
             DialogResult res = _weightCalObj.ShowDialog();
 
             _wtxObj.RestartTimer();

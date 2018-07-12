@@ -76,7 +76,7 @@ namespace HBM.WT.API.WTX
             for (int index = 0; index < 59; index++)
                 _data[index] = 0x00;
 
-            _connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
+            Connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
         }
 
 
@@ -163,7 +163,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read<int>(ParameterKeys.MEASURED_VALUE);
+                return this.Connection.Read<int>(ParameterKeys.MEASURED_VALUE);
             }
         }
 
@@ -172,7 +172,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read<int>(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
+                return this.Connection.Read<int>(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
             }
             
         }
@@ -185,7 +185,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read<int>(ParameterKeys.WEIGHT_MOVING_DETECTION);
+                return this.Connection.Read<int>(ParameterKeys.WEIGHT_MOVING_DETECTION);
             }
         }              // data[6]
 
@@ -203,7 +203,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return _connection.Read<int>(ParameterKeys.DECIMALS);   // Decimals = "DPT";
+                return Connection.Read<int>(ParameterKeys.DECIMALS);   // Decimals = "DPT";
             }
         }     // data[15]
 
@@ -251,7 +251,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read<int>(ParameterKeys.DOSING_STATUS);
+                return this.Connection.Read<int>(ParameterKeys.DOSING_STATUS);
             }
         }             // data[51]
 
@@ -259,7 +259,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read<int>(ParameterKeys.DOSING_COUNTER);
+                return this.Connection.Read<int>(ParameterKeys.DOSING_COUNTER);
             }
         }            // data[52]
 
@@ -267,7 +267,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read<int>(ParameterKeys.DOSING_RESULT);
+                return this.Connection.Read<int>(ParameterKeys.DOSING_RESULT);
             }
         }           // data[53]
 
@@ -349,6 +349,11 @@ namespace HBM.WT.API.WTX
             {
                 this._dataStrArr = value;
             }
+        }
+
+        public JetBusConnection Connection
+        {
+            get { return _connection; }
         }
 
         /* 

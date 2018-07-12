@@ -30,7 +30,7 @@ namespace WTXGUISimple
         private static String _ipAddr;
         private static int _timerInterval;
 
-        static INetConnection _sConnection;
+        static JetBusConnection _sConnection;
 
         static string _menuRequest = "folow instructions: \n \r"
     + "<read> <parameter> \n"

@@ -45,8 +45,9 @@ namespace WtConsole
             { "test" , TestDeviceLayer },
         };
 
-        static INetConnection _sConnection;
-        
+        static JetBusConnection _jetConnection;
+        static ModbusTcpConnection _modbusConnection;
+
         static void Main(string[] args) {
 
             _previousNetValue = "";
@@ -88,16 +89,16 @@ namespace WtConsole
                         _ipAddr = "wss://" + args[1];
                         Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
 
-                        _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
+                        _jetConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
 
                         Console.WriteLine("OK");
  
                         //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;
 
                         Console.WriteLine("Parameter are fetching: ");
-                        Console.Write((_sConnection as JetBusConnection).BufferToString());
+                        Console.Write((_jetConnection as JetBusConnection).BufferToString());
                         
-                        _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
+                        _wtxObj = new HBM.WT.API.WTX.WtxJet(_jetConnection);
 
                         Console.WriteLine("Parameter fetched");
                         Console.WriteLine("Net value : "   + _wtxObj.NetValue);
@@ -118,10 +119,10 @@ namespace WtConsole
 
                         _ipAddr = args[1];
                         
-                        _sConnection = new ModbusTcpConnection(_ipAddr);
+                        _modbusConnection = new ModbusTcpConnection(_ipAddr);
 
 
-                        _wtxObj = new HBM.WT.API.WTX.WtxModbus(_sConnection, 100);
+                        _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusConnection, _timerInterval);
 
                         // Konstruktor neu : Obj. von ModbusTCPConnection, Timer Intervall
 
@@ -132,10 +133,8 @@ namespace WtConsole
 
                         // Start asynchronous data transfer : Method - Nur bei einer Änderung Werte ausgeben - Was abrufbar ist aus der Klasse Program zu WTX120_Modbus
 
-                        _wtxObj.GetConnection.Connect();
+                        _wtxObj.Connect();
                         
-                        _wtxObj.GetConnection.SendingInterval = _timerInterval;
-
                         //WTXObj.isDataReceived = false;
 
                         thread1.Start();     // Thread für eine Eingabe. Wenn 'e' eingetippt wurde, wird die Anwendung bzgl. Modbus beendet. 
@@ -280,7 +279,7 @@ namespace WtConsole
             private static int ReadParameter(string[] args) {
             Console.Write(args[0] + "Read... ");
             if (args.Length < 2) return -1;
-            int intValue = _sConnection.Read<int>(args[1]);
+            int intValue = _jetConnection.Read<int>(args[1]);
             
             Console.WriteLine(intValue);
             return 0;
@@ -291,7 +290,7 @@ namespace WtConsole
             if (args.Length < 3) return -1;
 
             int value = Convert.ToInt32(args[2]);
-            _sConnection.Write<int>(args[1], value);
+            _jetConnection.Write<int>(args[1], value);
             Console.WriteLine("OK");
 
             return 0;
@@ -299,7 +298,7 @@ namespace WtConsole
 
         private static int ShowProperties (string[] args) {
 
-            BaseWtDevice parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
+            BaseWtDevice parameter = new HBM.WT.API.WTX.WtxJet(_jetConnection);
 
             Type type = parameter.GetType();
 
@@ -330,7 +329,7 @@ namespace WtConsole
             if (true)
             {
 
-                parameter = new HBM.WT.API.WTX.WtxJet(_sConnection);
+                parameter = new HBM.WT.API.WTX.WtxJet(_jetConnection);
 
             } else
             {

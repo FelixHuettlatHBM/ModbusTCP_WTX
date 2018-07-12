@@ -109,7 +109,7 @@ namespace WTXModbus
                 // The connection to the device should be established.   
                 _wtxObj.Connect();                                 // Alternative : WTXObj.getConnection.Connect();  
 
-                if (_wtxObj.GetConnection.IsConnected == true)
+                if (_wtxObj.Connection.IsConnected == true)
                 {
                     Console.WriteLine("\nThe connection has been established successfully.\nThe values of the WTX device are printed on the console ... :");
                 }
@@ -119,7 +119,7 @@ namespace WTXModbus
                     _ipAddress = Console.ReadLine();
                 }
 
-            } while (_wtxObj.GetConnection.IsConnected==false);
+            } while (_wtxObj.Connection.IsConnected==false);
 
 
             //thread1.Start();

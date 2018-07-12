@@ -1,8 +1,0 @@
-.vs
-bin
-obj
-packages
-*.ide
-/WTXModbus/Examples/MyWTX
-WTXModbus/MyWTX.sln
-.axoCover

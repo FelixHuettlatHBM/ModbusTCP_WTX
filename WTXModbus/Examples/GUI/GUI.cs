@@ -42,82 +42,82 @@ namespace WTXModbusExamples
     /// The latter is implemented by an additional form and changes the IP address, number of inputs read out by the register, sending/timer interval. 
     /// A status bar on the bottom shows the actually updated status of the connection ("Connected", "IP address", "Mode", "TCP/Modbus", "NumInputs").
     /// </summary>
-    partial class GUI : Form
+    partial class Gui : Form
     {
-        private static ModbusTCPConnection ModbusObj;
+        private static ModbusTcpConnection _modbusObj;
 
-        private static HBM.WT.API.WTX.WTXModbus WTXObj;
+        private static HBM.WT.API.WTX.WtxModbus _wtxObj;
 
         //private static WTXModbus WTXObj;
 
-        private SettingsForm Set_obj;
+        private SettingsForm _setObj;
 
-        private CalcCalibration CalcCalObj;
-        private WeightCalibration WeightCalObj;
+        private CalcCalibration _calcCalObj;
+        private WeightCalibration _weightCalObj;
 
-        private string[] dataStr;
+        private string[] _dataStr;
 
-        private bool is_standard;
+        private bool _isStandard;
 
-        private string ipAddress;
-        private int timerInterval;
+        private string _ipAddress;
+        private int _timerInterval;
 
-        private int startIndex ;   // Default setting for standard mode. 
-        private int i;
-        private int arrayLength;
+        private int _startIndex ;   // Default setting for standard mode. 
+        private int _i;
+        private int _arrayLength;
 
-        string[] args;
+        string[] _args;
 
         // Constructor of class GUI for the initialisation: 
-        public GUI(string[] argsParam)
+        public Gui(string[] argsParam)
         {
             // Initialize the GUI Form: 
             InitializeComponent();           // Call of this method to initialize the form.
 
-            this.args = argsParam;
+            this._args = argsParam;
 
-            if (args.Length > 0)
+            if (_args.Length > 0)
             {
-                if (args[0] == "modbus" || args[0] == "Modbus")
+                if (_args[0] == "modbus" || _args[0] == "Modbus")
                     toolStripStatusLabel6.Text = "Modbus";
 
-                if (args[0] == "jet" || args[0] == "Jet")
+                if (_args[0] == "jet" || _args[0] == "Jet")
                     toolStripStatusLabel6.Text = "Jetbus";
             }
 
             //Get IPAddress and the timer interval from the command line of the VS project arguments (at "Debug").
-            if (this.args.Length > 1)
+            if (this._args.Length > 1)
             {
-                this.ipAddress = this.args[1];
+                this._ipAddress = this._args[1];
             }
             else
                 MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau.");
 
-            if (this.args.Length > 2)
+            if (this._args.Length > 2)
             {
-                this.timerInterval = Convert.ToInt32(args[2]);
+                this._timerInterval = Convert.ToInt32(_args[2]);
             }
             else
-                this.timerInterval = 200; // Default value for the timer interval.
+                this._timerInterval = 200; // Default value for the timer interval.
 
-            ModbusObj = new ModbusTCPConnection(ipAddress);
-            WTXObj = new HBM.WT.API.WTX.WTXModbus(ModbusObj, this.timerInterval);
+            _modbusObj = new ModbusTcpConnection(_ipAddress);
+            _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusObj, this._timerInterval);
 
-            is_standard = true;      // change between standard and application mode in the GUI. 
-            ModbusObj.IPAddress = ipAddress;
+            _isStandard = true;      // change between standard and application mode in the GUI. 
+            _modbusObj.IpAddress = _ipAddress;
 
-            this.dataStr = new string[59];
+            this._dataStr = new string[59];
 
             for (int i = 0; i < 59; i++)
             {
-                this.dataStr[i] = "0";
+                this._dataStr[i] = "0";
             }
 
             startToolStripMenuItem_Click(this, new EventArgs());
 
-            startIndex = 8;   // Default setting for standard mode. 
-            i = 0;
-            arrayLength = 0;
+            _startIndex = 8;   // Default setting for standard mode. 
+            _i = 0;
+            _arrayLength = 0;
         }
 
         // This method could also load the datagrid at the beginning of the application: For printing the datagrid on the beginning.
@@ -148,7 +148,7 @@ namespace WTXModbusExamples
             dataGridView1.Columns.Add("Input:Content Content_header", "Input:Content Content");   // column 13
             dataGridView1.Columns.Add("Output:Value_header", "Output:Value");                     // column 16
 
-            if (this.is_standard == true) // case 1) Standard application. Initializing the description and a placeholder for the values in the data grid.
+            if (this._isStandard == true) // case 1) Standard application. Initializing the description and a placeholder for the values in the data grid.
             {
                 dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "dataStr[1]", "Net measured", "0", "0", "Control word", "Bit", ".0", "Taring", "Button taring");                                           // row 1 ; dataStr[1]      
                 dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "dataStr[2]", "Gross measured", "0", "0", "Control word", "Bit", ".1", "Gross/Net", "Button Gross/Net");                               // row 2 ; dataStr[2]      
@@ -195,7 +195,7 @@ namespace WTXModbusExamples
                 dataGridView1.Rows.Add("13", "Weight memory, gross", "Int16", ".0-15", "IDevice_Values.weightMemGross", "dataStr[35]", "Stored gross value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                           // row 36 ; dataStr[35]
                 dataGridView1.Rows.Add("14", "Weight memory, net", "Int16", ".0-15", "IDevice_Values.weightMemNet", "dataStr[36]", "Stored net value", "0", "-", "-", "-", "-", "-", "-", "-", "-");                                 // row 37 ; dataStr[36]             
             }
-            if (this.is_standard==false) // case 2) Filler application. Initializing the description and a placeholder for the values in the data grid.
+            if (this._isStandard==false) // case 2) Filler application. Initializing the description and a placeholder for the values in the data grid.
             {
                 dataGridView1.Rows.Add("0", "Measured Value", "Int32", "32Bit", "IDevice_Values.NetValue", "dataStr[1]", "Net measured", "0", "0", "Control word", "Bit", ".0", "Taring",  "Button Taring");                               // row 1 ; dataStr[1]      
                 dataGridView1.Rows.Add("2", "Measured Value", "Int32", "32Bit", "IDevice_Values.GrossValue", "dataStr[2]", "Gross measured", "0", "0", "Control word", "Bit", ".1", "Gross/Net", "Button Gross/Net");                      // row 2 ; dataStr[2]
@@ -276,7 +276,7 @@ namespace WTXModbusExamples
             label1.Text = "Only for Standard application:";       // label for information : Only output words for standard application
             label2.Text = "Only for Filler application:";         // label for information : Only output words for filler application 
             toolStripStatusLabel5.Text = "38";
-            if (WTXObj.getConnection.isConnected == true)
+            if (_wtxObj.Connection.IsConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
@@ -285,11 +285,11 @@ namespace WTXModbusExamples
         }
 
         // This automatic property returns an instance of this class. It has usage in the class "Settings_Form".
-        public HBM.WT.API.WTX.WTXModbus get_dataviewer
+        public HBM.WT.API.WTX.WtxModbus GetDataviewer
         {
             get
             {
-                return WTXObj;
+                return _wtxObj;
             }
         }
 
@@ -297,14 +297,14 @@ namespace WTXModbusExamples
         // For the connection status, IP address, application mode and number of inputs. 
         private void GUI_Load(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.isConnected == true)
+            if (_wtxObj.Connection.IsConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
             else
                 toolStripStatusLabel1.Text = "Disconnected";
 
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
-            toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.NumOfPoints; 
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
+            toolStripStatusLabel3.Text = "Mode : " + this._dataStr[14]; // index 14 refers to application mode of the Device
+            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.Connection.NumOfPoints; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -312,14 +312,14 @@ namespace WTXModbusExamples
         // "dataStr" array to actualize every element of the data grid in the standard or filler application. 
         public void refresh_values()
         {     
-            if (WTXObj.getConnection.isConnected == true)
+            if (_wtxObj.Connection.IsConnected == true)
                 toolStripStatusLabel1.Text = "Connected";
-            if (WTXObj.getConnection.isConnected == false)
+            if (_wtxObj.Connection.IsConnected == false)
                 toolStripStatusLabel1.Text = "Disconnected";
             
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
-            toolStripStatusLabel3.Text = "Mode : " + this.dataStr[14];                 // index 14 refers to application mode of the Device
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
+            toolStripStatusLabel3.Text = "Mode : " + this._dataStr[14];                 // index 14 refers to application mode of the Device
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
 
             //Changing the width of a column:
             /*foreach (DataGridViewTextBoxColumn c in dataGridView1.Columns)
@@ -327,26 +327,26 @@ namespace WTXModbusExamples
             try
             {
                 for (int index = 0; index <= 26; index++) // Up to index 26, the input words are equal in standard and filler application.                           
-                    dataGridView1.Rows[index].Cells[7].Value = dataStr[index];
+                    dataGridView1.Rows[index].Cells[7].Value = _dataStr[index];
             }catch(Exception){ }
 
-            if (WTXObj.applicationMode == 0)             // In the standard application: 
+            if (_wtxObj.ApplicationMode == 0)             // In the standard application: 
             {
                 try
                 {
                     for (int index = 27; index <= 35; index++)
-                    dataGridView1.Rows[(index+1)].Cells[7].Value = dataStr[index];  //ddd: Achtung Index auf die Schnelle hier verschben, es gibt kein Net and gross measured!?
+                    dataGridView1.Rows[(index+1)].Cells[7].Value = _dataStr[index];  //ddd: Achtung Index auf die Schnelle hier verschben, es gibt kein Net and gross measured!?
                 }
                 catch (Exception) { }
             }
             else
-            if (WTXObj.applicationMode == 1 || WTXObj.applicationMode == 2)   // In the filler application: 
+            if (_wtxObj.ApplicationMode == 1 || _wtxObj.ApplicationMode == 2)   // In the filler application: 
                 {
                     try
                     {
                         for (int index = 27; index <55; index++)
                         {
-                             dataGridView1.Rows[(index + 1)].Cells[7].Value = dataStr[index];
+                             dataGridView1.Rows[(index + 1)].Cells[7].Value = _dataStr[index];
                         }
                     }   
                     catch (Exception) { }
@@ -363,7 +363,7 @@ namespace WTXModbusExamples
         // the GUI is actualized.
         // A asynchronous call is used in the following button_Click methods. 
         // The callback method is Write_DataReceived, which is called once the command is written into the register of the device.      
-        public void Write_DataReceived(IDeviceData Device_Values)
+        public void Write_DataReceived(IDeviceData deviceValues)
         {
             //this.dataStr = Device_Values.getDataStr;
             //this.reset_values();
@@ -374,7 +374,7 @@ namespace WTXModbusExamples
         private void button4_Click(object sender, EventArgs e)
         {
             // Taring       
-            WTXObj.Async_Call(0x1, Write_DataReceived);
+            _wtxObj.Async_Call(0x1, Write_DataReceived);
         }
 
         // This method sends a command to the device : Change between gross and net value. Command : 0x2 
@@ -382,7 +382,7 @@ namespace WTXModbusExamples
         private void button1_Click(object sender, EventArgs e)
         {
             // Gross/Net
-            WTXObj.Async_Call(0x2, Write_DataReceived);
+            _wtxObj.Async_Call(0x2, Write_DataReceived);
         }
 
         
@@ -391,7 +391,7 @@ namespace WTXModbusExamples
         private void button5_Click(object sender, EventArgs e)
         {
             // Zeroing
-            WTXObj.Async_Call(0x40, Write_DataReceived);
+            _wtxObj.Async_Call(0x40, Write_DataReceived);
         }
 
         // This method sends a command to the device : Adjust zero. Command : 0x80
@@ -399,7 +399,7 @@ namespace WTXModbusExamples
         private void button6_Click(object sender, EventArgs e)
         {
             // Adjust zero
-            WTXObj.Async_Call(0x80, Write_DataReceived);
+            _wtxObj.Async_Call(0x80, Write_DataReceived);
         }
 
         // This method sends a command to the device : Adjust nominal. Command : 0x100
@@ -407,7 +407,7 @@ namespace WTXModbusExamples
         private void button7_Click(object sender, EventArgs e)
         {
             // Adjust nominal
-            WTXObj.Async_Call(0x100, Write_DataReceived);
+            _wtxObj.Async_Call(0x100, Write_DataReceived);
         }
 
         // This method sends a command to the device : Activate data. Command : 0x800
@@ -421,27 +421,27 @@ namespace WTXModbusExamples
             
             int maximumIndex = 0;
 
-            if (WTXObj.applicationMode == 0)     // if in standard mode: 
+            if (_wtxObj.ApplicationMode == 0)     // if in standard mode: 
             {
-                startIndex = 8;
-                arrayLength = 17;
+                _startIndex = 8;
+                _arrayLength = 17;
                 maximumIndex = 25;
             }
-            else if (WTXObj.applicationMode == 1 || WTXObj.applicationMode == 2)  // if in filler mode: 
+            else if (_wtxObj.ApplicationMode == 1 || _wtxObj.ApplicationMode == 2)  // if in filler mode: 
             {
-                startIndex  = 11;
-                arrayLength = 26;
+                _startIndex  = 11;
+                _arrayLength = 26;
                 maximumIndex = 36;
             }
 
-            ushort[] valueArr = new ushort[arrayLength];
+            ushort[] valueArr = new ushort[_arrayLength];
 
-            for (int index = startIndex; index < maximumIndex; index++)  // In Filler mode: From index 11 to the maximum row number.In Standard mode: From index 8 to the maximum row number.
+            for (int index = _startIndex; index < maximumIndex; index++)  // In Filler mode: From index 11 to the maximum row number.In Standard mode: From index 8 to the maximum row number.
             {
-                i = index - startIndex;
+                _i = index - _startIndex;
                 
                 var input= dataGridView1.Rows[index].Cells[13].Value;
-                valueArr[i] = (ushort)Convert.ToInt16(input);
+                valueArr[_i] = (ushort)Convert.ToInt16(input);
 
                 string inputStr = input.ToString();
 
@@ -449,17 +449,17 @@ namespace WTXModbusExamples
                 if (inputStr != "0")
                 {
                     if (dataGridView1.Rows[index].Cells[10].Value.ToString()=="S32")
-                        WTXObj.writeOutputWordS32(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                        _wtxObj.WriteOutputWordS32(valueArr[_i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
                     else
                         if(dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
-                            WTXObj.writeOutputWordU08(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);           
+                            _wtxObj.WriteOutputWordU08(valueArr[_i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);           
                     else if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
-                              WTXObj.writeOutputWordU16(valueArr[i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                              _wtxObj.WriteOutputWordU16(valueArr[_i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
                 }
 
                 //WTXObj.Async_Call(0x100, Write_DataReceived);
             }        
-            WTXObj.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
+            _wtxObj.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
         }       
 
         // This method sends a command to the device : Manual taring. Command : 0x1000
@@ -468,7 +468,7 @@ namespace WTXModbusExamples
         {
             // Manual taring
             //if (this.is_standard == true)      // Activate this if-conditon only in case, if the should be a change between standard and filler application. 
-            WTXObj.Async_Call(0x1000, Write_DataReceived);             
+            _wtxObj.Async_Call(0x1000, Write_DataReceived);             
         }
 
         // This method sends a command to the device : Record weight. Command : 0x4000
@@ -476,7 +476,7 @@ namespace WTXModbusExamples
         private void button10_Click(object sender, EventArgs e)
         {
             // Record weight
-            WTXObj.Async_Call(0x4000, Write_DataReceived);   // Bit .14
+            _wtxObj.Async_Call(0x4000, Write_DataReceived);   // Bit .14
         }
 
         // This method sends a command to the device : Clear dosing results. Command : 0x4
@@ -485,7 +485,7 @@ namespace WTXModbusExamples
         {
             // Clear dosing results
             //if (this.is_standard == false)
-            WTXObj.Async_Call(0x4, Write_DataReceived);  // Bit .2
+            _wtxObj.Async_Call(0x4, Write_DataReceived);  // Bit .2
         }
 
         // This method sends a command to the device : Abort dosing. Command : 0x8
@@ -494,7 +494,7 @@ namespace WTXModbusExamples
         {
             // Abort dosing
             //if (this.is_standard == false)
-            WTXObj.Async_Call(0x8, Write_DataReceived);   // Bit .3
+            _wtxObj.Async_Call(0x8, Write_DataReceived);   // Bit .3
         }
 
         // This method sends a command to the device : Start dosing. Command : 0x10
@@ -503,7 +503,7 @@ namespace WTXModbusExamples
         {
             // Start dosing
             //if (this.is_standard == false)
-            WTXObj.Async_Call(0x10, Write_DataReceived);    // Bit .4
+            _wtxObj.Async_Call(0x10, Write_DataReceived);    // Bit .4
         }
 
         // Write Bit .14 to the register of the WTX device. Only in the filler mode: 
@@ -511,7 +511,7 @@ namespace WTXModbusExamples
         {
             // Manual re-dosing
             //if (this.is_standard == false)
-            WTXObj.Async_Call(0x4000, Write_DataReceived);        // Bit .14
+            _wtxObj.Async_Call(0x4000, Write_DataReceived);        // Bit .14
 
         }
 
@@ -521,7 +521,7 @@ namespace WTXModbusExamples
         {
             // Manual re-dosing
             //if (this.is_standard == false)
-            WTXObj.Async_Call(0x8000, Write_DataReceived);        // Bit .15
+            _wtxObj.Async_Call(0x8000, Write_DataReceived);        // Bit .15
         }
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120_Modbus).
@@ -530,37 +530,37 @@ namespace WTXModbusExamples
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {           
             // First the connection to the device should be established.   
-            WTXObj.Connect();       // Alternative : WTXObj.getConnection.Connect();
+            _wtxObj.Connect();       // Alternative : WTXObj.getConnection.Connect();
 
-            this.dataStr = WTXObj.getDataStr;
+            this._dataStr = _wtxObj.GetDataStr;
 
-            if (WTXObj.applicationMode == 0 && this.is_standard == false)
-                this.is_standard = true;
+            if (_wtxObj.ApplicationMode == 0 && this._isStandard == false)
+                this._isStandard = true;
 
             else
-                if (WTXObj.applicationMode == 1 && this.is_standard == true)
-                this.is_standard = false;
+                if (_wtxObj.ApplicationMode == 1 && this._isStandard == true)
+                this._isStandard = false;
             else
-                if (WTXObj.applicationMode == 2 && this.is_standard == true)
-                this.is_standard = false;
+                if (_wtxObj.ApplicationMode == 2 && this._isStandard == true)
+                this._isStandard = false;
 
             // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first.      
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
 
             this.set_GUI_rows();
-            WTXObj.Refreshed = true;
+            _wtxObj.Refreshed = true;
 
-            WTXObj.DataUpdateEvent += ValuesOnConsole;
+            _wtxObj.DataUpdateEvent += ValuesOnConsole;
 
             // New eventhandler for a change in a data grid cell : 
 
-            dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(gridValueChangedMethod);
+            dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(GridValueChangedMethod);
 
         }
 
         // This method is set if the output value in column 13 has changed - For writing some of the first output words of the standard application. 
-        private void gridValueChangedMethod(object sender, DataGridViewCellEventArgs e)
+        private void GridValueChangedMethod(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 13)
             {
@@ -568,7 +568,7 @@ namespace WTXModbusExamples
                 ushort index = 0;
                 bool inputFormatIsRight = false;
 
-                if (this.is_standard == true)
+                if (this._isStandard == true)
                 {
                     if (e.RowIndex >= 8 && e.RowIndex <= 24)
                     {
@@ -587,7 +587,7 @@ namespace WTXModbusExamples
                         MessageBox.Show("Bitte in den vorgegebenen Feldern eingeben für standard application.");
                 }
 
-                if (this.is_standard == false)
+                if (this._isStandard == false)
                 {
                     if (e.RowIndex >= 11 && e.RowIndex <= 36)
                     {
@@ -611,7 +611,7 @@ namespace WTXModbusExamples
                     index = (ushort)Convert.ToInt16(dataGridView1[8, e.RowIndex].Value); // For the index, the word number which should be written to the WTX device 
 
                     // For the standard application: 
-                    if (this.is_standard == true)
+                    if (this._isStandard == true)
                     {
                         if (e.RowIndex >= 8 && e.RowIndex <= 24)
                         {
@@ -620,65 +620,65 @@ namespace WTXModbusExamples
 
                             switch (e.RowIndex)
                             {
-                                case  8: WTXObj.manualTareValue = value; break;
-                                case  9: WTXObj.limitValue1Input = value; break;
-                                case 10: WTXObj.limitValue1Mode = value; break;
-                                case 11: WTXObj.limitValue1ActivationLevelLowerBandLimit = value; break;
-                                case 12: WTXObj.limitValue1HysteresisBandHeight = value; break;
-                                case 13: WTXObj.limitValue2Source = value; break;
-                                case 14: WTXObj.limitValue2Mode = value; break;
-                                case 15: WTXObj.limitValue2ActivationLevelLowerBandLimit = value; break;
-                                case 16: WTXObj.limitValue2HysteresisBandHeight = value; break;
+                                case  8: _wtxObj.ManualTareValue = value; break;
+                                case  9: _wtxObj.LimitValue1Input = value; break;
+                                case 10: _wtxObj.LimitValue1Mode = value; break;
+                                case 11: _wtxObj.LimitValue1ActivationLevelLowerBandLimit = value; break;
+                                case 12: _wtxObj.LimitValue1HysteresisBandHeight = value; break;
+                                case 13: _wtxObj.LimitValue2Source = value; break;
+                                case 14: _wtxObj.LimitValue2Mode = value; break;
+                                case 15: _wtxObj.LimitValue2ActivationLevelLowerBandLimit = value; break;
+                                case 16: _wtxObj.LimitValue2HysteresisBandHeight = value; break;
 
-                                case 17: WTXObj.limitValue3Source = value; break;
-                                case 18: WTXObj.limitValue3Mode = value; break;
-                                case 19: WTXObj.limitValue3ActivationLevelLowerBandLimit = value; break;
-                                case 20: WTXObj.limitValue3HysteresisBandHeight = value; break;
-                                case 21: WTXObj.limitValue4Source = value; break;
-                                case 22: WTXObj.limitValue4Mode = value; break;
-                                case 23: WTXObj.limitValue4ActivationLevelLowerBandLimit = value; break;
-                                case 24: WTXObj.limitValue4HysteresisBandHeight = value; break;
+                                case 17: _wtxObj.LimitValue3Source = value; break;
+                                case 18: _wtxObj.LimitValue3Mode = value; break;
+                                case 19: _wtxObj.LimitValue3ActivationLevelLowerBandLimit = value; break;
+                                case 20: _wtxObj.LimitValue3HysteresisBandHeight = value; break;
+                                case 21: _wtxObj.LimitValue4Source = value; break;
+                                case 22: _wtxObj.LimitValue4Mode = value; break;
+                                case 23: _wtxObj.LimitValue4ActivationLevelLowerBandLimit = value; break;
+                                case 24: _wtxObj.LimitValue4HysteresisBandHeight = value; break;
 
                                 default: break;
                             }
                         }
                     }
-                    else if (this.is_standard == false)  // for the filler application. 
+                    else if (this._isStandard == false)  // for the filler application. 
                     {
                         if (e.RowIndex >= 11 && e.RowIndex <= 36)
                         {
                             MessageBox.Show(value.ToString());  // for test purpose only.
                             switch (e.RowIndex)
                             {
-                                case 11: WTXObj.ResidualFlowTime = value; break;
-                                case 12: WTXObj.targetFillingWeight = value; break;
-                                case 13: WTXObj.coarseFlowCutOffPointSet = value; break;
-                                case 14: WTXObj.fineFlowCutOffPointSet = value; break;
-                                case 15: WTXObj.minimumFineFlow = value; break;
-                                case 16: WTXObj.optimizationOfCutOffPoints = value; break;
+                                case 11: _wtxObj.ResidualFlowTime = value; break;
+                                case 12: _wtxObj.TargetFillingWeight = value; break;
+                                case 13: _wtxObj.CoarseFlowCutOffPointSet = value; break;
+                                case 14: _wtxObj.FineFlowCutOffPointSet = value; break;
+                                case 15: _wtxObj.MinimumFineFlow = value; break;
+                                case 16: _wtxObj.OptimizationOfCutOffPoints = value; break;
 
-                                case 17: WTXObj.maximumDosingTime = value; break;
-                                case 18: WTXObj.startWithFineFlow = value; break;
-                                case 19: WTXObj.coarseLockoutTime = value; break;
-                                case 20: WTXObj.fineLockoutTime = value; break;
-                                case 21: WTXObj.tareMode = value; break;
-                                case 22: WTXObj.upperToleranceLimit = value; break;
-                                case 23: WTXObj.lowerToleranceLimit = value; break;
-                                case 24: WTXObj.minimumStartWeight = value; break;
+                                case 17: _wtxObj.MaximumDosingTime = value; break;
+                                case 18: _wtxObj.StartWithFineFlow = value; break;
+                                case 19: _wtxObj.CoarseLockoutTime = value; break;
+                                case 20: _wtxObj.FineLockoutTime = value; break;
+                                case 21: _wtxObj.TareMode = value; break;
+                                case 22: _wtxObj.UpperToleranceLimit = value; break;
+                                case 23: _wtxObj.LowerToleranceLimit = value; break;
+                                case 24: _wtxObj.MinimumStartWeight = value; break;
 
-                                case 25: WTXObj.emptyWeight = value; break;
-                                case 26: WTXObj.tareDelay = value; break;
-                                case 27: WTXObj.coarseFlowMonitoringTime = value; break;
-                                case 28: WTXObj.coarseFlowMonitoring = value; break;
-                                case 29: WTXObj.fineFlowMonitoring = value; break;
-                                case 30: WTXObj.fineFlowMonitoringTime = value; break;
+                                case 25: _wtxObj.EmptyWeight = value; break;
+                                case 26: _wtxObj.TareDelay = value; break;
+                                case 27: _wtxObj.CoarseFlowMonitoringTime = value; break;
+                                case 28: _wtxObj.CoarseFlowMonitoring = value; break;
+                                case 29: _wtxObj.FineFlowMonitoring = value; break;
+                                case 30: _wtxObj.FineFlowMonitoringTime = value; break;
 
-                                case 31: WTXObj.delayTimeAfterFineFlow = value; break;
-                                case 32: WTXObj.activationTimeAfterFineFlow = value; break;
-                                case 33: WTXObj.systematicDifference = value; break;
-                                case 34: WTXObj.downardsDosing = value; break;
-                                case 35: WTXObj.valveControl = value; break;
-                                case 36: WTXObj.emptyingMode = value; break;
+                                case 31: _wtxObj.DelayTimeAfterFineFlow = value; break;
+                                case 32: _wtxObj.ActivationTimeAfterFineFlow = value; break;
+                                case 33: _wtxObj.SystematicDifference = value; break;
+                                case 34: _wtxObj.DownardsDosing = value; break;
+                                case 35: _wtxObj.ValveControl = value; break;
+                                case 36: _wtxObj.EmptyingMode = value; break;
 
                             }
                         }
@@ -702,13 +702,13 @@ namespace WTXModbusExamples
                 } // end - if (inputFormatIsRight == true)
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "S32")
-                    WTXObj.writeOutputWordS32(value, index, Write_DataReceived);
+                    _wtxObj.WriteOutputWordS32(value, index, Write_DataReceived);
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U08")
-                    WTXObj.writeOutputWordU08(value, index, Write_DataReceived);
+                    _wtxObj.WriteOutputWordU08(value, index, Write_DataReceived);
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U16")
-                    WTXObj.writeOutputWordU16(value, index, Write_DataReceived);
+                    _wtxObj.WriteOutputWordU16(value, index, Write_DataReceived);
             }
 
             // Test Activate Data after the write of an output word: 
@@ -719,7 +719,7 @@ namespace WTXModbusExamples
 
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
-            this.dataStr = WTXObj.getDataStr;
+            this._dataStr = _wtxObj.GetDataStr;
 
             refresh_values();
         }
@@ -728,7 +728,7 @@ namespace WTXModbusExamples
         // Afterwards the timer and the application can be restarted.
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WTXObj.DataUpdateEvent -= ValuesOnConsole;
+            _wtxObj.DataUpdateEvent -= ValuesOnConsole;
             toolStripStatusLabel1.Text = "Disconnected";    
         }
 
@@ -738,7 +738,7 @@ namespace WTXModbusExamples
         {
             toolStripStatusLabel1.Text = "Disconnected";
 
-            WTXObj.DataUpdateEvent -= ValuesOnConsole;
+            _wtxObj.DataUpdateEvent -= ValuesOnConsole;
             this.Close();
             
             Application.Exit();
@@ -756,18 +756,18 @@ namespace WTXModbusExamples
             if (saveFileDialog1.FileName != "")
             {
 
-                string full_path = Path.Combine(System.IO.Path.GetDirectoryName(saveFileDialog1.FileName), "\\", saveFileDialog1.FileName);
+                string fullPath = Path.Combine(System.IO.Path.GetDirectoryName(saveFileDialog1.FileName), "\\", saveFileDialog1.FileName);
 
-                System.IO.File.Delete(@full_path);
+                System.IO.File.Delete(fullPath);
 
-                System.IO.File.AppendAllText(@full_path, " PLC Interface , Input words WTX120_Modbus -> SPS , Application : " + this.dataStr[14] + "\n\n\n");// index 14 ("this.dataStr[14]") refers to application mode of the Device
-                System.IO.File.AppendAllText(@full_path, "\nWord|\n" + "Name|\n" + "Type|\n" + "Bit|\n" + "Interface Call Routine|\n" + "List Call Routine|\n" + "Content|\n" + "Value\n\n");
+                System.IO.File.AppendAllText(fullPath, " PLC Interface , Input words WTX120_Modbus -> SPS , Application : " + this._dataStr[14] + "\n\n\n");// index 14 ("this.dataStr[14]") refers to application mode of the Device
+                System.IO.File.AppendAllText(fullPath, "\nWord|\n" + "Name|\n" + "Type|\n" + "Bit|\n" + "Interface Call Routine|\n" + "List Call Routine|\n" + "Content|\n" + "Value\n\n");
 
                 for (int x=0;x < (dataGridView1.RowCount-1); x++)       // Iterating through the whole data grid: 
                     for(int y = 0; y < (dataGridView1.ColumnCount); y++)
                     {
                         dataGridView1.CurrentCell = dataGridView1.Rows[x].Cells[y];    // Writes the descriptions and values into a word file.
-                        System.IO.File.AppendAllText(@full_path, "\n" + dataGridView1.CurrentCell.Value.ToString());
+                        System.IO.File.AppendAllText(fullPath, "\n" + dataGridView1.CurrentCell.Value.ToString());
                     }
                 
             }
@@ -780,23 +780,23 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            Set_obj = new SettingsForm(WTXObj.getConnection.IPAddress, this.timer1.Interval, WTXObj.getConnection.NumOfPoints, this);
-            Set_obj.Show();
+            _setObj = new SettingsForm(_wtxObj.Connection.IpAddress, this.timer1.Interval, _wtxObj.Connection.NumOfPoints, this);
+            _setObj.Show();
         }
 
         // This method updates the values of the connection(IP address, timer/sending interval, number of inputs), set in class "Settings_Form".
         // See class "Setting_Form" in method button2_Click(sender,e).
         // After updating the values the tool bar labels on the bottom (f.e. "toolStripStatusLabel2") is rewritten with the new values. 
-        public void setting()
+        public void Setting()
         {
-            WTXObj.getConnection.IPAddress = Set_obj.get_IP_address;
-            toolStripStatusLabel2.Text = "IP address: " + WTXObj.getConnection.IPAddress;
+            _wtxObj.Connection.IpAddress = _setObj.GetIpAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.Connection.IpAddress;
 
-            WTXObj.getConnection.SendingInterval = Set_obj.get_sending_interval;     
-            this.timer1.Interval = Set_obj.get_sending_interval;
+            _wtxObj.Connection.SendingInterval = _setObj.GetSendingInterval;     
+            this.timer1.Interval = _setObj.GetSendingInterval;
 
-            WTXObj.getConnection.NumOfPoints = Set_obj.get_number_inputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + WTXObj.getConnection.NumOfPoints;
+            _wtxObj.Connection.NumOfPoints = _setObj.GetNumberInputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.Connection.NumOfPoints;
         }
 
         // This method changes the GUI concerning the application mode.
@@ -805,7 +805,7 @@ namespace WTXModbusExamples
         // the GUI. 
         private void standardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.is_standard = true;
+            this._isStandard = true;
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
             this.set_GUI_rows();
@@ -817,7 +817,7 @@ namespace WTXModbusExamples
         // the GUI. 
         private void fillerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.is_standard = false;
+            this._isStandard = false;
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
             this.set_GUI_rows();
@@ -829,12 +829,12 @@ namespace WTXModbusExamples
          */
         private void calculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WTXObj.stopTimer();
+            _wtxObj.StopTimer();
 
-            CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.isConnected);
-            DialogResult res = CalcCalObj.ShowDialog();
+            _calcCalObj = new CalcCalibration(_wtxObj, _wtxObj.Connection.IsConnected);
+            DialogResult res = _calcCalObj.ShowDialog();
 
-            WTXObj.restartTimer();
+            _wtxObj.RestartTimer();
         }
 
         /*
@@ -843,12 +843,12 @@ namespace WTXModbusExamples
          */
         private void calibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WTXObj.stopTimer();
+            _wtxObj.StopTimer();
 
-            WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.isConnected);
-            DialogResult res = WeightCalObj.ShowDialog();
+            _weightCalObj = new WeightCalibration(_wtxObj, _wtxObj.Connection.IsConnected);
+            DialogResult res = _weightCalObj.ShowDialog();
 
-            WTXObj.restartTimer();
+            _wtxObj.RestartTimer();
         }
 
 
@@ -872,13 +872,13 @@ namespace WTXModbusExamples
         // Span (Nominal load) = 2 mV/V
         private void button3_Click(object sender, EventArgs e)
         {
-            WTXObj.Calibrating = true;
+            _wtxObj.Calibrating = true;
 
-            WTXObj.stopTimer();
+            _wtxObj.StopTimer();
 
-            WTXObj.Calculate(0, 2);
+            _wtxObj.Calculate(0, 2);
 
-            WTXObj.Calibrating = false;
+            _wtxObj.Calibrating = false;
 
             //WTX_obj.restartTimer();   // The timer is restarted in the method 'Calculate(..)'.
         }
@@ -889,20 +889,20 @@ namespace WTXModbusExamples
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
 
-            if (WTXObj.applicationMode == 0 && this.is_standard == false)
-                this.is_standard = true;
+            if (_wtxObj.ApplicationMode == 0 && this._isStandard == false)
+                this._isStandard = true;
 
             else
-            if (WTXObj.applicationMode == 1 && this.is_standard == true)
-                this.is_standard = false;
+            if (_wtxObj.ApplicationMode == 1 && this._isStandard == true)
+                this._isStandard = false;
             else
-            if (WTXObj.applicationMode == 2 && this.is_standard == true)
-                this.is_standard = false;
+            if (_wtxObj.ApplicationMode == 2 && this._isStandard == true)
+                this._isStandard = false;
 
             // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first.      
             this.set_GUI_rows();
 
-            WTXObj.Refreshed = true;
+            _wtxObj.Refreshed = true;
         }
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)

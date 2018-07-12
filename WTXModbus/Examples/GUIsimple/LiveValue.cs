@@ -37,14 +37,14 @@ namespace WTXModbusGUIsimple
     {
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
-        private static ModbusTCPConnection ModbusObj;
-        private static WTXModbus WTXObj;
+        private static ModbusTcpConnection _modbusObj;
+        private static WtxModbus _wtxObj;
         
-        private String IPAddress;
-        private CalcCalibration CalcCalObj;
-        private WeightCalibration WeightCalObj;
+        private String _ipAddress;
+        private CalcCalibration _calcCalObj;
+        private WeightCalibration _weightCalObj;
 
-        private int timerInterval;
+        private int _timerInterval;
 
         // toolStripLabel1: Label connectionStatus
         // toolstripLabel2: Label movingStatuDefaultTimerIntervals
@@ -58,8 +58,8 @@ namespace WTXModbusGUIsimple
         {
             InitializeComponent();
 
-            IPAddress = WTXModbusGUIsimple.Properties.Settings.Default.IPAddress;
-            textBox1.Text = IPAddress;
+            _ipAddress = WTXModbusGUIsimple.Properties.Settings.Default.IPAddress;
+            textBox1.Text = _ipAddress;
         }
 
         // Advanced Constructor with args
@@ -69,8 +69,8 @@ namespace WTXModbusGUIsimple
         {
             this.Show();
 
-            this.IPAddress = "172.19.103.8"; ; // Default Setting
-            this.timerInterval = 500;          // Default setting
+            this._ipAddress = "172.19.103.8"; ; // Default Setting
+            this._timerInterval = 500;          // Default setting
 
             if (args.Length > 0)
             {
@@ -82,16 +82,16 @@ namespace WTXModbusGUIsimple
             }
             if (args.Length > 1)
             {
-                this.IPAddress = args[1];                
+                this._ipAddress = args[1];                
                 textBox1.Text  = args[1];
             }
 
             if (args.Length > 2)
             {
-                this.timerInterval = Convert.ToInt32(args[2]);
+                this._timerInterval = Convert.ToInt32(args[2]);
             }
             else
-                this.timerInterval = 200; // Default value for the timer interval. 
+                this._timerInterval = 200; // Default value for the timer interval. 
 
             this.Connect();
         }
@@ -105,13 +105,13 @@ namespace WTXModbusGUIsimple
         // This method is called in the constructor of class LiveValue and establishs a connection. 
         private void Connect()
         {
-            ModbusObj = new ModbusTCPConnection(this.IPAddress);
+            _modbusObj = new ModbusTcpConnection(this._ipAddress);
 
-            WTXObj = new WTXModbus(ModbusObj, this.timerInterval);
+            _wtxObj = new WtxModbus(_modbusObj, this._timerInterval);
             
-            WTXObj.getConnection.NumOfPoints = 6;
+            _wtxObj.Connection.NumOfPoints = 6;
             
-            WTXObj.DataUpdateEvent += ValuesOnConsole;
+            _wtxObj.DataUpdateEvent += ValuesOnConsole;
 
             this.toolStripLabel1.Text = "disconnected";
             button1_Click(this, null);
@@ -133,25 +133,25 @@ namespace WTXModbusGUIsimple
                 Update();
 
                 string tempIpAddress = textBox1.Text;
-                WTXObj.getConnection.IPAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
+                _wtxObj.Connection.IpAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
 
                 // The connection to the device should be established.   
-                WTXObj.Connect();                                 // Alternative : WTX_obj.getConnection.Connect();  Equal to : ModbusObj.Connect();
+                _wtxObj.Connect();                                 // Alternative : WTX_obj.getConnection.Connect();  Equal to : ModbusObj.Connect();
 
-                if (WTXObj.getConnection.isConnected)
+                if (_wtxObj.Connection.IsConnected)
                 {
-                    WTXObj.restartTimer();
-                    IPAddress = tempIpAddress;
+                    _wtxObj.RestartTimer();
+                    _ipAddress = tempIpAddress;
                     this.toolStripLabel1.Text = "connected";
                     RenameButtonGrossNet();
-                    WTXObj.getConnection.SendingInterval = this.timerInterval;
+                    _wtxObj.Connection.SendingInterval = this._timerInterval;
 
                 }
                 else
                 {
-                    WTXObj.getConnection.IPAddress = this.IPAddress;
+                    _wtxObj.Connection.IpAddress = this._ipAddress;
 
-                    WTXObj.stopTimer();
+                    _wtxObj.StopTimer();
                     
                     textBox2.Text = "Connection could not be established!" + Environment.NewLine
                         + "Please check connection or IP-Address.";
@@ -170,15 +170,15 @@ namespace WTXModbusGUIsimple
         //public void ReadDataReceived(IDeviceValues deviceValues)
         private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
         {
-            if (WTXObj.limitStatus == 0)  //Check for Errors
+            if (_wtxObj.LimitStatus == 0)  //Check for Errors
             {
-                int taraValue = WTXObj.GrossValue - WTXObj.NetValue;
+                int taraValue = _wtxObj.GrossValue - _wtxObj.NetValue;
 
                 textBox2.Invoke(new Action(() =>
                 {
-                    textBox2.Text = "Net:" + WTXObj.netGrossValueStringComment(WTXObj.NetValue,WTXObj.decimals) + WTXObj.unitStringComment() + Environment.NewLine
-                    + "Gross:" + WTXObj.netGrossValueStringComment(WTXObj.GrossValue, WTXObj.decimals) + WTXObj.unitStringComment() + Environment.NewLine
-                    + "Tara:"  + WTXObj.netGrossValueStringComment(taraValue        , WTXObj.decimals) + WTXObj.unitStringComment();
+                    textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue,_wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                    + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                    + "Tara:"  + _wtxObj.NetGrossValueStringComment(taraValue        , _wtxObj.Decimals) + _wtxObj.UnitStringComment();
                     textBox2.TextAlign = HorizontalAlignment.Right;
                     pictureBox1.Image = Properties.Resources.NE107_DiagnosisActive;
                 }));
@@ -188,13 +188,13 @@ namespace WTXModbusGUIsimple
                 textBox2.Invoke(new Action(() =>
                 {
                     pictureBox1.Image = Properties.Resources.NE107_OutOfSpecification;
-                    textBox2.Text = WTXObj.limitStatusStringComment(/*WTXObj.limitStatus*/);
+                    textBox2.Text = _wtxObj.LimitStatusStringComment(/*WTXObj.limitStatus*/);
                     textBox2.TextAlign = HorizontalAlignment.Left;
 
                 }));
             }
 
-            if (WTXObj.weightMoving != 0)
+            if (_wtxObj.WeightMoving != 0)
             {
                 toolStripLabel2.Text = "Moving";
             }
@@ -203,7 +203,7 @@ namespace WTXModbusGUIsimple
                 toolStripLabel2.Text = "";
             }
 
-            if (WTXObj.weightType == 0)
+            if (_wtxObj.WeightType == 0)
             {
                 toolStripLabel3.Text = "Gross";
             }
@@ -219,10 +219,10 @@ namespace WTXModbusGUIsimple
         // Button Tare
         private void button2_Click(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.isConnected)
+            if (_wtxObj.Connection.IsConnected)
             {
                 RenameButtonGrossNet();
-                WTXObj.Async_Call(0x1, WriteDataReceived);
+                _wtxObj.Async_Call(0x1, WriteDataReceived);
             }
             else
             {
@@ -237,9 +237,9 @@ namespace WTXModbusGUIsimple
         // Button Zero
         private void button3_Click(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.isConnected)
+            if (_wtxObj.Connection.IsConnected)
             { 
-                WTXObj.Async_Call(0x40, WriteDataReceived);
+                _wtxObj.Async_Call(0x40, WriteDataReceived);
             }
             else
             {
@@ -253,9 +253,9 @@ namespace WTXModbusGUIsimple
         // Button Gross/Net
         private void button4_Click(object sender, EventArgs e)
         {
-            if (WTXObj.getConnection.isConnected)
+            if (_wtxObj.Connection.IsConnected)
             {
-                WTXObj.Async_Call(0x2, WriteDataReceived);
+                _wtxObj.Async_Call(0x2, WriteDataReceived);
                 RenameButtonGrossNet();
             }
             else
@@ -281,7 +281,7 @@ namespace WTXModbusGUIsimple
         // Adapts button Gross/Net text
         private void RenameButtonGrossNet()
         {
-            if (WTXObj.weightType == 0) //is gross?
+            if (_wtxObj.WeightType == 0) //is gross?
             {
                 textBox2.Invoke(new Action(() =>
                 {
@@ -305,30 +305,30 @@ namespace WTXModbusGUIsimple
         //Opens a menu window for calculated calibration
         private void CalculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WTXObj.stopTimer();
+            _wtxObj.StopTimer();
 
-            CalcCalObj = new CalcCalibration(WTXObj, WTXObj.getConnection.isConnected);
-            DialogResult res = CalcCalObj.ShowDialog();
+            _calcCalObj = new CalcCalibration(_wtxObj, _wtxObj.Connection.IsConnected);
+            DialogResult res = _calcCalObj.ShowDialog();
 
-            WTXObj.restartTimer();
+            _wtxObj.RestartTimer();
 
         }
 
         //Opens a menu window for calibration with a calibration weight
         private void CalibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WTXObj.stopTimer();
+            _wtxObj.StopTimer();
 
-            WeightCalObj = new WeightCalibration(WTXObj, WTXObj.getConnection.isConnected);
-            DialogResult res = WeightCalObj.ShowDialog();
+            _weightCalObj = new WeightCalibration(_wtxObj, _wtxObj.Connection.IsConnected);
+            DialogResult res = _weightCalObj.ShowDialog();
 
-            WTXObj.restartTimer();
+            _wtxObj.RestartTimer();
         }
 
 
         private void LiveValue_FormClosing(object sender, FormClosingEventArgs e)
         {
-            WTXModbusGUIsimple.Properties.Settings.Default.IPAddress = this.IPAddress;
+            WTXModbusGUIsimple.Properties.Settings.Default.IPAddress = this._ipAddress;
             WTXModbusGUIsimple.Properties.Settings.Default.Save();
         }
 

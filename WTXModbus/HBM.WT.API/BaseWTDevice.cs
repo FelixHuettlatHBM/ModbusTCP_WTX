@@ -62,7 +62,7 @@ namespace HBM.WT.API
         }
         */
 
-        public abstract event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
+        public abstract event EventHandler<DataEvent> DataUpdateEvent;
 
         public abstract event Func<object, EventArgs, Task> Shutdown;
 
@@ -82,7 +82,7 @@ namespace HBM.WT.API
         
         public abstract void Calibration(ushort command);
 
-        public abstract void UpdateEvent(object sender, NetConnectionEventArgs<ushort[]> e);
+        public abstract void UpdateEvent(object sender, DataEvent e);
         
         public abstract string[] GetDataStr { get; set; }
 

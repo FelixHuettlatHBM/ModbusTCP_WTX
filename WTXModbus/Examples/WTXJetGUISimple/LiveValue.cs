@@ -21,7 +21,6 @@ namespace WTXGUISimple
 {
     public partial class LiveValue : Form
     {
-
         const string DEFAULT_IP_ADDRESS = "172.19.103.8";
 
         private static WtxJet _wtxObj;
@@ -57,18 +56,16 @@ namespace WTXGUISimple
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisPassive;
 
             // Setting the connection for Modbus: 
+
             /*
+             
             s_Connection = new ModbusTCPConnection(ipAddr);
-
             WTXObj = new Hbm.Wt.WTXInterface.WTX120_Modbus.WTX120_Jet(s_Connection);     // WTX120_Jet umändern 
-
             WTXObj.getConnection.Connect();
-
             timerInterval = 200; 
-
             WTXObj.getConnection.Sending_interval = timerInterval;
-
             initializeTimerModbus(timerInterval);
+
             */
 
             // Setting the connection for jetbus: 
@@ -85,6 +82,7 @@ namespace WTXGUISimple
             _timerInterval = 200;
 
             _ipAddr = "wss://" + args[1];
+
             Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
 
             _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
@@ -249,16 +247,12 @@ namespace WTXGUISimple
             Type type = parameter.GetType();
 
             PropertyInfo[] properties = type.GetProperties();
+
             foreach (PropertyInfo prop in properties)
             {
                 Console.WriteLine(prop.ToString());
-
-
             }
-
             return 0;
-
-
         }
 
         private static uint StringToId(string arg)

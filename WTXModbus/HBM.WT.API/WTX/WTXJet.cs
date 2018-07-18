@@ -25,7 +25,7 @@ namespace HBM.WT.API.WTX
         private bool _dataReceived;
 
         public override event Func<object, EventArgs, Task> Shutdown;
-        public override event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
+        public override event EventHandler<DataEvent> DataUpdateEvent;
 
         private struct ParameterKeys
         {
@@ -101,7 +101,7 @@ namespace HBM.WT.API.WTX
         {
         }
 
-        public override void UpdateEvent(object sender, NetConnectionEventArgs<ushort[]> e) { }
+        public override void UpdateEvent(object sender, DataEvent e) { }
 
         
         public override void Async_Call(ushort commandParam, Action<IDeviceData> callbackParam)

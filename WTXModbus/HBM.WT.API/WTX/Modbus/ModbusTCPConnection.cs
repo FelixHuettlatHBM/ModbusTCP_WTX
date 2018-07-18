@@ -80,8 +80,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         public event EventHandler BusActivityDetection;
 
-        public virtual event EventHandler<NetConnectionEventArgs<ushort[]>>
-            RaiseDataEvent; // virtual new due to tesing - 3.5.2018
+        public virtual event EventHandler<DataEvent> RaiseDataEvent; // virtual new due to tesing - 3.5.2018
 
         // Only for the purpose to fulfill the methods from the interface 'INetConnection', which are implemented by 'JetbusConnection'. 
         public T Read<T>(object index)
@@ -102,7 +101,7 @@ namespace HBM.WT.API.WTX.Modbus
         public void ReadRegister()
         {
             if (_connected)
-                ReadRegisterPublishing(new NetConnectionEventArgs<ushort[]>(EventArgType.Data, _data));
+                ReadRegisterPublishing(new DataEvent(_data));
         }
 
         /*
@@ -120,9 +119,7 @@ namespace HBM.WT.API.WTX.Modbus
         // This method is declared as a virtual method to allow derived class to override the event call.
         //protected virtual void ReadRegisterPublishing(MessageEvent<ushort> e)
 
-        public virtual void
-            ReadRegisterPublishing(
-                NetConnectionEventArgs<ushort[]> e) // 25.4 Comment : 'virtual' machte hier probleme beim durchlaufen :o 
+        public virtual void ReadRegisterPublishing(DataEvent e) // 25.4 Comment : 'virtual' machte hier probleme beim durchlaufen :o 
         {
             // virtual new due to tesing - 3.5.2018
             try

@@ -65,7 +65,9 @@ namespace WtConsole
                         CANDaemon can = CANDaemonManager.CreateInstance(hw);
 
                         CANBaudrate baudrate = CANBaudrate.B0125;
-                        switch (args[1]) {
+
+                        switch (args[1]) 
+                        {
                             case "1000":baudrate = CANBaudrate.B1000; break;
                             case "500": baudrate = CANBaudrate.B0500; break;
                             case "250": baudrate = CANBaudrate.B0250; break;
@@ -228,12 +230,12 @@ namespace WtConsole
 
         private static void S_Connection_BusActivityDetection(object sender, EventArgs e)
         {
-            Console.WriteLine((e as NetConnectionEventArgs<string>).Args.ToString());
+            Console.WriteLine((e as DataEvent).Args.ToString());
         }
 
 
         // This method prints the values of the device (as a integer and the interpreted string) as well as the description of each bit. 
-        private static void AsyncUpdateData(object arg1, NetConnectionEventArgs<ushort[]> arg2)
+        private static void AsyncUpdateData(object arg1, DataEvent arg2)
         {
             
             _compareTest = true;

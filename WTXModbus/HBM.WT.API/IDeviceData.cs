@@ -34,7 +34,7 @@ namespace HBM.WT.API
         /// <summary>
         ///
         /// </summary>
-        event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
+        event EventHandler<DataEvent> DataUpdateEvent;
 
         /// <summary>
         ///Gets or sets

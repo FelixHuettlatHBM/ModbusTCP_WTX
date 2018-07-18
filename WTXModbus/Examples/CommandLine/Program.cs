@@ -295,7 +295,7 @@ namespace WTXModbus
         }
 
         // This method prints the values of the device (as a integer and the interpreted string) as well as the description of each bit. 
-        private static void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
+        private static void ValuesOnConsole(object sender, DataEvent e)
         {
             // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is 
             // not null (respectively empty) and if no calibration is done at that moment.

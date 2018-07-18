@@ -168,7 +168,7 @@ namespace WTXModbusGUIsimple
         // Method executed after read from WTX by eventbased call from WTX120Modbus, UpdateEvent(..) 
         // Updates displayed values and states
         //public void ReadDataReceived(IDeviceValues deviceValues)
-        private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
+        private void ValuesOnConsole(object sender, DataEvent e)
         {
             if (_wtxObj.LimitStatus == 0)  //Check for Errors
             {

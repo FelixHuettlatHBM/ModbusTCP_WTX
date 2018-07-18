@@ -18,7 +18,7 @@ namespace HBM.WT.API
 
         event EventHandler BusActivityDetection;
 
-        event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
+        event EventHandler<DataEvent> RaiseDataEvent;
 
     }
 

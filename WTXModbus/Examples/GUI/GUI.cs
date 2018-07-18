@@ -717,7 +717,7 @@ namespace WTXModbusExamples
 
         }
 
-        private void ValuesOnConsole(object sender, NetConnectionEventArgs<ushort[]> e)
+        private void ValuesOnConsole(object sender, DataEvent e)
         {
             this._dataStr = _wtxObj.GetDataStr;
 

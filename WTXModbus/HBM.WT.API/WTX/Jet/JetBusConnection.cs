@@ -24,7 +24,7 @@ namespace HBM.WT.API.WTX.Jet
 
         public event EventHandler BusActivityDetection;
         //public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent
-        public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent;
+        public event EventHandler<DataEvent> RaiseDataEvent;
 
 
         #endregion
@@ -109,7 +109,10 @@ namespace HBM.WT.API.WTX.Jet
                 // Wake up the waiting thread where call the konstruktor to connect the session
                 //
                 _mSuccessEvent.Set();
-                BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));  // erstmal rausnehmen 
+                
+                BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
+                //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));
+
             }, _mTimeoutMs);
             WaitOne(3);
         }
@@ -146,7 +149,11 @@ namespace HBM.WT.API.WTX.Jet
                         _mTokenBuffer[path] = data["value"];
                         break;
                 }
-                BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, data.ToString()));
+
+                BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
+
+                // Alternative: 
+                //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, data.ToString()));
 
                 // Äquivalent zu ...
                 //if(BusActivityDetection != null){
@@ -230,7 +237,10 @@ namespace HBM.WT.API.WTX.Jet
                         _mException = new InterfaceException(exception, (uint)exception.Error);
                     }
                     _mSuccessEvent.Set();
-                    BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Set data: " + success));
+                   
+                    BusActivityDetection?.Invoke(this, new LogEvent("Set data" + success ));
+                    // Alternative : BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Set data: " + success)); 
+
                 }, _mTimeoutMs);
             }
             catch (Exception e) {

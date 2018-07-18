@@ -42,7 +42,7 @@ namespace HBM.WT.API.WTX
 
         // Neu : 4.5.2018 - für asynchronen Aufruf - Eventbasiert
 
-        public override event EventHandler<NetConnectionEventArgs<ushort[]>> DataUpdateEvent;
+        public override event EventHandler<DataEvent> DataUpdateEvent;
 
 
         public override event Func<object, EventArgs, Task> Shutdown;
@@ -409,7 +409,7 @@ namespace HBM.WT.API.WTX
 
 
         //public override void UpdateEvent(object sender, MessageEvent<ushort> e)
-        public override void UpdateEvent(object sender, NetConnectionEventArgs<ushort[]> e)
+        public override void UpdateEvent(object sender, DataEvent e)
         {
             this._data = e.Args;
 

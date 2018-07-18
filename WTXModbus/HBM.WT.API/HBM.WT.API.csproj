@@ -65,11 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataEvent.cs" />
     <Compile Include="IDeviceData.cs" />
     <Compile Include="INetConnection.cs" />
+    <Compile Include="LogEvent.cs" />
     <Compile Include="WTX\Jet\JetBusConnection.cs" />
     <Compile Include="WTX\Modbus\ModbusTCPConnection.cs" />
-    <Compile Include="NetConnectionEventArgs.cs" />
     <Compile Include="NetConnectionSecurity.cs" />
     <Compile Include="WTX\WTXJet.cs" />
     <Compile Include="WTX\WTXModbus.cs" />

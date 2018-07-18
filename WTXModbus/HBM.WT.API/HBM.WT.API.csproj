@@ -6,7 +6,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3DA03496-08A9-492E-BFC8-1ECE852B20F0}</ProjectGuid>
+    <ProjectGuid>{F8FB1D85-0FBA-4905-A559-A1C654675662}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WT.API</RootNamespace>

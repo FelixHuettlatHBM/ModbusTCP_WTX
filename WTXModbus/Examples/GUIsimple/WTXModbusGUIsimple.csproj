@@ -114,7 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\HBM.WT.API\HBM.WT.API.csproj">
-      <Project>{3da03496-08a9-492e-bfc8-1ece852b20f0}</Project>
+      <Project>{F8FB1D85-0FBA-4905-A559-A1C654675662}</Project>
       <Name>HBM.WT.API</Name>
     </ProjectReference>
   </ItemGroup>

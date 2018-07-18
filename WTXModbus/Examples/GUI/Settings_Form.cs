@@ -24,54 +24,54 @@ namespace WTXModbusExamples
 
     partial class SettingsForm : Form
     {
-        private string IP_address_before;
-        private string IP_address;
+        private string _ipAddressBefore;
+        private string _ipAddress;
 
-        private int sending_interval;
-        private ushort number_inputs;
+        private int _sendingInterval;
+        private ushort _numberInputs;
 
-        private GUI GUI_info;
+        private Gui _guiInfo;
 
         // Constructor of class 'SettingForm': 
-        public SettingsForm(string IP_address_param, int sending_interval_param, ushort number_inputs_param, GUI GUI_obj_param)
+        public SettingsForm(string ipAddressParam, int sendingIntervalParam, ushort numberInputsParam, Gui guiObjParam)
         {
             InitializeComponent();
 
-            this.GUI_info = GUI_obj_param;
+            this._guiInfo = guiObjParam;
            
-            this.IP_address_before = IP_address_param;    // IP_address_before is used to change the IP adress. 
-            this.IP_address = IP_address_param;
-            this.sending_interval = sending_interval_param;
-            this.number_inputs = number_inputs_param;
+            this._ipAddressBefore = ipAddressParam;    // IP_address_before is used to change the IP adress. 
+            this._ipAddress = ipAddressParam;
+            this._sendingInterval = sendingIntervalParam;
+            this._numberInputs = numberInputsParam;
                       
-            textBox1.Text = this.IP_address;
-            textBox2.Text = this.sending_interval.ToString();
-            textBox3.Text = this.number_inputs.ToString();
+            textBox1.Text = this._ipAddress;
+            textBox2.Text = this._sendingInterval.ToString();
+            textBox3.Text = this._numberInputs.ToString();
             
             label2.Text = "IP address";
             label3.Text = "Timer/Sending interval";
             label4.Text = "Number of inputs";
         }
 
-        public string get_IP_address
+        public string GetIpAddress
         {
             get
             {
-                return this.IP_address;
+                return this._ipAddress;
             }
         }
-        public int get_sending_interval
+        public int GetSendingInterval
         {
             get
             {
-                return this.sending_interval;
+                return this._sendingInterval;
             }
         }
-        public ushort get_number_inputs
+        public ushort GetNumberInputs
         {
             get
             {
-                return this.number_inputs;
+                return this._numberInputs;
             }
         }
 
@@ -79,17 +79,17 @@ namespace WTXModbusExamples
         // (IP adress, sending/timer interval, number of inputs), if they have changed. 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.IP_address = textBox1.Text;
+            this._ipAddress = textBox1.Text;
 
-            this.sending_interval = Convert.ToInt32(textBox2.Text);
+            this._sendingInterval = Convert.ToInt32(textBox2.Text);
 
-            this.number_inputs = Convert.ToUInt16(textBox3.Text);
+            this._numberInputs = Convert.ToUInt16(textBox3.Text);
 
-            GUI_info.setting();
+            _guiInfo.Setting();
 
-            if (this.IP_address != this.IP_address_before)
+            if (this._ipAddress != this._ipAddressBefore)
             {
-                GUI_info.get_dataviewer.getConnection.Connect();
+                _guiInfo.GetDataviewer.Connection.Connect();
             }
             
             this.Close();
@@ -97,7 +97,7 @@ namespace WTXModbusExamples
             //GUI_info.timer1_start();
 
             //Store IPAddress in Settings .settings
-            WTXModbus.Properties.Settings.Default.IPAddress = this.IP_address;
+            WTXModbus.Properties.Settings.Default.IPAddress = this._ipAddress;
             WTXModbus.Properties.Settings.Default.Save();
         }
 

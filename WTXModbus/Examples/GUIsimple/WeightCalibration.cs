@@ -29,26 +29,26 @@ namespace WTXModbusGUIsimple
 
     public partial class WeightCalibration : Form
     {
-        private WTXModbus WTXObj;
-        private int State;
-        private double CalibrationWeight;
+        private WtxModbus _wtxObj;
+        private int _state;
+        private double _calibrationWeight;
         //private IFormatProvider Provider;
 
-        private double PowCalibrationWeight;
-        private double potenz;
+        private double _powCalibrationWeight;
+        private double _potenz;
 
-        private string str_comma_dot;
+        private string _strCommaDot;
 
         // Constructor of class WeightCalibration: 
-        public WeightCalibration(WTXModbus WTXObj, bool connected)
+        public WeightCalibration(WtxModbus wtxObj, bool connected)
         {
-            this.PowCalibrationWeight = 0.0;
-            this.potenz = 0.0;
+            this._powCalibrationWeight = 0.0;
+            this._potenz = 0.0;
 
-            this.WTXObj = WTXObj;
-            State = 0;
+            this._wtxObj = wtxObj;
+            _state = 0;
 
-            str_comma_dot = "";
+            _strCommaDot = "";
             //Provider for english number format
             //Provider = CultureInfo.InvariantCulture;
 
@@ -62,7 +62,7 @@ namespace WTXModbusGUIsimple
                 textBox2.Text = "No WTX connected!";
             }
 
-            switch (WTXObj.unit)
+            switch (wtxObj.Unit)
             {
                 case 0:
                     label2.Text = "kg";
@@ -93,7 +93,7 @@ namespace WTXModbusGUIsimple
             this.Cursor = Cursors.WaitCursor;
 
             //Switch depending on the current calibration step described by State
-            switch (State)
+            switch (_state)
             {
                 case 0: //start
 
@@ -101,11 +101,11 @@ namespace WTXModbusGUIsimple
                     {
                         //CalibrationWeight = Convert.ToDouble(textBox1.Text, Provider);
 
-                        str_comma_dot = textBox1.Text.Replace(".", ",");                   // Neu : 12.3 - Für die Umwandlung in eine Gleitkommazahl. 
-                        CalibrationWeight = double.Parse(str_comma_dot);                   // Damit können Kommata und Punkte eingegeben werden. 
+                        _strCommaDot = textBox1.Text.Replace(".", ",");                   // Neu : 12.3 - Für die Umwandlung in eine Gleitkommazahl. 
+                        _calibrationWeight = double.Parse(_strCommaDot);                   // Damit können Kommata und Punkte eingegeben werden. 
 
                         textBox1.Enabled = false;
-                        textBox2.Text = CalibrationWeight.ToString();
+                        textBox2.Text = _calibrationWeight.ToString();
                     }
                     catch (FormatException)
                     {
@@ -122,7 +122,7 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Unload Scale!";
                     button1.Text = "Measure Zero";
                     button2.Text = "<Back";
-                    State = 1;
+                    _state = 1;
                     break;
 
                 case 1: // measure zero
@@ -132,11 +132,11 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Measure zero in progess.";
                     Application.DoEvents();
 
-                    WTXObj.MeasureZero();
+                    _wtxObj.MeasureZero();
 
                     textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
                     button1.Text = "Calibrate";
-                    State = 2;
+                    _state = 2;
 
                     break;
 
@@ -147,21 +147,21 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Calibration in progress.";
                     Application.DoEvents();
 
-                    WTXObj.Calibrate(this.potencyCalibrationWeight(), CalibrationWeight.ToString());
+                    _wtxObj.Calibrate(this.PotencyCalibrationWeight(), _calibrationWeight.ToString());
 
-                    if (WTXObj.status == 1 && WTXObj.handshake == 0)
+                    if (_wtxObj.Status == 1 && _wtxObj.Handshake == 0)
                         textBox2.Text = "Calibration successful and finished.";
                     else
                         textBox2.Text = "Calibration  failed.";
 
                     button1.Text = "Close";
-                    State = 3;
+                    _state = 3;
                     break;
 
                 default: //close window
 
                     button1.Enabled = false;
-                    State = 0;
+                    _state = 0;
 
                     Close();
                     break;
@@ -171,15 +171,15 @@ namespace WTXModbusGUIsimple
         }
 
 
-        private int potencyCalibrationWeight()
+        private int PotencyCalibrationWeight()
         {
             //this.DoubleCalibrationWeight = Convert.ToDouble(textBox1.Text, Provider); 
 
-            this.potenz = Math.Pow(10, WTXObj.decimals);
+            this._potenz = Math.Pow(10, _wtxObj.Decimals);
 
-            this.PowCalibrationWeight = CalibrationWeight * potenz;
+            this._powCalibrationWeight = _calibrationWeight * _potenz;
 
-            return (int)this.PowCalibrationWeight;
+            return (int)this._powCalibrationWeight;
         }
 
         // Limits the input of the textbox to digits, ',' and '.'
@@ -199,25 +199,25 @@ namespace WTXModbusGUIsimple
         // calibration state
         private void button2_Click(object sender, EventArgs e)
         {
-            switch (State)
+            switch (_state)
             {
                 case 0:
                     Close();
                     break;
                 case 1:
-                    State = 0;
+                    _state = 0;
                     button2.Text = "Cancel";
                     textBox1.Enabled = true;
                     button1.Text = "Start";
                     textBox2.Text = "";
                     break;
                 case 2:
-                    State = 1;
+                    _state = 1;
                     textBox2.Text = "Unload Scale!";
                     button1.Text = "Measure Zero";
                     break;
                 default:
-                    State = 2;
+                    _state = 2;
                     textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
                     button1.Text = "Calibrate";
                     break;

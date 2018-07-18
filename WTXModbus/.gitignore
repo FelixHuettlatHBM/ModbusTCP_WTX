@@ -1,15 +1,9 @@
-CANLib/bin
-CANLib/obj
-CANLib_Test/bin
-CANLib_Test/obj
+#*.suo
+#*.ide
 
-*/bin
-*/obj
-*/Results
-
-*bin
-*obj
-
-
-*.suo
+bin/
+obj/
 packages/
+.axoCover/
+.vs/
+

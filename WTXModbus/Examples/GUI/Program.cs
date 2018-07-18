@@ -28,7 +28,7 @@ namespace WTXModbusExamples
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GUI(args));            
+            Application.Run(new Gui(args));            
         }
     }
 }

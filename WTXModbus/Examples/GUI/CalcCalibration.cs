@@ -27,25 +27,25 @@ namespace WTXModbusGUIsimple
     // based on know values for dead load and nominal load in mV/V
     public partial class CalcCalibration : Form
     {
-        private HBM.WT.API.WTX.WTXModbus WTXObj;
+        private HBM.WT.API.WTX.WtxModbus _wtxObj;
 
-        private bool Finished;
-        private double Preload;
-        private double Capacity;
-        private IFormatProvider Provider;
-        private const double MultiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
-        private string str_comma_dot;
+        private bool _finished;
+        private double _preload;
+        private double _capacity;
+        private IFormatProvider _provider;
+        private const double MULTIPLIER_MV2_D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
+        private string _strCommaDot;
               
         // Constructor of class 'CalcCalibration' : 
-        public CalcCalibration(HBM.WT.API.WTX.WTXModbus WTXObj, bool connected)
+        public CalcCalibration(HBM.WT.API.WTX.WtxModbus wtxObj, bool connected)
         {
-            this.WTXObj = WTXObj;
+            this._wtxObj = wtxObj;
             
-            Finished = false;
+            _finished = false;
             //Provider for english number format
-            Provider = CultureInfo.InvariantCulture;
+            _provider = CultureInfo.InvariantCulture;
 
-            str_comma_dot = "";
+            _strCommaDot = "";
 
             InitializeComponent();
 
@@ -54,7 +54,7 @@ namespace WTXModbusGUIsimple
                 textBox1.Enabled = false;
                 textBox2.Enabled = false;
                 buttonCalculate.Text = "Close";
-                Finished = true;
+                _finished = true;
                 label5.Visible = true;
                 label5.Text = "No WTX connected!";
             }
@@ -64,15 +64,15 @@ namespace WTXModbusGUIsimple
         // If the caluclation is finished, the window can be closed with the button.
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-            if (!Finished)
+            if (!_finished)
             {
                 label5.Visible = true;
                 bool abort = false;
                 try
                 {
                     //Preload = Convert.ToDouble(textBox1.Text, Provider);
-                    str_comma_dot = textBox1.Text.Replace(".", ",");          
-                    Preload = double.Parse(str_comma_dot);
+                    _strCommaDot = textBox1.Text.Replace(".", ",");          
+                    _preload = double.Parse(_strCommaDot);
                     textBox1.Enabled = false;
                 }
                 catch (FormatException)
@@ -89,8 +89,8 @@ namespace WTXModbusGUIsimple
                 try
                 {
                     //Capacity = Convert.ToDouble(textBox2.Text, Provider);
-                    str_comma_dot = textBox2.Text.Replace(".", ",");                   
-                    Capacity = double.Parse(str_comma_dot);
+                    _strCommaDot = textBox2.Text.Replace(".", ",");                   
+                    _capacity = double.Parse(_strCommaDot);
                     textBox2.Enabled = false;
                 }
                 catch (FormatException)
@@ -105,10 +105,10 @@ namespace WTXModbusGUIsimple
                 }
                 if (abort) return;
                 
-                WTXObj.Calculate(Preload,Capacity);
+                _wtxObj.Calculate(_preload,_capacity);
 
                 label5.Text = "Calibration Successful!";
-                Finished = true;
+                _finished = true;
                 buttonCalculate.Text = "Close";
             }
             else

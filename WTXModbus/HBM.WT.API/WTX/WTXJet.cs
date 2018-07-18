@@ -163,7 +163,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read<int>(ParameterKeys.MEASURED_VALUE);
+                return this.Connection.Read(ParameterKeys.MEASURED_VALUE);
             }
         }
 
@@ -172,7 +172,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read<int>(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
+                return this.Connection.Read(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
             }
             
         }
@@ -185,7 +185,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read<int>(ParameterKeys.WEIGHT_MOVING_DETECTION);
+                return this.Connection.Read(ParameterKeys.WEIGHT_MOVING_DETECTION);
             }
         }              // data[6]
 
@@ -203,7 +203,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Connection.Read<int>(ParameterKeys.DECIMALS);   // Decimals = "DPT";
+                return Connection.Read(ParameterKeys.DECIMALS);   // Decimals = "DPT";
             }
         }     // data[15]
 
@@ -250,8 +250,8 @@ namespace HBM.WT.API.WTX
         public override int FillingProcessStatus
         {
             get
-            {
-                return this.Connection.Read<int>(ParameterKeys.DOSING_STATUS);
+            {             
+                return this.Connection.Read(ParameterKeys.DOSING_STATUS);
             }
         }             // data[51]
 
@@ -259,7 +259,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read<int>(ParameterKeys.DOSING_COUNTER);
+                return this.Connection.Read(ParameterKeys.DOSING_COUNTER);
             }
         }            // data[52]
 
@@ -267,19 +267,19 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read<int>(ParameterKeys.DOSING_RESULT);
+                return this.Connection.Read(ParameterKeys.DOSING_RESULT);
             }
         }           // data[53]
 
-        public override int MeanValueDosingResults { get { return 1; } }      // data[54]
+        public override int MeanValueDosingResults { get { return 1; } }           // data[54]
         public override int StandardDeviation { get { return 1; } }                // data[55]
         public override int TotalWeight { get { return 1; } }                      // data[56]
-        public override int FineFlowCutOffPoint { get { return 1; } }           // data[57]
-        public override int CoarseFlowCutOffPoint { get { return 1; } }         // data[58]
+        public override int FineFlowCutOffPoint { get { return 1; } }              // data[57]
+        public override int CoarseFlowCutOffPoint { get { return 1; } }            // data[58]
         public override int CurrentDosingTime { get { return 1; } }                // data[59]
-        public override int CurrentCoarseFlowTime { get { return 1; } }           // data[60]
-        public override int CurrentFineFlowTime { get { return 1; } }             // data[61]
-        public override int ParameterSetProduct { get { return 1; } }                     // data[62]
+        public override int CurrentCoarseFlowTime { get { return 1; } }            // data[60]
+        public override int CurrentFineFlowTime { get { return 1; } }              // data[61]
+        public override int ParameterSetProduct { get { return 1; } }              // data[62]
 
         public override int ManualTareValue { get; set; }
         public override int LimitValue1Input { get; set; }

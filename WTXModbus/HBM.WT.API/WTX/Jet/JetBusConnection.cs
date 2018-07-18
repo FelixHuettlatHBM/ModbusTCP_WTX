@@ -179,6 +179,7 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
         
+        /*
         public T Read<T>(object index) {
             try {
                 JToken token = ReadObj(index);
@@ -188,8 +189,28 @@ namespace HBM.WT.API.WTX.Jet
                 throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
+        */
 
-        public void Write<T>(object index, T value) {
+        public int Read(object index)
+        {
+            try
+            {
+                return Convert.ToInt32(ReadObj(index));
+
+                //JToken token = ReadObj(index);
+                //return token;
+
+                //return (T)Convert.ChangeType(token, typeof(T));
+            }
+            catch (FormatException)
+            {
+                throw new InterfaceException(new FormatException("Invalid data format"), 0);
+            }
+        }
+
+
+
+        public void Write(object index, int value) {
             JValue jValue = new JValue(value);
             SetData(index, jValue);
         }
@@ -306,15 +327,12 @@ namespace HBM.WT.API.WTX.Jet
             // GC.SuppressFinalize(this);
         }
 
-        public void WriteArray2Reg(ushort index, ushort[] data)
+        public void WriteArray(ushort index, ushort[] data)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteWord2Reg(ushort index, ushort data)
-        {
-            throw new NotImplementedException();
-        }
+
         #endregion
     }
 

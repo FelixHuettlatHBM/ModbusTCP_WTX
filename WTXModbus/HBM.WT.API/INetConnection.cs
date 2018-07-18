@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 
 namespace HBM.WT.API  
 {
@@ -7,15 +8,12 @@ namespace HBM.WT.API
     /// </summary>
     public interface INetConnection
     {
+        int Read(object index);
 
-        T Read<T>(object index);
+        void Write(object index, int data);
 
-        void Write<T>(object index, T data);
-
-        void WriteArray2Reg(ushort index, ushort[] data);
-
-        void WriteWord2Reg(ushort index, ushort data);
-
+        void WriteArray(ushort index, ushort[] data);
+        
         event EventHandler BusActivityDetection;
 
         event EventHandler<DataEvent> RaiseDataEvent;

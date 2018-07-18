@@ -281,7 +281,7 @@ namespace WtConsole
             private static int ReadParameter(string[] args) {
             Console.Write(args[0] + "Read... ");
             if (args.Length < 2) return -1;
-            int intValue = _jetConnection.Read<int>(args[1]);
+            int intValue = _jetConnection.Read(args[1]);
             
             Console.WriteLine(intValue);
             return 0;
@@ -292,7 +292,7 @@ namespace WtConsole
             if (args.Length < 3) return -1;
 
             int value = Convert.ToInt32(args[2]);
-            _jetConnection.Write<int>(args[1], value);
+            _jetConnection.Write(args[1], value);
             Console.WriteLine("OK");
 
             return 0;

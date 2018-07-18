@@ -180,7 +180,7 @@ namespace HBM.WT.API.WTX
             this._callbackObj = callbackParam;
 
             if (this._command == 0x00)
-                this.Connection.ReadRegister();
+                this.Connection.Read(0);
 
             else
             {
@@ -190,7 +190,7 @@ namespace HBM.WT.API.WTX
                 while (this.Handshake == 0)
                 {
                     Thread.Sleep(100);
-                    this.Connection.ReadRegister();
+                    this.Connection.Read(0);
                     //this.JetConnObj.Read();
                 }
 
@@ -203,7 +203,7 @@ namespace HBM.WT.API.WTX
                 while (/*this.status == 1 &&*/ this.Handshake == 1)
                 {
                     Thread.Sleep(100);
-                    this.Connection.ReadRegister();
+                    this.Connection.Read(0);
                     //this.JetConnObj.Read();
                 }
             }
@@ -222,7 +222,7 @@ namespace HBM.WT.API.WTX
         // @return: IDevice_Values - Interface, that contains all values for the device. 
         public override IDeviceData AsyncReadData(BackgroundWorker worker)
         {
-            this.Connection.ReadRegister();
+            this.Connection.Read(0);
 
             return this;
         }
@@ -230,7 +230,7 @@ namespace HBM.WT.API.WTX
         // Neu : 8.3.2018
         public override IDeviceData SyncReadData()
         {
-            this.Connection.ReadRegister();
+            this.Connection.Read(0);
             //this.JetConnObj.Read();
 
             return this;
@@ -310,7 +310,7 @@ namespace HBM.WT.API.WTX
             _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
             _dataWritten[1] = (ushort)(valueParam & 0x0000ffff);
 
-            Connection.Write(wordNumber, _dataWritten);
+            Connection.WriteArray(wordNumber, _dataWritten);
         }
 
 

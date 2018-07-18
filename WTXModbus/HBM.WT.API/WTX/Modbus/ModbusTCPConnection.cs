@@ -82,38 +82,26 @@ namespace HBM.WT.API.WTX.Modbus
 
         public virtual event EventHandler<DataEvent> RaiseDataEvent; // virtual new due to tesing - 3.5.2018
 
-        // Only for the purpose to fulfill the methods from the interface 'INetConnection', which are implemented by 'JetbusConnection'. 
-        public T Read<T>(object index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write<T>(object index, T data)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Alternative : Without Generics 
 
         // This method is called from the device class "WTX120" and calls the method ReadRegisterPublishing(e:MessageEvent)
         // to create a new MessageEvent to read the register of the device. 
-
-        public void ReadRegister()
+        public int Read(object index)
         {
             if (_connected)
                 ReadRegisterPublishing(new DataEvent(_data));
+
+            return 0; 
         }
 
-        /*
-        public T Read<T>(object index)
+        public void Write(object index, int data)
         {
-            if (this.connected == true)
-                this.ReadRegisterPublishing(new NetConnectionEventArgs<ushort[]>(EventArgType.Data, this.data));
-
-            return (T)Convert.ChangeType(0, typeof(T));
-
+            _master.WriteSingleRegister((ushort)index, (ushort)data);
         }
-        */
+
+        public void WriteArray(ushort index, ushort[] data)
+        {
+            _master.WriteMultipleRegisters(index, data);
+        }
 
         // This method publishes the event (MessageEvent) and read the register, afterwards the message(from the register) will be sent back to WTX120.  
         // This method is declared as a virtual method to allow derived class to override the event call.
@@ -178,14 +166,5 @@ namespace HBM.WT.API.WTX.Modbus
             _client.Close();
         }
 
-        public void WriteArray2Reg(ushort index, ushort[] data)
-        {
-            _master.WriteMultipleRegisters(index, data);
-        }
-
-        public void WriteWord2Reg(ushort index, ushort data)
-        {
-            _master.WriteSingleRegister(index, data);
-        }
     }
 }

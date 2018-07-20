@@ -107,9 +107,11 @@ namespace WTXModbus
                 _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusObj, _timerInterval);    // timerInterval is given by the VS project properties menu as an argument.
 
                 // The connection to the device should be established.   
-                _wtxObj.Connect();                                 // Alternative : WTXObj.getConnection.Connect();  
+                //_wtxObj.Connect();                                 // Alternative : WTXObj.getConnection.Connect();  
 
-                if (_wtxObj.Connection.IsConnected == true)
+                _wtxObj.getModbusConnection.Connect();
+
+                if (_wtxObj.getModbusConnection.IsConnected == true)
                 {
                     Console.WriteLine("\nThe connection has been established successfully.\nThe values of the WTX device are printed on the console ... :");
                 }
@@ -119,7 +121,7 @@ namespace WTXModbus
                     _ipAddress = Console.ReadLine();
                 }
 
-            } while (_wtxObj.Connection.IsConnected==false);
+            } while (_wtxObj.getModbusConnection.IsConnected==false);
 
 
             //thread1.Start();

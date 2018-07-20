@@ -73,7 +73,7 @@ namespace HBM.WT.API.WTX.Modbus
             set { _port = value; }
         }
 
-        public virtual bool IsConnected => _connected;
+        public bool IsConnected => _connected;
 
         // Declaration of the event Eventhandler. For the message information from the register.
         // public event EventHandler<MessageEvent<ushort>> RaiseDataEvent;
@@ -175,6 +175,7 @@ namespace HBM.WT.API.WTX.Modbus
         {
             _client.Close();
         }
+
 
     }
 }

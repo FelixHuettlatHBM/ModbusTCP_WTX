@@ -1,5 +1,6 @@
 ﻿
 using HBM.WT.API;
+using HBM.WT.API.WTX;
 using HBM.WT.API.WTX.Jet;
 using HBM.WT.API.WTX.Modbus;
 
@@ -123,7 +124,6 @@ namespace WtConsole
                         
                         _modbusConnection = new ModbusTcpConnection(_ipAddr);
 
-
                         _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusConnection, _timerInterval);
 
                         // Konstruktor neu : Obj. von ModbusTCPConnection, Timer Intervall
@@ -134,9 +134,9 @@ namespace WtConsole
                             _previousDataStrArr[i] = "0";
 
                         // Start asynchronous data transfer : Method - Nur bei einer Änderung Werte ausgeben - Was abrufbar ist aus der Klasse Program zu WTX120_Modbus
-
-                        _wtxObj.Connect();
                         
+                        _wtxObj.getModbusConnection.Connect();     // Alternative : _wtxObj.Connect();
+
                         //WTXObj.isDataReceived = false;
 
                         thread1.Start();     // Thread für eine Eingabe. Wenn 'e' eingetippt wurde, wird die Anwendung bzgl. Modbus beendet. 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HBM.WT.API.WTX.Modbus;
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace HBM.WT.API  
@@ -8,15 +9,18 @@ namespace HBM.WT.API
     /// </summary>
     public interface INetConnection
     {
+        event EventHandler BusActivityDetection;
+        event EventHandler<DataEvent> RaiseDataEvent;
+
+        void Connect();
+     
         int Read(object index);
 
         void Write(object index, int data);
 
         void WriteArray(ushort index, ushort[] data);
-        
-        event EventHandler BusActivityDetection;
 
-        event EventHandler<DataEvent> RaiseDataEvent;
+        void Disconnect();
 
     }
 

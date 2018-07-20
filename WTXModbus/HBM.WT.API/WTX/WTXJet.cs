@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using HBM.WT.API.WTX.Jet;
-
+using HBM.WT.API.WTX.Modbus;
 
 namespace HBM.WT.API.WTX
 {
@@ -75,7 +75,7 @@ namespace HBM.WT.API.WTX
             for (int index = 0; index < 59; index++)
                 _data[index] = 0x00;
 
-            Connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
+            this._connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
         }
 
 
@@ -156,18 +156,16 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read(ParameterKeys.MEASURED_VALUE);
+                return this._connection.Read(ParameterKeys.MEASURED_VALUE);
             }
         }
-
 
         public override int GrossValue
         {
             get
             {
-                return this.Connection.Read(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
-            }
-            
+                return this._connection.Read(ParameterKeys.GROSS_VALUE);        // GrossValue = "6144/00";
+            }           
         }
 
         public override int GeneralWeightError { get { return 1; } }       // data[3]
@@ -178,7 +176,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read(ParameterKeys.WEIGHT_MOVING_DETECTION);
+                return this._connection.Read(ParameterKeys.WEIGHT_MOVING_DETECTION);
             }
         }              // data[6]
 
@@ -196,7 +194,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Connection.Read(ParameterKeys.DECIMALS);   // Decimals = "DPT";
+                return this._connection.Read(ParameterKeys.DECIMALS);   // Decimals = "DPT";
             }
         }     // data[15]
 
@@ -244,7 +242,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {             
-                return this.Connection.Read(ParameterKeys.DOSING_STATUS);
+                return this._connection.Read(ParameterKeys.DOSING_STATUS);
             }
         }             // data[51]
 
@@ -252,7 +250,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read(ParameterKeys.DOSING_COUNTER);
+                return this._connection.Read(ParameterKeys.DOSING_COUNTER);
             }
         }            // data[52]
 
@@ -260,7 +258,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this.Connection.Read(ParameterKeys.DOSING_RESULT);
+                return this._connection.Read(ParameterKeys.DOSING_RESULT);
             }
         }           // data[53]
 
@@ -344,7 +342,10 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        public JetBusConnection Connection
+
+        public override ModbusTcpConnection getModbusConnection => throw new NotImplementedException();
+
+        public override JetBusConnection getJetBusConnection
         {
             get { return _connection; }
         }
@@ -474,12 +475,17 @@ namespace HBM.WT.API.WTX
 
         }
 
-        public override void Connect()
+        public override void Disconnect()
         {
             throw new NotImplementedException();
         }
 
-        public override void Disconnect()
+        public override bool isConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Connect(Action<bool> completed, double timeoutMs)
         {
             throw new NotImplementedException();
         }

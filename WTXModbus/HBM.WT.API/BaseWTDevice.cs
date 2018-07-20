@@ -1,4 +1,5 @@
-﻿using HBM.WT.API.WTX.Modbus;
+﻿using HBM.WT.API.WTX.Jet;
+using HBM.WT.API.WTX.Modbus;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -64,10 +65,17 @@ namespace HBM.WT.API
 
         public abstract event EventHandler<DataEvent> DataUpdateEvent;
 
+        public abstract bool isConnected();
 
         public abstract ushort[] GetValuesAsync();        // Neu : 4.5 für eventbasierten asynchronen Abruf der Daten
-        
-        public abstract void Connect();
+
+        public abstract void Connect(Action<bool> completed, double timeoutMs);
+
+        //public abstract void Connect();
+
+        public abstract ModbusTcpConnection getModbusConnection { get; }
+
+        public abstract JetBusConnection getJetBusConnection { get; }
 
         public abstract void Disconnect();
 

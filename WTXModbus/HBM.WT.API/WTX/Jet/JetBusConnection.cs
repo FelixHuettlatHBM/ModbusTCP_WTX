@@ -60,6 +60,11 @@ namespace HBM.WT.API.WTX.Jet
 
         #region support functions
 
+        public void Connect()
+        {
+
+        }
+
         protected virtual void ConnectOnPeer(int timeoutMs = 5000) {
             MPeer.Connect(delegate (bool connected) {
                 if (!connected) {

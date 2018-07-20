@@ -7,8 +7,7 @@ namespace HBM.WT.API.WTX.Jet
     using Newtonsoft.Json.Linq;
     using HBM.WT.API.WTX;
     using HBM.WT.API.WTX.Modbus;
-
-    using JetbusTest;
+    
     using HBM.WT.API.WTX.Jet;
 
     [TestFixture]

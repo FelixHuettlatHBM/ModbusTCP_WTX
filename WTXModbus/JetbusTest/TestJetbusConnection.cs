@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // Look also on the tests on GitHub at a related project for SharpJet : https://github.com/gatzka/SharpJet/tree/master/SharpJetTests
 
-namespace JetbusTest
+namespace HBM.WT.API.WTX.Jet
 {
     using HBM.WT.API;
     using System;

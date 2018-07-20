@@ -23,8 +23,7 @@ namespace HBM.WT.API.WTX
         private ushort[] _data;
         private JetBusConnection _connection;
         private bool _dataReceived;
-
-        public override event Func<object, EventArgs, Task> Shutdown;
+        
         public override event EventHandler<DataEvent> DataUpdateEvent;
 
         private struct ParameterKeys
@@ -144,12 +143,6 @@ namespace HBM.WT.API.WTX
             //throw new NotImplementedException();
         }
         
-
-        public override Task OnShutdown()
-        {
-            throw new NotImplementedException();
-        }
-
         public override ushort[] GetValuesAsync()
         {
             throw new NotImplementedException();

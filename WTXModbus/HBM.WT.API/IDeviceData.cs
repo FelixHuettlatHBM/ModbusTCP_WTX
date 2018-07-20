@@ -26,10 +26,6 @@ namespace HBM.WT.API
     /// </summary>
     public interface IDeviceData
     {
-        /// <summary>
-        ///
-        /// </summary>
-        event Func<object, EventArgs, Task> Shutdown;
 
         /// <summary>
         ///
@@ -1076,10 +1072,5 @@ namespace HBM.WT.API
         /// <returns></returns>
         ushort[] GetValuesAsync();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        Task OnShutdown();
     }
 }

@@ -95,12 +95,16 @@ namespace HBM.WT.API.WTX.Modbus
 
         public void Write(object index, int data)
         {
-            _master.WriteSingleRegister((ushort)index, (ushort)data);
+            _master.WriteSingleRegister((ushort)Convert.ToInt32(index), (ushort)data);
+
+            BusActivityDetection?.Invoke(this, new LogEvent("Data(ushort) have been written successfully to the register"));
         }
 
         public void WriteArray(ushort index, ushort[] data)
         {
             _master.WriteMultipleRegisters(index, data);
+
+            BusActivityDetection?.Invoke(this, new LogEvent("Data(ushort array) have been written successfully to multiple registers"));
         }
 
         // This method publishes the event (MessageEvent) and read the register, afterwards the message(from the register) will be sent back to WTX120.  
@@ -117,6 +121,8 @@ namespace HBM.WT.API.WTX.Modbus
 
                 e.Args = _master.ReadHoldingRegisters(StartAdress, NumOfPoints);
                 _connected = true;
+
+                BusActivityDetection?.Invoke(this, new LogEvent("Registers have been read"));
             }
             catch (ArgumentException)
             {
@@ -153,10 +159,14 @@ namespace HBM.WT.API.WTX.Modbus
                 _client = new TcpClient(_iPAddress, _port);
                 _master = ModbusIpMaster.CreateIp(_client);
                 _connected = true;
+
+                BusActivityDetection?.Invoke(this, new LogEvent("Connection has been established successfully"));
             }
             catch (Exception)
             {
                 _connected = false; // If the connection establishment has not been successful - connected=false. 
+
+                BusActivityDetection?.Invoke(this, new LogEvent("Connection has NOT been established successfully"));
             }
         }
 

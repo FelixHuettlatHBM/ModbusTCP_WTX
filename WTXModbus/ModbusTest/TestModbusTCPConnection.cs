@@ -11,7 +11,7 @@ namespace HBM.WT.API.WTX.Modbus
          ConnectionSuccess
     }
 
-    public class TestModbusTCPConnection : INetConnection
+    public class TestModbusTCPConnection : ModbusTcpConnection
     {
         private Behavior behavior;
         private List<string> messages;
@@ -20,13 +20,15 @@ namespace HBM.WT.API.WTX.Modbus
         public event EventHandler BusActivityDetection;
         public event EventHandler<DataEvent> RaiseDataEvent;
 
-        public TestModbusTCPConnection(Behavior behavior)
+        public TestModbusTCPConnection(Behavior behavior,string ipAddress) : base(ipAddress)
         {
             this.behavior = behavior;
             this.messages = new List<string>();
         }
 
-        public void Connect()
+
+
+        public new void Connect()
         {
             switch(this.behavior)
             {
@@ -49,22 +51,22 @@ namespace HBM.WT.API.WTX.Modbus
             return this.connected;
         }
 
-    public void Disconnect()
+    public new void Disconnect()
         {
             throw new NotImplementedException();
         }
 
-        public int Read(object index)
+        public new int Read(object index)
         {
             throw new NotImplementedException();
         }
 
-        public void Write(object index, int data)
+        public new void Write(object index, int data)
         {
             throw new NotImplementedException();
         }
 
-        public void WriteArray(ushort index, ushort[] data)
+        public new void WriteArray(ushort index, ushort[] data)
         {
             throw new NotImplementedException();
         }

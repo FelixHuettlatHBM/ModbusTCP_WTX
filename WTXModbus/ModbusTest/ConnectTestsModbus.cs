@@ -27,8 +27,8 @@ namespace HBM.WT.API.WTX.Modbus
         [SetUp]
         public void Setup()
         {
-            this.connectCallbackCalled = false;
-            this.connectCompleted = false;
+            this.connectCallbackCalled = true;
+            this.connectCompleted = true;
         }
 
 
@@ -36,7 +36,7 @@ namespace HBM.WT.API.WTX.Modbus
          public bool ConnectTestModbus(Behavior behaviour)
          {
 
-            object testConnection = new TestModbusTCPConnection(behaviour);
+            object testConnection = new TestModbusTCPConnection(behaviour, "172.19.103.8");
             WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
             
             WTXModbusObj.Connect(this.OnConnect, 100);

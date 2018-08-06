@@ -9,11 +9,9 @@ namespace HBM.WT.API.WTX.Jet
     using HBM.WT.API.WTX.Modbus;
     
     using HBM.WT.API.WTX.Jet;
-
     [TestFixture]
     public class ConnectTestsJetbus
     {
-
         private bool connectCallbackCalled;
         private bool connectCompleted;
 
@@ -47,16 +45,18 @@ namespace HBM.WT.API.WTX.Jet
             return this.connectCompleted;
 
             // Ohne Callback:    
+
             /*
             object testConnection = new TestModbusTCPConnection(behaviour);
 
-            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
-       
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);     
+            
             WTXModbusObj.Connect();
             
             Assert.AreEqual(WTXModbusObj.isConnected(), true);
 
             return this.connectCompleted;
+            
             */
         }
 

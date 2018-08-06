@@ -65,7 +65,7 @@ namespace HBM.WT.API.WTX.Jet
 
         }
 
-        protected virtual void ConnectOnPeer(int timeoutMs = 5000) {
+        public virtual void ConnectOnPeer(int timeoutMs = 5000) {   // before it was "protected". 
             MPeer.Connect(delegate (bool connected) {
                 if (!connected) {
                     _mException = new Exception("Connection failed.");
@@ -81,7 +81,8 @@ namespace HBM.WT.API.WTX.Jet
             WaitOne();
         }
 
-        protected virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000) {
+        public virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000)   // before it was "protected". 
+        {   
             MPeer.Connect(delegate (bool connected) {
                 if (connected) {
                     MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {

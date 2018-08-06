@@ -33,13 +33,17 @@ namespace HBM.WT.API.WTX.Jet
 
         [Test, TestCaseSource(typeof(ConnectTestsJetbus), "TestCases")]
         public bool ConnectTestJetbus(Behavior behaviour)
-        {
-            object testConnection = new TestJetbusConnection(behaviour);
+        {        
+            //object testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8",5000);
+            
+            object testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
             WtxJet WTXJetObj = new WtxJet((JetBusConnection) testConnection);
 
-            WTXJetObj.Connect(this.OnConnect, 100);
-
+            WTXJetObj.Connect(this.OnConnect, 5000);
+            
             //Mit Callback-Funktion:
+
             Assert.AreEqual(this.connectCallbackCalled, true);
 
             return this.connectCompleted;

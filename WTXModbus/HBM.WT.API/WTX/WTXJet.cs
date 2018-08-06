@@ -487,7 +487,7 @@ namespace HBM.WT.API.WTX
 
         public override void Connect(Action<bool> completed, double timeoutMs)
         {
-            throw new NotImplementedException();
+            _connection.ConnectOnPeer((int)timeoutMs);
         }
     }
 }

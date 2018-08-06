@@ -94,6 +94,10 @@ namespace WtConsole
 
                         _jetConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
 
+                        _jetConnection.ConnectOnPeer(5000);
+                        _jetConnection.FetchAll();
+
+
                         Console.WriteLine("OK");
  
                         //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;

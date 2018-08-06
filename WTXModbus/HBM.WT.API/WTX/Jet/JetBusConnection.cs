@@ -26,6 +26,8 @@ namespace HBM.WT.API.WTX.Jet
         //public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent
         public event EventHandler<DataEvent> RaiseDataEvent;
 
+        private bool JetConnected;
+
 
         #endregion
 
@@ -33,11 +35,12 @@ namespace HBM.WT.API.WTX.Jet
 
         // Constructor: Without ssh certification. 
         public JetBusConnection(string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) {
+
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, certificationCallback);
             MPeer = new JetPeer(jetConnection);
 
-            ConnectOnPeer(user, passwd, timeoutMs);
-            FetchAll();
+            //ConnectOnPeer(user, passwd, timeoutMs);
+            //FetchAll();
         }
 
         // Constructor: With ssh certification as a parameter (NetConnectionSecurity) . 
@@ -46,15 +49,30 @@ namespace HBM.WT.API.WTX.Jet
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
 
-            ConnectOnPeer(timeoutMs);
-            FetchAll();
+            //ConnectOnPeer(timeoutMs);
+            //FetchAll();
         }
 
         public JetBusConnection(string ipAddr, string user, string passwd, int timeoutMs = 5000) 
-            : this(ipAddr, user, passwd, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs){ }
+            : this(ipAddr, user, passwd, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs){
+
+            IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
+            MPeer = new JetPeer(jetConnection);
+
+            //ConnectOnPeer(timeoutMs);
+            //FetchAll();
+
+        }
 
         public JetBusConnection(string ipAddr, int timeoutMs = 5000) 
-            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs) { }
+            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs) {
+
+            IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
+            MPeer = new JetPeer(jetConnection);
+
+            //ConnectOnPeer(timeoutMs);
+            //FetchAll();
+        }
 
         #endregion
 
@@ -63,6 +81,18 @@ namespace HBM.WT.API.WTX.Jet
         public void Connect()
         {
 
+        }
+
+        public bool isConnected
+        {
+            get
+            {
+                return JetConnected;
+            }
+            set
+            {
+                JetConnected = value;
+            }
         }
 
         public virtual void ConnectOnPeer(int timeoutMs = 5000) {   // before it was "protected". 
@@ -78,6 +108,7 @@ namespace HBM.WT.API.WTX.Jet
             // Das WaitOne und der Timeout bezieht sich auf die gesamte Routine einschließlich aller
             // Instruktionen in die Callbacks der Connect-Methode
             //
+
             WaitOne();
         }
 
@@ -85,8 +116,13 @@ namespace HBM.WT.API.WTX.Jet
         {   
             MPeer.Connect(delegate (bool connected) {
                 if (connected) {
+
+                    this.JetConnected = true;
+
                     MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {
                         if (!success) {
+
+                            this.JetConnected = false;
                             JetBusException exception = new JetBusException(token);
                             _mException = new InterfaceException(exception, (uint)exception.Error);
                         }
@@ -94,6 +130,7 @@ namespace HBM.WT.API.WTX.Jet
                     }, _mTimeoutMs);
                 }
                 else {
+                    this.JetConnected = false;
                     _mException = new Exception("Connection failed");
                     _mSuccessEvent.Set();
                 }
@@ -102,12 +139,16 @@ namespace HBM.WT.API.WTX.Jet
             WaitOne(2);
         }
 
-        protected virtual void FetchAll()
+        public virtual void FetchAll()
         {
             Matcher matcher = new Matcher();
             FetchId id;
+
             MPeer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token) {
                 if (!success) {
+
+                    this.JetConnected = false;
+
                     JetBusException exception = new JetBusException(token);
                     _mException = new InterfaceException(exception, (uint)exception.Error);
                 }
@@ -117,14 +158,17 @@ namespace HBM.WT.API.WTX.Jet
                 _mSuccessEvent.Set();
                 
                 BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
+                
                 //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));
 
             }, _mTimeoutMs);
             WaitOne(3);
         }
-
+        
         protected virtual void WaitOne(int timeoutMultiplier = 1) {
             if (!_mSuccessEvent.WaitOne(_mTimeoutMs * timeoutMultiplier)) {
+
+                this.JetConnected = false;
                 //
                 // Timeout-Exception
                 //
@@ -136,7 +180,7 @@ namespace HBM.WT.API.WTX.Jet
                 throw exception;
             }
         }
-
+        
         #endregion
 
         #region read-functions
@@ -273,7 +317,8 @@ namespace HBM.WT.API.WTX.Jet
             catch (Exception e) {
                 throw new InterfaceException(e, 0x01);
             }
-            WaitOne();
+
+            //WaitOne();
         }
 
         public void WriteInt(object index, int data) {
@@ -292,7 +337,7 @@ namespace HBM.WT.API.WTX.Jet
         #endregion
 
         public void DisconnectDevice() {
-            throw new NotImplementedException();
+            MPeer.Disconnect();
         }
 
         public string BufferToString() {

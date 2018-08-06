@@ -72,7 +72,6 @@ namespace WTXGUISimple
             */
 
             // Setting the connection for jetbus: 
-
             if (args.Length > 0)
             {
                 if (args[0] == "modbus" || args[0] == "Modbus")

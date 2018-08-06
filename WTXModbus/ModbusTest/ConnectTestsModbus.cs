@@ -36,7 +36,7 @@ namespace HBM.WT.API.WTX.Modbus
          public bool ConnectTestModbus(Behavior behaviour)
          {
 
-            object testConnection = new TestModbusTCPConnection(behaviour, "172.19.103.8");
+            object testConnection  = new TestModbusTCPConnection(behaviour, "172.19.103.8");
             WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
             
             WTXModbusObj.Connect(this.OnConnect, 100);

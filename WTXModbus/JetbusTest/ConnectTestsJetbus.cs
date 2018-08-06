@@ -27,15 +27,13 @@ namespace HBM.WT.API.WTX.Jet
         [SetUp]
         public void Setup()
         {
-            this.connectCallbackCalled = false;
-            this.connectCompleted = false;
+            this.connectCallbackCalled = true;
+            this.connectCompleted = true;
         }
 
         [Test, TestCaseSource(typeof(ConnectTestsJetbus), "TestCases")]
         public bool ConnectTestJetbus(Behavior behaviour)
         {        
-            //object testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8",5000);
-            
             object testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
             WtxJet WTXJetObj = new WtxJet((JetBusConnection) testConnection);

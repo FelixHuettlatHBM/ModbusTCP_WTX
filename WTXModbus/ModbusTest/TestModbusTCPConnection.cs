@@ -16,8 +16,6 @@ namespace HBM.WT.API.WTX.Modbus
 
          WriteFail,
          WriteSuccess,
-
-
     }
 
     public class TestModbusTCPConnection : ModbusTcpConnection
@@ -137,17 +135,30 @@ namespace HBM.WT.API.WTX.Modbus
             if (handler != null) handler(this, e);
         }
 
-
-
-
         public new void Write(object index, int data)
         {
-            switch(this.behavior)
+            switch (this.behavior)
             {
                 case Behavior.WriteFail:
+                    _data[16] = 0;
+
+                    if (_data[17] == 0) // _data[17] = Do not invert the status bit.
+                        _data[17] = 0;
+                    if (_data[17] == 1)
+                        _data[17] = 1;
+
                     break;
 
                 case Behavior.WriteSuccess:
+                    _data[16] = 1;      // _data[16] = Handshake.
+                    Thread.Sleep(500);
+                    _data[16] = 0;
+
+                    if (_data[17] == 0) // _data[17] = Invert the status bit according to the Handshake protocol.
+                        _data[17] = 1;
+                    if (_data[17] == 1)
+                        _data[17] = 0;
+
                     break;
 
                 default:

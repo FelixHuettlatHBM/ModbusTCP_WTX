@@ -122,7 +122,7 @@ namespace HBM.WT.API.WTX.Modbus
                 e.Args = _master.ReadHoldingRegisters(StartAdress, NumOfPoints);
                 _connected = true;
 
-                BusActivityDetection?.Invoke(this, new LogEvent("Registers have been read"));
+                BusActivityDetection?.Invoke(this, new LogEvent("Read successful: Registers have been read"));
             }
             catch (ArgumentException)
             {
@@ -130,6 +130,8 @@ namespace HBM.WT.API.WTX.Modbus
             }
             catch (InvalidOperationException)
             {
+                BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
+
                 _connected = false;
 
                 Connect();

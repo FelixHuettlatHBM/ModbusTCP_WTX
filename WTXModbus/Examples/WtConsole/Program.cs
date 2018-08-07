@@ -257,19 +257,24 @@ namespace WtConsole
             
                 Console.WriteLine("Net value:                     " + _wtxObj.GetDataStr[0] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.NetValue);        
                 Console.WriteLine("Gross value:                   " + _wtxObj.GetDataStr[1] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.GrossValue);    
-                Console.WriteLine("General weight error:          " + _wtxObj.GetDataStr[2] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.GeneralWeightError);    
-                Console.WriteLine("Scale alarm triggered:         " + _wtxObj.GetDataStr[3] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.LimitStatus);    
+                Console.WriteLine("General weight error:          " + _wtxObj.GetDataStr[2] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.GeneralWeightError); 
+                
+                Console.WriteLine("Scale alarm triggered:         " + _wtxObj.GetDataStr[3] +   "\t  As an Integer:  " + _wtxObj.DeviceValues.ScaleAlarmTriggered);    
                 Console.WriteLine("Scale seal is open:            " + _wtxObj.GetDataStr[6]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.ScaleSealIsOpen);
                 Console.WriteLine("Manual tare:                   " + _wtxObj.GetDataStr[7]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.ManualTare);
+
                 Console.WriteLine("Weight type:                   " + _wtxObj.GetDataStr[8]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.WeightType);
                 Console.WriteLine("Scale range:                   " + _wtxObj.GetDataStr[9]   + "\t  As an Integer:  " + _wtxObj.DeviceValues.ScaleRange);
                 Console.WriteLine("Zero required/True zero:       " + _wtxObj.GetDataStr[10]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.ZeroRequired);
+
                 Console.WriteLine("Weight within center of zero:  " + _wtxObj.GetDataStr[11]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.WeightWithinTheCenterOfZero);
                 Console.WriteLine("Weight in zero range:          " + _wtxObj.GetDataStr[12]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.WeightWithinTheCenterOfZero);
                 Console.WriteLine("Application mode:              " + _wtxObj.GetDataStr[13]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.ApplicationMode);
+
                 Console.WriteLine("Decimal places:                " + _wtxObj.GetDataStr[14]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Decimals);
                 Console.WriteLine("Unit:                          " + _wtxObj.GetDataStr[15]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Unit);
                 Console.WriteLine("Handshake:                     " + _wtxObj.GetDataStr[16]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Handshake);
+
                 Console.WriteLine("Status:                        " + _wtxObj.GetDataStr[17]  + "\t  As an Integer:  " + _wtxObj.DeviceValues.Status);
                 Console.WriteLine("Limit status:                  " + _wtxObj.GetDataStr[4]  + "  As an Integer:  "    + _wtxObj.DeviceValues.LimitStatus);
                 Console.WriteLine("Weight moving:                 " + _wtxObj.GetDataStr[5]  + "  As an Integer:"      + _wtxObj.DeviceValues.WeightMoving);

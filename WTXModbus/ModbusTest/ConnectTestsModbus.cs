@@ -46,8 +46,8 @@ namespace HBM.WT.API.WTX.Modbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.WriteFail).ExpectedResult = _dataReadFail;
-                yield return new TestCaseData(Behavior.WriteSuccess).ExpectedResult = _dataReadSuccess;
+                yield return new TestCaseData(Behavior.WriteFail).ExpectedResult = _dataWriteFail;
+                yield return new TestCaseData(Behavior.WriteSuccess).ExpectedResult = _dataWriteSuccess;
             }
         }
 

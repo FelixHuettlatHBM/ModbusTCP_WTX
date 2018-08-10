@@ -8,6 +8,7 @@ namespace HBM.WT.API.WTX.Modbus
 
     public enum Behavior
     {
+
          ConnectionFail, 
          ConnectionSuccess,
          
@@ -16,6 +17,7 @@ namespace HBM.WT.API.WTX.Modbus
 
          WriteFail,
          WriteSuccess,
+
     }
 
     public class TestModbusTCPConnection : ModbusTcpConnection

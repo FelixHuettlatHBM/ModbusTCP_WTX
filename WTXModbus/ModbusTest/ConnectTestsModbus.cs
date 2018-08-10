@@ -53,6 +53,16 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        // Test case source for writing values to the WTX120 device. 
+        public static IEnumerable WriteSyncTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteFail).ExpectedResult = _dataWriteFail;
+                yield return new TestCaseData(Behavior.WriteSuccess).ExpectedResult = _dataWriteSuccess;
+            }
+        }
+
         /*
         // Test case for the Backgroundworker enabling asynchronous data transfer between host-pc and WTX120 device. 
         public static IEnumerable AsyncBackgroundworkerTestCases
@@ -211,12 +221,14 @@ namespace HBM.WT.API.WTX.Modbus
         */
 
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "ReadTestCases")]
-        public void BackgroundWorkerFiresRunWorkerCompleted(Behavior behavior)
+        public void AsyncReadBackgroundworkerTest(Behavior behavior)
         {
             var runner = new BackgroundWorker();
 
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WtxModbus application = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
 
             ManualResetEvent done = new ManualResetEvent(false);
 
@@ -224,23 +236,88 @@ namespace HBM.WT.API.WTX.Modbus
 
             runner.RunWorkerAsync();
 
-            DateTime end = DateTime.Now.AddSeconds(10);
+            DateTime end = DateTime.Now.AddSeconds(20);
             bool res = false;
-
+            
             while ((!res) && (DateTime.Now < end))
             {
-                //Application.DoEvents();
-
-                application.Async_Call(0x00, callbackMethod);
+                WTXModbusObj.Async_Call(0x00, callbackMethod);       // Read data from register 
 
                 res = done.WaitOne(0);
             }
             
-            // The following assertion should fail. It it is fails, the purpose of the test is right. 
-            Assert.IsTrue(res, "RunWorkerCompleted was not executed within 10 seconds");
-
-            //return 0;
+            Assert.IsTrue(res, "The RunWorkerCompleted method have not been executed within 10 seconds");
         }
+
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "ReadTestCases")]
+        public void AsyncWriteBackgroundworkerTest(Behavior behavior)
+        {
+            var runner = new BackgroundWorker();
+
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            ManualResetEvent done = new ManualResetEvent(false);
+
+            runner.RunWorkerCompleted += delegate { done.Set(); };
+
+            runner.RunWorkerAsync();
+
+            DateTime end = DateTime.Now.AddSeconds(20);
+            bool res = false;
+
+            while ((!res) && (DateTime.Now < end))
+            {
+                WTXModbusObj.Async_Call(0x2, callbackMethod);       // Read data from register 
+
+                res = done.WaitOne(0);
+            }
+
+            Assert.IsTrue(res, "The RunWorkerCompleted method have not been executed within 10 seconds");
+        }
+
+
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteSyncTestCases")]
+        public void SyncBackgroundworkerTest(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            // Write : Gross/Net 
+
+            //WTXModbusObj.Async_Call(0x2, callbackMethod);
+
+            WTXModbusObj.SyncCall_Write_Command(0, 0x2, Write_DataReceived);
+        
+            testConnection.ReadRegisterPublishing(new DataEvent(_dataWriteSuccess));
+
+            Assert.AreEqual(_dataWriteSuccess, WTXModbusObj.GetDataUshort);
+
+        }
+
+        private void Write_DataReceived(IDeviceData obj)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /*
+         [Test, TestCaseSource(typeof(ConnectTestsModbus), "ReadTestCases")]
+         public void TestUpdateEvent(Behavior behavior)
+         {
+             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+             WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+
+             WTXModbusObj.Connect(this.OnConnect, 100);
+
+
+         }
+         */
 
         private void callbackMethod(IDeviceData obj)
         {
@@ -254,8 +331,70 @@ namespace HBM.WT.API.WTX.Modbus
             throw new NotImplementedException();
         }
 
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]
+        public void MeasureZeroTest(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            //Alternative: 
+
+            //ModbusTcpConnection testConnection = new ModbusTcpConnection("172.19.103.8");
+
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj.Connect(this.OnConnect, 100);
+            
+            WTXModbusObj.MeasureZero();
+ 
+            testConnection.ReadRegisterPublishing(new DataEvent(_dataWriteSuccess));
+
+            Assert.AreEqual(0, WTXModbusObj.GetDataUshort[0]);  // If the measureZero method have been successful, the actually measured value is zero.
+        }
 
 
+        /*
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]
+        public void CalculateCalibrationTest(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            //Alternative: 
+
+            //ModbusTcpConnection testConnection = new ModbusTcpConnection("172.19.103.8");
+
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            WTXModbusObj.Calculate(0.5,1.5);
+
+            testConnection.ReadRegisterPublishing(new DataEvent(_dataWriteSuccess));
+
+            // Testbedingung noch bearbeiten: 
+            Assert.AreEqual(0, WTXModbusObj.GetDataUshort[0]);  
+        }
+        */
+
+        /*
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]
+        public void CalibrationTest(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            //Alternative: 
+
+            //ModbusTcpConnection testConnection = new ModbusTcpConnection("172.19.103.8");
+
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            WTXModbusObj.Calibrate(111, "111");
+
+            testConnection.ReadRegisterPublishing(new DataEvent(_dataWriteSuccess));
+
+            // Testbedingung noch bearbeiten: 
+            Assert.AreEqual(0, WTXModbusObj.GetDataUshort[0]);
+        }
+        */
+       
 
         /*
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]

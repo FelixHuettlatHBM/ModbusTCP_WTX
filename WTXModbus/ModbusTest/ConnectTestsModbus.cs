@@ -210,7 +210,7 @@ namespace HBM.WT.API.WTX.Modbus
         }
         */
 
-        [Test]
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "ReadTestCases")]
         public void BackgroundWorkerFiresRunWorkerCompleted(Behavior behavior)
         {
             var runner = new BackgroundWorker();
@@ -238,6 +238,8 @@ namespace HBM.WT.API.WTX.Modbus
             
             // The following assertion should fail. It it is fails, the purpose of the test is right. 
             Assert.IsTrue(res, "RunWorkerCompleted was not executed within 10 seconds");
+
+            //return 0;
         }
 
         private void callbackMethod(IDeviceData obj)

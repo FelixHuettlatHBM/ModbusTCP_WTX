@@ -7,6 +7,8 @@ namespace HBM.WT.API.WTX.Modbus
     using Newtonsoft.Json.Linq;
     using HBM.WT.API.WTX;
     using HBM.WT.API.WTX.Modbus;
+    using System.ComponentModel;
+    using System.Threading;
 
     [TestFixture]
     public class ConnectTestsModbus 
@@ -50,6 +52,18 @@ namespace HBM.WT.API.WTX.Modbus
                 yield return new TestCaseData(Behavior.WriteSuccess).ExpectedResult = _dataWriteSuccess;
             }
         }
+
+        /*
+        // Test case for the Backgroundworker enabling asynchronous data transfer between host-pc and WTX120 device. 
+        public static IEnumerable AsyncBackgroundworkerTestCases
+        {
+            get
+            {
+                //yield return new TestCaseData()...;
+                //yield return new TestCaseData()...;
+            }
+        }
+        */
 
 
         [SetUp]
@@ -169,11 +183,77 @@ namespace HBM.WT.API.WTX.Modbus
 
         }
 
+        /*
+        [Test, TestCaseSource(typeof(xyz),"AsyncBackgroundworkerCases")]
+        public void AsyncBackgroundWorkerTest(Behavior behavior)
+        {           
+            bool running = true;
+            string result = null;
+
+            Action<string> cb = name =>
+            {
+                result = name;
+                running = false;
+            };
+
+            var d = new MyClass();
+            d.Get("test", cb);
+
+            while (running)
+            {
+                Thread.Sleep(100);
+            }
+
+            Assert.IsNotNull(result);
+        
+        //Though you probably want to add something in there to stop the test from running forever if it fails...
+        }
+        */
+
+        [Test]
+        public void BackgroundWorkerFiresRunWorkerCompleted(Behavior behavior)
+        {
+            var runner = new BackgroundWorker();
+
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus application = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+
+            ManualResetEvent done = new ManualResetEvent(false);
+
+            runner.RunWorkerCompleted += delegate { done.Set(); };
+
+            runner.RunWorkerAsync();
+
+            DateTime end = DateTime.Now.AddSeconds(10);
+            bool res = false;
+
+            while ((!res) && (DateTime.Now < end))
+            {
+                //Application.DoEvents();
+
+                application.Async_Call(0x00, callbackMethod);
+
+                res = done.WaitOne(0);
+            }
+            
+            // The following assertion should fail. It it is fails, the purpose of the test is right. 
+            Assert.IsTrue(res, "RunWorkerCompleted was not executed within 10 seconds");
+        }
+
+        private void callbackMethod(IDeviceData obj)
+        {
+            throw new NotImplementedException();
+        }
+
+
         // Callback method for writing on the WTX120 device: 
         private void OnWriteData(IDeviceData obj)
         {
             throw new NotImplementedException();
         }
+
+
+
 
         /*
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]

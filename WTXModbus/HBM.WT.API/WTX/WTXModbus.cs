@@ -83,7 +83,7 @@ namespace HBM.WT.API.WTX
 
 
         // To establish a connection to the WTX device via class WTX120_Modbus.
-        public override void Connect(Action<bool> completed, double timeoutMs)
+        public override void Connect(Action<bool> ConnectCompleted, double timeoutMs)
         {
             this._connection.Connect();
         }
@@ -94,7 +94,7 @@ namespace HBM.WT.API.WTX
         }
 
         // To terminate,break, a connection to the WTX device via class WTX120_Modbus.
-        public override void Disconnect()
+        public override void Disconnect(Action<bool> DisconnectCompleted)
         {
             this._connection.Disconnect();
         }

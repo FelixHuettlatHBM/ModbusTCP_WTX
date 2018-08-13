@@ -11,6 +11,9 @@ namespace HBM.WT.API.WTX.Modbus
 
          ConnectionFail, 
          ConnectionSuccess,
+
+         DisconnectionFail,
+         DisconnectionSuccess,
          
          ReadFail,
          ReadSuccess,
@@ -79,7 +82,20 @@ namespace HBM.WT.API.WTX.Modbus
 
         public new void Disconnect()
         {
-            throw new NotImplementedException();
+            switch (this.behavior)
+            {
+                case Behavior.DisconnectionFail:
+                    _connected = true;
+                    break;
+
+                case Behavior.DisconnectionSuccess:
+                    _connected = false;
+                    break;
+
+                default:
+                    _connected = true;
+                    break;
+            }
         }
 
         public int Read(object index)

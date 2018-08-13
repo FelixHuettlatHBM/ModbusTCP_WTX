@@ -76,8 +76,8 @@ namespace HBM.WT.API
         public abstract ModbusTcpConnection getModbusConnection { get; }
 
         public abstract JetBusConnection getJetBusConnection { get; }
-
-        public abstract void Disconnect();
+        
+        public abstract void Disconnect(Action<bool> DisconnectCompleted);
 
         public abstract IDeviceData DeviceValues { get; }
 

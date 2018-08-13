@@ -17,6 +17,9 @@ namespace HBM.WT.API.WTX.Modbus
         private bool connectCallbackCalled;
         private bool connectCompleted;
 
+        private bool disconnectCallbackCalled;
+        private bool disconnectCompleted;
+
         private static ushort[] _dataReadSuccess;
         private static ushort[] _dataReadFail;
 
@@ -26,7 +29,6 @@ namespace HBM.WT.API.WTX.Modbus
         private TestModbusTCPConnection testConnection;
         private WtxModbus WTXModbusObj;
 
-
         // Test case source for the connection establishment. 
         public static IEnumerable ConnectTestCases 
         { 
@@ -35,6 +37,16 @@ namespace HBM.WT.API.WTX.Modbus
             yield return new TestCaseData(Behavior.ConnectionSuccess).Returns(true); 
             yield return new TestCaseData(Behavior.ConnectionFail).Returns(false); 
         } 
+        }
+
+        // Test case source for the connection establishment. 
+        public static IEnumerable DisconnectTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.DisconnectionSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.DisconnectionFail).Returns(false);
+            }
         }
 
         // Test case source for reading values from the WTX120 device. 
@@ -177,13 +189,38 @@ namespace HBM.WT.API.WTX.Modbus
             return this.connectCompleted;
         }
 
-        private void OnConnect(bool completed)
+        private void OnConnect(bool connectCompleted)
         {
             this.connectCallbackCalled = true;
-            this.connectCompleted = completed;
+            this.connectCompleted = connectCompleted;
+        }
+       
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "DisconnectTestCases")]
+        public bool DisconnectTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            Thread.Sleep(1000); // Do something.... and disconnect.
+
+            WTXModbusObj.Disconnect(this.OnDisconnect);
+
+            //Mit Callback-Funktion:
+            Assert.AreEqual(this.connectCallbackCalled, true);
+
+            return this.connectCompleted;
         }
 
-       
+        private void OnDisconnect(bool disonnectCompleted)
+        {
+            this.disconnectCallbackCalled = true;
+            this.disconnectCompleted = disonnectCompleted;
+        }
+
+
+
         // Test for reading: 
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "ReadTestCases")]
         public void ReadRegisterPublishingTestModbus(Behavior behavior)

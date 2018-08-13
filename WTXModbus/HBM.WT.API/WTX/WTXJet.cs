@@ -474,8 +474,7 @@ namespace HBM.WT.API.WTX
                 return "error.";
 
         }
-
-        public override void Disconnect()
+        public override void Disconnect(Action<bool> DisconnectCompleted)
         {
             throw new NotImplementedException();
         }

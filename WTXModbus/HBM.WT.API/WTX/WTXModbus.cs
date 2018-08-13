@@ -260,6 +260,9 @@ namespace HBM.WT.API.WTX
             this._callbackObj(this);         // Neu : 21.11.2017         Interface übergeben. 
         }
 
+        private ushort arrayElement1; // For test purpose
+        private ushort arrayElement2; // For test purpose
+
         public void WriteOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this._callbackObj = callbackParam;
@@ -267,7 +270,26 @@ namespace HBM.WT.API.WTX
             _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
             _dataWritten[1] = (ushort)(valueParam & 0x0000ffff);
 
+            this.arrayElement1 = _dataWritten[0];
+            this.arrayElement2 = _dataWritten[1];
+
             this._connection.WriteArray(wordNumber, _dataWritten);
+        }
+
+        public ushort getArrElement1
+        {
+            get
+            {
+                return this.arrayElement1;
+            }
+        }
+
+        public ushort getArrElement2
+        {
+            get
+            {
+                return this.arrayElement2;
+            }
         }
 
 

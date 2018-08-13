@@ -21,6 +21,9 @@ namespace HBM.WT.API.WTX.Modbus
          WriteFail,
          WriteSuccess,
 
+         WriteArrayFail,
+         WriteArraySuccess,
+
          MeasureZeroFail,
          MeasureZeroSuccess,
 
@@ -33,6 +36,9 @@ namespace HBM.WT.API.WTX.Modbus
     {
         private Behavior behavior;
         private List<int> messages;
+
+        private ushort arrayElement1;
+        private ushort arrayElement2;
 
         private bool _connected;
         private ushort[] _data;
@@ -216,17 +222,39 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
         public new void WriteArray(ushort index, ushort[] data)
-        {
+        {      
             switch(this.behavior)
             {
-                case Behavior.WriteFail:
+                case Behavior.WriteArrayFail:
+                    arrayElement1 = 0;
+                    arrayElement2 = 0; 
+
                     break;
 
-                case Behavior.WriteSuccess:
+                case Behavior.WriteArraySuccess:
+                    arrayElement1 = data[0];
+                    arrayElement2 = data[1];
+
                     break;
 
                 default:
                     break; 
+            }
+        }
+
+        public ushort getArrElement1
+        {
+            get
+            {
+                return this.arrayElement1;
+            }
+        }
+
+        public ushort getArrElement2
+        {
+            get
+            {
+                return this.arrayElement2;
             }
         }
     }

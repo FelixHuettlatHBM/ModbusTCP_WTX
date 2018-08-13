@@ -122,8 +122,14 @@ namespace HBM.WT.API.WTX.Modbus
             get { return this.command ; }
         }
 
+        public ushort arr1; // For test purpose
+        public ushort arr2; // For test purpose
+
         public void WriteArray(ushort index, ushort[] data)
         {
+            this.arr1 = data[0];
+            this.arr1 = data[1]; 
+
             _master.WriteMultipleRegisters(index, data);
 
             BusActivityDetection?.Invoke(this, new LogEvent("Data(ushort array) have been written successfully to multiple registers"));

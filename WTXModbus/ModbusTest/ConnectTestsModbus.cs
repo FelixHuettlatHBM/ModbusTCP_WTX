@@ -69,6 +69,19 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        public static IEnumerable WriteArrayTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteFail).ExpectedResult = 0;
+                yield return new TestCaseData(Behavior.WriteSuccess).ExpectedResult = 1;
+
+                //yield return new TestCaseData(Behavior.WriteArrayFail).ExpectedResult = (new ushort[2] { 0, 0 });
+                //yield return new TestCaseData(Behavior.WriteArraySuccess).ExpectedResult = (new ushort[2] { 0x0000ffff, 0x0000ffff });
+
+            }
+        }
+
         // Test case source for writing values to the WTX120 device. 
         public static IEnumerable WriteSyncTestCases
         {
@@ -471,23 +484,36 @@ namespace HBM.WT.API.WTX.Modbus
             Assert.AreEqual(0, WTXModbusObj.GetDataUshort[0]);
         }
         */
-
-
-        /*
-        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]
+        
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteArrayTestCases")]
         public void WriteArrayTestCasesModbus(Behavior behavior)
         {
+            bool parameterEqualArrayWritten = true; 
+
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
-            testConnection.WriteArray(0, new ushort[1]);
+            WTXModbusObj.WriteOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
+            
+                if( (WTXModbusObj.getArrElement1 == (0x7FFFFFFF & 0xffff0000) >> 16) &&   //if( (testConnection.arr1 == (0x7FFFFFFF & 0xffff0000) >> 16) && (testConnection.arr2 == (0x7FFFFFFF & 0x0000ffff)) )
+                    (WTXModbusObj.getArrElement2 == (0x7FFFFFFF & 0x0000ffff)) )
+                {
+                    parameterEqualArrayWritten = true;
+                }
+                else
+                {
+                    parameterEqualArrayWritten = false;
+                }    
+
+                Assert.IsTrue(parameterEqualArrayWritten);         
+            
         }
-        */
 
-
-
-
+        private void Write_DataReceived(IDeviceData obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

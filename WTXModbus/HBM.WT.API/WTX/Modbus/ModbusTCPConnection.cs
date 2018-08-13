@@ -1,5 +1,6 @@
 ﻿using Modbus.Device;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 
@@ -27,9 +28,14 @@ namespace HBM.WT.API.WTX.Modbus
         private int _sendingInterval; // Timer1.Interval = Sending Interval 
         private ushort _startAdress;
 
+        private List<int> messages;
+
+        private int command;
 
         public ModbusTcpConnection(string ipAddress)
         {
+            messages = new List<int>();
+
             _connected = false;
             _port = 502;
             _iPAddress = ipAddress; //IP-address to establish a successful connection to the device
@@ -39,6 +45,13 @@ namespace HBM.WT.API.WTX.Modbus
             _sendingInterval = 5; // Timer1.Interval = Sending Interval 
         }
 
+        public List<int> getMessages
+        {
+            get
+            {
+                return this.messages;
+            }
+        }
 
         public virtual ushort[] GetAllRegisters => _data;
 
@@ -95,9 +108,18 @@ namespace HBM.WT.API.WTX.Modbus
 
         public void Write(object index, int data)
         {
+            this.command = data;
+
+            messages.Add(0x1);
+
             _master.WriteSingleRegister((ushort)Convert.ToInt32(index), (ushort)data);
 
             BusActivityDetection?.Invoke(this, new LogEvent("Data(ushort) have been written successfully to the register"));
+        }
+
+        public int getCommand
+        {
+            get { return this.command ; }
         }
 
         public void WriteArray(ushort index, ushort[] data)

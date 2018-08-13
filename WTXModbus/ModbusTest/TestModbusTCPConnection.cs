@@ -18,15 +18,22 @@ namespace HBM.WT.API.WTX.Modbus
          WriteFail,
          WriteSuccess,
 
+         MeasureZeroFail,
+         MeasureZeroSuccess,
+
+         TareFail,
+         TareSuccess,
+
     }
 
     public class TestModbusTCPConnection : ModbusTcpConnection
     {
         private Behavior behavior;
-        private List<string> messages;
+        private List<int> messages;
 
         private bool _connected;
         private ushort[] _data;
+        public int command; 
 
         public event EventHandler BusActivityDetection;
         public override event EventHandler<DataEvent> RaiseDataEvent;
@@ -36,10 +43,18 @@ namespace HBM.WT.API.WTX.Modbus
             _data = new ushort[38];
 
             this.behavior = behavior;
-            this.messages = new List<string>();
+            this.messages = new List<int>();
         }
 
-        public new void Connect()
+        public List<int> getMessages
+        {
+            get
+            {
+                return this.messages;
+            }
+        }
+
+        public void Connect()
         {
             switch(this.behavior)
             {
@@ -67,7 +82,7 @@ namespace HBM.WT.API.WTX.Modbus
             throw new NotImplementedException();
         }
 
-        public new int Read(object index)
+        public int Read(object index)
         {
             if (_connected)
                 ReadRegisterPublishing(new DataEvent(_data));
@@ -97,8 +112,8 @@ namespace HBM.WT.API.WTX.Modbus
 
                     // The most important data attributes from the WTX120 device: 
 
-                    _data[0] = 10000;       // Net value
-                    _data[1] = 10000;       // Gross value
+                    _data[0] = 17000;       // Net value
+                    _data[1] = 17000;       // Gross value
                     _data[2] = 0;           // General weight error
                     _data[3] = 0;           // Scale alarm triggered
                     _data[4] = 0;           // Limit status
@@ -128,8 +143,11 @@ namespace HBM.WT.API.WTX.Modbus
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
                     break; 
             }
-        
+
             //_data = e.Args;
+
+
+            e.Args = _data;
 
             var handler = RaiseDataEvent;
 
@@ -137,8 +155,19 @@ namespace HBM.WT.API.WTX.Modbus
             if (handler != null) handler(this, e);
         }
 
-        public new void Write(object index, int data)
+        public int getCommand
         {
+            get { return this.command; }
+        }
+
+        public void Write(object index, int data)
+        {
+            this.messages.Add(data);        // New : 10.8.18
+
+            command = data; 
+
+
+            /*
             switch (this.behavior)
             {
                 case Behavior.WriteFail:
@@ -167,6 +196,7 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
             }
+            */
         }
 
         public new void WriteArray(ushort index, ushort[] data)

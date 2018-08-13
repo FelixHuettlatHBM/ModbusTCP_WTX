@@ -31,18 +31,20 @@ namespace HBM.WT.API.WTX
         private ushort _command;
         private string _ipAddr;
 
+        //TestModbusTCPConnection _testconnection;
         ModbusTcpConnection _connection;
-        IDeviceData _thisValues;
-          
-        public override event EventHandler<DataEvent> DataUpdateEvent;
 
+        IDeviceData _thisValues;
+
+        public override event EventHandler<DataEvent> DataUpdateEvent;
+        
         public WtxModbus(object connection,int paramTimerInterval)
          {
-            this._connection = (ModbusTcpConnection) connection;
+            this._connection = (ModbusTcpConnection)connection;
 
             this._ipAddr = "172.19.103.8";
 
-            this._connection = new ModbusTcpConnection(_ipAddr);
+             //this._connection = new ModbusTcpConnection(_ipAddr);
 
             this._previousData = new ushort[59];
             this._dataStr = new string[59];
@@ -95,6 +97,11 @@ namespace HBM.WT.API.WTX
         public override void Disconnect()
         {
             this._connection.Disconnect();
+        }
+
+        public int getCommand
+        {
+            get { return this._command; }
         }
 
         public override void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
@@ -351,7 +358,6 @@ namespace HBM.WT.API.WTX
             // Set zero, set nominal, set calibration weight... siehe anderen Code. 
         }
 
-
         public override ushort[] GetValuesAsync()
         {
             return _data;
@@ -362,9 +368,7 @@ namespace HBM.WT.API.WTX
         public override void UpdateEvent(object sender, DataEvent e)
         {
             this._data = e.Args;
-
-            //this.data = e.Message;        // Mit MessageEvent 
-
+            
             this.GetDataStr[0] = this.NetGrossValueStringComment(this.NetValue, this.Decimals);  // 1 equal to "Net measured" as a parameter
             this.GetDataStr[1] = this.NetGrossValueStringComment(this.GrossValue, this.Decimals);  // 2 equal to "Gross measured" as a parameter
 
@@ -466,8 +470,6 @@ namespace HBM.WT.API.WTX
                 handler2(this, e);
  */
             // Oder : DataUpdateEvent?.Invoke(this, e);
-
-
 
             _compareDataChanged = false;
 

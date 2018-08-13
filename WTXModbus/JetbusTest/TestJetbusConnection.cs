@@ -77,5 +77,11 @@ namespace HBM.WT.API.WTX.Jet
         {
             throw new NotImplementedException();
         }
-    }
+
+        public void SendMessage(string json)
+          { 
+            messages.Add(json);
+        }
+
+}
 }

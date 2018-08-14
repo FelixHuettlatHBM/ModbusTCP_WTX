@@ -21,6 +21,9 @@ namespace HBM.WT.API.WTX.Modbus
          WriteFail,
          WriteSuccess,
 
+         WriteSyncFail,
+         WriteSyncSuccess,
+
          WriteArrayFail,
          WriteArraySuccess,
 
@@ -157,6 +160,14 @@ namespace HBM.WT.API.WTX.Modbus
 
                     break;
 
+                case Behavior.WriteSyncSuccess:
+                    _data[16] = 1;
+                    break;
+
+                case Behavior.WriteSyncFail:
+                    _data[16] = 0;
+                    break;
+
                 default:
                     for (int index = 0; index < _data.Length; index++)
                     {
@@ -186,8 +197,18 @@ namespace HBM.WT.API.WTX.Modbus
         {
             this.messages.Add(data);        // New : 10.8.18
 
-            command = data; 
+            command = data;
 
+            switch (this.behavior)
+            {
+                case Behavior.WriteSyncSuccess:
+                    _data[16] = 1;
+                    break;
+
+                case Behavior.WriteSyncFail:
+                    _data[16] = 0;
+                    break;
+            }
 
             /*
             switch (this.behavior)

@@ -22,8 +22,7 @@ namespace HBM.WT.API.WTX
         private bool _isCalibrating;
         private bool _isRefreshed;
         private bool _compareDataChanged;
-        private int _timerInterval;
-        private System.Timers.Timer _aTimer;
+        private int _timerInterval;        
 
         private Action<IDeviceData> _callbackObj;
 
@@ -31,10 +30,12 @@ namespace HBM.WT.API.WTX
         private ushort _command;
         private string _ipAddr;
 
-        //TestModbusTCPConnection _testconnection;
-        ModbusTcpConnection _connection;
+        public System.Timers.Timer _aTimer;
 
-        IDeviceData _thisValues;
+        //TestModbusTCPConnection _testconnection;
+        private ModbusTcpConnection _connection;
+
+        private IDeviceData _thisValues;
 
         public override event EventHandler<DataEvent> DataUpdateEvent;
         
@@ -145,24 +146,30 @@ namespace HBM.WT.API.WTX
             else
             {
                 // (1) Sending of a command:        
-                this._connection.Write(wordNumber, this._command); 
-
-                while (this.Handshake == 0)
+                this._connection.Write(wordNumber, this._command);
+                
+               // Handshake protocol as given in the manual: 
+               
+               do
                 {
-                    Thread.Sleep(100);
                     this._connection.Read(0);
-                }
+
+                } while (this.Handshake == 0);
+                
 
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.Handshake == 1)
                 {
                     this._connection.Write(wordNumber, 0x00);  
                 }
-                while (/*this.status == 1 &&*/ this.Handshake == 1)
+                                
+                while ( this.Handshake == 1) // Before : 'this.status == 1' additionally in the while condition. 
                 {
                     Thread.Sleep(100);
                     this._connection.Read(0);
                 }
+                
+                
             }
         }
 

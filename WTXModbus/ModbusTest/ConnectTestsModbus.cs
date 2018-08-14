@@ -9,6 +9,9 @@ namespace HBM.WT.API.WTX.Modbus
     using HBM.WT.API.WTX.Modbus;
     using System.ComponentModel;
     using System.Threading;
+    using Moq;
+    using Moq.Language;
+    using System.Timers;
 
     [TestFixture]
     public class ConnectTestsModbus 
@@ -83,12 +86,12 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
         // Test case source for writing values to the WTX120 device. 
-        public static IEnumerable WriteSyncTestCases
+        public static IEnumerable WriteSyncTestModbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.WriteFail).ExpectedResult = _dataWriteFail;
-                yield return new TestCaseData(Behavior.WriteSuccess).ExpectedResult = _dataWriteSuccess;
+                yield return new TestCaseData(Behavior.WriteSyncFail).ExpectedResult = _dataWriteFail;
+                yield return new TestCaseData(Behavior.WriteSyncSuccess).ExpectedResult = _dataWriteSuccess;
             }
         }
 
@@ -254,7 +257,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         // Test for writing : Tare 
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "TareTestCases")]
-        public void TareTestModbus(Behavior behavior)
+        public void TareAsyncTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WTXModbusObj = new WtxModbus(testConnection, 200);
@@ -270,6 +273,23 @@ namespace HBM.WT.API.WTX.Modbus
             //Assert.IsTrue(messageCheck);          
             
         }
+
+        // Test for writing : Tare 
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteSyncTestModbus")]
+        public void WriteSyncTest(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+          
+            WTXModbusObj = new WtxModbus(testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            WTXModbusObj.SyncCall_Write_Command(0, 0x100, callbackMethod);
+
+            Assert.AreEqual(0x100, testConnection.getCommand);
+
+        }
+
 
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "WriteTestCases")]
         public void WriteTestCasesModbus(Behavior behavior)
@@ -515,5 +535,40 @@ namespace HBM.WT.API.WTX.Modbus
         {
             throw new NotImplementedException();
         }
+
+
+
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "ReadTestCases")]
+        public void testTimer(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            // In the constructor the timer is already started once an object of WtxModbus is created: 
+
+            Thread.Sleep(200);
+
+            Assert.AreEqual(WTXModbusObj.getCommand, 0);
+        }
+
+        // Alternative with mocking: 
+        /*
+        [Test]
+        public void Start_WithValidParameters_TriggersTimeReached()
+        {
+            var subscriberMock = new Mock<INetConnection>();
+            var timer = new TimeOutTimer(subscriberMock.Object);
+
+            timer.Start();
+            Thread.Sleep(1000);
+
+            subscriberMock.Verify(subscriber => subscriber.());
+        }
+        */
+
+
+        
+
+
     }
 }

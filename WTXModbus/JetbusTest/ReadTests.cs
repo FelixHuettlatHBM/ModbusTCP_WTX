@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace JetbusTest
 {
-
     // Class for testing read functions of JetBusConnection, like 'OnFetchData(JToken data)' and 
     // 'JToken ReadObj(object index)'.
     // In class JetBusConnection at #region read-functions:
@@ -21,25 +20,22 @@ namespace JetbusTest
         private TestJetbusConnection _jetTestConnection;
         private WtxJet _wtxObj;
         private int testGrossValue;
-
-        private string[] testTokenBuffer;
+        
 
         // Test case source for reading values from the WTX120 device. 
         public static IEnumerable ReadGrossTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.ReadFail).ExpectedResult = "";
-                yield return new TestCaseData(Behavior.ReadSuccess).ExpectedResult = "6144 / 00";
+                yield return new TestCaseData(Behavior.ReadFail).ExpectedResult = 0; // ""
+                yield return new TestCaseData(Behavior.ReadSuccess).ExpectedResult = 1; // "6144 / 00"
             }
         }
 
         [SetUp]
         public void Setup()
         {
-            testGrossValue = 0;
-
-            testTokenBuffer = new string[10];
+            testGrossValue = 0;            
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadGrossTestCases")]
@@ -49,11 +45,13 @@ namespace JetbusTest
 
             _wtxObj = new HBM.WT.API.WTX.WtxJet(_jetTestConnection);
 
+            _jetTestConnection.FetchAll();
+
             _wtxObj.Connect(this.OnConnect, 100);
 
             testGrossValue = _wtxObj.GrossValue;
         
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144 / 00"));
+            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
 
         }
 

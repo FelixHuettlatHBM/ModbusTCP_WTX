@@ -57,10 +57,10 @@ namespace HBM.WT.API.WTX.Jet
         protected JToken ReadObj(object index)
         {
 
-            switch(this.behavior)
+            switch (this.behavior)
             {
                 case Behavior.ReadSuccess:
-                    if(_mTokenBuffer.ContainsKey(index.ToString()))
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
                         return _mTokenBuffer[index.ToString()];
                     break;
                 case Behavior.ReadFail:
@@ -73,7 +73,7 @@ namespace HBM.WT.API.WTX.Jet
 
             }
 
-            return 0; 
+            return 0;
         }
 
         public Dictionary<string, JToken> getTokenBuffer
@@ -90,9 +90,10 @@ namespace HBM.WT.API.WTX.Jet
             Matcher matcher = new Matcher();
             FetchId id;
 
-            MPeer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token) {
+            MPeer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token)
+            {
                 if (!success)
-                {                  
+                {
                     JetBusException exception = new JetBusException(token);
                 }
                 //
@@ -117,9 +118,13 @@ namespace HBM.WT.API.WTX.Jet
         {
             string path = data["path"].ToString();
             lock (_mTokenBuffer)
-            {              
-                _mTokenBuffer.Add("6144 / 00", data["value"]);
-                
+            {
+
+                _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
+
+
+                //_mTokenBuffer.Add("6144 / 00", data["value"]);
+
                 /*
                 switch (data["event"].ToString())
                 {
@@ -136,6 +141,19 @@ namespace HBM.WT.API.WTX.Jet
         }
 
 
+        public JToken simulateFetchInstance()
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = "6144/00",
+                Event = "gross",
+                value = 12345,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
+        }
 
 
         public new void Connect()
@@ -184,9 +202,18 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         public void SendMessage(string json)
-          { 
+        {
             messages.Add(json);
         }
 
-}
+
+        public class FetchData
+        {
+            public string path { get; set; }
+            public string Event { get; set; }
+            public int value { get; set; }
+        }
+
+
+    }
 }

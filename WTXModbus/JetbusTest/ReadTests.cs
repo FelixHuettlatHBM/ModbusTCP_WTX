@@ -43,9 +43,9 @@ namespace JetbusTest
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            _wtxObj = new HBM.WT.API.WTX.WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
-            _jetTestConnection.FetchAll();
+            //_jetTestConnection.FetchAll();
 
             _wtxObj.Connect(this.OnConnect, 100);
 

@@ -28,7 +28,6 @@ namespace HBM.WT.API.WTX.Jet
 
         private bool JetConnected;
 
-
         #endregion
 
         #region constructors

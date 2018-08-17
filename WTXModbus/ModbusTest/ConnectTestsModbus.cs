@@ -441,7 +441,7 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
 
-
+        /*
         [Test, TestCaseSource(typeof(ConnectTestsModbus), "MeasureZeroTestCases")]
         public int MeasureZeroTest(Behavior behavior)
         {
@@ -458,7 +458,7 @@ namespace HBM.WT.API.WTX.Modbus
 
             return 0;
         }
-
+        */
 
 
         /*
@@ -527,8 +527,7 @@ namespace HBM.WT.API.WTX.Modbus
                     parameterEqualArrayWritten = false;
                 }    
 
-                Assert.IsTrue(parameterEqualArrayWritten);         
-            
+                Assert.IsTrue(parameterEqualArrayWritten);                
         }
 
         private void Write_DataReceived(IDeviceData obj)

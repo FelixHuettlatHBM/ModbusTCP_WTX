@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HBM.WT.API.WTX.Jet
 {
     using HBM.WT.API;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Net.Security;
@@ -14,7 +15,10 @@ namespace HBM.WT.API.WTX.Jet
     public enum Behavior
     {
         ConnectionFail,
-        ConnectionSuccess
+        ConnectionSuccess,
+
+        ReadFail,
+        ReadSuccess,
     }
 
     public class TestJetbusConnection : JetBusConnection
@@ -26,6 +30,8 @@ namespace HBM.WT.API.WTX.Jet
         public event EventHandler BusActivityDetection;
         public event EventHandler<DataEvent> RaiseDataEvent;
 
+        private Dictionary<string, int> _mTokenBuffer = new Dictionary<string, int>();
+
         // Constructor with all parameters possible from class 'JetbusConnection' - Without ssh certification.
         //public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) : base(ipAddr, user, passwd, certificationCallback, timeoutMs = 5000)
 
@@ -34,6 +40,55 @@ namespace HBM.WT.API.WTX.Jet
             this.behavior = behavior;
             this.messages = new List<string>();
         }
+
+
+        protected int ReadObj(object index)
+        {
+
+            switch(this.behavior)
+            {
+                case Behavior.ReadSuccess:
+                    if(_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+                case Behavior.ReadFail:
+                    throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
+                    break;
+
+                default:
+                    break;
+
+            }
+
+            return 0; 
+        }
+
+        /*
+        [Test]
+        //public void TestOnFetchData(JToken data)
+        public void TestOnFetchData(Behavior dataEvent)
+        {
+            switch (dataEvent.ToString())
+            {
+                case "add":
+
+                case "fetch":
+
+                case "change":
+
+
+            }
+        }
+        */
+
+        public Dictionary<string, int> getTokenBuffer
+        {
+            get
+            {
+                return this._mTokenBuffer;
+            }
+        }
+
 
         public new void Connect()
         {
@@ -52,6 +107,8 @@ namespace HBM.WT.API.WTX.Jet
                     break;
             }
         }
+
+
 
         public bool isConnected()
         {

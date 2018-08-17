@@ -26,7 +26,7 @@ namespace HBM.WT.API.WTX
         
         public override event EventHandler<DataEvent> DataUpdateEvent;
 
-        private struct ParameterKeys
+        public struct ParameterKeys
         {
             public const string MEASURED_VALUE = "601A/01";      // _601A_01 
             
@@ -41,6 +41,7 @@ namespace HBM.WT.API.WTX
 
             public const string WEIGHT_MOVING_DETECTION = "6153/00";
         }
+
 
         /*
         public ParameterProperty (INetConnection connection) : base (connection){ }

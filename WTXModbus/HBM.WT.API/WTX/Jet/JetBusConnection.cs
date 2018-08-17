@@ -383,6 +383,14 @@ namespace HBM.WT.API.WTX.Jet
         }
 
 
+        public Dictionary<string, JToken> getTokenBuffer
+        {
+            get
+            {
+                return _mTokenBuffer;
+            }
+        }
+
         #endregion
     }
 
@@ -403,5 +411,7 @@ namespace HBM.WT.API.WTX.Jet
                 return _mMessage + " [ 0x" + _mError.ToString("X") + " ]";
             }
         }
+
     }
+   
 }

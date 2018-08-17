@@ -80,6 +80,7 @@ namespace HBM.WT.API.WTX.Jet
 
             peer.Disconnect();
 
+            /*
             Assert.AreEqual(0, peer.numberOfRegisteredStateCallback());
        
             string removeJson = connection.SendMessage[1];
@@ -91,7 +92,7 @@ namespace HBM.WT.API.WTX.Jet
             JToken path = parameters["path"];
             Assert.AreEqual(state, path.ToString());       
         
-    
+            */
     }
 
         private void OnResponse(bool arg1, JToken arg2)

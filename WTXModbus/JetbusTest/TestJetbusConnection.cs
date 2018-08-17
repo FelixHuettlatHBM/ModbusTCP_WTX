@@ -30,7 +30,7 @@ namespace HBM.WT.API.WTX.Jet
         public event EventHandler BusActivityDetection;
         public event EventHandler<DataEvent> RaiseDataEvent;
 
-        private Dictionary<string, int> _mTokenBuffer = new Dictionary<string, int>();
+        private Dictionary<string, JToken> _mTokenBuffer = new Dictionary<string, JToken>();
 
         // Constructor with all parameters possible from class 'JetbusConnection' - Without ssh certification.
         //public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) : base(ipAddr, user, passwd, certificationCallback, timeoutMs = 5000)
@@ -42,7 +42,7 @@ namespace HBM.WT.API.WTX.Jet
         }
 
 
-        protected int ReadObj(object index)
+        protected JToken ReadObj(object index)
         {
 
             switch(this.behavior)
@@ -63,6 +63,15 @@ namespace HBM.WT.API.WTX.Jet
             return 0; 
         }
 
+        public Dictionary<string, JToken> getTokenBuffer
+        {
+            get
+            {
+                return this._mTokenBuffer;
+            }
+        }
+
+
         /*
         [Test]
         //public void TestOnFetchData(JToken data)
@@ -80,14 +89,6 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
         */
-
-        public Dictionary<string, int> getTokenBuffer
-        {
-            get
-            {
-                return this._mTokenBuffer;
-            }
-        }
 
 
         public new void Connect()

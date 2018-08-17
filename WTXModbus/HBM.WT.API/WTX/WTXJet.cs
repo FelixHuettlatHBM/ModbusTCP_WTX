@@ -160,7 +160,7 @@ namespace HBM.WT.API.WTX
                 return this._connection.Read(ParameterKeys.MEASURED_VALUE);
             }
         }
-
+        
         public override int GrossValue
         {
             get

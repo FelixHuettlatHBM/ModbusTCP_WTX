@@ -39,7 +39,7 @@ namespace HBM.WT.API.WTX
 
         public override event EventHandler<DataEvent> DataUpdateEvent;
         
-        public WtxModbus(object connection,int paramTimerInterval)
+        public WtxModbus(INetConnection connection,int paramTimerInterval) : base(connection)
          {
             this._connection = (ModbusTcpConnection)connection;
 

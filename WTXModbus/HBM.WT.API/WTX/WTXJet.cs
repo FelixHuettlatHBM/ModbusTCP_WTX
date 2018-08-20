@@ -65,9 +65,9 @@ namespace HBM.WT.API.WTX
         
         */
 
-        public WtxJet(JetBusConnection connection)  // ParameterProperty umändern 
+        public WtxJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
         {
-            _connection = connection;
+            _connection = (JetBusConnection) connection;
             
             this._dataReceived = false;
             _dataStrArr = new string[59];

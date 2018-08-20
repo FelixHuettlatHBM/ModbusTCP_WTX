@@ -234,7 +234,8 @@ namespace HBM.WT.API.WTX.Jet
                 JToken token = ReadObj(index);
                 return (T)Convert.ChangeType(token, typeof(T));
             }
-            catch (FormatException) {
+            catch (FormatException) 
+            {
                 throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }

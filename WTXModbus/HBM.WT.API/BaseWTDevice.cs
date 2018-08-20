@@ -8,7 +8,7 @@ namespace HBM.WT.API
 {
     public abstract class BaseWtDevice : IDeviceData
     {
-        
+
         /*
         private Action<IDeviceData> callback_obj;
 
@@ -32,36 +32,44 @@ namespace HBM.WT.API
 
         //private INetCommunication<uint, JToken> commObj;
 
-            /*
-        public BaseWTDevice(INetConnection connection)
+        /*
+    public BaseWTDevice(INetConnection connection)
+    {
+        m_Connection = connection;
+        inputModbusJet = true;
+        timeoutMS = 5000;
+
+        this.ipAddr = "172.19.103.8";
+
+        this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
+*/
+
+        //this.NetObj = new ModbusTCPConnection(ipAddr);
+
+        /*
+        if (inputModbusJet == true)
+        { 
+            this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
+            }
+        else
+            if (inputModbusJet == false)
+            {
+            IJetConnection IJetObj = new WebSocketJetConnection(ipAddr, delegate { return true; });      // Unter Umständen die Certification Callback ausimplementieren. 
+            JetPeer jetObj = new JetPeer(IJetObj);                                                       // Certification Callbackmethode in API verpackt? Oder Nutzer selbst implementieren? Machen wir! Erstmal als delegate -> true. 
+
+            this.JetConnObj = new JetBusConnection(jetObj, timeoutMS);
+        }
+
+    }
+    */
+
+        protected INetConnection m_Connection;
+
+        public BaseWtDevice(INetConnection connection)
         {
             m_Connection = connection;
-            inputModbusJet = true;
-            timeoutMS = 5000;
-
-            this.ipAddr = "172.19.103.8";
-
-            this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
-*/
-            
-            //this.NetObj = new ModbusTCPConnection(ipAddr);
-
-            /*
-            if (inputModbusJet == true)
-            { 
-                this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
-                }
-            else
-                if (inputModbusJet == false)
-                {
-                IJetConnection IJetObj = new WebSocketJetConnection(ipAddr, delegate { return true; });      // Unter Umständen die Certification Callback ausimplementieren. 
-                JetPeer jetObj = new JetPeer(IJetObj);                                                       // Certification Callbackmethode in API verpackt? Oder Nutzer selbst implementieren? Machen wir! Erstmal als delegate -> true. 
-
-                this.JetConnObj = new JetBusConnection(jetObj, timeoutMS);
-            }
-            
         }
-        */
+
 
         public abstract event EventHandler<DataEvent> DataUpdateEvent;
 

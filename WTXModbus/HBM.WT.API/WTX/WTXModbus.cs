@@ -11,7 +11,6 @@ namespace HBM.WT.API.WTX
 
     public class WtxModbus : BaseWtDevice     // ParameterProperty umändern 
     {
-
         private string[] _dataStr;
         private ushort[] _previousData;
         private ushort[] _data;
@@ -33,20 +32,26 @@ namespace HBM.WT.API.WTX
         public System.Timers.Timer _aTimer;
 
         //TestModbusTCPConnection _testconnection;
-        private ModbusTcpConnection _connection;
+        private INetConnection _connection;
 
         private IDeviceData _thisValues;
 
         public override event EventHandler<DataEvent> DataUpdateEvent;
         
-        public WtxModbus(INetConnection connection,int paramTimerInterval) : base(connection)
+        public WtxModbus(INetConnection connection,int paramTimerInterval)  : base(connection)
          {
-            this._connection = (ModbusTcpConnection)connection;
+            if (connection is ModbusTcpConnection)
+            {
+                _connection = (ModbusTcpConnection)connection;
+            }
+
+            if (connection is TestModbusTCPConnection)
+            {
+                _connection = (TestModbusTCPConnection)connection;
+            }
 
             this._ipAddr = "172.19.103.8";
-
-             //this._connection = new ModbusTcpConnection(_ipAddr);
-
+          
             this._previousData = new ushort[59];
             this._dataStr = new string[59];
             this._data = new ushort[59];
@@ -74,9 +79,7 @@ namespace HBM.WT.API.WTX
             this._timerInterval = 0;
 
             // For the connection and initializing of the timer: 
-
-             _connection = (ModbusTcpConnection) connection;
-
+           
             this._connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
 
             this.initialize_timer(paramTimerInterval);
@@ -558,7 +561,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 1)
+                    if (this._connection.NumofPoints > 1)
                         return (_data[1] + (_data[0] << 16));
                     else
                         return 0;
@@ -576,7 +579,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 3)
+                    if (this._connection.NumofPoints > 3)
                         return (_data[3] + (_data[2] << 16));
                     else
                         return 0;
@@ -593,7 +596,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return (_data[4] & 0x1);
                     else
                         return 0;
@@ -610,7 +613,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x2) >> 1);
                     else
                         return 0;
@@ -627,7 +630,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0xC) >> 2);
                     else
                         return 0;
@@ -644,7 +647,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x10) >> 4);
                     else
                         return 0;
@@ -661,7 +664,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x20) >> 5);
                     else
                         return 0;
@@ -678,7 +681,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x40) >> 6);
                     else
                         return 0;
@@ -695,7 +698,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x80) >> 7);
                     else
                         return 0;
@@ -712,7 +715,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x300) >> 8);
                     else
                         return 0;
@@ -729,7 +732,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x400) >> 10);
                     else
                         return 0;
@@ -746,7 +749,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x800) >> 11);
                     else
                         return 0;
@@ -763,7 +766,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 4)
+                    if (this._connection.NumofPoints > 4)
                         return ((_data[4] & 0x1000) >> 12);
                     else
                         return 0;
@@ -780,7 +783,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 5)
+                    if (this._connection.NumofPoints > 5)
                         return ((_data[5] & 0x3) >> 1);
                     else
                         return 0;
@@ -797,7 +800,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 5)
+                    if (this._connection.NumofPoints > 5)
                         return ((_data[5] & 0x70) >> 4);
                     else
                         return 0;
@@ -814,7 +817,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 5)
+                    if (this._connection.NumofPoints > 5)
                         return ((_data[5] & 0x180) >> 7);
                     else
                         return 0;
@@ -831,7 +834,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 5)
+                    if (this._connection.NumofPoints > 5)
                         return ((_data[5] & 0x4000) >> 14);
                     else
                         return 0;
@@ -848,7 +851,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 5)
+                    if (this._connection.NumofPoints > 5)
                         return ((_data[5] & 0x8000) >> 15);
                     else
                         return 0;
@@ -890,7 +893,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 6)
+                    if (this._connection.NumofPoints > 6)
                         return (_data[6] & 0x1);
                     else
                         return 0;
@@ -909,7 +912,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 6)
+                    if (this._connection.NumofPoints > 6)
                         return ((_data[6] & 0x2) >> 1);
                     else
                         return 0;
@@ -926,7 +929,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 6)
+                    if (this._connection.NumofPoints > 6)
                         return ((_data[6] & 0x4) >> 2);
                     else
                         return 0;
@@ -943,7 +946,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 6)
+                    if (this._connection.NumofPoints > 6)
                         return ((_data[6] & 0x8) >> 3);
                     else
                         return 0;
@@ -960,7 +963,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 7)
+                    if (this._connection.NumofPoints > 7)
                         return (_data[7] & 0x1);
                     else
                         return 0;
@@ -977,7 +980,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 7)
+                    if (this._connection.NumofPoints > 7)
                         return ((_data[7] & 0x2) >> 1);
                     else
                         return 0;
@@ -994,7 +997,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 7)
+                    if (this._connection.NumofPoints > 7)
                         return ((_data[7] & 0x4) >> 2);
                     else
                         return 0;
@@ -1011,7 +1014,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 7)
+                    if (this._connection.NumofPoints > 7)
                         return ((_data[7] & 0x8) >> 3);
                     else
                         return 0;
@@ -1028,7 +1031,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return (_data[8] & 0x1);
                     else
                         return 0;
@@ -1045,7 +1048,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x2) >> 1);
                     else
                         return 0;
@@ -1062,7 +1065,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x4) >> 2);
                     else
                         return 0;
@@ -1079,7 +1082,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x8) >> 3);
                     else
                         return 0;
@@ -1096,7 +1099,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 9)
+                    if (this._connection.NumofPoints > 9)
                         return (_data[9]);
                     else
                         return 0;
@@ -1113,7 +1116,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 10)
+                    if (this._connection.NumofPoints > 10)
                         return (_data[10]);
                     else
                         return 0;
@@ -1130,7 +1133,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 11)
+                    if (this._connection.NumofPoints > 11)
                         return (_data[11]);
                     else
                         return 0;
@@ -1147,7 +1150,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 12)
+                    if (this._connection.NumofPoints > 12)
                         return (_data[12]);
                     else
                         return 0;
@@ -1164,7 +1167,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 13)
+                    if (this._connection.NumofPoints > 13)
                         return (_data[13]);
                     else
                         return 0;
@@ -1181,7 +1184,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 14)
+                    if (this._connection.NumofPoints > 14)
                         return (_data[14]);
                     else
                         return 0;
@@ -1198,7 +1201,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return (_data[8] & 0x1);
                     else
                         return 0;
@@ -1215,7 +1218,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x2) >> 1);
                     else
                         return 0;
@@ -1232,7 +1235,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x4) >> 2);
                     else
                         return 0;
@@ -1249,7 +1252,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x8) >> 3);
                     else
                         return 0;
@@ -1266,7 +1269,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x10) >> 4);
                     else
                         return 0;
@@ -1282,8 +1285,8 @@ namespace HBM.WT.API.WTX
             get
             {
                 try
-                {
-                    if (this._connection.NumOfPoints > 8)
+                { 
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x20) >> 5);
                     else
                         return 0;
@@ -1300,7 +1303,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x40) >> 6);
                     else
                         return 0;
@@ -1317,7 +1320,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x80) >> 7);
                     else
                         return 0;
@@ -1336,7 +1339,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x100) >> 8);
                     else
                         return 0;
@@ -1353,7 +1356,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x200) >> 9);
                     else
                         return 0;
@@ -1370,7 +1373,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x400) >> 10);
                     else
                         return 0;
@@ -1387,7 +1390,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x800) >> 11);
                     else
                         return 0;
@@ -1404,7 +1407,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x4000) >> 14);
                     else
                         return 0;
@@ -1421,7 +1424,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 8)
+                    if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x8000) >> 15);
                     else
                         return 0;
@@ -1438,7 +1441,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 9)
+                    if (this._connection.NumofPoints > 9)
                         return _data[9];
                     else
                         return 0;
@@ -1455,7 +1458,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 11)
+                    if (this._connection.NumofPoints > 11)
                         return _data[11];
                     else
                         return 0;
@@ -1472,7 +1475,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 12)
+                    if (this._connection.NumofPoints > 12)
                         return _data[12];
                     else
                         return 0;
@@ -1489,7 +1492,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 14)
+                    if (this._connection.NumofPoints > 14)
                         return _data[14];
                     else
                         return 0;
@@ -1506,7 +1509,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 16)
+                    if (this._connection.NumofPoints > 16)
                         return _data[16];
                     else
                         return 0;
@@ -1523,7 +1526,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 18)
+                    if (this._connection.NumofPoints > 18)
                         return _data[18];
                     else
                         return 0;
@@ -1540,7 +1543,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 20)
+                    if (this._connection.NumofPoints > 20)
                         return _data[20];
                     else
                         return 0;
@@ -1557,7 +1560,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 22)
+                    if (this._connection.NumofPoints > 22)
                         return _data[22];
                     else
                         return 0;
@@ -1574,7 +1577,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 24)
+                    if (this._connection.NumofPoints > 24)
                         return _data[24];
                     else
                         return 0;
@@ -1591,7 +1594,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 25)
+                    if (this._connection.NumofPoints > 25)
                         return _data[25];
                     else
                         return 0;
@@ -1608,7 +1611,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 26)
+                    if (this._connection.NumofPoints > 26)
                         return _data[26];
                     else
                         return 0;
@@ -1625,7 +1628,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 27)
+                    if (this._connection.NumofPoints > 27)
                         return _data[27];
                     else
                         return 0;
@@ -1644,7 +1647,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 28)
+                    if (this._connection.NumofPoints > 28)
                         return _data[28];
                     else
                         return 0;
@@ -1665,7 +1668,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 29)
+                    if (this._connection.NumofPoints > 29)
                         return _data[29];
                     else
                         return 0;
@@ -1686,7 +1689,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 30)
+                    if (this._connection.NumofPoints > 30)
                         return _data[30];
                     else
                         return 0;
@@ -1708,7 +1711,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 31)
+                    if (this._connection.NumofPoints > 31)
                         return _data[31];
                     else
                         return 0;
@@ -1729,7 +1732,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 32)
+                    if (this._connection.NumofPoints > 32)
                         return _data[32];
                     else
                         return 0;
@@ -1750,7 +1753,7 @@ namespace HBM.WT.API.WTX
             {
                 try
                 {
-                    if (this._connection.NumOfPoints > 33)
+                    if (this._connection.NumofPoints > 33)
                         return _data[33];
                     else
                         return 0;
@@ -2361,12 +2364,12 @@ namespace HBM.WT.API.WTX
             set { this._isCalibrating = value; }
         }
 
-        public override ModbusTcpConnection getModbusConnection
+        public override INetConnection getModbusConnection
         {
             get { return _connection; }
         }
 
-        public override JetBusConnection getJetBusConnection => throw new NotImplementedException();
+        public override INetConnection getJetBusConnection => throw new NotImplementedException();
     }
 }
 

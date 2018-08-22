@@ -81,9 +81,9 @@ namespace HBM.WT.API
 
         //public abstract void Connect();
 
-        public abstract ModbusTcpConnection getModbusConnection { get; }
+        public abstract INetConnection getModbusConnection { get; }
 
-        public abstract JetBusConnection getJetBusConnection { get; }
+        public abstract INetConnection getJetBusConnection { get; }
         
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
 

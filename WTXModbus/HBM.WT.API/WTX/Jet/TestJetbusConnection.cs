@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 // Look also on the tests on GitHub at a related project for SharpJet : https://github.com/gatzka/SharpJet/tree/master/SharpJetTests
@@ -23,7 +23,7 @@ namespace HBM.WT.API.WTX.Jet
         ReadSuccess,
     }
 
-    public class TestJetbusConnection : JetBusConnection
+    public class TestJetbusConnection : INetConnection, IDisposable
     {
         private Behavior behavior;
         private List<string> messages;
@@ -38,11 +38,20 @@ namespace HBM.WT.API.WTX.Jet
 
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
 
+        protected JetPeer MPeer;
+
+        private bool JetConnected;
+        private Exception _mException = null;
+
+        private string IP;
+        private int interval;
+
         // Constructor with all parameters possible from class 'JetbusConnection' - Without ssh certification.
         //public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) : base(ipAddr, user, passwd, certificationCallback, timeoutMs = 5000)
 
-        public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) : base(ipAddr, user, passwd, certificationCallback, timeoutMs)
+        public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000)
         {
+            this.JetConnected = false;
             this.behavior = behavior;
             this.messages = new List<string>();
 
@@ -54,9 +63,21 @@ namespace HBM.WT.API.WTX.Jet
             //FetchAll();
         }
 
+        public int SendingInterval
+        {
+            get
+            {
+                return this.interval;
+            }
+            set
+            {
+                this.interval = value;
+            }
+        }
+
         protected JToken ReadObj(object index)
         {
-
+            
             switch (this.behavior)
             {
                 case Behavior.ReadSuccess:
@@ -84,9 +105,68 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
+        public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public override void FetchAll()
+        public bool IsConnected
         {
+            get
+            {
+                return this.JetConnected;
+            }
+
+            set
+            {
+                this.JetConnected = value;
+            }
+        }
+
+        public string IpAddress
+        {
+            get
+            {
+                return this.IP;
+            }
+
+            set
+            {
+                this.IP = value;
+            }
+        }
+
+        public virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000)   // before it was "protected". 
+        {
+            MPeer.Connect(delegate (bool connected) {
+                if (connected)
+                {
+
+                    this.JetConnected = true;
+
+                    MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {
+                        if (!success)
+                        {
+
+                            this.JetConnected = false;
+                            JetBusException exception = new JetBusException(token);
+                            _mException = new InterfaceException(exception, (uint)exception.Error);
+                        }
+                        _mSuccessEvent.Set();
+                    }, _mTimeoutMs);
+                }
+                else
+                {
+                    this.JetConnected = false;
+                    _mException = new Exception("Connection failed");
+                    _mSuccessEvent.Set();
+                }
+            }, timeoutMs);
+            _mTimeoutMs = timeoutMs;
+            WaitOne(2);
+        }
+
+        public void FetchAll()
+        {
+            this.ConnectOnPeer("wss://172.19.103.8:443/jet/canopen", "Administrator", 100);
+
             Matcher matcher = new Matcher();
             FetchId id;
 
@@ -94,7 +174,10 @@ namespace HBM.WT.API.WTX.Jet
             {
                 if (!success)
                 {
+                    this.JetConnected = false;
                     JetBusException exception = new JetBusException(token);
+                    _mException = new InterfaceException(exception, (uint)exception.Error);
+                   
                 }
                 //
                 // Wake up the waiting thread where call the konstruktor to connect the session
@@ -109,19 +192,37 @@ namespace HBM.WT.API.WTX.Jet
             WaitOne(3);
         }
 
+        protected virtual void WaitOne(int timeoutMultiplier = 1)
+        {
+            if (!_mSuccessEvent.WaitOne(_mTimeoutMs * timeoutMultiplier))
+            {
+
+                this.JetConnected = false;
+                //
+                // Timeout-Exception
+                //
+                throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
+            }
+            if (_mException != null)
+            {
+                Exception exception = _mException;
+                _mException = null;
+                throw exception;
+            }
+        }
+
         /// <summary>
         /// Event with callend when raced a Fetch-Event by a other Peer.
         /// For testing it must be filled with pseudo data be tested in the UNIT tests. 
         /// </summary>
         /// <param name="data"></param>
-        protected override void OnFetchData(JToken data)
+        protected void OnFetchData(JToken data)
         {
             string path = data["path"].ToString();
             lock (_mTokenBuffer)
             {
 
                 _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
-
 
                 //_mTokenBuffer.Add("6144 / 00", data["value"]);
 
@@ -186,10 +287,25 @@ namespace HBM.WT.API.WTX.Jet
             throw new NotImplementedException();
         }
 
-        public new int Read(object index)
+        public int Read(object index)
         {
-            throw new NotImplementedException();
+            _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
+
+            try
+            {
+                return Convert.ToInt32(ReadObj(index));
+
+                //JToken token = ReadObj(index);
+                //return token;
+
+                //return (T)Convert.ChangeType(token, typeof(T));
+            }
+            catch (FormatException)
+            {
+                throw new InterfaceException(new FormatException("Invalid data format"), 0);
+            }
         }
+
 
         public new void Write(object index, int data)
         {
@@ -206,6 +322,10 @@ namespace HBM.WT.API.WTX.Jet
             messages.Add(json);
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         public class FetchData
         {

@@ -305,7 +305,7 @@ namespace WTXModbusExamples
 
             toolStripStatusLabel2.Text = "IP address: " + _wtxObj.getModbusConnection.IpAddress;
             toolStripStatusLabel3.Text = "Mode : " + this._dataStr[14]; // index 14 refers to application mode of the Device
-            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.getModbusConnection.NumOfPoints; 
+            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.getModbusConnection.NumofPoints; 
         }
 
         // This method actualizes and resets the data grid with newly calculated values of the previous iteration. 
@@ -781,7 +781,7 @@ namespace WTXModbusExamples
             timer1.Enabled = false;     // Stop the timer (Restart is in Class "Settings_Form").
             timer1.Stop();
                   
-            _setObj = new SettingsForm(_wtxObj.getModbusConnection.IpAddress, this.timer1.Interval, _wtxObj.getModbusConnection.NumOfPoints, this);
+            _setObj = new SettingsForm(_wtxObj.getModbusConnection.IpAddress, this.timer1.Interval, (ushort)_wtxObj.getModbusConnection.NumofPoints, this);
             _setObj.Show();
         }
 
@@ -796,8 +796,8 @@ namespace WTXModbusExamples
             _wtxObj.getModbusConnection.SendingInterval = _setObj.GetSendingInterval;     
             this.timer1.Interval = _setObj.GetSendingInterval;
 
-            _wtxObj.getModbusConnection.NumOfPoints = _setObj.GetNumberInputs;
-            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.getModbusConnection.NumOfPoints;
+            _wtxObj.getModbusConnection.NumofPoints = _setObj.GetNumberInputs;
+            toolStripStatusLabel5.Text = "Number of Inputs : " + _wtxObj.getModbusConnection.NumofPoints;
         }
 
         // This method changes the GUI concerning the application mode.

@@ -39,6 +39,7 @@ namespace JetbusTest
             testGrossValue = 0;            
         }
 
+        
         [Test, TestCaseSource(typeof(ReadTests), "ReadGrossTestCases")]
         public void testReadGrossValue(Behavior behavior)
         {
@@ -50,37 +51,18 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
+            // _jetTestConnection.FetchAll();
+
             testGrossValue = _wtxObj.GrossValue;
+
+            //_jetTestConnection.getTokenBuffer.Add("6144/00", _jetTestConnection.simulateFetchInstance()["value"]);
+
+            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
+
+            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
+
+        }
         
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
-
-        }
-
-        [Test, TestCaseSource(typeof(ReadTests), "ReadGrossTestCases")]
-        public void AlternativetestReadGrossValue(Behavior behavior)
-        {
-
-            INetConnection s_Connection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
-
-            BaseWtDevice parameter = new WtxJet(s_Connection);
-
-            //Hbm.Wt.WTXInterface.WTDevice parameter = new Hbm.Wt.WTXInterface.WTX120_Jet.ParameterProperty(s_Connection);
-
-            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
-
-            _wtxObj = new WtxJet(_jetTestConnection);
-
-            //_jetTestConnection.FetchAll();
-
-            _wtxObj.Connect(this.OnConnect, 100);
-
-            testGrossValue = _wtxObj.GrossValue;
-
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
-
-        }
-
-
         private void OnConnect(bool obj)
         {
             throw new NotImplementedException();

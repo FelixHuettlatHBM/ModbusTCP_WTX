@@ -109,7 +109,7 @@ namespace WTXModbusGUIsimple
 
             _wtxObj = new WtxModbus(_modbusObj, this._timerInterval);
             
-            _wtxObj.getModbusConnection.NumOfPoints = 6;
+            _wtxObj.getModbusConnection.NumofPoints = 6;
             
             _wtxObj.DataUpdateEvent += ValuesOnConsole;
 

@@ -35,7 +35,7 @@ namespace HBM.WT.API.WTX.Modbus
 
     }
 
-    public class TestModbusTCPConnection : ModbusTcpConnection
+    public class TestModbusTCPConnection : INetConnection, IDisposable
     {
         private Behavior behavior;
         private List<int> messages;
@@ -48,9 +48,12 @@ namespace HBM.WT.API.WTX.Modbus
         public int command; 
 
         public event EventHandler BusActivityDetection;
-        public override event EventHandler<DataEvent> RaiseDataEvent;
+        public event EventHandler<DataEvent> RaiseDataEvent;
 
-        public TestModbusTCPConnection(Behavior behavior,string ipAddress) : base(ipAddress)
+        private string IP;
+        private int interval;
+
+        public TestModbusTCPConnection(Behavior behavior,string ipAddress) 
         {
             _data = new ushort[38];
 
@@ -84,7 +87,7 @@ namespace HBM.WT.API.WTX.Modbus
             }
     }
 
-        public bool isConnected()
+        public bool IsConnected()
         {
             return this._connected;
         }
@@ -115,7 +118,7 @@ namespace HBM.WT.API.WTX.Modbus
             return 0;
         }
 
-        public override void ReadRegisterPublishing(DataEvent e) // 25.4 Comment : 'virtual' machte hier probleme beim durchlaufen :o 
+        public void ReadRegisterPublishing(DataEvent e) // 25.4 Comment : 'virtual' machte hier probleme beim durchlaufen :o 
         {
             // Behavoir : Kann in Standard oder Filler Mode sein, kann unterschiedliche "NumInputs" haben. Dementsprechend abhängig
             // ist die Anzahl der eingelesenen Werte. Erstmal vom einfachen Fall ausgehen! 
@@ -263,6 +266,11 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         public ushort getArrElement1
         {
             get
@@ -278,5 +286,35 @@ namespace HBM.WT.API.WTX.Modbus
                 return this.arrayElement2;
             }
         }
+
+        public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        bool INetConnection.IsConnected { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+        public string IpAddress
+        {
+            get
+            {
+                return this.IP;
+            }
+            set
+            {
+                this.IP = value; 
+            }
+        }
+
+        public int SendingInterval
+        {
+            get
+            {
+                return this.interval;
+            }
+            set
+            {
+                this.interval = value;
+            }
+        }
+
     }
 }

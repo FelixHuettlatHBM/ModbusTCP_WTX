@@ -22,6 +22,11 @@ namespace HBM.WT.API
 
         void Disconnect();
 
+        int NumofPoints     { get; set; }
+        bool IsConnected    { get; set; }
+        string IpAddress    { get; set; }
+        int SendingInterval { get; set; }
+
     }
 
     /// <summary>

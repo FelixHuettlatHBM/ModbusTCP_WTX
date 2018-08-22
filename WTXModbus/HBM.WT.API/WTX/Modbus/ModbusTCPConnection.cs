@@ -86,7 +86,17 @@ namespace HBM.WT.API.WTX.Modbus
             set { _port = value; }
         }
 
-        public bool IsConnected => _connected;
+        public bool IsConnected
+        {
+            get
+            {
+                return this._connected;
+            }
+            set
+            {
+                this._connected = value;
+            }
+        }
 
         // Declaration of the event Eventhandler. For the message information from the register.
         // public event EventHandler<MessageEvent<ushort>> RaiseDataEvent;
@@ -120,6 +130,18 @@ namespace HBM.WT.API.WTX.Modbus
         public int getCommand
         {
             get { return this.command ; }
+        }
+
+        public int NumofPoints
+        {
+            get
+            {
+                return this._numOfPoints;
+            }
+            set
+            {
+                this._numOfPoints = (ushort)value;
+            }
         }
 
         public ushort arr1; // For test purpose

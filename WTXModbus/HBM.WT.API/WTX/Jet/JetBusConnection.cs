@@ -28,6 +28,9 @@ namespace HBM.WT.API.WTX.Jet
 
         private bool JetConnected;
 
+        private string IP;
+        private int interval;
+
         #endregion
 
         #region constructors
@@ -126,7 +129,7 @@ namespace HBM.WT.API.WTX.Jet
                             _mException = new InterfaceException(exception, (uint)exception.Error);
                         }
                         _mSuccessEvent.Set();
-                    }, _mTimeoutMs);
+                    }, _mTimeoutMs); 
                 }
                 else {
                     this.JetConnected = false;
@@ -389,6 +392,34 @@ namespace HBM.WT.API.WTX.Jet
             get
             {
                 return _mTokenBuffer;
+            }
+        }
+
+        public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsConnected { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public string IpAddress
+        {
+            get
+            {
+                return this.IP;
+            }
+            set
+            {
+                this.IP = value;
+            }
+
+        }
+
+        public int SendingInterval
+        {
+            get
+            {
+                return this.interval;
+            }
+            set
+            {
+                this.interval = value;
             }
         }
 

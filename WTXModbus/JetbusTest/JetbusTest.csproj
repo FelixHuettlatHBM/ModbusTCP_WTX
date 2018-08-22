@@ -83,7 +83,6 @@
     <Compile Include="ConnectTestsJetbus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadTests.cs" />
-    <Compile Include="TestJetbusConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

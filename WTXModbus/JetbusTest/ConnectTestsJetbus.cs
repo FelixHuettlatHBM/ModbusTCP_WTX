@@ -14,8 +14,13 @@ namespace HBM.WT.API.WTX.Jet
     [TestFixture]
     public class ConnectTestsJetbus
     {
+
+        private TestJetbusConnection testConnection;
+
         private bool connectCallbackCalled;
         private bool connectCompleted;
+
+        private int testGrossValue;
 
         public static IEnumerable TestCases
         {
@@ -29,6 +34,8 @@ namespace HBM.WT.API.WTX.Jet
         [SetUp]
         public void Setup()
         {
+            testGrossValue = 0; 
+
             this.connectCallbackCalled = true;
             this.connectCompleted = true;
         }
@@ -36,9 +43,9 @@ namespace HBM.WT.API.WTX.Jet
         [Test, TestCaseSource(typeof(ConnectTestsJetbus), "TestCases")]
         public bool ConnectTestJetbus(Behavior behaviour)
         {        
-            object testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet WTXJetObj = new WtxJet((JetBusConnection) testConnection);
+            WtxJet WTXJetObj = new WtxJet(testConnection);
 
             WTXJetObj.Connect(this.OnConnect, 5000);
             

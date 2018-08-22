@@ -21,7 +21,7 @@ namespace HBM.WT.API.WTX
     {
         private string[] _dataStrArr;
         private ushort[] _data;
-        private JetBusConnection _connection;
+        private INetConnection _connection;
         private bool _dataReceived;
         
         public override event EventHandler<DataEvent> DataUpdateEvent;
@@ -67,7 +67,15 @@ namespace HBM.WT.API.WTX
 
         public WtxJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
         {
-            _connection = (JetBusConnection) connection;
+            if(connection is JetBusConnection)
+            {
+                _connection = (JetBusConnection)connection;
+            }
+
+            if (connection is TestJetbusConnection)
+            {
+                _connection = (TestJetbusConnection)connection;
+            }
             
             this._dataReceived = false;
             _dataStrArr = new string[59];
@@ -344,12 +352,13 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public override ModbusTcpConnection getModbusConnection => throw new NotImplementedException();
+        public override INetConnection getModbusConnection => throw new NotImplementedException();
 
-        public override JetBusConnection getJetBusConnection
+        public override INetConnection getJetBusConnection
         {
             get { return _connection; }
         }
+        
 
         /* 
 *In the following methods the different options for the single integer values are used to define and
@@ -487,7 +496,8 @@ namespace HBM.WT.API.WTX
 
         public override void Connect(Action<bool> completed, double timeoutMs)
         {
-            _connection.ConnectOnPeer((int)timeoutMs);
+            //_connection.ConnectOnPeer((int)timeoutMs);
+            _connection.Connect();
         }
     }
 }

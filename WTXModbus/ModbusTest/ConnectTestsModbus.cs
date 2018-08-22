@@ -195,7 +195,7 @@ namespace HBM.WT.API.WTX.Modbus
         public bool ConnectTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -215,7 +215,7 @@ namespace HBM.WT.API.WTX.Modbus
         public bool DisconnectTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -295,7 +295,7 @@ namespace HBM.WT.API.WTX.Modbus
         public void WriteTestCasesModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -341,7 +341,7 @@ namespace HBM.WT.API.WTX.Modbus
             var runner = new BackgroundWorker();
 
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -370,7 +370,7 @@ namespace HBM.WT.API.WTX.Modbus
             var runner = new BackgroundWorker();
 
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -399,7 +399,7 @@ namespace HBM.WT.API.WTX.Modbus
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
 
-            WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -511,7 +511,7 @@ namespace HBM.WT.API.WTX.Modbus
             bool parameterEqualArrayWritten = true; 
 
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -542,7 +542,7 @@ namespace HBM.WT.API.WTX.Modbus
         {
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
 
-            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
             // In the constructor the timer is already started once an object of WtxModbus is created: 
 
             Thread.Sleep(200);

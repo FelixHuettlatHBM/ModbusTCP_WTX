@@ -71,8 +71,10 @@
     <Compile Include="INetConnection.cs" />
     <Compile Include="LogEvent.cs" />
     <Compile Include="WTX\Jet\JetBusConnection.cs" />
+    <Compile Include="WTX\Jet\TestJetbusConnection.cs" />
     <Compile Include="WTX\Modbus\ModbusTCPConnection.cs" />
     <Compile Include="NetConnectionSecurity.cs" />
+    <Compile Include="WTX\Modbus\TestModbusTCPConnection.cs" />
     <Compile Include="WTX\WTXJet.cs" />
     <Compile Include="WTX\WTXModbus.cs" />
     <Compile Include="BaseWTDevice.cs" />

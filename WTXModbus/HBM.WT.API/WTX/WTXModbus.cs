@@ -92,9 +92,16 @@ namespace HBM.WT.API.WTX
             this._connection.Connect();
         }
 
-        public override bool isConnected()
+        public override bool isConnected
         {
-            return this._connection.IsConnected;
+            get
+            {
+                return _connection.IsConnected;
+            }
+            set
+            {
+                _connection.IsConnected = value;
+            }
         }
 
         // To terminate,break, a connection to the WTX device via class WTX120_Modbus.

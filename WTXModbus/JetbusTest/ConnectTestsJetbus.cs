@@ -49,25 +49,12 @@ namespace HBM.WT.API.WTX.Jet
 
             WTXJetObj.Connect(this.OnConnect, 5000);
             
-            //Mit Callback-Funktion:
+            //With the callback: 
 
-            Assert.AreEqual(this.connectCallbackCalled, true);
+            Assert.AreEqual(this.connectCallbackCalled, WTXJetObj.isConnected);
 
             return this.connectCompleted;
 
-            // Ohne Callback:    
-
-            /*
-            object testConnection = new TestModbusTCPConnection(behaviour);
-
-            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);     
-            
-            WTXModbusObj.Connect();
-            
-            Assert.AreEqual(WTXModbusObj.isConnected(), true);
-
-            return this.connectCompleted;        
-            */
         }
 
         [Test]

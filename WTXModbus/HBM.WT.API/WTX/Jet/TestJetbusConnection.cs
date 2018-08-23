@@ -39,8 +39,7 @@ namespace HBM.WT.API.WTX.Jet
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
 
         protected JetPeer MPeer;
-
-        private bool JetConnected;
+        
         private Exception _mException = null;
 
         private string IP;
@@ -51,7 +50,7 @@ namespace HBM.WT.API.WTX.Jet
 
         public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000)
         {
-            this.JetConnected = false;
+            this.connected = false;
             this.behavior = behavior;
             this.messages = new List<string>();
 
@@ -111,12 +110,12 @@ namespace HBM.WT.API.WTX.Jet
         {
             get
             {
-                return this.JetConnected;
+                return this.connected;
             }
 
             set
             {
-                this.JetConnected = value;
+                this.connected = value;
             }
         }
 
@@ -140,13 +139,13 @@ namespace HBM.WT.API.WTX.Jet
                 if (connected)
                 {
 
-                    this.JetConnected = true;
+                    this.connected = true;
 
                     MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {
                         if (!success)
                         {
 
-                            this.JetConnected = false;
+                            this.connected = false;
                             JetBusException exception = new JetBusException(token);
                             _mException = new InterfaceException(exception, (uint)exception.Error);
                         }
@@ -155,7 +154,7 @@ namespace HBM.WT.API.WTX.Jet
                 }
                 else
                 {
-                    this.JetConnected = false;
+                    this.connected = false;
                     _mException = new Exception("Connection failed");
                     _mSuccessEvent.Set();
                 }
@@ -205,7 +204,7 @@ namespace HBM.WT.API.WTX.Jet
             if (!_mSuccessEvent.WaitOne(_mTimeoutMs * timeoutMultiplier))
             {
 
-                this.JetConnected = false;
+                this.connected = false;
                 //
                 // Timeout-Exception
                 //
@@ -281,13 +280,6 @@ namespace HBM.WT.API.WTX.Jet
                     connected = true;
                     break;
             }
-        }
-
-
-
-        public bool isConnected()
-        {
-            return this.connected;
         }
 
         public new void Disconnect()

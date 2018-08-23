@@ -73,7 +73,7 @@ namespace HBM.WT.API
 
         public abstract event EventHandler<DataEvent> DataUpdateEvent;
 
-        public abstract bool isConnected();
+        public abstract bool isConnected { get; set; }
 
         public abstract ushort[] GetValuesAsync();        // Neu : 4.5 für eventbasierten asynchronen Abruf der Daten
 

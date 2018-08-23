@@ -489,10 +489,19 @@ namespace HBM.WT.API.WTX
             throw new NotImplementedException();
         }
 
-        public override bool isConnected()
+        public override bool isConnected
         {
-            throw new NotImplementedException();
+            get
+            {
+                return _connection.IsConnected;
+            }
+            set
+            {
+                _connection.IsConnected = value;
+            }
         }
+
+
 
         public override void Connect(Action<bool> completed, double timeoutMs)
         {

@@ -149,10 +149,9 @@ namespace HBM.WT.API.WTX
             else
             {
                 // (1) Sending of a command:        
-                this._connection.Write(wordNumber, this._command);
-                
-               // Handshake protocol as given in the manual: 
-               
+                this._connection.Write(wordNumber, this._command);             
+
+                // Handshake protocol as given in the manual:              
                do
                 {
                     this._connection.Read(0);
@@ -169,9 +168,9 @@ namespace HBM.WT.API.WTX
                 while ( this.Handshake == 1) // Before : 'this.status == 1' additionally in the while condition. 
                 {
                     Thread.Sleep(100);
-                    this._connection.Read(0);
-                }
-                
+                    this.
+                    _connection.Read(0);
+                }   
                 
             }
         }

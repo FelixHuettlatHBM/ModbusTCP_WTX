@@ -266,9 +266,11 @@ namespace HBM.WT.API.WTX.Modbus
 
             WTXModbusObj.Async_Call(0x1, callbackMethod);
 
-            testConnection.Write(0, 0x1);
-            Assert.AreEqual(0x1, testConnection.getCommand);
-                      
+            //testConnection.Write(0, 0x1);
+            //Assert.AreEqual(0x1, testConnection.getCommand);
+
+            Assert.AreEqual(0x1, WTXModbusObj.getCommand);
+
             //bool messageCheck = testConnection.getMessages.Contains(0x1);
             //Assert.IsTrue(messageCheck);          
             
@@ -287,7 +289,6 @@ namespace HBM.WT.API.WTX.Modbus
             WTXModbusObj.SyncCall_Write_Command(0, 0x100, callbackMethod);
 
             Assert.AreEqual(0x100, testConnection.getCommand);
-
         }
 
 
@@ -357,7 +358,6 @@ namespace HBM.WT.API.WTX.Modbus
             while ((!res) && (DateTime.Now < end))
             {
                 WTXModbusObj.Async_Call(0x00, callbackMethod);       // Read data from register 
-
                 res = done.WaitOne(0);
             }
             
@@ -430,7 +430,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         private void callbackMethod(IDeviceData obj)
         {
-            throw new NotImplementedException();
+
         }
 
 

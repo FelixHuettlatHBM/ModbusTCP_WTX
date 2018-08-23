@@ -60,7 +60,7 @@ namespace HBM.WT.API.WTX.Jet
             this._mTimeoutMs = 5000; // values of 5000 according to the initialization in class JetBusConnection. 
 
             //ConnectOnPeer(user, passwd, timeoutMs);
-            //FetchAll();
+            FetchAll();
         }
 
         public int SendingInterval
@@ -133,6 +133,7 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
+        
         public virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000)   // before it was "protected". 
         {
             MPeer.Connect(delegate (bool connected) {
@@ -162,11 +163,18 @@ namespace HBM.WT.API.WTX.Jet
             _mTimeoutMs = timeoutMs;
             WaitOne(2);
         }
+        
 
         public void FetchAll()
         {
-            this.ConnectOnPeer("wss://172.19.103.8:443/jet/canopen", "Administrator", 100);
 
+            this.OnFetchData(this.simulateFetchInstance());
+            
+            bool success = true;
+
+            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
+       
+            /*
             Matcher matcher = new Matcher();
             FetchId id;
 
@@ -185,11 +193,11 @@ namespace HBM.WT.API.WTX.Jet
                 _mSuccessEvent.Set();
 
                 BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
-
-                //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));
-
+                
             }, _mTimeoutMs);
             WaitOne(3);
+            */
+            
         }
 
         protected virtual void WaitOne(int timeoutMultiplier = 1)
@@ -288,9 +296,7 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         public int Read(object index)
-        {
-            _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
-
+        {           
             try
             {
                 return Convert.ToInt32(ReadObj(index));

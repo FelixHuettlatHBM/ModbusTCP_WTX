@@ -36,7 +36,7 @@ namespace HBM.WT.API.WTX.Jet
         {
             testGrossValue = 0; 
 
-            this.connectCallbackCalled = true;
+            this.connectCallbackCalled = false;
             this.connectCompleted = true;
         }
 
@@ -47,47 +47,16 @@ namespace HBM.WT.API.WTX.Jet
 
             WtxJet WTXJetObj = new WtxJet(testConnection);
 
-            WTXJetObj.Connect(this.OnConnect, 5000);
+            this.connectCallbackCalled = false;
+
+            WTXJetObj.Connect(this.OnConnect, 100);
             
-            //With the callback: 
-
-            Assert.AreEqual(this.connectCallbackCalled, WTXJetObj.isConnected);
-
-            return this.connectCompleted;
-
+            return WTXJetObj.isConnected;
+            
+            //Assert.AreEqual(this.connectCallbackCalled, WTXJetObj.isConnected);
         }
 
-        [Test]
-        public void RemoveStatesWhenDisconnect()
-        {
-            const string state = "theState";
-           
-            var connection = new TestJetbusConnection(Behavior.ConnectionSuccess, "172.19.103.8", "Administrator", "wtx", delegate { return true; });
-            
-            var peer = new JetPeer((IJetConnection)connection);
 
-            peer.Connect(this.OnConnect, 100);
-
-            JValue stateValue = new JValue(12);
-
-            peer.AddState(state, stateValue, this.OnSet, this.OnResponse, 3000);
-
-            peer.Disconnect();
-
-            /*
-            Assert.AreEqual(0, peer.numberOfRegisteredStateCallback());
-       
-            string removeJson = connection.SendMessage[1];
-
-            JToken json = JToken.Parse(removeJson);
-            JToken method = json["method"];
-            Assert.AreEqual("remove", method.ToString());
-            JToken parameters = json["params"];
-            JToken path = parameters["path"];
-            Assert.AreEqual(state, path.ToString());       
-        
-            */
-    }
 
         private void OnResponse(bool arg1, JToken arg2)
         {
@@ -101,7 +70,8 @@ namespace HBM.WT.API.WTX.Jet
 
         private void OnConnect(bool completed)
         {
-            this.connectCallbackCalled = true;
+            this.connectCallbackCalled = true; 
+
             this.connectCompleted = completed;
         }
 

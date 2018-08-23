@@ -33,18 +33,20 @@ namespace HBM.WT.API.WTX.Modbus
          TareFail,
          TareSuccess,
 
+         AsyncWriteBackgroundworkerFail,
+         AsyncWriteBackgroundworkerSuccess,
+
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
     {
         private Behavior behavior;
-        private List<int> messages;
 
         private ushort arrayElement1;
         private ushort arrayElement2;
 
         private bool _connected;
-        private ushort[] _data;
+        public ushort[] _data;
         public int command; 
 
         public event EventHandler BusActivityDetection;
@@ -53,21 +55,15 @@ namespace HBM.WT.API.WTX.Modbus
         private string IP;
         private int interval;
 
+        private int numPoints; 
+
         public TestModbusTCPConnection(Behavior behavior,string ipAddress) 
         {
-            _data = new ushort[38];
+            _data = new ushort[59];
 
             this.behavior = behavior;
-            this.messages = new List<int>();
         }
 
-        public List<int> getMessages
-        {
-            get
-            {
-                return this.messages;
-            }
-        }
 
         public void Connect()
         {
@@ -82,14 +78,21 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
                 default:
-                    _connected = true;
+                    _connected = false;
                     break; 
             }
     }
 
-        public bool IsConnected()
+        public bool IsConnected
         {
-            return this._connected;
+            get
+            {
+                return this._connected;
+            }
+            set
+            {
+                this._connected = value;
+            }
         }
 
         public new void Disconnect()
@@ -125,15 +128,29 @@ namespace HBM.WT.API.WTX.Modbus
 
             switch (this.behavior)
             {
+
+                case Behavior.MeasureZeroFail:
+
+                    _data[0] = 16995;       // Net value
+                    _data[1] = 16995;       // Gross value
+                    break;
+
+                case Behavior.MeasureZeroSuccess:
+
+                    _data[0] = 0;       // Net value
+                    _data[1] = 0;       // Gross value
+                    break;
+
                 case Behavior.ReadFail:
 
                     // If there is a connection fail, all data attributes get 0 as value.
-
+                    
                     for (int index = 0; index < _data.Length; index++)
                     {
                         _data[index] = 0;
                     }
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
+                    
                     break;
 
                 case Behavior.ReadSuccess:
@@ -172,23 +189,20 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
                 default:
+                    
                     for (int index = 0; index < _data.Length; index++)
                     {
                         _data[index] = 0;
                     }
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
+                    
                     break; 
             }
-
-            //_data = e.Args;
-
-
-            e.Args = _data;
 
             var handler = RaiseDataEvent;
 
             //If a subscriber exists: 
-            if (handler != null) handler(this, e);
+            if (handler != null) handler(this, new DataEvent(_data));
         }
 
         public int getCommand
@@ -198,8 +212,6 @@ namespace HBM.WT.API.WTX.Modbus
 
         public void Write(object index, int data)
         {
-            this.messages.Add(data);        // New : 10.8.18
-
             command = data;
 
             switch (this.behavior)
@@ -213,54 +225,64 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
             }
 
-            /*
-            switch (this.behavior)
+            switch(this.behavior)
             {
                 case Behavior.WriteFail:
-                    _data[16] = 0;
-
-                    if (_data[17] == 0) // _data[17] = Do not invert the status bit.
-                        _data[17] = 0;
-                    if (_data[17] == 1)
-                        _data[17] = 1;
-
+                    command = 0;
                     break;
 
                 case Behavior.WriteSuccess:
-                    _data[16] = 1;      // _data[16] = Handshake.
-                    Thread.Sleep(500);
-                    _data[16] = 0;
-
-                    if (_data[17] == 0) // _data[17] = Invert the status bit according to the Handshake protocol.
-                        _data[17] = 1;
-                    if (_data[17] == 1)
-                        _data[17] = 0;
-
+                    command = 2;
                     break;
-
-                default:
-                    break;
-
             }
-            */
+
+            switch (this.behavior)
+            {
+                case Behavior.WriteSyncFail:
+                    command = 0;
+                    break;
+
+                case Behavior.WriteSyncSuccess:
+                    command = 0x100;
+                    break;
+            }
+
         }
 
-        public new void WriteArray(ushort index, ushort[] data)
-        {      
-            switch(this.behavior)
+        public void WriteArray(ushort index, ushort[] data)
+        {
+
+            switch (this.behavior)
             {
                 case Behavior.WriteArrayFail:
-                    arrayElement1 = 0;
-                    arrayElement2 = 0; 
+                    this.arrayElement1 = 0;
+                    this.arrayElement2 = 0;
 
                     break;
 
                 case Behavior.WriteArraySuccess:
-                    arrayElement1 = data[0];
-                    arrayElement2 = data[1];
+                    this.arrayElement1 = data[0];
+                    this.arrayElement2 = data[1];
 
                     break;
 
+                case Behavior.MeasureZeroSuccess:
+
+                    _data[0] = 0;
+                    _data[0] = 0; 
+                    this.arrayElement1 = data[0];
+                    this.arrayElement2 = data[1];
+
+                    break;
+
+                case Behavior.MeasureZeroFail:
+
+                    _data[0] = 1111;
+                    _data[0] = 555;
+                    this.arrayElement1 = 0;
+                    this.arrayElement2 = 0;
+
+                    break;
                 default:
                     break; 
             }
@@ -287,11 +309,20 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-        public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int NumofPoints
+        {
+            get
+            {
+                return this.numPoints;
+            }
+            set
+            {
+                this.numPoints = value; 
+            }
+        }
+
         public bool IsConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        bool INetConnection.IsConnected { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-
+        
         public string IpAddress
         {
             get

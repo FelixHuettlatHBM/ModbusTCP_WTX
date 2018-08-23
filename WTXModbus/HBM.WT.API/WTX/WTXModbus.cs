@@ -50,6 +50,7 @@ namespace HBM.WT.API.WTX
                 _connection = (TestModbusTCPConnection)connection;
             }
 
+
             this._ipAddr = "172.19.103.8";
           
             this._previousData = new ushort[59];
@@ -158,6 +159,7 @@ namespace HBM.WT.API.WTX
                 // (1) Sending of a command:        
                 this._connection.Write(wordNumber, this._command);             
 
+                /*
                 // Handshake protocol as given in the manual:              
                do
                 {
@@ -178,7 +180,7 @@ namespace HBM.WT.API.WTX
                     this.
                     _connection.Read(0);
                 }   
-                
+                */
             }
         }
 
@@ -286,26 +288,7 @@ namespace HBM.WT.API.WTX
             _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
             _dataWritten[1] = (ushort)(valueParam & 0x0000ffff);
 
-            this.arrayElement1 = _dataWritten[0];
-            this.arrayElement2 = _dataWritten[1];
-
             this._connection.WriteArray(wordNumber, _dataWritten);
-        }
-
-        public ushort getArrElement1
-        {
-            get
-            {
-                return this.arrayElement1;
-            }
-        }
-
-        public ushort getArrElement2
-        {
-            get
-            {
-                return this.arrayElement2;
-            }
         }
 
 
@@ -838,6 +821,9 @@ namespace HBM.WT.API.WTX
         {
             get
             {
+                return ((_data[5] & 0x4000) >> 14);
+
+                /*
                 try
                 {
                     if (this._connection.NumofPoints > 5)
@@ -849,6 +835,7 @@ namespace HBM.WT.API.WTX
                 {
                     return 0;
                 }
+                */
             }
         }
         public override int Status
@@ -2341,27 +2328,27 @@ namespace HBM.WT.API.WTX
             //todo: write reg 48, 0x7FFFFFFF
 
             this.WriteOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);
-
+            
             Console.Write(".");
 
             this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
 
+            /*
             if ((this.NetValue != 0 || this.GrossValue != 0))
             {
-                Console.Write("Wait for setting the dead load into the WTX.");
-                this.Async_Call(0x00, DataReceivedTimer);
+                this.Async_Call(0x00, DataReceivedTimer);  // Wait for setting the dead load into the WTX.
             }
             else
             if (this.NetValue > (0 + 10) || (this.NetValue < (0 - 10)))
             {
-                Console.Write("Wait for setting the dead load into the WTX.");
-                this.Async_Call(0x00, DataReceivedTimer);
+                this.Async_Call(0x00, DataReceivedTimer);   // Wait for setting the dead load into the WTX.
             }
             else
               if (this.GrossValue > (0 + 10) || (this.GrossValue < (0 - 10)))
             {
-                Console.Write("Wait for setting the dead load into the WTX.");
+                this.Async_Call(0x00, DataReceivedTimer);    // Wait for setting the dead load into the WTX.
             }
+            */
         }
 
         public bool Calibrating

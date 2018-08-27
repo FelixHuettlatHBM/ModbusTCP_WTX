@@ -132,7 +132,8 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        
+        public ushort[] getData { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000)   // before it was "protected". 
         {
             MPeer.Connect(delegate (bool connected) {

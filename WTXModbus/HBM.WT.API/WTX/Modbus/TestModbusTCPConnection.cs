@@ -36,6 +36,12 @@ namespace HBM.WT.API.WTX.Modbus
          AsyncWriteBackgroundworkerFail,
          AsyncWriteBackgroundworkerSuccess,
 
+         HandshakeFail,
+         HandshakeSuccess,
+
+         CalibrationFail,
+         CalibrationSuccess,
+
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -44,9 +50,11 @@ namespace HBM.WT.API.WTX.Modbus
 
         private ushort arrayElement1;
         private ushort arrayElement2;
+        private ushort arrayElement3;
+        private ushort arrayElement4;
 
         private bool _connected;
-        public ushort[] _data;
+        private ushort[] _datafromWTX;
         public int command; 
 
         public event EventHandler BusActivityDetection;
@@ -59,9 +67,21 @@ namespace HBM.WT.API.WTX.Modbus
 
         public TestModbusTCPConnection(Behavior behavior,string ipAddress) 
         {
-            _data = new ushort[59];
+            _datafromWTX = new ushort[15];
 
             this.behavior = behavior;
+
+            this.numPoints = 6;
+
+            for (int index = 0; index < _datafromWTX.Length; index++)
+                _datafromWTX[index] = 0x0000; 
+
+            _datafromWTX[0] = 0x0000;
+            _datafromWTX[1] = 0x2710;
+            _datafromWTX[2] = 0x0000;
+            _datafromWTX[3] = 0x2710;
+            _datafromWTX[4] = 0x0000;
+            _datafromWTX[5] = 0x0000;
         }
 
 
@@ -116,7 +136,7 @@ namespace HBM.WT.API.WTX.Modbus
         public int Read(object index)
         {
             if (_connected)
-                ReadRegisterPublishing(new DataEvent(_data));
+                ReadRegisterPublishing(new DataEvent(_datafromWTX));
 
             return 0;
         }
@@ -131,23 +151,33 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.MeasureZeroFail:
 
-                    _data[0] = 16995;       // Net value
-                    _data[1] = 16995;       // Gross value
+                    // Net value in hexadecimal: 
+                    _datafromWTX[0] = 0x00;     
+                    _datafromWTX[1] = 0x2710;
+
+                    // Gross value in hexadecimal:
+                    _datafromWTX[2] = 0x00;
+                    _datafromWTX[3] = 0x2710;
                     break;
 
                 case Behavior.MeasureZeroSuccess:
 
-                    _data[0] = 0;       // Net value
-                    _data[1] = 0;       // Gross value
+                    // Net value in hexadecimal: 
+                    _datafromWTX[0] = 0x00;
+                    _datafromWTX[1] = 0x00;
+
+                    // Gross value in hexadecimal:
+                    _datafromWTX[2] = 0x00;
+                    _datafromWTX[3] = 0x00;
                     break;
 
                 case Behavior.ReadFail:
 
                     // If there is a connection fail, all data attributes get 0 as value.
                     
-                    for (int index = 0; index < _data.Length; index++)
+                    for (int index = 0; index < _datafromWTX.Length; index++)
                     {
-                        _data[index] = 0;
+                        _datafromWTX[index] = 0x0000;
                     }
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
                     
@@ -157,52 +187,36 @@ namespace HBM.WT.API.WTX.Modbus
 
                     // The most important data attributes from the WTX120 device: 
 
-                    _data[0] = 17000;       // Net value
-                    _data[1] = 17000;       // Gross value
-                    _data[2] = 0;           // General weight error
-                    _data[3] = 0;           // Scale alarm triggered
-                    _data[4] = 0;           // Limit status
-                    _data[5] = 0;           // Weight moving
-                    _data[6] = 1;           // Scale seal is open
-                    _data[7] = 0;           // Manual tare
-                    _data[8] = 0;           // Weight type
-                    _data[9] = 0;           // Scale range
-                    _data[10] = 0;          // Zero required/True zero
-                    _data[11] = 0;          // Weight within center of zero 
-                    _data[12] = 0;          // weight in zero range
-                    _data[13] = 0;          // Application mode = 0
-                    _data[14] = 4;          // Decimal Places
-                    _data[15] = 2;          // Unit
-                    _data[16] = 0;          // Handshake
-                    _data[17] = 0;          // Status
-
+                    _datafromWTX[0] = 0x0000;
+                    _datafromWTX[1] = 0x4040;
+                    _datafromWTX[2] = 0x0000;
+                    _datafromWTX[3] = 0x4040;
+                    _datafromWTX[4] = 0x0000;
+                    _datafromWTX[5] = 0x0000;
+                    
                     BusActivityDetection?.Invoke(this, new LogEvent("Read successful: Registers have been read"));
-
                     break;
 
-                case Behavior.WriteSyncSuccess:
-                    _data[16] = 1;
-                    break;
-
-                case Behavior.WriteSyncFail:
-                    _data[16] = 0;
-                    break;
 
                 default:
-                    
-                    for (int index = 0; index < _data.Length; index++)
+                    /*
+                    for (int index = 0; index < _datafromWTX.Length; index++)
                     {
-                        _data[index] = 0;
+                        _datafromWTX[index] = 0;
                     }
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
-                    
+                    */
                     break; 
             }
 
+            RaiseDataEvent?.Invoke(this, new DataEvent(this._datafromWTX));
+
+            /*
             var handler = RaiseDataEvent;
 
             //If a subscriber exists: 
-            if (handler != null) handler(this, new DataEvent(_data));
+            if (handler != null) handler(this, new DataEvent(_datafromWTX));
+            */
         }
 
         public int getCommand
@@ -212,38 +226,45 @@ namespace HBM.WT.API.WTX.Modbus
 
         public void Write(object index, int data)
         {
-            command = data;
-
+            
             switch (this.behavior)
             {
+                case Behavior.CalibrationFail:
+                    command = 0;
+                    break;
+
+                case Behavior.CalibrationSuccess:
+                    command = data;
+                    break;
+
                 case Behavior.WriteSyncSuccess:
-                    _data[16] = 1;
+                    command = data;
+                    _datafromWTX[5] = 0x4040;
                     break;
 
                 case Behavior.WriteSyncFail:
-                    _data[16] = 0;
+                    command = 0;
+                    _datafromWTX[5] = 0x40;
                     break;
-            }
 
-            switch(this.behavior)
-            {
                 case Behavior.WriteFail:
                     command = 0;
                     break;
 
                 case Behavior.WriteSuccess:
-                    command = 2;
-                    break;
-            }
-
-            switch (this.behavior)
-            {
-                case Behavior.WriteSyncFail:
-                    command = 0;
+                    command = data;
                     break;
 
-                case Behavior.WriteSyncSuccess:
-                    command = 0x100;
+                case Behavior.HandshakeSuccess:
+                    // Change the handshake bit : bit .14 from 0 to 1.
+                    _datafromWTX[5] = 0x4040;
+                   
+                    break;
+
+                case Behavior.HandshakeFail:
+                    
+                    _datafromWTX[5] = 0x40;
+
                     break;
             }
 
@@ -254,6 +275,28 @@ namespace HBM.WT.API.WTX.Modbus
 
             switch (this.behavior)
             {
+
+            case Behavior.CalibrationFail:
+                    this.arrayElement1 = 0;
+                    this.arrayElement2 = 0;
+
+            break;
+
+                case Behavior.CalibrationSuccess:
+
+                    if ((int)index == 48)       // According to the index 48 (=wordnumber) the preload is written. 
+                    {
+                        this.arrayElement1 = data[0];
+                        this.arrayElement2 = data[1];
+                    }
+                    else
+                    if ((int)index == 50)       // According to the index 50 (=wordnumber) the nominal load is written. 
+                    {
+                        this.arrayElement3 = data[0];
+                        this.arrayElement4 = data[1];
+                    }
+                        break;
+
                 case Behavior.WriteArrayFail:
                     this.arrayElement1 = 0;
                     this.arrayElement2 = 0;
@@ -268,17 +311,16 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.MeasureZeroSuccess:
 
-                    _data[0] = 0;
-                    _data[0] = 0; 
+                    _datafromWTX[0] = 0;
+                    _datafromWTX[0] = 0; 
                     this.arrayElement1 = data[0];
                     this.arrayElement2 = data[1];
 
                     break;
 
                 case Behavior.MeasureZeroFail:
-
-                    _data[0] = 1111;
-                    _data[0] = 555;
+                    
+                    _datafromWTX[0] = 555;
                     this.arrayElement1 = 0;
                     this.arrayElement2 = 0;
 
@@ -306,6 +348,22 @@ namespace HBM.WT.API.WTX.Modbus
             get
             {
                 return this.arrayElement2;
+            }
+        }
+
+        public ushort getArrElement3
+        {
+            get
+            {
+                return this.arrayElement3;
+            }
+        }
+
+        public ushort getArrElement4
+        {
+            get
+            {
+                return this.arrayElement4;
             }
         }
 
@@ -347,5 +405,17 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        public ushort[] getData {
+
+            get
+            {
+                return this._datafromWTX;
+            }
+            set
+            {
+                this._datafromWTX = value; 
+            }
+
+        }
     }
 }

@@ -117,7 +117,7 @@ namespace HBM.WT.API.WTX
            throw new NotImplementedException();
         }
 
-        public override void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)
+        public override void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)
         {
             throw new NotImplementedException();
         }

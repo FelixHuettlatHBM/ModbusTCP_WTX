@@ -229,7 +229,7 @@ namespace HBM.WT.API
 
 
         // Neu - 8.3.2018 - Ohne Backgroundworker - Ohne Asynchronität
-        public abstract void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam);      // Callback-Methode nicht benötigt. 
+        public abstract void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam);      // Callback-Methode nicht benötigt. 
 
 
         // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 

@@ -423,6 +423,8 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
+        public ushort[] getData { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         #endregion
     }
 

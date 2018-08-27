@@ -19,14 +19,15 @@ namespace HBM.WT.API.WTX.Modbus
     public class ModbusTcpConnection : INetConnection //IModbusConnection
     {
         private TcpClient _client;
-        private bool _connected;
-        private ushort[] _data;
+        private bool _connected;     
         private string _iPAddress;
         private ModbusIpMaster _master;
         private ushort _numOfPoints;
         private int _port;
         private int _sendingInterval; // Timer1.Interval = Sending Interval 
         private ushort _startAdress;
+
+        private ushort[] _data;
 
         private List<int> messages;
 
@@ -143,6 +144,8 @@ namespace HBM.WT.API.WTX.Modbus
                 this._numOfPoints = (ushort)value;
             }
         }
+
+        public ushort[] getData { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public ushort arr1; // For test purpose
         public ushort arr2; // For test purpose

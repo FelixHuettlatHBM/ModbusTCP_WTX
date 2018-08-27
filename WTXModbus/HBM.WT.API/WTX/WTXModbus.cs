@@ -13,7 +13,7 @@ namespace HBM.WT.API.WTX
     {
         private string[] _dataStr;
         private ushort[] _previousData;
-        private ushort[] _data;
+        public ushort[] _data;
         private ushort[] _outputData;
         private ushort[] _dataWritten;
 
@@ -21,13 +21,15 @@ namespace HBM.WT.API.WTX
         private bool _isCalibrating;
         private bool _isRefreshed;
         private bool _compareDataChanged;
-        private int _timerInterval;        
+        private int _timerInterval;
 
         private Action<IDeviceData> _callbackObj;
 
         private bool _dataReceived;
         private ushort _command;
         private string _ipAddr;
+
+        private double dPreload,dNominalLoad, multiplierMv2D;
 
         public System.Timers.Timer _aTimer;
 
@@ -37,9 +39,9 @@ namespace HBM.WT.API.WTX
         private IDeviceData _thisValues;
 
         public override event EventHandler<DataEvent> DataUpdateEvent;
-        
-        public WtxModbus(INetConnection connection,int paramTimerInterval)  : base(connection)
-         {
+
+        public WtxModbus(INetConnection connection, int paramTimerInterval) : base(connection)
+        {
             if (connection is ModbusTcpConnection)
             {
                 _connection = (ModbusTcpConnection)connection;
@@ -52,7 +54,7 @@ namespace HBM.WT.API.WTX
 
 
             this._ipAddr = "172.19.103.8";
-          
+
             this._previousData = new ushort[59];
             this._dataStr = new string[59];
             this._data = new ushort[59];
@@ -79,12 +81,16 @@ namespace HBM.WT.API.WTX
 
             this._timerInterval = 0;
 
+            this.dPreload = 0; 
+            this.dNominalLoad = 0;
+            this.multiplierMv2D = 500000;
+
             // For the connection and initializing of the timer: 
-           
+
             this._connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
 
             this.initialize_timer(paramTimerInterval);
-         }
+        }
 
 
         // To establish a connection to the WTX device via class WTX120_Modbus.
@@ -145,7 +151,7 @@ namespace HBM.WT.API.WTX
 
 
         // This method writes a data word to the WTX120 device synchronously. 
-        public override void SyncCall_Write_Command(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
+        public override void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
         {
             this._dataReceived = false;
             this._command = commandParam;
@@ -157,17 +163,20 @@ namespace HBM.WT.API.WTX
             else
             {
                 // (1) Sending of a command:        
-                this._connection.Write(wordNumber, this._command);             
+                this._connection.Write(wordNumber, this._command);
+
+                // Handshake protocol as given in the manual:              
 
                 /*
-                // Handshake protocol as given in the manual:              
-               do
+                do
                 {
                     this._connection.Read(0);
 
-                } while (this.Handshake == 0);
-                
+                } while (this._connection.getData[16] == 0 || this.Handshake == 0);
+                */
+                //while (this.Handshake == 0);
 
+                /*
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.Handshake == 1)
                 {
@@ -229,16 +238,10 @@ namespace HBM.WT.API.WTX
 
         public override void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //EventHandler<RunWorkerCompletedEventArgs> handler = DataUpdateEvent;        // Neu : 4.5.18
-
             this._callbackObj((IDeviceData)e.Result);         // Interface commited via callback. 
 
             // For synchronous check that data is received:
             _dataReceived = true;
-
-            // For asynchronous check that data is received:
-            //if (handler != null)
-            //    handler(this, e);
         }
 
         public override bool IsDataReceived
@@ -260,7 +263,7 @@ namespace HBM.WT.API.WTX
             this._connection.Write(0, this._command);
             //this.JetConnObj.Write(0,1);
 
-            while (this.Handshake == 0);
+            while (this.Handshake == 0) ;
 
             // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
             if (this.Handshake == 1)
@@ -270,7 +273,7 @@ namespace HBM.WT.API.WTX
 
                 //this.NetObj.Write<ushort>(0, 0x00);
             }
-            while (/*this.status == 1 && */this.Handshake == 1);
+            while (/*this.status == 1 && */this.Handshake == 1) ;
         }
 
         public override void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -313,7 +316,7 @@ namespace HBM.WT.API.WTX
             this._connection.Write(wordNumber, _dataWritten[0]);
         }
 
-        
+
         // This method initializes the with the timer interval as a parameter: 
         public override void initialize_timer(int paramTimerInterval)
         {
@@ -326,7 +329,7 @@ namespace HBM.WT.API.WTX
             catch (ArgumentException)
             {
                 this._timerInterval = 100;   // In case if the timer interval is not valid, an 'ArgumentException' is catched and a default value for
-                                            // the timer interval is set. 
+                                             // the timer interval is set. 
                 _aTimer = new System.Timers.Timer(this._timerInterval);
             }
             // Connect the elapsed event for the timer. 
@@ -371,7 +374,7 @@ namespace HBM.WT.API.WTX
             _thisValues = deviceValues;
 
             int previousNetValue = deviceValues.NetValue;
-            
+
         }
 
         public override void Calibration(ushort command)
@@ -389,7 +392,8 @@ namespace HBM.WT.API.WTX
         public override void UpdateEvent(object sender, DataEvent e)
         {
             this._data = e.Args;
-            
+            this.GetDataUshort = e.Args;
+
             this.GetDataStr[0] = this.NetGrossValueStringComment(this.NetValue, this.Decimals);  // 1 equal to "Net measured" as a parameter
             this.GetDataStr[1] = this.NetGrossValueStringComment(this.GrossValue, this.Decimals);  // 2 equal to "Gross measured" as a parameter
 
@@ -482,14 +486,14 @@ namespace HBM.WT.API.WTX
             }
 
             // Vorher: 
-/*
-            e.Args = this.data;
+            /*
+                        e.Args = this.data;
 
-            EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        // Neu : 4.5.18
+                        EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        // Neu : 4.5.18
 
-            if (handler2 != null)
-                handler2(this, e);
- */
+                        if (handler2 != null)
+                            handler2(this, e);
+             */
             // Oder : DataUpdateEvent?.Invoke(this, e);
 
             _compareDataChanged = false;
@@ -821,21 +825,18 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return ((_data[5] & 0x4000) >> 14);
-
-                /*
                 try
                 {
-                    if (this._connection.NumofPoints > 5)
-                        return ((_data[5] & 0x4000) >> 14);
-                    else
-                        return 0;
+                    //if (this._connection.NumofPoints > 5)
+                    return ((_data[5] & 0x4000) >> 14);
+                    //else
+                    //    return 0;
                 }
                 catch (System.IndexOutOfRangeException)
                 {
                     return 0;
                 }
-                */
+
             }
         }
         public override int Status
@@ -1278,7 +1279,7 @@ namespace HBM.WT.API.WTX
             get
             {
                 try
-                { 
+                {
                     if (this._connection.NumofPoints > 8)
                         return ((_data[8] & 0x20) >> 5);
                     else
@@ -1633,7 +1634,7 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        
+
         public int FillerWeightMemoryDay
         {
             get
@@ -2258,7 +2259,7 @@ namespace HBM.WT.API.WTX
 
             Console.Write(".");
 
-            this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
+            this.SyncCall(0, 0x100, Write_DataReceived);
 
             this.RestartTimer();
 
@@ -2293,32 +2294,55 @@ namespace HBM.WT.API.WTX
             //throw new NotImplementedException();
         }
 
+
+        public double getDPreload
+        {
+            get
+            {
+                return dPreload;
+            }
+        }
+
+        public double getDNominalLoad
+        {
+            get
+            {
+                return dNominalLoad;
+            }
+        }
+
+
         // Calculates the values for deadload and nominal load in d from the inputs in mV/V
         // and writes the into the WTX registers.
         public void Calculate(double preload, double capacity)
         {
-            double multiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
 
-            double dPreload = preload * multiplierMv2D;
-            double dNominalLoad = dPreload + (capacity * multiplierMv2D);
+            dPreload = 0;
+            dNominalLoad = 0; 
 
+            multiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
+
+            dPreload = preload * multiplierMv2D;
+            dNominalLoad = dPreload + (capacity * multiplierMv2D);
+                           
             this.StopTimer();
 
             //write reg 48, DPreload;         
 
             this.WriteOutputWordS32(Convert.ToInt32(dPreload), 48, Write_DataReceived);
 
-            this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
+            this.SyncCall(0, 0x80, Write_DataReceived);
 
             //write reg 50, DNominalLoad;          
 
             this.WriteOutputWordS32(Convert.ToInt32(dNominalLoad), 50, Write_DataReceived);
 
-            this.SyncCall_Write_Command(0, 0x100, Write_DataReceived);
+            this.SyncCall(0, 0x100, Write_DataReceived);
 
             this._isCalibrating = true;
 
             this.RestartTimer();
+
         }
 
         public void MeasureZero()
@@ -2331,7 +2355,7 @@ namespace HBM.WT.API.WTX
             
             Console.Write(".");
 
-            this.SyncCall_Write_Command(0, 0x80, Write_DataReceived);
+            this.SyncCall(0, 0x80, Write_DataReceived);
 
             /*
             if ((this.NetValue != 0 || this.GrossValue != 0))

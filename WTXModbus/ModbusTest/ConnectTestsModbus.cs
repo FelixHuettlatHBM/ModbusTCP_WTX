@@ -293,9 +293,7 @@ namespace HBM.WT.API.WTX.Modbus
             WTXModbusObj.isConnected = true;
 
             WTXModbusObj.SyncCall(0, 0x100, callbackMethod);
-
-            Thread.Sleep(100);
-
+            
             return testConnection.getCommand;
                  // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
         }

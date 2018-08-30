@@ -143,6 +143,16 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        // Test case source for checking the values of the application mode: 
+       
+        public static IEnumerable ApplicationModeTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.InStandardMode).Returns(0);
+                yield return new TestCaseData(Behavior.InFillerMode).Returns(1);
+            }
+        }
 
         [SetUp]
         public void Setup()
@@ -472,27 +482,58 @@ namespace HBM.WT.API.WTX.Modbus
         }
         
 
-        /*
-        [Test, TestCaseSource(typeof(ConnectTestsModbus), "CalibrationTestCases")]
-        public void CalibrationTest(Behavior behavior)
+        
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "CalculateCalibrationTestCases")]
+        public bool CalibrationTest(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
+
+            WTXModbusObj.isConnected = true; 
+            WTXModbusObj.Connect(this.OnConnect, 100);
+
+            int testCalibrationValue = 111; 
+
+            WTXModbusObj.Calibrate(testCalibrationValue, "111");
+
+            // Check if: write reg 46, CalibrationWeight and write reg 50, 0x7FFFFFFF
+
+            if (
+                (testConnection.getArrElement1 == (testCalibrationValue & 0xffff0000) >> 16) &&
+                (testConnection.getArrElement2 == (testCalibrationValue & 0x0000ffff)) &&
+
+                (testConnection.getArrElement3 == (0x7FFFFFFF & 0xffff0000) >> 16) &&
+                (testConnection.getArrElement4 == (0x7FFFFFFF & 0x0000ffff))             
+            )
+            {
+                    return true;
+            }
+            else
+            {
+                    return false;
+            }
+
+        }
+
+        [Test, TestCaseSource(typeof(ConnectTestsModbus), "ApplicationModeTestCases")]
+        public int ApplicationModeTest(Behavior behavior)
         {
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
 
-            //Alternative: 
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
 
-            //ModbusTcpConnection testConnection = new ModbusTcpConnection("172.19.103.8");
-
-            WtxModbus WTXModbusObj = new WtxModbus((ModbusTcpConnection)testConnection, 200);
+            WTXModbusObj.isConnected = true;
             WTXModbusObj.Connect(this.OnConnect, 100);
+            
+            testConnection.Write(0, 0);
 
-            WTXModbusObj.Calibrate(111, "111");
+            testConnection.Read(0);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(_dataWriteSuccess));
+            return testConnection.getData[5] & 0x3 >> 1; 
 
-            // Testbedingung noch bearbeiten: 
-            Assert.AreEqual(0, WTXModbusObj.GetDataUshort[0]);
+            //return WTXModbusObj.ApplicationMode;
         }
-        */
 
 
     }

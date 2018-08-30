@@ -42,6 +42,9 @@ namespace HBM.WT.API.WTX.Modbus
          CalibrationFail,
          CalibrationSuccess,
 
+         InStandardMode,
+         InFillerMode,
+         
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -54,7 +57,9 @@ namespace HBM.WT.API.WTX.Modbus
         private ushort arrayElement4;
 
         private bool _connected;
-        private ushort[] _datafromWTX;
+
+        private ushort[] _dataWTX;
+
         public int command; 
 
         public event EventHandler BusActivityDetection;
@@ -67,21 +72,22 @@ namespace HBM.WT.API.WTX.Modbus
 
         public TestModbusTCPConnection(Behavior behavior,string ipAddress) 
         {
-            _datafromWTX = new ushort[15];
+            _dataWTX = new ushort[38];
+            // size of 38 elements for the standard and filler application mode.            
 
             this.behavior = behavior;
 
             this.numPoints = 6;
 
-            for (int index = 0; index < _datafromWTX.Length; index++)
-                _datafromWTX[index] = 0x0000; 
+            for (int index = 0; index < _dataWTX.Length; index++)
+                _dataWTX[index] = 0x00;
 
-            _datafromWTX[0] = 0x0000;
-            _datafromWTX[1] = 0x2710;
-            _datafromWTX[2] = 0x0000;
-            _datafromWTX[3] = 0x2710;
-            _datafromWTX[4] = 0x0000;
-            _datafromWTX[5] = 0x0000;
+            _dataWTX[0] = 0x00;
+            _dataWTX[1] = 0x2710;
+            _dataWTX[2] = 0x00;
+            _dataWTX[3] = 0x2710;
+            _dataWTX[4] = 0x00;
+            _dataWTX[5] = 0x00;
         }
 
 
@@ -136,48 +142,60 @@ namespace HBM.WT.API.WTX.Modbus
         public int Read(object index)
         {
             if (_connected)
-                ReadRegisterPublishing(new DataEvent(_datafromWTX));
+                ReadRegisterPublishing(new DataEvent(_dataWTX));
 
             return 0;
         }
 
-        public void ReadRegisterPublishing(DataEvent e) // 25.4 Comment : 'virtual' machte hier probleme beim durchlaufen :o 
+        public void ReadRegisterPublishing(DataEvent e) 
         {
             // Behavoir : Kann in Standard oder Filler Mode sein, kann unterschiedliche "NumInputs" haben. Dementsprechend abhängig
             // ist die Anzahl der eingelesenen Werte. Erstmal vom einfachen Fall ausgehen! 
 
             switch (this.behavior)
             {
+                case Behavior.InFillerMode:
+
+                    //data word for a application mode being in filler mode: Bit .0-1 = 1 || 2 (2 is the given value for filler mode according to the manual, but actually it is 1.)
+                    _dataWTX[5] = 0x1;
+                    break;
+
+                case Behavior.InStandardMode:
+
+                    //data word for a application mode being in standard mode, not in filler mode: Bit .0-1 = 0
+                    _dataWTX[5] = 0x00;
+
+                    break;
 
                 case Behavior.MeasureZeroFail:
 
                     // Net value in hexadecimal: 
-                    _datafromWTX[0] = 0x00;     
-                    _datafromWTX[1] = 0x2710;
+                    _dataWTX[0] = 0x00;     
+                    _dataWTX[1] = 0x2710;
 
                     // Gross value in hexadecimal:
-                    _datafromWTX[2] = 0x00;
-                    _datafromWTX[3] = 0x2710;
+                    _dataWTX[2] = 0x00;
+                    _dataWTX[3] = 0x2710;
                     break;
 
                 case Behavior.MeasureZeroSuccess:
 
                     // Net value in hexadecimal: 
-                    _datafromWTX[0] = 0x00;
-                    _datafromWTX[1] = 0x00;
+                    _dataWTX[0] = 0x00;
+                    _dataWTX[1] = 0x00;
 
                     // Gross value in hexadecimal:
-                    _datafromWTX[2] = 0x00;
-                    _datafromWTX[3] = 0x00;
+                    _dataWTX[2] = 0x00;
+                    _dataWTX[3] = 0x00;
                     break;
 
                 case Behavior.ReadFail:
 
                     // If there is a connection fail, all data attributes get 0 as value.
                     
-                    for (int index = 0; index < _datafromWTX.Length; index++)
+                    for (int index = 0; index < _dataWTX.Length; index++)
                     {
-                        _datafromWTX[index] = 0x0000;
+                        _dataWTX[index] = 0x0000;
                     }
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
                     
@@ -187,12 +205,12 @@ namespace HBM.WT.API.WTX.Modbus
 
                     // The most important data attributes from the WTX120 device: 
 
-                    _datafromWTX[0] = 0x0000;
-                    _datafromWTX[1] = 0x4040;
-                    _datafromWTX[2] = 0x0000;
-                    _datafromWTX[3] = 0x4040;
-                    _datafromWTX[4] = 0x0000;
-                    _datafromWTX[5] = 0x0000;
+                    _dataWTX[0] = 0x0000;
+                    _dataWTX[1] = 0x4040;
+                    _dataWTX[2] = 0x0000;
+                    _dataWTX[3] = 0x4040;
+                    _dataWTX[4] = 0x0000;
+                    _dataWTX[5] = 0x0000;
                     
                     BusActivityDetection?.Invoke(this, new LogEvent("Read successful: Registers have been read"));
                     break;
@@ -200,22 +218,22 @@ namespace HBM.WT.API.WTX.Modbus
 
                 default:
                     /*
-                    for (int index = 0; index < _datafromWTX.Length; index++)
+                    for (int index = 0; index < _dataWTX.Length; index++)
                     {
-                        _datafromWTX[index] = 0;
+                        _dataWTX[index] = 0;
                     }
                     BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
                     */
                     break; 
             }
 
-            RaiseDataEvent?.Invoke(this, new DataEvent(this._datafromWTX));
+            RaiseDataEvent?.Invoke(this, new DataEvent(this._dataWTX));
 
             /*
             var handler = RaiseDataEvent;
 
             //If a subscriber exists: 
-            if (handler != null) handler(this, new DataEvent(_datafromWTX));
+            if (handler != null) handler(this, new DataEvent(_dataWTX));
             */
         }
 
@@ -229,6 +247,16 @@ namespace HBM.WT.API.WTX.Modbus
             
             switch (this.behavior)
             {
+                case Behavior.InFillerMode:
+                    //data word for a application mode being in filler mode: Bit .0-1 = 1 || 2 (2 is the given value for filler mode according to the manual, but actually it is 1.)
+                    _dataWTX[5] = 0x1;
+                    break;
+
+                case Behavior.InStandardMode:
+                    //data word for a application mode being in standard mode, not in filler mode: Bit .0-1 = 0
+                    _dataWTX[5] = 0x00;
+                    break;
+
                 case Behavior.CalibrationFail:
                     command = 0;
                     break;
@@ -239,12 +267,12 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.WriteSyncSuccess:
                     command = data;
-                    _datafromWTX[5] = 0x4040;
+                    _dataWTX[5] = 0x4040;
                     break;
 
                 case Behavior.WriteSyncFail:
                     command = 0;
-                    _datafromWTX[5] = 0x40;
+                    _dataWTX[5] = 0x40;
                     break;
 
                 case Behavior.WriteFail:
@@ -257,13 +285,13 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.HandshakeSuccess:
                     // Change the handshake bit : bit .14 from 0 to 1.
-                    _datafromWTX[5] = 0x4040;
+                    _dataWTX[5] = 0x4040;
                    
                     break;
 
                 case Behavior.HandshakeFail:
                     
-                    _datafromWTX[5] = 0x40;
+                    _dataWTX[5] = 0x40;
 
                     break;
             }
@@ -284,7 +312,7 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.CalibrationSuccess:
 
-                    if ((int)index == 48)       // According to the index 48 (=wordnumber) the preload is written. 
+                    if ((int)index == 48 || (int) index== 46)       // According to the index 48 (=wordnumber) the preload is written. 
                     {
                         this.arrayElement1 = data[0];
                         this.arrayElement2 = data[1];
@@ -311,8 +339,8 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.MeasureZeroSuccess:
 
-                    _datafromWTX[0] = 0;
-                    _datafromWTX[0] = 0; 
+                    _dataWTX[0] = 0;
+                    _dataWTX[0] = 0; 
                     this.arrayElement1 = data[0];
                     this.arrayElement2 = data[1];
 
@@ -320,7 +348,7 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.MeasureZeroFail:
                     
-                    _datafromWTX[0] = 555;
+                    _dataWTX[0] = 555;
                     this.arrayElement1 = 0;
                     this.arrayElement2 = 0;
 
@@ -409,11 +437,11 @@ namespace HBM.WT.API.WTX.Modbus
 
             get
             {
-                return this._datafromWTX;
+                return this._dataWTX;
             }
             set
             {
-                this._datafromWTX = value; 
+                this._dataWTX = value; 
             }
 
         }

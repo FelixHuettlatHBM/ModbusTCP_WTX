@@ -440,7 +440,7 @@ namespace HBM.WT.API.WTX
                 this.GetDataStr[35] = this.WeightMemNet.ToString();
             }
             else
-                if (this.ApplicationMode == 2 || this.ApplicationMode == 0) // in filler mode 
+                if (this.ApplicationMode == 2 || this.ApplicationMode == 1) // in filler mode 
             {
                 this.GetDataStr[26] = this.CoarseFlow.ToString();
                 this.GetDataStr[27] = this.FineFlow.ToString();
@@ -775,7 +775,7 @@ namespace HBM.WT.API.WTX
                 try
                 {
                     if (this._connection.NumofPoints > 5)
-                        return ((_data[5] & 0x3) >> 1);
+                        return (_data[5] & 0x3>>1);
                     else
                         return 0;
                 }
@@ -2247,8 +2247,8 @@ namespace HBM.WT.API.WTX
         // This method sets the value for the nominal weight in the WTX.
         public void Calibrate(int calibrationValue, string calibrationWeightStr)
         {
-            //write reg 46, CalibrationWeight         
-
+            //write reg 46, CalibrationWeight     
+            
             this.WriteOutputWordS32(calibrationValue, 46, Write_DataReceived);
 
             //write reg 50, 0x7FFFFFFF
@@ -2314,7 +2314,6 @@ namespace HBM.WT.API.WTX
         // and writes the into the WTX registers.
         public void Calculate(double preload, double capacity)
         {
-
             dPreload = 0;
             dNominalLoad = 0; 
 

@@ -101,6 +101,24 @@ namespace WTXGUISimple
             InitializeTimerJetbus(_timerInterval);
         }
 
+
+        private CalcCalibration _calcCalObj;
+        private WeightCalibration _weightCalObj;
+
+        //Opens a menu window for calculated calibration
+        private void CalculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _calcCalObj = new CalcCalibration(_sConnection, _sConnection.IsConnected);
+            DialogResult res = _calcCalObj.ShowDialog();            
+        }
+
+        //Opens a menu window for calibration with a calibration weight
+        private void CalibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _weightCalObj = new WeightCalibration(_sConnection, _sConnection.IsConnected);
+            DialogResult res = _weightCalObj.ShowDialog();         
+        }
+
         // This method initializes the with the timer interval as a parameter: 
         private void InitializeTimerJetbus(int timerInterval)
         {
@@ -181,15 +199,6 @@ namespace WTXGUISimple
             */
         }
 
-        private void CalculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CalibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -228,8 +237,6 @@ namespace WTXGUISimple
 
         private static int WriteParameter(string[] args)
         {
-            Console.Write(args[0] + "Write... ");
-
             if (args.Length < 3)
                 return -1;
 
@@ -237,18 +244,47 @@ namespace WTXGUISimple
 
             _sConnection.Write(args[1], value);
 
-            Console.WriteLine("OK");
-
             return 0;
         }
 
+        // Write to WTX : Zeroing
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string[] argument = new string[3];
+
+            argument[0] = "6002/01";      // "Write" + argument[0]
+            argument[1] = "6002/01";      // path  for gross 
+            argument[2] = "1869768058";   // value for gross in hex = 0x6F72657A 
+
+            WriteParameter(argument);
+        }
+
+        // Write to WTX : Gross
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string[] argument = new string[3];
+
+            argument[0] = "6002/01";      // "Write" + argument[0]
+            argument[1] = "6002/01";      // path  for gross 
+            argument[2] = "1936683623";   // value for gross in hex = 0x736F7267 
+
+            WriteParameter(argument);
+        }
+
+        // Write to WTX : Tare
         private void button2_Click(object sender, EventArgs e)
         {
             string[] argument = new string[3];
 
-            argument[0] = "2022";      // "Write" + argument[0]
-            argument[1] = "8266";      // path 
-            argument[2] = "00000001";  // value 
+            /* Example that works well:
+            argument[0] = "2021/04";      // "Write" + argument[0]
+            argument[1] = "2021/04";      // path 
+            argument[2] = "1";            // value 
+            */
+
+            argument[0] = "6002/01";      // "Write" + argument[0]
+            argument[1] = "6002/01";      // path  for gross 
+            argument[2] = "1701994868";   // value for gross in hex = 0x65726174 
 
             WriteParameter(argument);
 

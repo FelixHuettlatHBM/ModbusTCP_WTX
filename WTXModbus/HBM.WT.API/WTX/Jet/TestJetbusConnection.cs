@@ -21,6 +21,9 @@ namespace HBM.WT.API.WTX.Jet
 
         ReadFail,
         ReadSuccess,
+
+        WriteFail,
+        WriteSuccess,
     }
 
     public class TestJetbusConnection : INetConnection, IDisposable
@@ -308,7 +311,32 @@ namespace HBM.WT.API.WTX.Jet
 
         public new void Write(object index, int data)
         {
-            throw new NotImplementedException();
+            switch(behavior)
+            {
+                case Behavior.WriteSuccess:
+                    // A specific path and specific value is added to the buffer _mTokenBuffer
+                    _mTokenBuffer.Add("6002/01", this.simulateTareInstance()["value"]);
+                    break;
+
+                case Behavior.WriteFail:
+                    // No path and no value is added to the buffer _mTokenBuffer
+                    break;
+
+            }
+        }
+
+        public JToken simulateTareInstance()
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = "6002/01",
+                Event = "tare",
+                value = 1701994868,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
         }
 
         public new void WriteArray(ushort index, ushort[] data)

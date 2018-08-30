@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalcCalibration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CalcCalibration.Designer.cs">
+      <DependentUpon>CalcCalibration.cs</DependentUpon>
+    </Compile>
     <Compile Include="LiveValue.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeightCalibration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WeightCalibration.Designer.cs">
+      <DependentUpon>WeightCalibration.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CalcCalibration.resx">
+      <DependentUpon>CalcCalibration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LiveValue.resx">
       <DependentUpon>LiveValue.cs</DependentUpon>
     </EmbeddedResource>
@@ -67,6 +82,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WeightCalibration.resx">
+      <DependentUpon>WeightCalibration.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

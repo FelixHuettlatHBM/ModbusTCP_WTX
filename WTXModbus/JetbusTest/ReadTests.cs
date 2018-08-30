@@ -46,23 +46,16 @@ namespace JetbusTest
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
             _wtxObj = new WtxJet(_jetTestConnection);
-
-            //_jetTestConnection.FetchAll();
-
-            _wtxObj.Connect(this.OnConnect, 100);
-
-            // _jetTestConnection.FetchAll();
+            
+            _wtxObj.Connect(this.OnConnect, 100);        
 
             testGrossValue = _wtxObj.GrossValue;
-
-            //_jetTestConnection.getTokenBuffer.Add("6144/00", _jetTestConnection.simulateFetchInstance()["value"]);
-
+            
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
-
-            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
-
+           
         }
-        
+
+
         private void OnConnect(bool obj)
         {
             throw new NotImplementedException();

@@ -41,8 +41,8 @@ namespace HBM.WT.API.WTX.Jet
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, certificationCallback);
             MPeer = new JetPeer(jetConnection);
 
-            //ConnectOnPeer(user, passwd, timeoutMs);
-            //FetchAll();
+            ConnectOnPeer(user, passwd, timeoutMs);
+            FetchAll();
         }
 
         // Constructor: With ssh certification as a parameter (NetConnectionSecurity) . 
@@ -51,8 +51,8 @@ namespace HBM.WT.API.WTX.Jet
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
 
-            //ConnectOnPeer(timeoutMs);
-            //FetchAll();
+            ConnectOnPeer(timeoutMs);
+            FetchAll();
         }
 
         public JetBusConnection(string ipAddr, string user, string passwd, int timeoutMs = 5000) 
@@ -61,8 +61,8 @@ namespace HBM.WT.API.WTX.Jet
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
 
-            //ConnectOnPeer(timeoutMs);
-            //FetchAll();
+            ConnectOnPeer(timeoutMs);
+            FetchAll();
 
         }
 
@@ -72,8 +72,8 @@ namespace HBM.WT.API.WTX.Jet
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
 
-            //ConnectOnPeer(timeoutMs);
-            //FetchAll();
+            ConnectOnPeer(timeoutMs);
+            FetchAll();
         }
 
         #endregion

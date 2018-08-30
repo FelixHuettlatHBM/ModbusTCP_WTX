@@ -229,13 +229,29 @@ namespace WTXGUISimple
         private static int WriteParameter(string[] args)
         {
             Console.Write(args[0] + "Write... ");
-            if (args.Length < 3) return -1;
+
+            if (args.Length < 3)
+                return -1;
 
             int value = Convert.ToInt32(args[2]);
+
             _sConnection.Write(args[1], value);
+
             Console.WriteLine("OK");
 
             return 0;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string[] argument = new string[3];
+
+            argument[0] = "2022";      // "Write" + argument[0]
+            argument[1] = "8266";      // path 
+            argument[2] = "00000001";  // value 
+
+            WriteParameter(argument);
+
         }
 
         private static int ShowProperties(string[] args)

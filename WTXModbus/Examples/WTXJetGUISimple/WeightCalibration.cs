@@ -200,7 +200,7 @@ namespace WTXGUISimple
 
                     Thread.Sleep(3000);
 
-                    //_jetObj.WriteInt("6002/01", 15000);
+                    _jetObj.WriteInt("6002/01", 15000);
 
                     textBox2.Text = "Calibration successful and finished.";
                     button1.Text = "Close";

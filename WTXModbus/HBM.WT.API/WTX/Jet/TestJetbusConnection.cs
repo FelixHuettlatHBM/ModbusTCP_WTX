@@ -30,6 +30,9 @@ namespace HBM.WT.API.WTX.Jet
 
         WriteZeroFail,
         WriteZeroSuccess,
+
+        CalibrationFail,
+        CalibrationSuccess,
     }
 
     public class TestJetbusConnection : INetConnection, IDisposable
@@ -346,6 +349,15 @@ namespace HBM.WT.API.WTX.Jet
                     // No path and no value is added to the buffer _mTokenBuffer
                     break;
 
+                case Behavior.CalibrationSuccess:
+                    // The specific path and specific value for calibration is added to the buffer _mTokenBuffer
+                    _mTokenBuffer.Add("6002/01", this.simulateCalibrationInstance()["value"]);
+                    break;
+
+                case Behavior.CalibrationFail:
+                    // No path and no value is added to the buffer _mTokenBuffer
+                    break;
+
             }
         }
 
@@ -390,6 +402,21 @@ namespace HBM.WT.API.WTX.Jet
 
             return JToken.FromObject(fetchInstance);
         }
+
+        public JToken simulateCalibrationInstance()
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = "6002/01",
+                Event = "change",   // tare
+                value = 1701994868,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
+        }
+
 
         public new void WriteArray(ushort index, ushort[] data)
         {

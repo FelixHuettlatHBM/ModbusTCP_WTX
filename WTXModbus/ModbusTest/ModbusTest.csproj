@@ -92,8 +92,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalibrationTestsModbus.cs" />
     <Compile Include="ConnectTestsModbus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadTestsModbus.cs" />
+    <Compile Include="WriteTestsModbus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -2270,13 +2270,13 @@ namespace HBM.WT.API.WTX
                 this.Async_Call(0x00, DataReceivedTimer);
             }
             else
-                if (this.NetValue > (calibrationValue + 10) || (this.NetValue < (calibrationValue - 10)))
+            if (this.NetValue > (calibrationValue + 10) || (this.NetValue < (calibrationValue - 10)))
             {
                 Console.Write("Wait for setting the nomnial weight into the WTX.");
                 this.Async_Call(0x00, DataReceivedTimer);
             }
             else
-                     if (this.GrossValue > (calibrationValue + 10) || (this.GrossValue < (calibrationValue - 10)))
+            if (this.GrossValue > (calibrationValue + 10) || (this.GrossValue < (calibrationValue - 10)))
             {
                 Console.Write("Wait for setting the nomnial weight into the WTX.");
             }

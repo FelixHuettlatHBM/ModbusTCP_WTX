@@ -1,9 +1,11 @@
-﻿using HBM.WT.API.WTX;
+﻿using HBM.WT.API;
+using HBM.WT.API.WTX;
 using HBM.WT.API.WTX.Jet;
 using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,6 +120,7 @@ namespace JetbusTest
         {
             //Callback, do something ... 
         }
+
     }
 }
 

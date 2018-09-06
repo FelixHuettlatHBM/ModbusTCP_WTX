@@ -38,7 +38,7 @@ namespace JetbusTest
 
 
 
-        [Test, TestCaseSource(typeof(ReadTests), "WriteTareTestCases")]
+        [Test, TestCaseSource(typeof(WriteTests), "WriteTareTestCases")]
         public bool WriteTareTest(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });

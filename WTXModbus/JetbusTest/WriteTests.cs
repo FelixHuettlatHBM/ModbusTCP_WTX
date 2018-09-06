@@ -20,13 +20,33 @@ namespace JetbusTest
         private int testGrossValue;
 
 
-        // Test case source for reading values from the WTX120 device. 
+        // Test case source for writing values to the WTX120 device: Taring 
         public static IEnumerable WriteTareTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.WriteFail).Returns(false);
-                yield return new TestCaseData(Behavior.WriteSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.WriteTareFail).Returns(false);
+                yield return new TestCaseData(Behavior.WriteTareSuccess).Returns(true);
+            }
+        }
+
+        // Test case source for writing values to the WTX120 device: Set to gross
+        public static IEnumerable WriteGrossTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteGrossFail).Returns(false);
+                yield return new TestCaseData(Behavior.WriteGrossSuccess).Returns(true);
+            }
+        }
+
+        // Test case source for writing values to the WTX120 device : Zeroing
+        public static IEnumerable WriteZeroTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteZeroFail).Returns(false);
+                yield return new TestCaseData(Behavior.WriteZeroSuccess).Returns(true);
             }
         }
 
@@ -40,6 +60,48 @@ namespace JetbusTest
 
         [Test, TestCaseSource(typeof(WriteTests), "WriteTareTestCases")]
         public bool WriteTareTest(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            _jetTestConnection.Write("6002/01", 1701994868);
+
+            if (_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"))
+                return true;
+
+            else
+                return false;
+
+            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"));
+
+        }
+
+        [Test, TestCaseSource(typeof(WriteTests), "WriteGrossTestCases")]
+        public bool WriteGrossTest(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            _jetTestConnection.Write("6002/01", 1701994868);
+
+            if (_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"))
+                return true;
+
+            else
+                return false;
+
+            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"));
+
+        }
+
+        [Test, TestCaseSource(typeof(WriteTests), "WriteZeroTestCases")]
+        public bool WriteZeroTest(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 

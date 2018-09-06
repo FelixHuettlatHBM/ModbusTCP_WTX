@@ -22,8 +22,14 @@ namespace HBM.WT.API.WTX.Jet
         ReadFail,
         ReadSuccess,
 
-        WriteFail,
-        WriteSuccess,
+        WriteTareFail,
+        WriteTareSuccess,
+
+        WriteGrossFail,
+        WriteGrossSuccess,
+
+        WriteZeroFail,
+        WriteZeroSuccess,
     }
 
     public class TestJetbusConnection : INetConnection, IDisposable
@@ -313,16 +319,62 @@ namespace HBM.WT.API.WTX.Jet
         {
             switch(behavior)
             {
-                case Behavior.WriteSuccess:
-                    // A specific path and specific value is added to the buffer _mTokenBuffer
+                case Behavior.WriteTareSuccess:
+                    // The specific path and specific value for taring is added to the buffer _mTokenBuffer
                     _mTokenBuffer.Add("6002/01", this.simulateTareInstance()["value"]);
                     break;
 
-                case Behavior.WriteFail:
+                case Behavior.WriteTareFail:
+                    // No path and no value is added to the buffer _mTokenBuffer
+                    break;
+
+                case Behavior.WriteGrossSuccess:
+                    // The specific path and specific value for gross is added to the buffer _mTokenBuffer
+                    _mTokenBuffer.Add("6002/01", this.simulteGrossInstance()["value"]);
+                    break;
+
+                case Behavior.WriteGrossFail:
+                    // No path and no value is added to the buffer _mTokenBuffer
+                    break;
+
+                case Behavior.WriteZeroSuccess:
+                    // The specific path and specific value for gross is added to the buffer _mTokenBuffer
+                    _mTokenBuffer.Add("6002/01", this.simulteGrossInstance()["value"]);
+                    break;
+
+                case Behavior.WriteZeroFail:
                     // No path and no value is added to the buffer _mTokenBuffer
                     break;
 
             }
+        }
+
+        public JToken simulateZeroingInstance()
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = "6002/01",
+                Event = "zero",
+                value = 1869768058,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
+        }
+
+        public JToken simulteGrossInstance()
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = "6002/01",
+                Event = "gross",
+                value = 1936683623,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
         }
 
         public JToken simulateTareInstance()

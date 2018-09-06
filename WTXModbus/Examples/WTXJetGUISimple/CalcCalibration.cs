@@ -109,11 +109,19 @@ namespace WTXGUISimple
 
                 argument[0] = "6002/01";
                 argument[1] = "6002/01";
+                argument[2] = "2053923171";
+
+                WriteParameter(argument);
+
+                Thread.Sleep(5000);
+
+                argument[0] = "6002/01";
+                argument[1] = "6002/01";
                 argument[2] = "1852596579";
 
                 WriteParameter(argument);
 
-                label5.Text = "Calibration Successful!";
+                label5.Text = "Calibration done via Jetbus";
                 _finished = true;
                 buttonCalculate.Text = "Close";
             }

@@ -168,12 +168,14 @@
             this.calculateCalibrationToolStripMenuItem.Name = "calculateCalibrationToolStripMenuItem";
             this.calculateCalibrationToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.calculateCalibrationToolStripMenuItem.Text = "Calculate Calibration";
+            this.calculateCalibrationToolStripMenuItem.Click += new System.EventHandler(this.calculateCalibrationToolStripMenuItem_Click_2);
             // 
             // calibrationWithWeightToolStripMenuItem
             // 
             this.calibrationWithWeightToolStripMenuItem.Name = "calibrationWithWeightToolStripMenuItem";
             this.calibrationWithWeightToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.calibrationWithWeightToolStripMenuItem.Text = "Calibration with Weight";
+            this.calibrationWithWeightToolStripMenuItem.Click += new System.EventHandler(this.calibrationWithWeightToolStripMenuItem_Click_2);
             // 
             // statusStrip1
             // 

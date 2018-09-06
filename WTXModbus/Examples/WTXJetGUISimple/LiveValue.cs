@@ -32,6 +32,9 @@ namespace WTXGUISimple
 
         static JetBusConnection _sConnection;
 
+        private CalcCalibration _calcCalObj;
+        private WeightCalibration _weightCalObj;
+
         static string _menuRequest = "folow instructions: \n \r"
     + "<read> <parameter> \n"
     + "<write> <parameter> <value> \n"
@@ -101,22 +104,18 @@ namespace WTXGUISimple
             InitializeTimerJetbus(_timerInterval);
         }
 
-
-        private CalcCalibration _calcCalObj;
-        private WeightCalibration _weightCalObj;
-
         //Opens a menu window for calculated calibration
-        private void CalculateCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void calculateCalibrationToolStripMenuItem_Click_2(object sender, EventArgs e)
         {
             _calcCalObj = new CalcCalibration(_sConnection, _sConnection.IsConnected);
-            DialogResult res = _calcCalObj.ShowDialog();            
+            DialogResult res = _calcCalObj.ShowDialog();
         }
 
         //Opens a menu window for calibration with a calibration weight
-        private void CalibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
+        private void calibrationWithWeightToolStripMenuItem_Click_2(object sender, EventArgs e)
         {
             _weightCalObj = new WeightCalibration(_sConnection, _sConnection.IsConnected);
-            DialogResult res = _weightCalObj.ShowDialog();         
+            DialogResult res = _weightCalObj.ShowDialog();
         }
 
         // This method initializes the with the timer interval as a parameter: 
@@ -276,12 +275,6 @@ namespace WTXGUISimple
         {
             string[] argument = new string[3];
 
-            /* Example that works well:
-            argument[0] = "2021/04";      // "Write" + argument[0]
-            argument[1] = "2021/04";      // path 
-            argument[2] = "1";            // value 
-            */
-
             argument[0] = "6002/01";      // "Write" + argument[0]
             argument[1] = "6002/01";      // path  for gross 
             argument[2] = "1701994868";   // value for gross in hex = 0x65726174 
@@ -391,5 +384,6 @@ namespace WTXGUISimple
         {
 
         }
+
     }
 }

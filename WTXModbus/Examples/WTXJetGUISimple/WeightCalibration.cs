@@ -62,6 +62,7 @@ namespace WTXGUISimple
                 button2.Text = "Close";
                 textBox2.Text = "No WTX connected!";
             }
+
             /*
             switch (_jetObj.Unit)
             {
@@ -85,96 +86,6 @@ namespace WTXGUISimple
 
             textBox2.Text = "Enter a calibration weight";
         }
-
-        /*
-
-        // Calls the correct method depending on the current calibration state "State" and 
-        // adapts respectively the text on the button "Start".
-        // The states are start, measure zero, measure calibration weight, close.
-        private void button1_Click(object sender, EventArgs e)
-        {
-            button1.Enabled = false;
-            this.Cursor = Cursors.WaitCursor;
-
-            //Switch depending on the current calibration step described by State
-            switch (_state)
-            {
-                case 0: //start
-
-                    try
-                    {
-                        //CalibrationWeight = Convert.ToDouble(textBox1.Text, Provider);
-
-                        _strCommaDot = textBox1.Text.Replace(".", ",");                   // Neu : 12.3 - Für die Umwandlung in eine Gleitkommazahl. 
-                        _calibrationWeight = double.Parse(_strCommaDot);                   // Damit können Kommata und Punkte eingegeben werden. 
-
-                        textBox1.Enabled = false;
-                        textBox2.Text = _calibrationWeight.ToString();
-                    }
-                    catch (FormatException)
-                    {
-                        textBox2.Text = "Wrong format!" + Environment.NewLine
-                            + "Only numbers in the form of 123,456,789.0123 allowed!";
-                        break;
-                    }
-                    catch (OverflowException)
-                    {
-                        textBox2.Text = "Overflow! Number to big.";
-                        break;
-                    }
-
-                    textBox2.Text = "Unload Scale!";
-                    button1.Text = "Measure Zero";
-                    button2.Text = "<Back";
-                    _state = 1;
-                    break;
-
-                case 1: // measure zero
-
-                    button1.Enabled = false;
-
-                    textBox2.Text = "Measure zero in progess.";
-                    Application.DoEvents();
-
-                    _jetObj.MeasureZero();
-
-                    textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
-                    button1.Text = "Calibrate";
-                    _state = 2;
-
-                    break;
-
-                case 2: // start calibration   
-
-                    button1.Enabled = false;
-
-                    textBox2.Text = "Calibration in progress.";
-                    Application.DoEvents();
-
-                    _jetObj.Calibrate(this.PotencyCalibrationWeight(), _calibrationWeight.ToString());
-
-                    if (_jetObj.Status == 1 && _jetObj.Handshake == 0)
-                        textBox2.Text = "Calibration successful and finished.";
-                    else
-                        textBox2.Text = "Calibration  failed.";
-
-                    button1.Text = "Close";
-                    _state = 3;
-                    break;
-
-                default: //close window
-
-                    button1.Enabled = false;
-                    _state = 0;
-
-                    Close();
-                    break;
-            }
-            button1.Enabled = true;
-            this.Cursor = Cursors.Default;
-        }
-
-    */
 
     /*
         private int PotencyCalibrationWeight()
@@ -238,7 +149,108 @@ namespace WTXGUISimple
 
         private void label5_Click(object sender, EventArgs e)
         {
-
         }
+
+        // Calls the correct method depending on the current calibration state "State" and 
+        // adapts respectively the text on the button "Start".
+        // The states are start, measure zero, measure calibration weight, close.
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string[] argument = new string[3];
+
+            switch(_state)
+            {
+                case 0: // start
+
+                    textBox2.Text = "Unload Scale!";
+                    button1.Text = "Measure Zero";
+                    button2.Text = "<Back";
+
+                    _state = 1;
+
+                    break;
+
+                case 1:  // measure zero
+
+                    textBox2.Text = "Measure zero in progess.";
+
+                    argument[0] = "6002/01";
+                    argument[1] = "6002/01";
+                    argument[2] = "2053923171";
+
+                    WriteParameter(argument);
+
+                    Thread.Sleep(5000);
+
+                    textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
+                    button1.Text = "Calibrate";
+                    _state = 2;
+
+                    break;
+
+                case 2: // start calibration 
+
+                    textBox2.Text = "Calibration in progress.";
+
+                    argument[0] = "6002/01";
+                    argument[1] = "6002/01";
+                    argument[2] = "1852596579";
+
+                    WriteParameter(argument);
+
+                    Thread.Sleep(3000);
+
+                    //_jetObj.WriteInt("6002/01", 15000);
+
+                    textBox2.Text = "Calibration successful and finished.";
+                    button1.Text = "Close";
+
+                    _state = 3; 
+
+                    break;
+
+                default:
+
+                    this.Close();
+                    _state = 0;
+
+                    break; 
+            }
+
+            /*
+            // state 0 : 
+            textBox2.Text = "Unload Scale!";
+            button1.Text = "Measure Zero";
+            button2.Text = "<Back";
+
+            // state 1 : 
+            argument[0] = "6002/01";
+            argument[1] = "6002/01";
+            argument[2] = "2053923171";
+
+            WriteParameter(argument);
+            Thread.Sleep(5000);
+
+            // state 2: 
+            argument[0] = "6002/01";
+            argument[1] = "6002/01";
+            argument[2] = "1852596579";
+
+            WriteParameter(argument);
+            */    
+        }
+
+        private int WriteParameter(string[] args)
+        {
+            if (args.Length < 3)
+                return -1;
+
+            int value = Convert.ToInt32(args[2]);
+
+            _jetObj.Write(args[1], value);
+
+            return 0;
+        }
+
     }
 }

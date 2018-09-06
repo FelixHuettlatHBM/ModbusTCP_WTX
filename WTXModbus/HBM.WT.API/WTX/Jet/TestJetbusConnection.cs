@@ -355,7 +355,7 @@ namespace HBM.WT.API.WTX.Jet
             FetchData fetchInstance = new FetchData
             {
                 path = "6002/01",
-                Event = "zero",
+                Event = "change",  //zero
                 value = 1869768058,
 
             };
@@ -369,7 +369,7 @@ namespace HBM.WT.API.WTX.Jet
             FetchData fetchInstance = new FetchData
             {
                 path = "6002/01",
-                Event = "gross",
+                Event = "change",  // gross
                 value = 1936683623,
 
             };
@@ -383,7 +383,7 @@ namespace HBM.WT.API.WTX.Jet
             FetchData fetchInstance = new FetchData
             {
                 path = "6002/01",
-                Event = "tare",
+                Event = "change",   // tare
                 value = 1701994868,
 
             };

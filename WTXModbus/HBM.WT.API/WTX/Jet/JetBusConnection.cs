@@ -85,7 +85,7 @@ namespace HBM.WT.API.WTX.Jet
 
         }
 
-        public bool isConnected
+        public bool IsConnected
         {
             get
             {
@@ -102,6 +102,8 @@ namespace HBM.WT.API.WTX.Jet
                 if (!connected) {
                     _mException = new Exception("Connection failed.");
                 }
+
+                this.JetConnected = true; 
                 _mSuccessEvent.Set();
             }, timeoutMs);
             _mTimeoutMs = timeoutMs;
@@ -128,6 +130,8 @@ namespace HBM.WT.API.WTX.Jet
                             JetBusException exception = new JetBusException(token);
                             _mException = new InterfaceException(exception, (uint)exception.Error);
                         }
+
+                        this.JetConnected = true;
                         _mSuccessEvent.Set();
                     }, _mTimeoutMs); 
                 }
@@ -157,6 +161,8 @@ namespace HBM.WT.API.WTX.Jet
                 //
                 // Wake up the waiting thread where call the konstruktor to connect the session
                 //
+
+                this.JetConnected = true;
                 _mSuccessEvent.Set();
                 
                 BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
@@ -176,6 +182,8 @@ namespace HBM.WT.API.WTX.Jet
                 //
                 throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
             }
+
+            this.JetConnected = true; 
             if (_mException != null) {
                 Exception exception = _mException;
                 _mException = null;
@@ -310,6 +318,9 @@ namespace HBM.WT.API.WTX.Jet
                         JetBusException exception = new JetBusException(token);
                         _mException = new InterfaceException(exception, (uint)exception.Error);
                     }
+
+                    this.JetConnected = true; 
+
                     _mSuccessEvent.Set();
                    
                     BusActivityDetection?.Invoke(this, new LogEvent("Set data" + success ));
@@ -396,7 +407,6 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool IsConnected { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public string IpAddress
         {

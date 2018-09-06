@@ -57,7 +57,6 @@ namespace JetbusTest
         }
 
 
-
         [Test, TestCaseSource(typeof(WriteTests), "WriteTareTestCases")]
         public bool WriteTareTest(Behavior behavior)
         {
@@ -74,8 +73,6 @@ namespace JetbusTest
 
             else
                 return false;
-
-            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"));
 
         }
 
@@ -96,8 +93,6 @@ namespace JetbusTest
             else
                 return false;
 
-            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"));
-
         }
 
         [Test, TestCaseSource(typeof(WriteTests), "WriteZeroTestCases")]
@@ -115,15 +110,13 @@ namespace JetbusTest
                 return true;
 
             else
-                return false;
-
-            //Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6002/01"));
+                return false;          
 
         }
 
         private void OnConnect(bool obj)
         {
-            //Callback, do for example something ... 
+            //Callback, do something ... 
         }
     }
 }

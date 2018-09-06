@@ -339,7 +339,7 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.WriteZeroSuccess:
                     // The specific path and specific value for gross is added to the buffer _mTokenBuffer
-                    _mTokenBuffer.Add("6002/01", this.simulteGrossInstance()["value"]);
+                    _mTokenBuffer.Add("6002/01", this.simulateZeroingInstance()["value"]);                  
                     break;
 
                 case Behavior.WriteZeroFail:

@@ -2384,26 +2384,20 @@ namespace HBM.WT.API.WTX
         }
 
         public override INetConnection getJetBusConnection => throw new NotImplementedException();
-
-        public void gross(/*Action <IDeviceData> completed*/)
+        
+        public void gross(Action<IDeviceData> WriteDataCompleted)
         {
-            this.Async_Call(0x2, completed);
+            this.Async_Call(0x2, WriteDataCompleted);
+        }
+        public void taring(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.Async_Call(0x1, WriteDataCompleted);
+        }
+        public void zeroing(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.Async_Call(0x40, WriteDataCompleted);
         }
 
-        public void taring(/*Action<IDeviceData> completed*/)
-        {
-            this.Async_Call(0x1, completed);
-        }
-
-        public void zeroing(/*Action<IDeviceData> completed*/)
-        {
-            this.Async_Call(0x40, completed);
-        }
-
-        private void completed(IDeviceData obj)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

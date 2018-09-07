@@ -249,19 +249,24 @@ namespace WTXGUISimple
         // Write to WTX : Zeroing
         private void button3_Click(object sender, EventArgs e)
         {
-            _wtxObj.zeroing(); 
+            _wtxObj.zeroing(WriteDataCompleted); 
         }
 
         // Write to WTX : Gross
         private void button4_Click(object sender, EventArgs e)
         {
-            _wtxObj.gross();
+            _wtxObj.gross(WriteDataCompleted);
         }
 
         // Write to WTX : Tare
         private void button2_Click(object sender, EventArgs e)
         {
-            _wtxObj.taring();
+            _wtxObj.taring(WriteDataCompleted);
+        }
+
+        private void WriteDataCompleted(IDeviceData obj)
+        {
+            throw new NotImplementedException();
         }
 
         private static int ShowProperties(string[] args)

@@ -600,20 +600,19 @@ namespace HBM.WT.API.WTX
             */
         }
 
-        public void zeroing()
+        public void zeroing(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write("6002/01", 1869768058);
         }
 
-        public void gross()
+        public void gross(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write("6002/01", 1936683623);
         }
 
-        public void taring()
+        public void taring(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write("6002/01", 1701994868);
         }
-
     }
 }

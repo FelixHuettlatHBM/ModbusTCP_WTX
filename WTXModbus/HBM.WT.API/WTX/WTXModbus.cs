@@ -29,7 +29,7 @@ namespace HBM.WT.API.WTX
         private ushort _command;
         private string _ipAddr;
 
-        private double dPreload,dNominalLoad, multiplierMv2D;
+        private double dPreload, dNominalLoad, multiplierMv2D;
 
         public System.Timers.Timer _aTimer;
 
@@ -81,7 +81,7 @@ namespace HBM.WT.API.WTX
 
             this._timerInterval = 0;
 
-            this.dPreload = 0; 
+            this.dPreload = 0;
             this.dNominalLoad = 0;
             this.multiplierMv2D = 500000;
 
@@ -91,7 +91,6 @@ namespace HBM.WT.API.WTX
 
             this.initialize_timer(paramTimerInterval);
         }
-
 
         // To establish a connection to the WTX device via class WTX120_Modbus.
         public override void Connect(Action<bool> ConnectCompleted, double timeoutMs)
@@ -314,6 +313,16 @@ namespace HBM.WT.API.WTX
             this._connection.Write(wordNumber, _dataWritten[0]);
         }
 
+        // This methods sets the interval value of the timer. 
+        public void ResetTimer(int timerIntervalParam)
+        {
+            this._aTimer.Enabled = false;
+            this._aTimer.Stop();
+
+            this._timerInterval = timerIntervalParam;
+
+            this.initialize_timer(timerIntervalParam);
+        }
 
         // This method initializes the with the timer interval as a parameter: 
         public override void initialize_timer(int paramTimerInterval)
@@ -2398,6 +2407,50 @@ namespace HBM.WT.API.WTX
             this.Async_Call(0x40, WriteDataCompleted);
         }
 
+        public void adjustZero(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.Async_Call(0x80, Write_DataReceived);
+        }
+
+        public void adjustNominal(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.Async_Call(0x100, Write_DataReceived);
+        }
+
+        public void activateData(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
+        }
+
+        public void manualTaring(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.Async_Call(0x1000, Write_DataReceived);
+        }
+
+        public void clearDosingResults(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.clearDosingResults(Write_DataReceived);
+        }
+
+        public void abortDosing(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.abortDosing(Write_DataReceived);
+        }
+
+        public void startDosing(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.startDosing(Write_DataReceived);
+        }
+
+        public void recordWeight(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.recordWeight(Write_DataReceived);
+        }
+
+        public void manualReDosing(Action<IDeviceData> WriteDataCompleted)
+        {
+            this.manualReDosing(Write_DataReceived);
+        }
     }
 }
 

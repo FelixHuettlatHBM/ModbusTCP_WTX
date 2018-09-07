@@ -120,6 +120,11 @@ namespace WTXModbusExamples
             _arrayLength = 0;
         }
 
+        public void setTimerInterval(int timerIntervalParam)
+        {
+            _wtxObj.ResetTimer(timerIntervalParam);
+        }
+
         // This method could also load the datagrid at the beginning of the application: For printing the datagrid on the beginning.
         private void GUI_Load_1(object sender, EventArgs e)
         {
@@ -375,7 +380,7 @@ namespace WTXModbusExamples
         private void button4_Click(object sender, EventArgs e)
         {
             // Taring       
-            _wtxObj.Async_Call(0x1, Write_DataReceived);
+            _wtxObj.taring(Write_DataReceived);
         }
 
         // This method sends a command to the device : Change between gross and net value. Command : 0x2 
@@ -383,7 +388,7 @@ namespace WTXModbusExamples
         private void button1_Click(object sender, EventArgs e)
         {
             // Gross/Net
-            _wtxObj.Async_Call(0x2, Write_DataReceived);
+            _wtxObj.gross(Write_DataReceived);
         }
 
         
@@ -392,7 +397,7 @@ namespace WTXModbusExamples
         private void button5_Click(object sender, EventArgs e)
         {
             // Zeroing
-            _wtxObj.Async_Call(0x40, Write_DataReceived);
+            _wtxObj.zeroing(Write_DataReceived);
         }
 
         // This method sends a command to the device : Adjust zero. Command : 0x80
@@ -400,7 +405,7 @@ namespace WTXModbusExamples
         private void button6_Click(object sender, EventArgs e)
         {
             // Adjust zero
-            _wtxObj.Async_Call(0x80, Write_DataReceived);
+            _wtxObj.adjustZero(Write_DataReceived);
         }
 
         // This method sends a command to the device : Adjust nominal. Command : 0x100
@@ -408,7 +413,7 @@ namespace WTXModbusExamples
         private void button7_Click(object sender, EventArgs e)
         {
             // Adjust nominal
-            _wtxObj.Async_Call(0x100, Write_DataReceived);
+            _wtxObj.adjustNominal(Write_DataReceived);
         }
 
         // This method sends a command to the device : Activate data. Command : 0x800
@@ -418,8 +423,7 @@ namespace WTXModbusExamples
         private void button8_Click(object sender, EventArgs e)
         {
             // Activate data
-            
-            
+                       
             int maximumIndex = 0;
 
             if (_wtxObj.ApplicationMode == 0)     // if in standard mode: 
@@ -459,8 +463,9 @@ namespace WTXModbusExamples
                 }
 
                 //WTXObj.Async_Call(0x100, Write_DataReceived);
-            }        
-            _wtxObj.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
+            }
+
+            _wtxObj.activateData(Write_DataReceived); 
         }       
 
         // This method sends a command to the device : Manual taring. Command : 0x1000
@@ -469,60 +474,53 @@ namespace WTXModbusExamples
         {
             // Manual taring
             //if (this.is_standard == true)      // Activate this if-conditon only in case, if the should be a change between standard and filler application. 
-            _wtxObj.Async_Call(0x1000, Write_DataReceived);             
-        }
-
-        // This method sends a command to the device : Record weight. Command : 0x4000
-        // For standard and filler application.
-        private void button10_Click(object sender, EventArgs e)
-        {
-            // Record weight
-            _wtxObj.Async_Call(0x4000, Write_DataReceived);   // Bit .14
+            _wtxObj.manualTaring(Write_DataReceived);
         }
 
         // This method sends a command to the device : Clear dosing results. Command : 0x4
         // Only for filler application.
-        private void button11_Click(object sender, EventArgs e)
+        private void button11_Click_1(object sender, EventArgs e)
         {
             // Clear dosing results
             //if (this.is_standard == false)
-            _wtxObj.Async_Call(0x4, Write_DataReceived);  // Bit .2
+            _wtxObj.clearDosingResults(Write_DataReceived);
         }
 
         // This method sends a command to the device : Abort dosing. Command : 0x8
         // Only for filler application.
-        private void button12_Click(object sender, EventArgs e)
+        private void button12_Click_1(object sender, EventArgs e)
         {
             // Abort dosing
             //if (this.is_standard == false)
-            _wtxObj.Async_Call(0x8, Write_DataReceived);   // Bit .3
+            _wtxObj.abortDosing(Write_DataReceived);
         }
 
         // This method sends a command to the device : Start dosing. Command : 0x10
         // Only for filler application.
-        private void button13_Click(object sender, EventArgs e)
+        private void button13_Click_1(object sender, EventArgs e)
         {
             // Start dosing
             //if (this.is_standard == false)
-            _wtxObj.Async_Call(0x10, Write_DataReceived);    // Bit .4
+            _wtxObj.startDosing(Write_DataReceived);
         }
 
-        // Write Bit .14 to the register of the WTX device. Only in the filler mode: 
+        // This method sends a command to the device : Record weight. Command : 0x4000 , Bit .14
+        // For standard and filler application.
         private void button2_Click_1(object sender, EventArgs e)
         {
-            // Manual re-dosing
+            // Record weight: 
             //if (this.is_standard == false)
-            _wtxObj.Async_Call(0x4000, Write_DataReceived);        // Bit .14
+            _wtxObj.recordWeight(Write_DataReceived);
 
         }
 
         // This method sends a command to the device : Manual re-dosing. Command : 0x8000
         // Only for filler application.
-        private void button14_Click(object sender, EventArgs e)
+        private void button14_Click_1(object sender, EventArgs e)
         {
             // Manual re-dosing
             //if (this.is_standard == false)
-            _wtxObj.Async_Call(0x8000, Write_DataReceived);        // Bit .15
+            _wtxObj.manualReDosing(Write_DataReceived);
         }
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120_Modbus).
@@ -915,5 +913,7 @@ namespace WTXModbusExamples
         {
 
         }
+
+
     }
 }

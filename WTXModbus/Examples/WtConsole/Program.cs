@@ -97,7 +97,6 @@ namespace WtConsole
                         _jetConnection.ConnectOnPeer(5000);
                         _jetConnection.FetchAll();
 
-
                         Console.WriteLine("OK");
  
                         //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;
@@ -212,21 +211,6 @@ namespace WtConsole
                 Console.ReadLine();
             }*/
         }
-
-        //public static async Task Handler1(object sender, EventArgs e /*EventArgs e*/)
-        //
-        //await WTXObj.UpdateEvent(sender, e);
-
-        //ushort[] TESTushortarray = new ushort[100];
-        //TESTushortarray = await Task.FromResult<ushort[]>(WTXObj.getValuesAsync());
-
-        //await Task.FromResult<IDeviceData>(WTXObj.DeviceValues);
-
-        //reset_values_on_console(WTXObj.DeviceValues);
-        //}
-
-
-
         private static void InputOutput()
         {
                 _valueExitapplication = Console.ReadKey();

@@ -282,8 +282,6 @@ namespace WTXGUISimple
             foreach (PropertyInfo prop in properties)
             {
                 Console.WriteLine(prop.ToString());
-
-
             }
 
             return 0;

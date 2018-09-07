@@ -221,8 +221,8 @@ namespace WTXModbusGUIsimple
         {
             if (_wtxObj.getModbusConnection.IsConnected)
             {
-                RenameButtonGrossNet();
-                _wtxObj.Async_Call(0x1, WriteDataReceived);
+                RenameButtonGrossNet();               
+                _wtxObj.taring();
             }
             else
             {
@@ -238,8 +238,8 @@ namespace WTXModbusGUIsimple
         private void button3_Click(object sender, EventArgs e)
         {
             if (_wtxObj.getModbusConnection.IsConnected)
-            { 
-                _wtxObj.Async_Call(0x40, WriteDataReceived);
+            {              
+                _wtxObj.zeroing();
             }
             else
             {
@@ -253,10 +253,13 @@ namespace WTXModbusGUIsimple
         // Button Gross/Net
         private void button4_Click(object sender, EventArgs e)
         {
+            //Action<IDeviceData> completed = new Action<IDeviceData>;// _wtxObj.DeviceValues;
+
             if (_wtxObj.getModbusConnection.IsConnected)
-            {
-                _wtxObj.Async_Call(0x2, WriteDataReceived);
+            {               
+                _wtxObj.gross();
                 RenameButtonGrossNet();
+                
             }
             else
             {
@@ -267,6 +270,7 @@ namespace WTXModbusGUIsimple
             }
         }
 
+        /*
         // CallbackMethod executed after write to WTX
         public void WriteDataReceived(IDeviceData deviceValues)
         {
@@ -277,6 +281,7 @@ namespace WTXModbusGUIsimple
 
             RenameButtonGrossNet();
         }
+        */
 
         // Adapts button Gross/Net text
         private void RenameButtonGrossNet()

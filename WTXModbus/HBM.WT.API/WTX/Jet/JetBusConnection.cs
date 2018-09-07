@@ -1,7 +1,9 @@
 ﻿using Hbm.Devices.Jet;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Security;
 using System.Text;
 using System.Threading;
@@ -23,7 +25,6 @@ namespace HBM.WT.API.WTX.Jet
         private int _mTimeoutMs;
 
         public event EventHandler BusActivityDetection;
-        //public event EventHandler<NetConnectionEventArgs<ushort[]>> RaiseDataEvent
         public event EventHandler<DataEvent> RaiseDataEvent;
 
         private bool JetConnected;
@@ -164,9 +165,9 @@ namespace HBM.WT.API.WTX.Jet
 
                 this.JetConnected = true;
                 _mSuccessEvent.Set();
-                
+               
                 BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
-                
+
                 //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));
 
             }, _mTimeoutMs);
@@ -199,7 +200,8 @@ namespace HBM.WT.API.WTX.Jet
         /// Event with callend when raced a Fetch-Event by a other Peer.
         /// </summary>
         /// <param name="data"></param>
-        protected virtual void OnFetchData(JToken data) {
+        protected virtual void OnFetchData(JToken data)
+        {
             string path = data["path"].ToString();
             lock (_mTokenBuffer) {
                 switch (data["event"].ToString()) {
@@ -209,6 +211,18 @@ namespace HBM.WT.API.WTX.Jet
                         _mTokenBuffer[path] = data["value"];
                         break;
                 }
+
+                JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
+                ushort[] DataArray = new ushort[JTokenArray.Length + 1];
+                
+                for (int index = 0; index < JTokenArray.Length; index++)
+                {
+                    JToken element = JTokenArray[index];
+                  
+                    DataArray[index] = (ushort)Convert.ToInt32(element.SelectToken("value"));
+                }
+
+                RaiseDataEvent?.Invoke(this, new DataEvent(DataArray));
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
 
@@ -228,7 +242,8 @@ namespace HBM.WT.API.WTX.Jet
         /// <param name="index"></param>
         /// <returns></returns>
         protected virtual JToken ReadObj(object index) {
-            lock (_mTokenBuffer) {
+            lock (_mTokenBuffer)
+            {
                 if (_mTokenBuffer.ContainsKey(index.ToString())) {
                     return _mTokenBuffer[index.ToString()];
                 }
@@ -257,11 +272,6 @@ namespace HBM.WT.API.WTX.Jet
             try
             {
                 return Convert.ToInt32(ReadObj(index));
-
-                //JToken token = ReadObj(index);
-                //return token;
-
-                //return (T)Convert.ChangeType(token, typeof(T));
             }
             catch (FormatException)
             {

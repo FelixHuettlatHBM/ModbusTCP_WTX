@@ -11,6 +11,7 @@ namespace HBM.WT.API.WTX.Jet
     using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Security;
     using System.Threading;
 
@@ -19,8 +20,14 @@ namespace HBM.WT.API.WTX.Jet
         ConnectionFail,
         ConnectionSuccess,
 
-        ReadFail,
-        ReadSuccess,
+        ReadGrossValueFail,
+        ReadGrossValueSuccess,
+
+        ReadNetValueFail,
+        ReadNetValueSuccess,
+
+        ReadWeightMovingFail,
+        ReadWeightMovingSuccess,
 
         WriteTareFail,
         WriteTareSuccess,
@@ -33,6 +40,12 @@ namespace HBM.WT.API.WTX.Jet
 
         CalibrationFail,
         CalibrationSuccess,
+
+        CalibratePreloadCapacityFail,
+        CalibratePreloadCapacitySuccess,
+
+        MeasureZeroFail,
+        MeasureZeroSuccess,
     }
 
     public class TestJetbusConnection : INetConnection, IDisposable
@@ -91,11 +104,29 @@ namespace HBM.WT.API.WTX.Jet
             
             switch (this.behavior)
             {
-                case Behavior.ReadSuccess:
+                case Behavior.ReadGrossValueSuccess:
                     if (_mTokenBuffer.ContainsKey(index.ToString()))
                         return _mTokenBuffer[index.ToString()];
                     break;
-                case Behavior.ReadFail:
+                case Behavior.ReadGrossValueFail:
+                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
+                    return _mTokenBuffer[""];
+                    break;
+
+                case Behavior.ReadNetValueSuccess:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+                case Behavior.ReadNetValueFail:
+                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
+                    return _mTokenBuffer[""];
+                    break;
+
+                case Behavior.ReadWeightMovingSuccess:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+                case Behavior.ReadWeightMovingFail:
                     //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                     return _mTokenBuffer[""];
                     break;
@@ -184,32 +215,7 @@ namespace HBM.WT.API.WTX.Jet
             
             bool success = true;
 
-            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
-       
-            /*
-            Matcher matcher = new Matcher();
-            FetchId id;
-
-            MPeer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token)
-            {
-                if (!success)
-                {
-                    this.JetConnected = false;
-                    JetBusException exception = new JetBusException(token);
-                    _mException = new InterfaceException(exception, (uint)exception.Error);
-                   
-                }
-                //
-                // Wake up the waiting thread where call the konstruktor to connect the session
-                //
-                _mSuccessEvent.Set();
-
-                BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
-                
-            }, _mTimeoutMs);
-            WaitOne(3);
-            */
-            
+            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));            
         }
 
         protected virtual void WaitOne(int timeoutMultiplier = 1)
@@ -240,22 +246,29 @@ namespace HBM.WT.API.WTX.Jet
         {
             string path = data["path"].ToString();
             lock (_mTokenBuffer)
-            {
+            {  
+                //if(this.behavior==Behavior.ReadGrossValueSuccess)
+                     _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
 
-                _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
+                //if (this.behavior == Behavior.ReadNetValueSuccess)
+                    _mTokenBuffer.Add("601A/01", this.simulateFetchInstance()["value"]);
 
-                //_mTokenBuffer.Add("6144 / 00", data["value"]);
 
-                /*
-                switch (data["event"].ToString())
+                //if (this.behavior == Behavior.ReadWeightMovingSuccess)
+                    _mTokenBuffer.Add("6153/00", this.simulateFetchInstance()["value"]);
+
+                JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
+                ushort[] DataArray = new ushort[JTokenArray.Length + 1];
+
+                for (int index = 0; index < JTokenArray.Length; index++)
                 {
-                    case "add": _mTokenBuffer.Add(path, data["value"]); break;
-                    case "fetch": _mTokenBuffer[path] = data["value"]; break;
-                    case "change":
-                        _mTokenBuffer[path] = data["value"];
-                        break;
+                    JToken element = JTokenArray[index];
+
+                    DataArray[index] = (ushort)Convert.ToInt32(element.SelectToken("value"));
                 }
-                */
+
+                RaiseDataEvent?.Invoke(this, new DataEvent(DataArray));
+
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
@@ -351,14 +364,67 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.CalibrationSuccess:
                     // The specific path and specific value for calibration is added to the buffer _mTokenBuffer
-                    _mTokenBuffer.Add("6002/01", this.simulateCalibrationInstance()["value"]);
+                    _mTokenBuffer.Add("6152/00", this.simulateCalibrationInstance(data)["value"]);
                     break;
 
                 case Behavior.CalibrationFail:
                     // No path and no value is added to the buffer _mTokenBuffer
                     break;
 
+                case Behavior.MeasureZeroSuccess:
+                    _mTokenBuffer.Add("6002/01",this.simulateMeasureZeroInstance()["value"]);
+                    break;
+
+                case Behavior.MeasureZeroFail:
+                    break;
+
+                case Behavior.CalibratePreloadCapacitySuccess:
+
+                    if (index.Equals("6112/01"))
+                        _mTokenBuffer.Add("6112/01", simulateJTokenInstance("6112/01", data)["value"]);
+
+                    if (index.Equals("6113/01"))
+                        _mTokenBuffer.Add("6113/01", simulateJTokenInstance("6113/01", data)["value"]);
+
+                    break;
+
+                case Behavior.CalibratePreloadCapacityFail:
+                    break;
+
+                default:
+                    break; 
+
             }
+        }
+
+
+        public JToken simulateJTokenInstance(string index, int data)
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = index,
+                Event = "change",  // measure zero
+                value = data,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
+        }
+
+
+        public JToken simulateMeasureZeroInstance()
+        {
+
+            FetchData fetchInstance = new FetchData
+            {
+                path = "6002/01",
+                Event = "change",  // measure zero
+                value = 2053923171,
+
+            };
+
+            return JToken.FromObject(fetchInstance);
         }
 
         public JToken simulateZeroingInstance()
@@ -403,15 +469,14 @@ namespace HBM.WT.API.WTX.Jet
             return JToken.FromObject(fetchInstance);
         }
 
-        public JToken simulateCalibrationInstance()
+        public JToken simulateCalibrationInstance(int data)
         {
 
             FetchData fetchInstance = new FetchData
             {
-                path = "6002/01",
+                path = "6152/00",
                 Event = "change",   // tare
-                value = 1701994868,
-
+                value = data,
             };
 
             return JToken.FromObject(fetchInstance);

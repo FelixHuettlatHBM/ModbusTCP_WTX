@@ -9,7 +9,7 @@ using System.Timers;
 namespace HBM.WT.API.WTX
 {
 
-    public class WtxModbus : BaseWtDevice     // ParameterProperty umändern 
+    public class WtxModbus : BaseWtDevice   
     {
         private string[] _dataStr;
         private ushort[] _previousData;
@@ -32,8 +32,7 @@ namespace HBM.WT.API.WTX
         private double dPreload, dNominalLoad, multiplierMv2D;
 
         public System.Timers.Timer _aTimer;
-
-        //TestModbusTCPConnection _testconnection;
+        
         private INetConnection _connection;
 
         private IDeviceData _thisValues;
@@ -382,11 +381,6 @@ namespace HBM.WT.API.WTX
 
             int previousNetValue = deviceValues.NetValue;
 
-        }
-
-        public override void Calibration(ushort command)
-        {
-            // Set zero, set nominal, set calibration weight... siehe anderen Code. 
         }
 
         public override ushort[] GetValuesAsync()
@@ -2275,19 +2269,19 @@ namespace HBM.WT.API.WTX
             // Check if the values of the WTX device are equal to the calibration value. It is also checked within a certain interval if the measurement is noisy.
             if ((this.NetValue != calibrationValue || this.GrossValue != calibrationValue))
             {
-                Console.Write("Wait for setting the nomnial weight into the WTX.");
+                Console.Write("Wait for setting the nominal weight into the WTX.");
                 this.Async_Call(0x00, DataReceivedTimer);
             }
             else
             if (this.NetValue > (calibrationValue + 10) || (this.NetValue < (calibrationValue - 10)))
             {
-                Console.Write("Wait for setting the nomnial weight into the WTX.");
+                Console.Write("Wait for setting the nominal weight into the WTX.");
                 this.Async_Call(0x00, DataReceivedTimer);
             }
             else
             if (this.GrossValue > (calibrationValue + 10) || (this.GrossValue < (calibrationValue - 10)))
             {
-                Console.Write("Wait for setting the nomnial weight into the WTX.");
+                Console.Write("Wait for setting the nominal weight into the WTX.");
             }
             else
             {

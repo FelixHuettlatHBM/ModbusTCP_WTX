@@ -68,7 +68,7 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            _jetTestConnection.Write("6002/01", 1701994868);
+            _wtxObj.taring(WriteDataCompleted);     // Alternative : _jetTestConnection.Write("6002/01", 1701994868);
 
             if (_jetTestConnection.getTokenBuffer.ContainsKey("6002/01") && _jetTestConnection.getTokenBuffer.ContainsValue(1701994868))
                 return true;
@@ -76,6 +76,11 @@ namespace JetbusTest
             else
                 return false;
 
+        }
+
+        private void WriteDataCompleted(IDeviceData obj)
+        {
+            throw new NotImplementedException();
         }
 
         [Test, TestCaseSource(typeof(WriteTests), "WriteGrossTestCases")]
@@ -87,7 +92,7 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            _jetTestConnection.Write("6002/01", 1936683623);
+            _wtxObj.gross(WriteDataCompleted);     // Alternative : _jetTestConnection.Write("6002/01", 1936683623);
 
             if (_jetTestConnection.getTokenBuffer.ContainsKey("6002/01") && _jetTestConnection.getTokenBuffer.ContainsValue(1936683623))
                 return true;
@@ -106,8 +111,8 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            _jetTestConnection.Write("6002/01", 1869768058);
-            
+            _wtxObj.zeroing(WriteDataCompleted);     // Alternative : _jetTestConnection.Write("6002/01", 1869768058);
+
             if (_jetTestConnection.getTokenBuffer.ContainsKey("6002/01") && _jetTestConnection.getTokenBuffer.ContainsValue(1869768058)) 
                 return true;
 

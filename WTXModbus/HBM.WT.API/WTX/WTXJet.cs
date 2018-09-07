@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using HBM.WT.API.WTX.Jet;
 using HBM.WT.API.WTX.Modbus;
@@ -113,11 +114,13 @@ namespace HBM.WT.API.WTX
                 this._dataReceived = value;
             }
         }
-        public override void Calibration(ushort command)
-        {
-        }
 
-        public override void UpdateEvent(object sender, DataEvent e) { }
+        public override void UpdateEvent(object sender, DataEvent e)
+        {
+            ushort[] DataArray = new ushort[e.Args.Length];
+
+            // Do something with the data, like in the class WTXModbus.cs           
+        }
 
         
         public override void Async_Call(ushort commandParam, Action<IDeviceData> callbackParam)
@@ -173,7 +176,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return this._connection.Read(ParameterKeys.MEASURED_VALUE);
+                return this._connection.Read(ParameterKeys.MEASURED_VALUE);     // Net value = measured value = "601A/01"
             }
         }
         
@@ -521,8 +524,6 @@ namespace HBM.WT.API.WTX
         // This method sets the value for the nominal weight in the WTX.
         public void Calibrate(int calibrationValue, string calibrationWeightStr)
         {
-            calibrationValue = 1100000;
-
             _connection.Write("6152/00", calibrationValue);
 
             this._isCalibrating = true;
@@ -566,24 +567,12 @@ namespace HBM.WT.API.WTX
 
             // write path 6112/01 - scale minimum dead load         
 
-            _connection.Write("6112/01",Convert.ToInt32(preload/*dPreload*/));
-
-            /*
-            //write reg 48, DPreload;     
-            this.WriteOutputWordS32(Convert.ToInt32(dPreload), 48, Write_DataReceived);
-            this.SyncCall(0, 0x80, Write_DataReceived);
-            */
+            _connection.Write("6112/01",Convert.ToInt32(dPreload));
 
             // write path 6113/01 - scale maximum capacity        
 
-            _connection.Write("6113/01", Convert.ToInt32(capacity /*dNominalLoad*/));
-
-            /*
-            //write reg 50, DNominalLoad; 
-            this.WriteOutputWordS32(Convert.ToInt32(dNominalLoad), 50, Write_DataReceived);
-            this.SyncCall(0, 0x100, Write_DataReceived);
-            */
-
+            _connection.Write("6113/01", Convert.ToInt32(dNominalLoad));
+            
             this._isCalibrating = true;
             
         }

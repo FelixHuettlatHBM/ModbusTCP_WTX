@@ -91,9 +91,7 @@ namespace HBM.WT.API
 
         public abstract void initialize_timer(int timerInterval);
 
-        public abstract bool IsDataReceived { get; set; }
-        
-        public abstract void Calibration(ushort command);
+        public abstract bool IsDataReceived { get; set; }       
 
         public abstract void UpdateEvent(object sender, DataEvent e);
         

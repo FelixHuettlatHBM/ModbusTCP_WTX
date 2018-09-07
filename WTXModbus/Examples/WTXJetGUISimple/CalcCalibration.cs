@@ -27,7 +27,7 @@ namespace WTXGUISimple
     // based on know values for dead load and nominal load in mV/V
     public partial class CalcCalibration : Form
     {
-        private JetBusConnection _jetObj;
+        private WtxJet _wtxObj;
 
         private bool _finished;
         private double _preload;
@@ -37,9 +37,9 @@ namespace WTXGUISimple
         private string _strCommaDot;       
 
         // Constructor of class 'CalcCalibration' : 
-        public CalcCalibration(JetBusConnection jetObjParam, bool connected)
+        public CalcCalibration(WtxJet jetObjParam, bool connected)
         {
-            this._jetObj = jetObjParam;
+            this._wtxObj = jetObjParam;
             
             _finished = false;
             //Provider for english number format
@@ -105,21 +105,7 @@ namespace WTXGUISimple
                 }
                 if (abort) return;
 
-                string[] argument = new string[3];
-
-                argument[0] = "6002/01";
-                argument[1] = "6002/01";
-                argument[2] = "2053923171";
-
-                WriteParameter(argument);
-
-                Thread.Sleep(5000);
-
-                argument[0] = "6002/01";
-                argument[1] = "6002/01";
-                argument[2] = "1852596579";
-
-                WriteParameter(argument);
+                _wtxObj.Calculate(_preload, _capacity);
 
                 label5.Text = "Calibration done via Jetbus";
                 _finished = true;
@@ -130,19 +116,6 @@ namespace WTXGUISimple
 
                 Close();
             }
-        }
-
-
-        private int WriteParameter(string[] args)
-        {
-            if (args.Length < 3)
-                return -1;
-
-            int value = Convert.ToInt32(args[2]);
-
-            _jetObj.Write(args[1], value);
-
-            return 0;
         }
 
         // Limits the input of the textbox 1/2 to digits, ',' and '.'
@@ -158,21 +131,6 @@ namespace WTXGUISimple
             }
         }
 
-        // This is a callback method for the synchronous command, a write instruction to the WTX registers. 
-        // Once the writing is finished, this method is called. So the handshake and status bits are updated if
-        // the user is interested in the data transfer between application and WTX device. 
-        // Updating the handshake and status bit here is not necessary, because the data transfer is done
-        // in class 'WTX120_Modbus' and 'ModbusConnection'. 
-        // By this optional example it is also shown how data can be simply called in another way:
-        // By 'obj.NetValue', 'obj.GrossValue' or 'obj.handshake'.
-
-        /*
-                private void WriteDataReceived(IDeviceValues obj)
-                {
-                    this.handshake_compare_optional = obj.handshake;
-                    this.status_compare_optional = obj.status;
-                }
-        */
         private void CalcCalibration_Load(object sender, EventArgs e)
         {
 

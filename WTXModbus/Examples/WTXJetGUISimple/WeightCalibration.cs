@@ -30,7 +30,7 @@ namespace WTXGUISimple
 
     public partial class WeightCalibration : Form
     {
-        private JetBusConnection _jetObj;
+        private WtxJet _wtxObj;
         private int _state;
         private double _calibrationWeight;
         //private IFormatProvider Provider;
@@ -41,12 +41,12 @@ namespace WTXGUISimple
         private string _strCommaDot;
 
         // Constructor of class WeightCalibration: 
-        public WeightCalibration(JetBusConnection jetObjParam, bool connected)
+        public WeightCalibration(WtxJet jetObjParam, bool connected)
         {
             this._powCalibrationWeight = 0.0;
             this._potenz = 0.0;
 
-            this._jetObj = jetObjParam;
+            this._wtxObj = jetObjParam;
             _state = 0;
 
             _strCommaDot = "";
@@ -86,19 +86,22 @@ namespace WTXGUISimple
 
             textBox2.Text = "Enter a calibration weight";
         }
-
-    /*
+    
         private int PotencyCalibrationWeight()
         {
             //this.DoubleCalibrationWeight = Convert.ToDouble(textBox1.Text, Provider); 
 
-            this._potenz = Math.Pow(10, _jetObj.Decimals);
+            int decimals = 4; // 4 = Value given in the actual setting 
+
+            // int decimals = this._wtxObj.Decimals;  // Alternative 
+
+            this._potenz = Math.Pow(10, decimals);
 
             this._powCalibrationWeight = _calibrationWeight * _potenz;
 
             return (int)this._powCalibrationWeight;
         }
-    */
+    
 
         // Limits the input of the textbox to digits, ',' and '.'
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -162,6 +165,13 @@ namespace WTXGUISimple
             {
                 case 0: // start
 
+                    _strCommaDot = textBox1.Text.Replace(".", ",");                   // Neu : 12.3 - Für die Umwandlung in eine Gleitkommazahl. 
+                    _calibrationWeight = double.Parse(_strCommaDot);                   // Damit können Kommata und Punkte eingegeben werden. 
+
+                    textBox1.Enabled = false;
+                    textBox2.Text = _calibrationWeight.ToString();
+
+
                     textBox2.Text = "Unload Scale!";
                     button1.Text = "Measure Zero";
                     button2.Text = "<Back";
@@ -174,6 +184,10 @@ namespace WTXGUISimple
 
                     textBox2.Text = "Measure zero in progess.";
 
+                    _wtxObj.MeasureZero();
+
+                    Thread.Sleep(3000);
+                    /*
                     argument[0] = "6002/01";
                     argument[1] = "6002/01";
                     argument[2] = "2053923171";
@@ -181,7 +195,7 @@ namespace WTXGUISimple
                     WriteParameter(argument);
 
                     Thread.Sleep(5000);
-
+                    */
                     textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
                     button1.Text = "Calibrate";
                     _state = 2;
@@ -192,15 +206,24 @@ namespace WTXGUISimple
 
                     textBox2.Text = "Calibration in progress.";
 
+                    _wtxObj.Calibrate(this.PotencyCalibrationWeight(), _calibrationWeight.ToString());
+
+                    /*
                     argument[0] = "6002/01";
                     argument[1] = "6002/01";
                     argument[2] = "1852596579";
 
                     WriteParameter(argument);
 
-                    Thread.Sleep(3000);
+                    Thread.Sleep(1000);
 
-                    _jetObj.WriteInt("6002/01", 15000);
+                    argument[0] = "6152/00";
+                    argument[1] = "6152/00";
+                    argument[2] = "600000";
+
+                    WriteParameter(argument);
+                    */
+                    //_jetObj.WriteInt("6152/00", 1);    // Min = 200000 ; Max = 1200000
 
                     textBox2.Text = "Calibration successful and finished.";
                     button1.Text = "Close";
@@ -240,6 +263,7 @@ namespace WTXGUISimple
             */    
         }
 
+        
         private int WriteParameter(string[] args)
         {
             if (args.Length < 3)
@@ -247,10 +271,10 @@ namespace WTXGUISimple
 
             int value = Convert.ToInt32(args[2]);
 
-            _jetObj.Write(args[1], value);
+            _wtxObj.getJetBusConnection.Write(args[1], value);
 
             return 0;
         }
-
+        
     }
 }

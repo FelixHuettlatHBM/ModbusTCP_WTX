@@ -107,14 +107,14 @@ namespace WTXGUISimple
         //Opens a menu window for calculated calibration
         private void calculateCalibrationToolStripMenuItem_Click_2(object sender, EventArgs e)
         {
-            _calcCalObj = new CalcCalibration(_sConnection, _sConnection.IsConnected);
+            _calcCalObj = new CalcCalibration(_wtxObj, _sConnection.IsConnected);
             DialogResult res = _calcCalObj.ShowDialog();
         }
 
         //Opens a menu window for calibration with a calibration weight
         private void calibrationWithWeightToolStripMenuItem_Click_2(object sender, EventArgs e)
         {
-            _weightCalObj = new WeightCalibration(_sConnection, _sConnection.IsConnected);
+            _weightCalObj = new WeightCalibration(_wtxObj, _sConnection.IsConnected);
             DialogResult res = _weightCalObj.ShowDialog();
         }
 

@@ -26,6 +26,12 @@ namespace HBM.WT.API.WTX
         
         public override event EventHandler<DataEvent> DataUpdateEvent;
 
+        private bool _isCalibrating;
+
+        private double dPreload;
+        private double dNominalLoad;
+        private double multiplierMv2D;
+
         public struct ParameterKeys
         {
             public const string MEASURED_VALUE = "601A/01";      // _601A_01 
@@ -77,9 +83,11 @@ namespace HBM.WT.API.WTX
                 _connection = (TestJetbusConnection)connection;
             }
             
-            this._dataReceived = false;
+            _dataReceived = false;
             _dataStrArr = new string[59];
             _data = new ushort[59];
+
+            this._isCalibrating = false;
 
             for (int index = 0; index < 59; index++)
                 _data[index] = 0x00;
@@ -508,5 +516,89 @@ namespace HBM.WT.API.WTX
             //_connection.ConnectOnPeer((int)timeoutMs);
             _connection.Connect();
         }
+
+
+        // This method sets the value for the nominal weight in the WTX.
+        public void Calibrate(int calibrationValue, string calibrationWeightStr)
+        {
+            calibrationValue = 1100000;
+
+            _connection.Write("6152/00", calibrationValue);
+
+            this._isCalibrating = true;
+        }
+
+        private void Write_DataReceived(IDeviceData obj)
+        {
+            //throw new NotImplementedException();
+        }
+
+
+        public double getDPreload
+        {
+            get
+            {
+                return dPreload;
+            }
+        }
+
+        public double getDNominalLoad
+        {
+            get
+            {
+                return dNominalLoad;
+            }
+        }
+
+
+        // Calculates the values for deadload and nominal load in d from the inputs in mV/V
+        // and writes the into the WTX registers.
+        public void Calculate(double preload, double capacity)
+        {          
+            dPreload = 0;
+            dNominalLoad = 0;
+
+            multiplierMv2D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
+
+            dPreload = preload * multiplierMv2D;
+            dNominalLoad = dPreload + (capacity * multiplierMv2D);
+            
+
+            // write path 6112/01 - scale minimum dead load         
+
+            _connection.Write("6112/01",Convert.ToInt32(preload/*dPreload*/));
+
+            /*
+            //write reg 48, DPreload;     
+            this.WriteOutputWordS32(Convert.ToInt32(dPreload), 48, Write_DataReceived);
+            this.SyncCall(0, 0x80, Write_DataReceived);
+            */
+
+            // write path 6113/01 - scale maximum capacity        
+
+            _connection.Write("6113/01", Convert.ToInt32(capacity /*dNominalLoad*/));
+
+            /*
+            //write reg 50, DNominalLoad; 
+            this.WriteOutputWordS32(Convert.ToInt32(dNominalLoad), 50, Write_DataReceived);
+            this.SyncCall(0, 0x100, Write_DataReceived);
+            */
+
+            this._isCalibrating = true;
+            
+        }
+
+        public void MeasureZero()
+        {
+            //write "calz" 0x7A6C6163 ( 2053923171 ) to path(ID)=6002/01
+
+            _connection.Write("6002/01", 2053923171);
+
+            /*
+            this.WriteOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);         
+            this.SyncCall(0, 0x80, Write_DataReceived);
+            */
+        }
+
     }
 }

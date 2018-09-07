@@ -249,38 +249,19 @@ namespace WTXGUISimple
         // Write to WTX : Zeroing
         private void button3_Click(object sender, EventArgs e)
         {
-            string[] argument = new string[3];
-
-            argument[0] = "6002/01";      // "Write" + argument[0]
-            argument[1] = "6002/01";      // path  for gross 
-            argument[2] = "1869768058";   // value for gross in hex = 0x6F72657A 
-
-            WriteParameter(argument);
+            _wtxObj.zeroing(); 
         }
 
         // Write to WTX : Gross
         private void button4_Click(object sender, EventArgs e)
         {
-            string[] argument = new string[3];
-
-            argument[0] = "6002/01";      // "Write" + argument[0]
-            argument[1] = "6002/01";      // path  for gross 
-            argument[2] = "1936683623";   // value for gross in hex = 0x736F7267 
-
-            WriteParameter(argument);
+            _wtxObj.gross();
         }
 
         // Write to WTX : Tare
         private void button2_Click(object sender, EventArgs e)
         {
-            string[] argument = new string[3];
-
-            argument[0] = "6002/01";      // "Write" + argument[0]
-            argument[1] = "6002/01";      // path  for gross 
-            argument[2] = "1701994868";   // value for gross in hex = 0x65726174 
-
-            WriteParameter(argument);
-
+            _wtxObj.taring();
         }
 
         private static int ShowProperties(string[] args)

@@ -60,33 +60,7 @@ namespace WtConsole
             try {
 
                 switch (args[0]) {
-                    /*
-                    case "-can":
-                        ICANCommon hw = new CANPeak(new object[] { 0x51 });
-                        CANDaemon can = CANDaemonManager.CreateInstance(hw);
 
-                        CANBaudrate baudrate = CANBaudrate.B0125;
-
-                        switch (args[1]) 
-                        {
-                            case "1000":baudrate = CANBaudrate.B1000; break;
-                            case "500": baudrate = CANBaudrate.B0500; break;
-                            case "250": baudrate = CANBaudrate.B0250; break;
-                            case "150": baudrate = CANBaudrate.B0125; break;
-                        }
-
-                        Console.Write("Init CAN-Hardware...");
-                        can.Initialize(baudrate);
-                        Console.WriteLine("OK");
-
-                        Console.Write("Connect to Device...");
-                        byte addr = byte.Parse(args[2]);
-
-                        s_Connection = new CANOpenConnection(addr, can);
-
-                        Console.WriteLine("OK");
-                        break;
-                        */
                     case "-jet":
 
                         _ipAddr = "wss://" + args[1];
@@ -110,12 +84,6 @@ namespace WtConsole
                         Console.WriteLine("Net value : "   + _wtxObj.NetValue);
                         Console.WriteLine("Gross value : " + _wtxObj.GrossValue);                    
                         Console.WriteLine("Decimals : "    + _wtxObj.Decimals);
-
-                        //Console.WriteLine("Weight moving : " + WTXObj.weight_moving);
-
-                        //Console.WriteLine("dosingCounter : " +  WTXObj.dosing_count);
-                        //Console.WriteLine("dosingStatus  : "  + WTXObj.dosing_process_status);
-                        //Console.WriteLine("dosingResult  : "  + WTXObj.dosing_result);
 
                         Console.ReadLine();
 

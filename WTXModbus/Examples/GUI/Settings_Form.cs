@@ -89,7 +89,7 @@ namespace WTXModbusExamples
 
             if (this._ipAddress != this._ipAddressBefore)
             {
-                _guiInfo.GetDataviewer.getModbusConnection.Connect();
+                _guiInfo.GetDataviewer.getConnection.Connect();
             }
             this.Close();
 

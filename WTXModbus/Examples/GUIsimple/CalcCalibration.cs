@@ -32,7 +32,9 @@ namespace WTXModbusGUIsimple
         private double _preload;
         private double _capacity;
         private IFormatProvider _provider;
+
         private const double MULTIPLIER_MV2_D = 500000; //   2 / 1000000; // 2mV/V correspond 1 million digits (d)
+
         private string _strCommaDot;       
 
         // Constructor of class 'CalcCalibration' : 
@@ -151,6 +153,11 @@ namespace WTXModbusGUIsimple
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -138,7 +138,7 @@ namespace WtConsole
 
                         // Start asynchronous data transfer : Method - Nur bei einer Änderung Werte ausgeben - Was abrufbar ist aus der Klasse Program zu WTX120_Modbus
                         
-                        _wtxObj.getModbusConnection.Connect();     // Alternative : _wtxObj.Connect();
+                        _wtxObj.getConnection.Connect();     // Alternative : _wtxObj.Connect();
 
                         //WTXObj.isDataReceived = false;
 
@@ -218,7 +218,7 @@ namespace WtConsole
 
         private static void S_Connection_BusActivityDetection(object sender, EventArgs e)
         {
-            Console.WriteLine((e as DataEvent).Args.ToString());
+            Console.WriteLine((e as DataEvent).ushortArgs.ToString());
         }
 
 

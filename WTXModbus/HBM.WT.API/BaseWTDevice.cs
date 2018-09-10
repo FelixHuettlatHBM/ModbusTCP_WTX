@@ -65,6 +65,14 @@ namespace HBM.WT.API
 
         protected INetConnection m_Connection;
 
+        public INetConnection getConnection
+        {
+            get
+            {
+                return m_Connection;
+            }
+        }
+
         public BaseWtDevice(INetConnection connection)
         {
             m_Connection = connection;
@@ -78,12 +86,6 @@ namespace HBM.WT.API
         public abstract ushort[] GetValuesAsync();        // Neu : 4.5 für eventbasierten asynchronen Abruf der Daten
 
         public abstract void Connect(Action<bool> completed, double timeoutMs);
-
-        //public abstract void Connect();
-
-        public abstract INetConnection getModbusConnection { get; }
-
-        public abstract INetConnection getJetBusConnection { get; }
         
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
 
@@ -217,10 +219,6 @@ namespace HBM.WT.API
         public abstract int DownardsDosing { get; set; }
         public abstract int ValveControl { get; set; }
         public abstract int EmptyingMode { get; set; }
-
-
-
-
 
 
         public abstract void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam);

@@ -213,26 +213,21 @@ namespace HBM.WT.API.WTX.Jet
                 }
 
                 JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
-                ushort[] DataArray = new ushort[JTokenArray.Length + 1];
-                
-                for (int index = 0; index < JTokenArray.Length; index++)
+                ushort[] DataUshortArray = new ushort[JTokenArray.Length];
+
+                string[] DataStrArray = new string[JTokenArray.Length];
+
+                for (int i = 0; i < JTokenArray.Length; i++)
                 {
-                    JToken element = JTokenArray[index];
-                  
-                    DataArray[index] = (ushort)Convert.ToInt32(element.SelectToken("value"));
+                    JToken element = JTokenArray[i];
+
+                    DataStrArray[i] = element.ToString();
                 }
 
-                RaiseDataEvent?.Invoke(this, new DataEvent(DataArray));
+                RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
+
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
-
-                // Alternative: 
-                //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, data.ToString()));
-
-                // Äquivalent zu ...
-                //if(BusActivityDetection != null){
-                //     BusActivityDetection(this, new NetConnectionEventArgs<string>(EventArgType.Message, data.ToString()));
-                //}
             }
         }
 
@@ -242,9 +237,25 @@ namespace HBM.WT.API.WTX.Jet
         /// <param name="index"></param>
         /// <returns></returns>
         protected virtual JToken ReadObj(object index) {
+
             lock (_mTokenBuffer)
             {
                 if (_mTokenBuffer.ContainsKey(index.ToString())) {
+
+                    JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
+                    ushort[] DataUshortArray = new ushort[JTokenArray.Length];
+
+                    string[] DataStrArray = new string[JTokenArray.Length];
+
+                    for (int i = 0; i < JTokenArray.Length; i++)
+                    {
+                        JToken element = JTokenArray[i];
+
+                        DataStrArray[i] = element.ToString();                           
+                    }
+
+                    RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray,DataStrArray));
+
                     return _mTokenBuffer[index.ToString()];
                 }
                 else {
@@ -253,20 +264,7 @@ namespace HBM.WT.API.WTX.Jet
                 }
             }
         }
-        
-        /*
-        public T Read<T>(object index) {
-            try {
-                JToken token = ReadObj(index);
-                return (T)Convert.ChangeType(token, typeof(T));
-            }
-            catch (FormatException) 
-            {
-                throw new InterfaceException(new FormatException("Invalid data format"), 0);
-            }
-        }
-        */
-
+       
         public int Read(object index)
         {
             try
@@ -332,7 +330,7 @@ namespace HBM.WT.API.WTX.Jet
                     this.JetConnected = true; 
 
                     _mSuccessEvent.Set();
-                   
+
                     BusActivityDetection?.Invoke(this, new LogEvent("Set data" + success ));
                     // Alternative : BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Set data: " + success)); 
 

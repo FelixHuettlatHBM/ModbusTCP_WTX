@@ -257,6 +257,7 @@ namespace HBM.WT.API.WTX.Jet
                 //if (this.behavior == Behavior.ReadWeightMovingSuccess)
                     _mTokenBuffer.Add("6153/00", this.simulateFetchInstance()["value"]);
 
+                /*
                 JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
                 ushort[] DataArray = new ushort[JTokenArray.Length + 1];
 
@@ -268,7 +269,7 @@ namespace HBM.WT.API.WTX.Jet
                 }
 
                 RaiseDataEvent?.Invoke(this, new DataEvent(DataArray));
-
+                */
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }

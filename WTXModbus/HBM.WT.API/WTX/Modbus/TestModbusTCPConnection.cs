@@ -142,7 +142,7 @@ namespace HBM.WT.API.WTX.Modbus
         public int Read(object index)
         {
             if (_connected)
-                ReadRegisterPublishing(new DataEvent(_dataWTX));
+                ReadRegisterPublishing(new DataEvent(_dataWTX, new string[0]));
 
             return 0;
         }
@@ -227,7 +227,7 @@ namespace HBM.WT.API.WTX.Modbus
                     break; 
             }
 
-            RaiseDataEvent?.Invoke(this, new DataEvent(this._dataWTX));
+            RaiseDataEvent?.Invoke(this, new DataEvent(this._dataWTX, new string[0]));
 
             /*
             var handler = RaiseDataEvent;
@@ -407,7 +407,7 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-        public bool IsConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+       //public bool IsConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         
         public string IpAddress
         {

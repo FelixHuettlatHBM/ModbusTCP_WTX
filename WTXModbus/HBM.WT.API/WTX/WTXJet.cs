@@ -117,7 +117,8 @@ namespace HBM.WT.API.WTX
 
         public override void UpdateEvent(object sender, DataEvent e)
         {
-            ushort[] DataArray = new ushort[e.Args.Length];
+            // values from _mTokenBuffer as an array: 
+            string[] DataStrArray = new string[e.strArgs.Length];
 
             // Do something with the data, like in the class WTXModbus.cs           
         }
@@ -362,14 +363,14 @@ namespace HBM.WT.API.WTX
             }
         }
 
-
+        /*
         public override INetConnection getModbusConnection => throw new NotImplementedException();
 
         public override INetConnection getJetBusConnection
         {
             get { return _connection; }
         }
-        
+        */
 
         /* 
 *In the following methods the different options for the single integer values are used to define and

@@ -112,7 +112,7 @@ namespace HBM.WT.API.WTX.Modbus
         public int Read(object index)
         {
             if (_connected)
-                ReadRegisterPublishing(new DataEvent(_data));
+                ReadRegisterPublishing(new DataEvent(_data, new string[0]));
 
             return 0; 
         }
@@ -172,7 +172,7 @@ namespace HBM.WT.API.WTX.Modbus
                 // Read the data: e.Message's type - ushort[]  
                 //e.Args = masterParam.ReadHoldingRegisters(this.StartAdress, this.getNumOfPoints);
 
-                e.Args = _master.ReadHoldingRegisters(StartAdress, NumOfPoints);
+                e.ushortArgs = _master.ReadHoldingRegisters(StartAdress, NumOfPoints);
                 _connected = true;
 
                 BusActivityDetection?.Invoke(this, new LogEvent("Read successful: Registers have been read"));
@@ -192,7 +192,7 @@ namespace HBM.WT.API.WTX.Modbus
             }
 
             //this.data = e.Message;
-            _data = e.Args;
+            _data = e.ushortArgs;
 
             // copy of the event to avoid that a race condition is prevented, if the former subscriber directly logs off after the last
             // condition( and after if(handler!=null) ) and before the event is triggered. 

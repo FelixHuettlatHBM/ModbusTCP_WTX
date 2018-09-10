@@ -392,8 +392,8 @@ namespace HBM.WT.API.WTX
         //public override void UpdateEvent(object sender, MessageEvent<ushort> e)
         public override void UpdateEvent(object sender, DataEvent e)
         {
-            this._data = e.Args;
-            this.GetDataUshort = e.Args;
+            this._data = e.ushortArgs;
+            this.GetDataUshort = e.ushortArgs;
 
             this.GetDataStr[0] = this.NetGrossValueStringComment(this.NetValue, this.Decimals);  // 1 equal to "Net measured" as a parameter
             this.GetDataStr[1] = this.NetGrossValueStringComment(this.GrossValue, this.Decimals);  // 2 equal to "Gross measured" as a parameter
@@ -499,7 +499,7 @@ namespace HBM.WT.API.WTX
 
             _compareDataChanged = false;
 
-            e.Args = this._data;
+            e.ushortArgs = this._data;
 
             for (int index = 0; index < 6; index++)
             {
@@ -2381,13 +2381,15 @@ namespace HBM.WT.API.WTX
             set { this._isCalibrating = value; }
         }
 
+        /*
         public override INetConnection getModbusConnection
         {
             get { return _connection; }
         }
 
         public override INetConnection getJetBusConnection => throw new NotImplementedException();
-        
+        */
+
         public void gross(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x2, WriteDataCompleted);

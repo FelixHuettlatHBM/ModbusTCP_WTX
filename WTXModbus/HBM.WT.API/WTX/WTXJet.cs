@@ -20,8 +20,6 @@ namespace HBM.WT.API.WTX
 
     public class WtxJet : BaseWtDevice
     {
-        private string[] _dataStrArr;
-        private ushort[] _data;
         private INetConnection _connection;
         private bool _dataReceived;
         
@@ -32,6 +30,9 @@ namespace HBM.WT.API.WTX
         private double dPreload;
         private double dNominalLoad;
         private double multiplierMv2D;
+
+        private string[] _dataStrArr;
+        private ushort[] _dataUshort;
 
         public struct ParameterKeys
         {
@@ -62,23 +63,31 @@ namespace HBM.WT.API.WTX
             }
             
             _dataReceived = false;
-            _dataStrArr = new string[59];
-            _data = new ushort[59];
+            _dataStrArr = new string[185];
+            _dataUshort = new ushort[185];
+
+            for(int index=0; index < _dataStrArr.Length; index++)
+            {
+                _dataStrArr[index] = "";
+                _dataUshort[index] = 0; 
+            }
 
             this._isCalibrating = false;
-
-            for (int index = 0; index < 59; index++)
-                _data[index] = 0x00;
 
             this._connection.RaiseDataEvent += this.UpdateEvent;   // Subscribe to the event.
         }
 
 
-        public override void initialize_timer(int timerInterval)
+        public override void UpdateEvent(object sender, DataEvent e)
         {
-            throw new NotImplementedException();
-        }
+            // values from _mTokenBuffer as an array: 
 
+            this._dataStrArr = new string[e.strArgs.Length];
+
+            this._dataReceived = true;
+
+            // Do something with the data, like in the class WTXModbus.cs           
+        }
 
         public override bool IsDataReceived
         {
@@ -92,23 +101,14 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        public override void UpdateEvent(object sender, DataEvent e)
+
+        public string[] GetDataString
         {
-            // values from _mTokenBuffer as an array: 
-
-            string[] DataStrArray = new string[e.strArgs.Length];
-
-            // Do something with the data, like in the class WTXModbus.cs           
+            get
+            {
+                return this._dataStrArr;
+            }
         }
-        
-        public override ushort[] GetValuesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        //public override void UpdateEvent(object sender, MessageEvent<ushort> e) { }
-
-        public override ushort[] GetDataUshort { get { return new ushort[1]; } set { this._data = value;    } }
 
         public override int NetValue
         {
@@ -481,6 +481,19 @@ namespace HBM.WT.API.WTX
             get
             {
                 return dNominalLoad;
+            }
+        }
+
+        public override ushort[] GetDataUshort
+        {
+            get
+            {
+                return this._dataUshort;
+            }
+
+            set
+            {
+                this._dataUshort = value;
             }
         }
 

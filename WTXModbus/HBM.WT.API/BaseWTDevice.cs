@@ -28,16 +28,12 @@ namespace HBM.WT.API
 
         public abstract bool isConnected { get; set; }
 
-        public abstract ushort[] GetValuesAsync();        // Neu : 4.5 für eventbasierten asynchronen Abruf der Daten
-
         public abstract void Connect(Action<bool> completed, double timeoutMs);
         
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
 
         public abstract IDeviceData DeviceValues { get; }
-
-        public abstract void initialize_timer(int timerInterval);
-
+        
         public abstract bool IsDataReceived { get; set; }       
 
         public abstract void UpdateEvent(object sender, DataEvent e);

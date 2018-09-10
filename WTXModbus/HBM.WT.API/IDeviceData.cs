@@ -32,6 +32,7 @@ namespace HBM.WT.API
         /// </summary>
         event EventHandler<DataEvent> DataUpdateEvent;
 
+        /*
         /// <summary>
         ///Gets or sets
         /// </summary>
@@ -49,6 +50,7 @@ namespace HBM.WT.API
             get;
             set;
         }
+        */
 
         /// <summary>
         ///Gets or sets a value indicating whether
@@ -1065,12 +1067,6 @@ namespace HBM.WT.API
             get;
             set;
         }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        ushort[] GetValuesAsync();
 
     }
 }

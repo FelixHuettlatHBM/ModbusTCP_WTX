@@ -164,7 +164,6 @@ namespace HBM.WT.API.WTX
                 this._connection.Write(wordNumber, this._command);
 
                 // Handshake protocol as given in the manual:                            
-
                 
                 do
                 {
@@ -312,7 +311,7 @@ namespace HBM.WT.API.WTX
         }
 
         // This method initializes the with the timer interval as a parameter: 
-        public override void initialize_timer(int paramTimerInterval)
+        public void initialize_timer(int paramTimerInterval)
         {
             // Create a timer with an interval of the parameter value, if the argument paramTimerInterval is not valid,
             // an exception is catched and a default value for the timer interval is set, the timer tries to start again. 
@@ -371,7 +370,7 @@ namespace HBM.WT.API.WTX
 
         }
 
-        public override ushort[] GetValuesAsync()
+        public ushort[] GetValuesAsync()
         {
             return _data;
         }

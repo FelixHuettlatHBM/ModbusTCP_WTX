@@ -235,7 +235,6 @@ namespace HBM.WT.API.WTX.Jet
 
                 RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
 
-
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
@@ -424,9 +423,20 @@ namespace HBM.WT.API.WTX.Jet
                 return _mTokenBuffer;
             }
         }
+        
+        public int NumofPoints 
+        {
+            get
+            {
+                return 38;
+            }
 
-        public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        
         public string IpAddress
         {
             get
@@ -452,7 +462,9 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
+        /*
         public ushort[] getData { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        */
 
         #endregion
     }

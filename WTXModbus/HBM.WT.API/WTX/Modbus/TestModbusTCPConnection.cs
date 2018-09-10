@@ -406,8 +406,6 @@ namespace HBM.WT.API.WTX.Modbus
                 this.numPoints = value; 
             }
         }
-
-       //public bool IsConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         
         public string IpAddress
         {

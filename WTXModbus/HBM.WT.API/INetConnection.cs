@@ -26,9 +26,9 @@ namespace HBM.WT.API
         bool IsConnected    { get; set; }
         string IpAddress    { get; set; }
         int SendingInterval { get; set; }
-        ushort[] getData { get; set; }
 
     }
+
 
     /// <summary>
     /// Common Exception-type wich thrown if catch a Exception from spezific Interface

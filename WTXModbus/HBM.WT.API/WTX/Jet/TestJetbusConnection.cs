@@ -181,7 +181,18 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public int NumofPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int NumofPoints
+        {
+            get
+            {
+                return 38;
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public bool IsConnected
         {
@@ -209,39 +220,7 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public ushort[] getData { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000)   // before it was "protected". 
-        {
-            MPeer.Connect(delegate (bool connected) {
-                if (connected)
-                {
-
-                    this.connected = true;
-
-                    MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {
-                        if (!success)
-                        {
-
-                            this.connected = false;
-                            JetBusException exception = new JetBusException(token);
-                            _mException = new InterfaceException(exception, (uint)exception.Error);
-                        }
-                        _mSuccessEvent.Set();
-                    }, _mTimeoutMs);
-                }
-                else
-                {
-                    this.connected = false;
-                    _mException = new Exception("Connection failed");
-                    _mSuccessEvent.Set();
-                }
-            }, timeoutMs);
-            _mTimeoutMs = timeoutMs;
-            WaitOne(2);
-        }
-        
-
+       
         public void FetchAll()
         {
 
@@ -399,7 +378,6 @@ namespace HBM.WT.API.WTX.Jet
 
             }
         }
-
 
         public JToken simulateJTokenInstance(string index, int data)
         {

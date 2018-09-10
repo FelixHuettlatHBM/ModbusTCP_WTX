@@ -32,26 +32,6 @@ namespace HBM.WT.API
         /// </summary>
         event EventHandler<DataEvent> DataUpdateEvent;
 
-        /*
-        /// <summary>
-        ///Gets or sets
-        /// </summary>
-        string[] GetDataStr
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///Gets or sets
-        /// </summary>
-        ushort[] GetDataUshort
-        {
-            get;
-            set;
-        }
-        */
-
         /// <summary>
         ///Gets or sets a value indicating whether
         /// </summary>
@@ -67,9 +47,7 @@ namespace HBM.WT.API
         int NetValue
         {
             get;
-        }
-
-                      // data[1]
+        } // data[1]
 
         /// <summary>
         ///Gets
@@ -77,9 +55,7 @@ namespace HBM.WT.API
         int GrossValue
         {
             get;
-        }
-
-                    // data[2]
+        } // data[2]
 
         /// <summary>
         ///Gets
@@ -87,9 +63,7 @@ namespace HBM.WT.API
         int GeneralWeightError
         {
             get;
-        }
-
-            // data[3]
+        } // data[3]
 
         /// <summary>
         ///Gets
@@ -97,9 +71,7 @@ namespace HBM.WT.API
         int ScaleAlarmTriggered
         {
             get;
-        }
-
-           // data[4]
+        } // data[4]
 
         /// <summary>
         ///Gets
@@ -107,9 +79,7 @@ namespace HBM.WT.API
         int LimitStatus
         {
             get;
-        }
-
-                   // data[5]
+        } // data[5]
 
         /// <summary>
         ///Gets
@@ -117,9 +87,7 @@ namespace HBM.WT.API
         int WeightMoving
         {
             get;
-        }
-
-                  // data[6]
+        } // data[6]
 
         /// <summary>
         ///Gets
@@ -127,9 +95,7 @@ namespace HBM.WT.API
         int ScaleSealIsOpen
         {
             get;
-        }
-
-               // data[7]
+        } // data[7]
 
         /// <summary>
         ///Gets
@@ -137,9 +103,7 @@ namespace HBM.WT.API
         int ManualTare
         {
             get;
-        }
-
-                    // data[8]
+        } // data[8]
 
         /// <summary>
         ///Gets
@@ -147,9 +111,7 @@ namespace HBM.WT.API
         int WeightType
         {
             get;
-        }
-
-                    // data[9]
+        } // data[9]
 
         /// <summary>
         ///Gets
@@ -157,9 +119,7 @@ namespace HBM.WT.API
         int ScaleRange
         {
             get;
-        }
-
-                    // data[10]
+        } // data[10]
 
         /// <summary>
         ///Gets
@@ -167,9 +127,7 @@ namespace HBM.WT.API
         int ZeroRequired
         {
             get;
-        }
-
-                  // data[11]
+        } // data[11]
 
         /// <summary>
         ///Gets
@@ -187,9 +145,7 @@ namespace HBM.WT.API
         int WeightInZeroRange
         {
             get;
-        }
-
-             // data[13]
+        }  // data[13]
 
         /// <summary>
         ///Gets
@@ -197,9 +153,7 @@ namespace HBM.WT.API
         int ApplicationMode
         {
             get;
-        }
-
-               // data[14]
+        } // data[14]
 
         /// <summary>
         ///Gets
@@ -207,9 +161,7 @@ namespace HBM.WT.API
         int Decimals
         {
             get;
-        }
-
-                      // data[15]
+        } // data[15]
 
         /// <summary>
         ///Gets
@@ -217,9 +169,7 @@ namespace HBM.WT.API
         int Unit
         {
             get;
-        }
-
-                          // data[16]
+        } // data[16]
 
         /// <summary>
         ///Gets
@@ -227,9 +177,7 @@ namespace HBM.WT.API
         int Handshake
         {
             get;
-        }
-
-                     // data[17]
+        }  // data[17]
 
         /// <summary>
         ///Gets
@@ -237,9 +185,7 @@ namespace HBM.WT.API
         int Status
         {
             get;
-        }
-
-                        // data[18]
+        } // data[18]
 
         /// <summary>
         ///Gets
@@ -247,9 +193,7 @@ namespace HBM.WT.API
         int Input1
         {
             get;
-        }
-
-            // data[19] - Digital input 1 to 4
+        } // data[19] - Digital input 1
 
         /// <summary>
         ///Gets
@@ -257,9 +201,7 @@ namespace HBM.WT.API
         int Input2
         {
             get;
-        }
-
-            // data[20]
+        } // data[20]
 
         /// <summary>
         ///Gets
@@ -267,9 +209,7 @@ namespace HBM.WT.API
         int Input3
         {
             get;
-        }
-
-            // data[21]
+        } // data[21]
 
         /// <summary>
         ///Gets
@@ -277,9 +217,7 @@ namespace HBM.WT.API
         int Input4
         {
             get;
-        }
-
-            // data[22]
+        }  // data[22]
 
         /// <summary>
         ///Gets
@@ -287,9 +225,7 @@ namespace HBM.WT.API
         int Output1
         {
             get;
-        }
-
-           // data[23]
+        }  // data[23]
 
         /// <summary>
         ///Gets
@@ -297,9 +233,7 @@ namespace HBM.WT.API
         int Output2
         {
             get;
-        }
-
-           // data[24]
+        }  // data[24]
 
         /// <summary>
         ///Gets
@@ -307,9 +241,7 @@ namespace HBM.WT.API
         int Output3
         {
             get;
-        }
-
-           // data[25]
+        }  // data[25]
 
         /// <summary>
         ///Gets
@@ -317,9 +249,7 @@ namespace HBM.WT.API
         int Output4
         {
             get;
-        }
-
-           // data[26]
+        }  // data[26]
 
         /// <summary>
         ///Gets
@@ -327,9 +257,7 @@ namespace HBM.WT.API
         int LimitStatus1
         {
             get;
-        }
-
-        // data[27]
+        }  // data[27]
 
         /// <summary>
         ///Gets
@@ -337,9 +265,7 @@ namespace HBM.WT.API
         int LimitStatus2
         {
             get;
-        }
-
-        // data[28]
+        }  // data[28]
 
         /// <summary>
         ///Gets
@@ -347,9 +273,7 @@ namespace HBM.WT.API
         int LimitStatus3
         {
             get;
-        }
-
-        // data[29]
+        } // data[29]
 
         /// <summary>
         ///Gets
@@ -357,9 +281,7 @@ namespace HBM.WT.API
         int LimitStatus4
         {
             get;
-        }
-
-        // data[30]
+        } // data[30]
 
         /// <summary>
         ///Gets
@@ -367,9 +289,7 @@ namespace HBM.WT.API
         int WeightMemDay
         {
             get;
-        }
-
-          // data[31]
+        } // data[31]
 
         /// <summary>
         ///Gets
@@ -377,9 +297,7 @@ namespace HBM.WT.API
         int WeightMemMonth
         {
             get;
-        }
-
-        // data[32]
+        } // data[32]
 
         /// <summary>
         ///Gets
@@ -387,9 +305,7 @@ namespace HBM.WT.API
         int WeightMemYear
         {
             get;
-        }
-
-         // data[33]
+        } // data[33]
 
         /// <summary>
         ///Gets
@@ -397,9 +313,7 @@ namespace HBM.WT.API
         int WeightMemSeqNumber
         {
             get;
-        }
-
-        // data[34]
+        } // data[34]
 
         /// <summary>
         ///Gets
@@ -407,9 +321,7 @@ namespace HBM.WT.API
         int WeightMemGross
         {
             get;
-        }
-
-        // data[35]
+        } // data[35]
 
         /// <summary>
         ///Gets
@@ -417,9 +329,7 @@ namespace HBM.WT.API
         int WeightMemNet
         {
             get;
-        }
-
-          // data[36]
+        } // data[36]
 
         /// <summary>
         ///Gets
@@ -427,9 +337,7 @@ namespace HBM.WT.API
         int CoarseFlow
         {
             get;
-        }
-
-            // data[37]
+        } // data[37]
 
         /// <summary>
         ///Gets
@@ -437,9 +345,7 @@ namespace HBM.WT.API
         int FineFlow
         {
             get;
-        }
-
-              // data[38]
+        } // data[38]
 
         /// <summary>
         ///Gets
@@ -447,9 +353,7 @@ namespace HBM.WT.API
         int Ready
         {
             get;
-        }
-
-                 // data[39]
+        } // data[39]
 
         /// <summary>
         ///Gets
@@ -457,9 +361,7 @@ namespace HBM.WT.API
         int ReDosing
         {
             get;
-        }
-
-              // data[40]
+        } // data[40]
 
         /// <summary>
         ///Gets
@@ -467,9 +369,7 @@ namespace HBM.WT.API
         int Emptying
         {
             get;
-        }
-
-              // data[41]
+        } // data[41]
 
         /// <summary>
         ///Gets
@@ -477,9 +377,7 @@ namespace HBM.WT.API
         int FlowError
         {
             get;
-        }
-
-             // data[42]
+        } // data[42]
 
         /// <summary>
         ///Gets
@@ -487,9 +385,7 @@ namespace HBM.WT.API
         int Alarm
         {
             get;
-        }
-
-                 // data[43]
+        } // data[43]
 
         /// <summary>
         ///Gets
@@ -497,9 +393,7 @@ namespace HBM.WT.API
         int AdcOverUnderload
         {
             get;
-        }
-
-        // data[44]
+        } // data[44]
 
         /// <summary>
         ///Gets
@@ -507,9 +401,7 @@ namespace HBM.WT.API
         int MaxDosingTime
         {
             get;
-        }
-
-         // data[45]
+        } // data[45]
 
         /// <summary>
         ///Gets
@@ -517,9 +409,7 @@ namespace HBM.WT.API
         int LegalTradeOp
         {
             get;
-        }
-
-          // data[46]
+        } // data[46]
 
         /// <summary>
         ///Gets
@@ -527,9 +417,7 @@ namespace HBM.WT.API
         int ToleranceErrorPlus
         {
             get;
-        }
-
-        // data[47]
+        } // data[47]
 
         /// <summary>
         ///Gets
@@ -537,9 +425,7 @@ namespace HBM.WT.API
         int ToleranceErrorMinus
         {
             get;
-        }
-
-        // data[48]
+        } // data[48]
 
         /// <summary>
         ///Gets
@@ -547,9 +433,7 @@ namespace HBM.WT.API
         int StatusInput1
         {
             get;
-        }
-
-          // data[49]
+        } // data[49]
 
         /// <summary>
         ///Gets
@@ -557,9 +441,7 @@ namespace HBM.WT.API
         int GeneralScaleError
         {
             get;
-        }
-
-        // data[50]
+        } // data[50]
 
         /// <summary>
         ///Gets
@@ -567,9 +449,7 @@ namespace HBM.WT.API
         int FillingProcessStatus
         {
             get;
-        }
-
-        // data[51]
+        } // data[51]
 
         /// <summary>
         ///Gets
@@ -577,9 +457,7 @@ namespace HBM.WT.API
         int NumberDosingResults
         {
             get;
-        }
-
-        // data[52]
+        } // data[52]
 
         /// <summary>
         ///Gets
@@ -587,9 +465,7 @@ namespace HBM.WT.API
         int DosingResult
         {
             get;
-        }
-
-             // data[53]
+        } // data[53]
 
         /// <summary>
         ///Gets
@@ -597,9 +473,7 @@ namespace HBM.WT.API
         int MeanValueDosingResults
         {
             get;
-        }
-
-        // data[54]
+        } // data[54]
 
         /// <summary>
         ///Gets
@@ -607,9 +481,7 @@ namespace HBM.WT.API
         int StandardDeviation
         {
             get;
-        }
-
-        // data[55]
+        } // data[55]
 
         /// <summary>
         ///Gets
@@ -617,9 +489,7 @@ namespace HBM.WT.API
         int TotalWeight
         {
             get;
-        }
-
-              // data[56]
+        } // data[56]
 
         /// <summary>
         ///Gets
@@ -627,9 +497,7 @@ namespace HBM.WT.API
         int FineFlowCutOffPoint
         {
             get;
-        }
-
-        // data[57]
+        } // data[57]
 
         /// <summary>
         ///Gets
@@ -637,9 +505,7 @@ namespace HBM.WT.API
         int CoarseFlowCutOffPoint
         {
             get;
-        }
-
-        // data[58]
+        } // data[58]
 
         /// <summary>
         ///Gets
@@ -647,9 +513,7 @@ namespace HBM.WT.API
         int CurrentDosingTime
         {
             get;
-        }
-
-         // data[59]
+        } // data[59]
 
         /// <summary>
         ///Gets
@@ -657,9 +521,7 @@ namespace HBM.WT.API
         int CurrentCoarseFlowTime
         {
             get;
-        }
-
-        // data[60]
+        } // data[60]
 
         /// <summary>
         ///Gets
@@ -667,9 +529,7 @@ namespace HBM.WT.API
         int CurrentFineFlowTime
         {
             get;
-        }
-
-        // data[61]
+        } // data[61]
 
         /// <summary>
         ///Gets
@@ -677,9 +537,7 @@ namespace HBM.WT.API
         int ParameterSetProduct
         {
             get;
-        }
-
-        // data[62]
+        } // data[62]
 
         // Get-Set-properties to set the output words from 2 to 26 for the standard application.
 

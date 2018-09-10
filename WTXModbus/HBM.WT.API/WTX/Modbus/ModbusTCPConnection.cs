@@ -53,35 +53,33 @@ namespace HBM.WT.API.WTX.Modbus
                 return this.messages;
             }
         }
-
-        public virtual ushort[] GetAllRegisters => _data;
-
+        
         // Getter/Setter for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
-        public virtual string IpAddress
+        public string IpAddress
         {
             get { return _iPAddress; }
             set { _iPAddress = value; }
         }
 
-        public virtual ushort StartAdress
+        public ushort StartAdress
         {
             get { return _startAdress; }
             set { _startAdress = value; }
         }
 
-        public virtual ushort NumOfPoints
+        public ushort NumOfPoints
         {
             get { return _numOfPoints; }
             set { _numOfPoints = value; }
         }
 
-        public virtual int SendingInterval
+        public int SendingInterval
         {
             get { return _sendingInterval; }
             set { _sendingInterval = value; }
         }
 
-        public virtual int Port
+        public int Port
         {
             get { return _port; }
             set { _port = value; }
@@ -144,9 +142,7 @@ namespace HBM.WT.API.WTX.Modbus
                 this._numOfPoints = (ushort)value;
             }
         }
-
-        public ushort[] getData { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        
         public ushort arr1; // For test purpose
         public ushort arr2; // For test purpose
 

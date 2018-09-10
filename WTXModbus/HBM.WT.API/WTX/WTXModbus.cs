@@ -2368,15 +2368,6 @@ namespace HBM.WT.API.WTX
             set { this._isCalibrating = value; }
         }
 
-        /*
-        public override INetConnection getModbusConnection
-        {
-            get { return _connection; }
-        }
-
-        public override INetConnection getJetBusConnection => throw new NotImplementedException();
-        */
-
         public void gross(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x2, WriteDataCompleted);

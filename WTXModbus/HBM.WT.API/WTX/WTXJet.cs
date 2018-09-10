@@ -295,16 +295,7 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        /*
-        public override INetConnection getModbusConnection => throw new NotImplementedException();
-
-        public override INetConnection getJetBusConnection
-        {
-            get { return _connection; }
-        }
-        */
-
-        /* 
+/* 
 *In the following methods the different options for the single integer values are used to define and
 *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
 */

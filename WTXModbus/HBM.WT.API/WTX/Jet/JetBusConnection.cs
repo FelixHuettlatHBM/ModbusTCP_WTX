@@ -231,16 +231,7 @@ namespace HBM.WT.API.WTX.Jet
                         break;
                 }
 
-                JTokenArray = _mTokenBuffer.Values.ToArray();
-                DataUshortArray = new ushort[JTokenArray.Length];
-                DataStrArray = new string[JTokenArray.Length];
-
-                for (int i = 0; i < JTokenArray.Length; i++)
-                {
-                    JToken JTokenElement = JTokenArray[i];
-
-                    DataStrArray[i] = JTokenElement.ToString();
-                }
+                this.ConvertJTokenToStringArray();
 
                 RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
 
@@ -260,17 +251,8 @@ namespace HBM.WT.API.WTX.Jet
             {
                 if (_mTokenBuffer.ContainsKey(index.ToString())) {
 
-                    JTokenArray = _mTokenBuffer.Values.ToArray();
-                    DataUshortArray = new ushort[JTokenArray.Length];
-                    DataStrArray = new string[JTokenArray.Length];
-
-                    for (int i = 0; i < JTokenArray.Length; i++)
-                    {
-                        JToken JTokenElement = JTokenArray[i];
-
-                        DataStrArray[i] = JTokenElement.ToString();                           
-                    }
-
+                    this.ConvertJTokenToStringArray();
+                   
                     RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray,DataStrArray));
 
                     return _mTokenBuffer[index.ToString()];
@@ -279,6 +261,20 @@ namespace HBM.WT.API.WTX.Jet
                     throw new InterfaceException(
                         new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                 }
+            }
+        }
+
+        private void ConvertJTokenToStringArray()
+        {
+            JTokenArray = _mTokenBuffer.Values.ToArray();
+            DataUshortArray = new ushort[JTokenArray.Length];
+            DataStrArray = new string[JTokenArray.Length];
+
+            for (int i = 0; i < JTokenArray.Length; i++)
+            {
+                JToken JTokenElement = JTokenArray[i];
+
+                DataStrArray[i] = JTokenElement.ToString();
             }
         }
        
@@ -293,8 +289,6 @@ namespace HBM.WT.API.WTX.Jet
                 throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
-
-
 
         public void Write(object index, int value) {
             JValue jValue = new JValue(value);

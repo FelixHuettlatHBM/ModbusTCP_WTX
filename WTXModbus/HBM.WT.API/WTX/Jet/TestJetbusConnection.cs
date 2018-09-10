@@ -70,6 +70,10 @@ namespace HBM.WT.API.WTX.Jet
         private string IP;
         private int interval;
 
+        private JToken[] JTokenArray;
+        private ushort[] DataUshortArray;
+        private string[] DataStrArray;
+
         // Constructor with all parameters possible from class 'JetbusConnection' - Without ssh certification.
         //public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) : base(ipAddr, user, passwd, certificationCallback, timeoutMs = 5000)
 
@@ -96,6 +100,18 @@ namespace HBM.WT.API.WTX.Jet
             set
             {
                 this.interval = value;
+            }
+        }
+
+        public int Read(object index)
+        {
+            try
+            {
+                return Convert.ToInt32(ReadObj(index));
+            }
+            catch (FormatException)
+            {
+                throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -136,7 +152,25 @@ namespace HBM.WT.API.WTX.Jet
 
             }
 
-            return 0;
+
+            this.ConvertJTokenToStringArray();
+
+            return _mTokenBuffer[index.ToString()];
+        }
+
+
+        private void ConvertJTokenToStringArray()
+        {
+            JTokenArray = _mTokenBuffer.Values.ToArray();
+            DataUshortArray = new ushort[JTokenArray.Length];
+            DataStrArray = new string[JTokenArray.Length];
+
+            for (int i = 0; i < JTokenArray.Length; i++)
+            {
+                JToken JTokenElement = JTokenArray[i];
+                DataStrArray[i] = JTokenElement.ToString();
+            }
+
         }
 
         public Dictionary<string, JToken> getTokenBuffer
@@ -257,20 +291,6 @@ namespace HBM.WT.API.WTX.Jet
                 //if (this.behavior == Behavior.ReadWeightMovingSuccess)
                     _mTokenBuffer.Add("6153/00", this.simulateFetchInstance()["value"]);
 
-                /*
-                JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
-                ushort[] DataArray = new ushort[JTokenArray.Length + 1];
-
-                for (int index = 0; index < JTokenArray.Length; index++)
-                {
-                    JToken element = JTokenArray[index];
-
-                    DataArray[index] = (ushort)Convert.ToInt32(element.SelectToken("value"));
-                }
-
-                RaiseDataEvent?.Invoke(this, new DataEvent(DataArray));
-                */
-
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
@@ -313,24 +333,6 @@ namespace HBM.WT.API.WTX.Jet
         {
             throw new NotImplementedException();
         }
-
-        public int Read(object index)
-        {           
-            try
-            {
-                return Convert.ToInt32(ReadObj(index));
-
-                //JToken token = ReadObj(index);
-                //return token;
-
-                //return (T)Convert.ChangeType(token, typeof(T));
-            }
-            catch (FormatException)
-            {
-                throw new InterfaceException(new FormatException("Invalid data format"), 0);
-            }
-        }
-
 
         public new void Write(object index, int data)
         {

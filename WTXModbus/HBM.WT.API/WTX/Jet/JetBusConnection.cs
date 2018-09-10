@@ -172,16 +172,14 @@ namespace HBM.WT.API.WTX.Jet
                     _mException = new InterfaceException(exception, (uint)exception.Error);
                 }
                 //
-                // Wake up the waiting thread where call the konstruktor to connect the session
+                // Wake up the waiting thread where call the construktor to connect the session
                 //
 
                 this.JetConnected = true;
                 _mSuccessEvent.Set();
                
                 BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
-
-                //BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Fetch-All success: " + success + " - buffersize is: " + _mTokenBuffer.Count));
-
+               
             }, _mTimeoutMs);
             WaitOne(3);
         }
@@ -215,11 +213,20 @@ namespace HBM.WT.API.WTX.Jet
         protected virtual void OnFetchData(JToken data)
         {
             string path = data["path"].ToString();
-            lock (_mTokenBuffer) {
-                switch (data["event"].ToString()) {
-                    case "add": _mTokenBuffer.Add(path, data["value"]); break;
-                    case "fetch": _mTokenBuffer[path] = data["value"]; break;
+
+            lock (_mTokenBuffer)
+            {
+
+                switch (data["event"].ToString())
+                {
+                    case "add": _mTokenBuffer.Add(path, data["value"]);
+                        break;
+
+                    case "fetch": _mTokenBuffer[path] = data["value"];
+                        break;
+
                     case "change":
+
                         _mTokenBuffer[path] = data["value"];
                         break;
                 }

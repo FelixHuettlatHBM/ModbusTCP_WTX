@@ -109,7 +109,7 @@ namespace WTXModbusGUIsimple
 
             _wtxObj = new WtxModbus(_modbusObj, this._timerInterval);
             
-            _wtxObj.getModbusConnection.NumofPoints = 6;
+            _wtxObj.getConnection.NumofPoints = 6;
             
             _wtxObj.DataUpdateEvent += ValuesOnConsole;
 
@@ -133,23 +133,23 @@ namespace WTXModbusGUIsimple
                 Update();
 
                 string tempIpAddress = textBox1.Text;
-                _wtxObj.getModbusConnection.IpAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
+                _wtxObj.getConnection.IpAddress = tempIpAddress; // Equal to : ModbusObj.IP_Adress = tempIpAddress;
 
                 // The connection to the device should be established.   
-                _wtxObj.getModbusConnection.Connect();     // Alternative : _wtxObj.Connect();    
+                _wtxObj.getConnection.Connect();     // Alternative : _wtxObj.Connect();    
 
-                if (_wtxObj.getModbusConnection.IsConnected)
+                if (_wtxObj.getConnection.IsConnected)
                 {
                     _wtxObj.RestartTimer();
                     _ipAddress = tempIpAddress;
                     this.toolStripLabel1.Text = "connected";
                     RenameButtonGrossNet();
-                    _wtxObj.getModbusConnection.SendingInterval = this._timerInterval;
+                    _wtxObj.getConnection.SendingInterval = this._timerInterval;
 
                 }
                 else
                 {
-                    _wtxObj.getModbusConnection.IpAddress = this._ipAddress;
+                    _wtxObj.getConnection.IpAddress = this._ipAddress;
 
                     _wtxObj.StopTimer();
                     
@@ -219,7 +219,7 @@ namespace WTXModbusGUIsimple
         // Button Tare
         private void button2_Click(object sender, EventArgs e)
         {
-            if (_wtxObj.getModbusConnection.IsConnected)
+            if (_wtxObj.getConnection.IsConnected)
             {
                 RenameButtonGrossNet();
                 _wtxObj.taring(WriteDataReceived);
@@ -237,7 +237,7 @@ namespace WTXModbusGUIsimple
         // Button Zero
         private void button3_Click(object sender, EventArgs e)
         {
-            if (_wtxObj.getModbusConnection.IsConnected)
+            if (_wtxObj.getConnection.IsConnected)
             {
                 _wtxObj.zeroing(WriteDataReceived);
             }
@@ -253,7 +253,7 @@ namespace WTXModbusGUIsimple
         // Button Gross/Net
         private void button4_Click(object sender, EventArgs e)
         {
-            if (_wtxObj.getModbusConnection.IsConnected)
+            if (_wtxObj.getConnection.IsConnected)
             {
                 _wtxObj.gross(WriteDataReceived);
                 RenameButtonGrossNet();
@@ -310,7 +310,7 @@ namespace WTXModbusGUIsimple
         {
             _wtxObj.StopTimer();
 
-            _calcCalObj = new CalcCalibration(_wtxObj, _wtxObj.getModbusConnection.IsConnected);
+            _calcCalObj = new CalcCalibration(_wtxObj, _wtxObj.getConnection.IsConnected);
             DialogResult res = _calcCalObj.ShowDialog();
 
             _wtxObj.RestartTimer();
@@ -322,7 +322,7 @@ namespace WTXModbusGUIsimple
         {
             _wtxObj.StopTimer();
 
-            _weightCalObj = new WeightCalibration(_wtxObj, _wtxObj.getModbusConnection.IsConnected);
+            _weightCalObj = new WeightCalibration(_wtxObj, _wtxObj.getConnection.IsConnected);
             DialogResult res = _weightCalObj.ShowDialog();
 
             _wtxObj.RestartTimer();

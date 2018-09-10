@@ -48,30 +48,7 @@ namespace HBM.WT.API.WTX
 
             public const string WEIGHT_MOVING_DETECTION = "6153/00";
         }
-
-
-        /*
-        public ParameterProperty (INetConnection connection) : base (connection){ }
-      
-        public override int MeasureValue { get { return m_Connection.Read<int>(ParameterKeys.MesaureValue); } }
-        public override int MeasureValueType { get { return m_Connection.Read<int>(ParameterEnum.MeasuredValueStatus.ToString()); } }
-
-        public override string DeviceIdentification {
-            get { return m_Connection.Read<string>(ParameterEnum.DeviceIdentification.ToString()); }
-            set { m_Connection.Write<string>(ParameterEnum.DeviceIdentification.ToString(), value); }
-        }
-
-        public override int DecimalPonit {
-            get { return m_Connection.Read<int>(ParameterEnum.DecimalPoint.ToString()); }
-            set { m_Connection.Write<int>(ParameterEnum.DecimalPoint.ToString(), value); }
-        }
-
-        public int TestValue {
-            get;
-        }
-        
-        */
-
+   
         public WtxJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
         {
             if(connection is JetBusConnection)
@@ -118,50 +95,10 @@ namespace HBM.WT.API.WTX
         public override void UpdateEvent(object sender, DataEvent e)
         {
             // values from _mTokenBuffer as an array: 
+
             string[] DataStrArray = new string[e.strArgs.Length];
 
             // Do something with the data, like in the class WTXModbus.cs           
-        }
-
-        
-        public override void Async_Call(ushort commandParam, Action<IDeviceData> callbackParam)
-        {
-           throw new NotImplementedException();
-        }
-
-        public override void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IDeviceData AsyncReadData(BackgroundWorker worker)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IDeviceData SyncReadData()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-           throw new NotImplementedException();
-        }
-
-        public override void WriteDoWork(object sender, DoWorkEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
         
         public override ushort[] GetValuesAsync()
@@ -199,7 +136,7 @@ namespace HBM.WT.API.WTX
             {
                 return this._connection.Read(ParameterKeys.WEIGHT_MOVING_DETECTION);
             }
-        }              // data[6]
+        }        
 
 
         public override int ScaleSealIsOpen { get { return 1; } }         // data[7]
@@ -217,7 +154,7 @@ namespace HBM.WT.API.WTX
             {
                 return this._connection.Read(ParameterKeys.DECIMALS);   // Decimals = "DPT";
             }
-        }     // data[15]
+        }  
 
         public override int Unit { get { return 1; }}                       // data[16]
         public override int Handshake { get { return 1; }}                  // data[17]
@@ -265,7 +202,7 @@ namespace HBM.WT.API.WTX
             {             
                 return this._connection.Read(ParameterKeys.DOSING_STATUS);
             }
-        }             // data[51]
+        }        
 
         public override int NumberDosingResults
         {
@@ -273,7 +210,7 @@ namespace HBM.WT.API.WTX
             {
                 return this._connection.Read(ParameterKeys.DOSING_COUNTER);
             }
-        }            // data[52]
+        }            
 
         public override int DosingResult
         {
@@ -281,7 +218,7 @@ namespace HBM.WT.API.WTX
             {
                 return this._connection.Read(ParameterKeys.DOSING_RESULT);
             }
-        }           // data[53]
+        }        
 
         public override int MeanValueDosingResults { get { return 1; } }           // data[54]
         public override int StandardDeviation { get { return 1; } }                // data[55]
@@ -343,12 +280,7 @@ namespace HBM.WT.API.WTX
         public override int DownardsDosing { get; set; }
         public override int ValveControl { get; set; }
         public override int EmptyingMode { get; set; }
-
-
-
-        public override BaseWtDevice GetDeviceAbstract { get; }
-
-        
+               
         public override IDeviceData DeviceValues { get; }
 
         public override string[] GetDataStr

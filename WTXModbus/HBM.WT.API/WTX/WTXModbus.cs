@@ -120,7 +120,7 @@ namespace HBM.WT.API.WTX
             get { return this._command; }
         }
 
-        public override void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
+        public void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
         {
             this._dataReceived = false;
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
@@ -149,7 +149,7 @@ namespace HBM.WT.API.WTX
 
 
         // This method writes a data word to the WTX120 device synchronously. 
-        public override void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
+        public void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
         {
             this._dataReceived = false;
             this._command = commandParam;
@@ -165,13 +165,13 @@ namespace HBM.WT.API.WTX
 
                 // Handshake protocol as given in the manual:                            
 
-                /*
+                
                 do
                 {
                     this._connection.Read(0);
 
                 } while (this.Handshake == 0);
-                */
+                
                
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.Handshake == 1)
@@ -191,7 +191,7 @@ namespace HBM.WT.API.WTX
 
         // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 
         // @param : sender - the object of this class. dowork_asynchronous - the argument of the event. 
-        public override void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous)
+        public void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous)
         {
             this._dataReceived = false;
             doworkAsynchronous.Result = (IDeviceData)this.AsyncReadData((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
@@ -200,7 +200,7 @@ namespace HBM.WT.API.WTX
 
         // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
         // @return: IDevice_Values - Interface, that contains all values for the device. 
-        public override IDeviceData AsyncReadData(BackgroundWorker worker)
+        public IDeviceData AsyncReadData(BackgroundWorker worker)
         {
             this._connection.Read(0);
 
@@ -208,7 +208,7 @@ namespace HBM.WT.API.WTX
         }
 
         // Neu : 8.3.2018
-        public override IDeviceData SyncReadData()
+        public IDeviceData SyncReadData()
         {
             this._connection.Read(0);
             //this.JetConnObj.Read();
@@ -224,15 +224,7 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        public override BaseWtDevice GetDeviceAbstract
-        {
-            get
-            {
-                return this;
-            }
-        }
-
-        public override void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
+        public void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this._callbackObj((IDeviceData)e.Result);         // Interface commited via callback. 
 
@@ -252,12 +244,11 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        public override void WriteDoWork(object sender, DoWorkEventArgs e)
+        public void WriteDoWork(object sender, DoWorkEventArgs e)
         {
             // (1) Sending of a command:        
 
             this._connection.Write(0, this._command);
-            //this.JetConnObj.Write(0,1);
 
             while (this.Handshake == 0) ;
 
@@ -265,14 +256,11 @@ namespace HBM.WT.API.WTX
             if (this.Handshake == 1)
             {
                 this._connection.Write(0, 0x00);
-                //this.JetConnObj.Write(0,1);
-
-                //this.NetObj.Write<ushort>(0, 0x00);
             }
             while (/*this.status == 1 && */this.Handshake == 1) ;
         }
 
-        public override void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
+        public void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this._callbackObj(this);         // Neu : 21.11.2017         Interface übergeben. 
         }

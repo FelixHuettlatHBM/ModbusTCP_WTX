@@ -9,59 +9,10 @@ namespace HBM.WT.API
     public abstract class BaseWtDevice : IDeviceData
     {
 
-        /*
-        private Action<IDeviceData> callback_obj;
-
-        private ushort command;
-
-        private string ipAddr;
-
-        private ModbusTCPConnection ModbusConnObj;
-
-        protected INetConnection m_Connection;
-
-        private JetBusConnection JetConnObj;      
-        
-        private INetConnection NetObj; 
-
-        private int timeoutMS;
-        private bool inputModbusJet;
-        */
-
-        //public abstract INetConnection Connection { get; }
-
-        //private INetCommunication<uint, JToken> commObj;
-
-        /*
-    public BaseWTDevice(INetConnection connection)
-    {
-        m_Connection = connection;
-        inputModbusJet = true;
-        timeoutMS = 5000;
-
-        this.ipAddr = "172.19.103.8";
-
-        this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
-*/
-
-        //this.NetObj = new ModbusTCPConnection(ipAddr);
-
-        /*
-        if (inputModbusJet == true)
-        { 
-            this.ModbusConnObj = new ModbusTCPConnection(ipAddr);
-            }
-        else
-            if (inputModbusJet == false)
-            {
-            IJetConnection IJetObj = new WebSocketJetConnection(ipAddr, delegate { return true; });      // Unter Umständen die Certification Callback ausimplementieren. 
-            JetPeer jetObj = new JetPeer(IJetObj);                                                       // Certification Callbackmethode in API verpackt? Oder Nutzer selbst implementieren? Machen wir! Erstmal als delegate -> true. 
-
-            this.JetConnObj = new JetBusConnection(jetObj, timeoutMS);
+        public BaseWtDevice(INetConnection connection)
+        {
+            m_Connection = connection;
         }
-
-    }
-    */
 
         protected INetConnection m_Connection;
 
@@ -72,12 +23,6 @@ namespace HBM.WT.API
                 return m_Connection;
             }
         }
-
-        public BaseWtDevice(INetConnection connection)
-        {
-            m_Connection = connection;
-        }
-
 
         public abstract event EventHandler<DataEvent> DataUpdateEvent;
 
@@ -220,33 +165,6 @@ namespace HBM.WT.API
         public abstract int ValveControl { get; set; }
         public abstract int EmptyingMode { get; set; }
 
-
-        public abstract void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam);
-
-
-        // Neu - 8.3.2018 - Ohne Backgroundworker - Ohne Asynchronität
-        public abstract void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam);      // Callback-Methode nicht benötigt. 
-
-
-        // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 
-        // @param : sender - the object of this class. dowork_asynchronous - the argument of the event. 
-        public abstract void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous);
-
-        // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
-        // @return: IDevice_Values - Interface, that contains all values for the device. 
-        public abstract IDeviceData AsyncReadData(BackgroundWorker worker);
-
-        // Neu : 8.3.2018
-        public abstract IDeviceData SyncReadData();
-
-        public abstract BaseWtDevice GetDeviceAbstract { get; }
-
-        public abstract void ReadCompleted(object sender, RunWorkerCompletedEventArgs e);
-
-        public abstract void WriteDoWork(object sender, DoWorkEventArgs e);
-
-        public abstract void WriteCompleted(object sender, RunWorkerCompletedEventArgs e);
-        
     }
 }
 

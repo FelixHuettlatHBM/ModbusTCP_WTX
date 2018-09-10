@@ -165,8 +165,8 @@ namespace WTXGUISimple
             {
                 case 0: // start
 
-                    _strCommaDot = textBox1.Text.Replace(".", ",");                   // Neu : 12.3 - Für die Umwandlung in eine Gleitkommazahl. 
-                    _calibrationWeight = double.Parse(_strCommaDot);                   // Damit können Kommata und Punkte eingegeben werden. 
+                    _strCommaDot = textBox1.Text.Replace(".", ",");                    
+                    _calibrationWeight = double.Parse(_strCommaDot);                  
 
                     textBox1.Enabled = false;
                     textBox2.Text = _calibrationWeight.ToString();
@@ -187,15 +187,7 @@ namespace WTXGUISimple
                     _wtxObj.MeasureZero();
 
                     Thread.Sleep(3000);
-                    /*
-                    argument[0] = "6002/01";
-                    argument[1] = "6002/01";
-                    argument[2] = "2053923171";
 
-                    WriteParameter(argument);
-
-                    Thread.Sleep(5000);
-                    */
                     textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
                     button1.Text = "Calibrate";
                     _state = 2;
@@ -207,23 +199,6 @@ namespace WTXGUISimple
                     textBox2.Text = "Calibration in progress.";
 
                     _wtxObj.Calibrate(this.PotencyCalibrationWeight(), _calibrationWeight.ToString());
-
-                    /*
-                    argument[0] = "6002/01";
-                    argument[1] = "6002/01";
-                    argument[2] = "1852596579";
-
-                    WriteParameter(argument);
-
-                    Thread.Sleep(1000);
-
-                    argument[0] = "6152/00";
-                    argument[1] = "6152/00";
-                    argument[2] = "600000";
-
-                    WriteParameter(argument);
-                    */
-                    //_jetObj.WriteInt("6152/00", 1);    // Min = 200000 ; Max = 1200000
 
                     textBox2.Text = "Calibration successful and finished.";
                     button1.Text = "Close";
@@ -239,28 +214,6 @@ namespace WTXGUISimple
 
                     break; 
             }
-
-            /*
-            // state 0 : 
-            textBox2.Text = "Unload Scale!";
-            button1.Text = "Measure Zero";
-            button2.Text = "<Back";
-
-            // state 1 : 
-            argument[0] = "6002/01";
-            argument[1] = "6002/01";
-            argument[2] = "2053923171";
-
-            WriteParameter(argument);
-            Thread.Sleep(5000);
-
-            // state 2: 
-            argument[0] = "6002/01";
-            argument[1] = "6002/01";
-            argument[2] = "1852596579";
-
-            WriteParameter(argument);
-            */    
         }
 
         
@@ -271,7 +224,7 @@ namespace WTXGUISimple
 
             int value = Convert.ToInt32(args[2]);
 
-            _wtxObj.getJetBusConnection.Write(args[1], value);
+            _wtxObj.getConnection.Write(args[1], value);
 
             return 0;
         }

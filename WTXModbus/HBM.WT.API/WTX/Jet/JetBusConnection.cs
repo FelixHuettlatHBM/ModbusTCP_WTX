@@ -32,6 +32,10 @@ namespace HBM.WT.API.WTX.Jet
         private string IP;
         private int interval;
 
+        private JToken[] JTokenArray;
+        private ushort[] DataUshortArray;
+        private string[] DataStrArray;
+
         #endregion
 
         #region constructors
@@ -95,6 +99,14 @@ namespace HBM.WT.API.WTX.Jet
             set
             {
                 JetConnected = value;
+            }
+        }
+
+        public string[] getStringData
+        {
+            get
+            {
+                return this.DataStrArray;
             }
         }
 
@@ -212,16 +224,15 @@ namespace HBM.WT.API.WTX.Jet
                         break;
                 }
 
-                JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
-                ushort[] DataUshortArray = new ushort[JTokenArray.Length];
-
-                string[] DataStrArray = new string[JTokenArray.Length];
+                JTokenArray = _mTokenBuffer.Values.ToArray();
+                DataUshortArray = new ushort[JTokenArray.Length];
+                DataStrArray = new string[JTokenArray.Length];
 
                 for (int i = 0; i < JTokenArray.Length; i++)
                 {
-                    JToken element = JTokenArray[i];
+                    JToken JTokenElement = JTokenArray[i];
 
-                    DataStrArray[i] = element.ToString();
+                    DataStrArray[i] = JTokenElement.ToString();
                 }
 
                 RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
@@ -242,16 +253,15 @@ namespace HBM.WT.API.WTX.Jet
             {
                 if (_mTokenBuffer.ContainsKey(index.ToString())) {
 
-                    JToken[] JTokenArray = _mTokenBuffer.Values.ToArray();
-                    ushort[] DataUshortArray = new ushort[JTokenArray.Length];
-
-                    string[] DataStrArray = new string[JTokenArray.Length];
+                    JTokenArray = _mTokenBuffer.Values.ToArray();
+                    DataUshortArray = new ushort[JTokenArray.Length];
+                    DataStrArray = new string[JTokenArray.Length];
 
                     for (int i = 0; i < JTokenArray.Length; i++)
                     {
-                        JToken element = JTokenArray[i];
+                        JToken JTokenElement = JTokenArray[i];
 
-                        DataStrArray[i] = element.ToString();                           
+                        DataStrArray[i] = JTokenElement.ToString();                           
                     }
 
                     RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray,DataStrArray));

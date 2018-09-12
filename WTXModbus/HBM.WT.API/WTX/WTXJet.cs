@@ -47,6 +47,8 @@ namespace HBM.WT.API.WTX
 
             public const string LFT_SCALE_CALIBRATION_WEIGHT = "6152/00";
 
+            public const string UNIT_PREFIX_FIXED_PARAMETER = "6014/01";
+
         }
 
         public struct command_values
@@ -267,6 +269,16 @@ namespace HBM.WT.API.WTX
             }
         }
 
+        public override int Unit
+        {
+            get
+            {
+                _ID_value = this._connection.Read(ID_keys.UNIT_PREFIX_FIXED_PARAMETER);
+                return (_ID_value & 0xFF0000)>> 16;
+            }
+        }
+
+
         public override string[] GetDataStr
         {
             get
@@ -307,13 +319,13 @@ namespace HBM.WT.API.WTX
         {
             switch (this.Unit)
             {
-                case 0:
+                case 0x02:
                     return "kg";
-                case 1:
+                case 0x4B:
                     return "g";
-                case 2:
+                case 0x4C:
                     return "t";
-                case 3:
+                case 0XA6:
                     return "lb";
                 default:
                     return "error";
@@ -370,22 +382,6 @@ namespace HBM.WT.API.WTX
             // callback function : Do something 
         }
 
-
-        public double getDPreload
-        {
-            get
-            {
-                return dPreload;
-            }
-        }
-
-        public double getDNominalLoad
-        {
-            get
-            {
-                return dNominalLoad;
-            }
-        }
 
         public override ushort[] GetDataUshort
         {
@@ -451,8 +447,7 @@ namespace HBM.WT.API.WTX
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
         */
 
-        public override int ApplicationMode { get { return 1; } }          
-        public override int Unit { get { return 1; } }                      
+        public override int ApplicationMode { get { return 1; } }                                  
         public override int Handshake { get { return 1; } }
         public override int Status { get { return 1; } }
 

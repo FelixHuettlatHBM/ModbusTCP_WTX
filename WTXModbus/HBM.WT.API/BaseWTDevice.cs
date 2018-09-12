@@ -41,7 +41,7 @@ namespace HBM.WT.API
         public abstract string[] GetDataStr { get; set; }
 
         public abstract ushort[] GetDataUshort { get; set; }
-
+        
         public abstract int NetValue { get; }                    // data[1]
         public abstract int GrossValue { get; }                  // data[2]
         public abstract int GeneralWeightError { get; }          // data[3]
@@ -160,7 +160,7 @@ namespace HBM.WT.API
         public abstract int DownardsDosing { get; set; }
         public abstract int ValveControl { get; set; }
         public abstract int EmptyingMode { get; set; }
-
+        
     }
 }
 

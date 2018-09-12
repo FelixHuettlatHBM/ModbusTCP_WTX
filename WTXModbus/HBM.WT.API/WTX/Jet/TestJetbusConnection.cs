@@ -26,8 +26,8 @@ namespace HBM.WT.API.WTX.Jet
         ReadNetValueFail,
         ReadNetValueSuccess,
 
-        ReadWeightMovingFail,
-        ReadWeightMovingSuccess,
+        ReadFail_WEIGHING_DEVICE_1_WEIGHT_STATUS,
+        ReadSuccess_WEIGHING_DEVICE_1_WEIGHT_STATUS,
 
         WriteTareFail,
         WriteTareSuccess,
@@ -46,6 +46,34 @@ namespace HBM.WT.API.WTX.Jet
 
         MeasureZeroFail,
         MeasureZeroSuccess,
+
+        ReadFail_Decimals,
+        ReadSuccess_Decimals,
+
+        ReadFail_FillingProcessSatus,
+        ReadSuccess_FillingProcessSatus,
+
+        ReadFail_DosingResult,
+        ReadSuccess_DosingResult,
+
+        ReadFail_NumberDosingResults,
+        ReadSuccess_NumberDosingResults,
+
+        ReadFail_Unit,
+        ReadSuccess_Unit,
+
+        t_UnitValue_Fail,
+        t_UnitValue_Success,
+
+        kg_UnitValue_Fail,
+        kg_UnitValue_Success,
+
+        g_UnitValue_Fail,
+        g_UnitValue_Success,
+
+        lb_UnitValue_Fail,
+        lb_UnitValue_Success,
+
     }
 
     public class TestJetbusConnection : INetConnection, IDisposable
@@ -138,22 +166,74 @@ namespace HBM.WT.API.WTX.Jet
                     return _mTokenBuffer[""];
                     break;
 
-                case Behavior.ReadWeightMovingSuccess:
+                case Behavior.ReadSuccess_WEIGHING_DEVICE_1_WEIGHT_STATUS:
                     if (_mTokenBuffer.ContainsKey(index.ToString()))
                         return _mTokenBuffer[index.ToString()];
                     break;
-                case Behavior.ReadWeightMovingFail:
+                case Behavior.ReadFail_WEIGHING_DEVICE_1_WEIGHT_STATUS:
                     //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                     return _mTokenBuffer[""];
                     break;
+
+                case Behavior.ReadSuccess_Decimals:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+
+                case Behavior.ReadFail_Decimals:
+                    return _mTokenBuffer[""];
+                    break;
+
+                case Behavior.ReadSuccess_DosingResult:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+
+                case Behavior.ReadFail_DosingResult:
+                    return _mTokenBuffer[""];
+                    break;
+
+                case Behavior.ReadSuccess_FillingProcessSatus:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+
+                case Behavior.ReadFail_FillingProcessSatus:
+                    return _mTokenBuffer[""];
+                    break;
+
+                case Behavior.ReadSuccess_NumberDosingResults:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+
+                case Behavior.ReadFail_NumberDosingResults:
+                    return _mTokenBuffer[""];
+
+                case Behavior.ReadSuccess_Unit:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+
+                case Behavior.ReadFail_Unit:
+                    return _mTokenBuffer[""];
+
+                case Behavior.t_UnitValue_Success:
+                    if (_mTokenBuffer.ContainsKey(index.ToString()))
+                        return _mTokenBuffer[index.ToString()];
+                    break;
+
+                case Behavior.t_UnitValue_Fail:
+                    return _mTokenBuffer[""];
 
                 default:
                     break;
 
             }
-
-
+   
             this.ConvertJTokenToStringArray();
+
+            RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
 
             return _mTokenBuffer[index.ToString()];
         }
@@ -228,6 +308,10 @@ namespace HBM.WT.API.WTX.Jet
             
             bool success = true;
 
+            this.ConvertJTokenToStringArray();
+
+            RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
+
             BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));            
         }
 
@@ -260,22 +344,31 @@ namespace HBM.WT.API.WTX.Jet
             string path = data["path"].ToString();
             lock (_mTokenBuffer)
             {  
-                //if(this.behavior==Behavior.ReadGrossValueSuccess)
-                    _mTokenBuffer.Add("6144/00", simulateJTokenInstance("6144/00", 12345)["value"]);
+                    _mTokenBuffer.Add("6144/00", simulateJTokenInstance("6144/00", 12345)["value"]);   // Read 'gross value'
 
-                //if (this.behavior == Behavior.ReadNetValueSuccess)
-                    _mTokenBuffer.Add("601A/01", simulateJTokenInstance("601A/01", 12345)["value"]);
+                    _mTokenBuffer.Add("601A/01", simulateJTokenInstance("601A/01", 12345)["value"]);    // Read 'net value'
+    
+                    _mTokenBuffer.Add("6153/00", simulateJTokenInstance("6153/00", 12345)["value"]);   // Read 'weight moving'
+              
+                    _mTokenBuffer.Add("6012/01", simulateJTokenInstance("6012/01", 12345)["value"]);  // Read 'weight moving'
 
-                //if (this.behavior == Behavior.ReadWeightMovingSuccess)
-                    _mTokenBuffer.Add("6153/00", simulateJTokenInstance("6153/00", 12345)["value"]);
+                    _mTokenBuffer.Add("6013/01", simulateJTokenInstance("6013/01", 12345)["value"]);
+                    _mTokenBuffer.Add("SDO", simulateJTokenInstance("SDO", 12345)["value"]);
+                    _mTokenBuffer.Add("FRS1", simulateJTokenInstance("FRS1", 12345)["value"]);
+                    _mTokenBuffer.Add("NDS", simulateJTokenInstance("FRS1", 12345)["value"]);
 
-                //if(this.behavior == Behavior.ReadWeightMovingSuccess)
-                _mTokenBuffer.Add("6012/01", simulateJTokenInstance("6012/01", 12345)["value"]);
+                    _mTokenBuffer.Add("6014/01", simulateJTokenInstance("6014/01", 0x4C0000)["value"]);    // Read Unit, prefix or fixed parameters - for t.
+
+                // Hex and bin. for Unit testing: 
+
+                // A6 = lb = 0x530000 = 10100110000000000000000
+                // 02 = kg = 0x20000  = 100000000000000000
+                // 4B = g  = 0x4B0000 = 10010110000000000000000
+                // 4C = t  = 0x4C0000 = 10011000000000000000000
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
-
 
         public void Connect()
         {

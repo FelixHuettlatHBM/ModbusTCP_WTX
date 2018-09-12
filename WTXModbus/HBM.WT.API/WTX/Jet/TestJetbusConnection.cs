@@ -224,7 +224,7 @@ namespace HBM.WT.API.WTX.Jet
         public void FetchAll()
         {
 
-            this.OnFetchData(this.simulateFetchInstance());
+            this.OnFetchData(this.simulateJTokenInstance("123",123));
             
             bool success = true;
 
@@ -261,36 +261,23 @@ namespace HBM.WT.API.WTX.Jet
             lock (_mTokenBuffer)
             {  
                 //if(this.behavior==Behavior.ReadGrossValueSuccess)
-                     _mTokenBuffer.Add("6144/00", this.simulateFetchInstance()["value"]);
+                    _mTokenBuffer.Add("6144/00", simulateJTokenInstance("6144/00", 12345)["value"]);
 
                 //if (this.behavior == Behavior.ReadNetValueSuccess)
-                    _mTokenBuffer.Add("601A/01", this.simulateFetchInstance()["value"]);
-
+                    _mTokenBuffer.Add("601A/01", simulateJTokenInstance("601A/01", 12345)["value"]);
 
                 //if (this.behavior == Behavior.ReadWeightMovingSuccess)
-                    _mTokenBuffer.Add("6153/00", this.simulateFetchInstance()["value"]);
+                    _mTokenBuffer.Add("6153/00", simulateJTokenInstance("6153/00", 12345)["value"]);
+
+                //if(this.behavior == Behavior.ReadWeightMovingSuccess)
+                _mTokenBuffer.Add("6012/01", simulateJTokenInstance("6012/01", 12345)["value"]);
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
 
 
-        public JToken simulateFetchInstance()
-        {
-
-            FetchData fetchInstance = new FetchData
-            {
-                path = "6144/00",
-                Event = "gross",
-                value = 12345,
-
-            };
-
-            return JToken.FromObject(fetchInstance);
-        }
-
-
-        public new void Connect()
+        public void Connect()
         {
             switch (this.behavior)
             {
@@ -308,18 +295,18 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public new void Disconnect()
+        public void Disconnect()
         {
             throw new NotImplementedException();
         }
 
-        public new void Write(object index, int data)
+        public void Write(object index, int data)
         {
             switch(behavior)
             {
                 case Behavior.WriteTareSuccess:
                     // The specific path and specific value for taring is added to the buffer _mTokenBuffer
-                    _mTokenBuffer.Add("6002/01", this.simulateTareInstance()["value"]);
+                    _mTokenBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
                     break;
 
                 case Behavior.WriteTareFail:
@@ -328,7 +315,7 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.WriteGrossSuccess:
                     // The specific path and specific value for gross is added to the buffer _mTokenBuffer
-                    _mTokenBuffer.Add("6002/01", this.simulteGrossInstance()["value"]);
+                    _mTokenBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
                     break;
 
                 case Behavior.WriteGrossFail:
@@ -337,7 +324,7 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.WriteZeroSuccess:
                     // The specific path and specific value for gross is added to the buffer _mTokenBuffer
-                    _mTokenBuffer.Add("6002/01", this.simulateZeroingInstance()["value"]);                  
+                    _mTokenBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
                     break;
 
                 case Behavior.WriteZeroFail:
@@ -346,7 +333,12 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.CalibrationSuccess:
                     // The specific path and specific value for calibration is added to the buffer _mTokenBuffer
-                    _mTokenBuffer.Add("6152/00", this.simulateCalibrationInstance(data)["value"]);
+                    if (index.Equals("6152/00"))
+                        _mTokenBuffer.Add("6152/00", simulateJTokenInstance("6152/00", data)["value"]);
+
+                    if (index.Equals("6002/01"))
+                        _mTokenBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+
                     break;
 
                 case Behavior.CalibrationFail:
@@ -354,23 +346,25 @@ namespace HBM.WT.API.WTX.Jet
                     break;
 
                 case Behavior.MeasureZeroSuccess:
-                    _mTokenBuffer.Add("6002/01",this.simulateMeasureZeroInstance()["value"]);
+                    _mTokenBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
                     break;
 
                 case Behavior.MeasureZeroFail:
+                    // No path and no value is added to the buffer _mTokenBuffer
                     break;
 
                 case Behavior.CalibratePreloadCapacitySuccess:
 
-                    if (index.Equals("6112/01"))
-                        _mTokenBuffer.Add("6112/01", simulateJTokenInstance("6112/01", data)["value"]);
+                    if (index.Equals("2110/06"))
+                        _mTokenBuffer.Add("2110/06", simulateJTokenInstance("2110/06", data)["value"]);
 
-                    if (index.Equals("6113/01"))
-                        _mTokenBuffer.Add("6113/01", simulateJTokenInstance("6113/01", data)["value"]);
+                    if (index.Equals("2110/07"))
+                        _mTokenBuffer.Add("2110/07", simulateJTokenInstance("2110/07", data)["value"]);
 
                     break;
 
                 case Behavior.CalibratePreloadCapacityFail:
+                    // No path and no value is added to the buffer _mTokenBuffer
                     break;
 
                 default:
@@ -394,77 +388,7 @@ namespace HBM.WT.API.WTX.Jet
         }
 
 
-        public JToken simulateMeasureZeroInstance()
-        {
-
-            FetchData fetchInstance = new FetchData
-            {
-                path = "6002/01",
-                Event = "change",  // measure zero
-                value = 2053923171,
-
-            };
-
-            return JToken.FromObject(fetchInstance);
-        }
-
-        public JToken simulateZeroingInstance()
-        {
-
-            FetchData fetchInstance = new FetchData
-            {
-                path = "6002/01",
-                Event = "change",  //zero
-                value = 1869768058,
-
-            };
-
-            return JToken.FromObject(fetchInstance);
-        }
-
-        public JToken simulteGrossInstance()
-        {
-
-            FetchData fetchInstance = new FetchData
-            {
-                path = "6002/01",
-                Event = "change",  // gross
-                value = 1936683623,
-
-            };
-
-            return JToken.FromObject(fetchInstance);
-        }
-
-        public JToken simulateTareInstance()
-        {
-
-            FetchData fetchInstance = new FetchData
-            {
-                path = "6002/01",
-                Event = "change",   // tare
-                value = 1701994868,
-
-            };
-
-            return JToken.FromObject(fetchInstance);
-        }
-
-        public JToken simulateCalibrationInstance(int data)
-        {
-
-            FetchData fetchInstance = new FetchData
-            {
-                path = "6152/00",
-                Event = "change",   // tare
-                value = data,
-            };
-
-            return JToken.FromObject(fetchInstance);
-        }
-
-
-        public new void WriteArray(ushort index, ushort[] data)
+        public void WriteArray(ushort index, ushort[] data)
         {
             throw new NotImplementedException();
         }

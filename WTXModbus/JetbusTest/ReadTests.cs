@@ -111,7 +111,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.WeightMoving;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6153/00"));
+            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
         }
 
         private void OnConnect(bool obj)

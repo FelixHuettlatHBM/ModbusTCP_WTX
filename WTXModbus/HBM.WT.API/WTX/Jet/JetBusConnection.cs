@@ -219,14 +219,15 @@ namespace HBM.WT.API.WTX.Jet
 
                 switch (data["event"].ToString())
                 {
-                    case "add": _mTokenBuffer.Add(path, data["value"]);
+                    case "add":
+                        _mTokenBuffer.Add(path, data["value"]);
                         break;
 
-                    case "fetch": _mTokenBuffer[path] = data["value"];
+                    case "fetch":
+                        _mTokenBuffer[path] = data["value"];
                         break;
 
                     case "change":
-
                         _mTokenBuffer[path] = data["value"];
                         break;
                 }

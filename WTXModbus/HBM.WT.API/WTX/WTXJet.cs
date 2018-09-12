@@ -358,10 +358,10 @@ namespace HBM.WT.API.WTX
         // This method sets the value for the nominal weight in the WTX.
         public void Calibrate(int calibrationValue, string calibrationWeightStr)
         {
+            _connection.Write(ID_keys.LFT_SCALE_CALIBRATION_WEIGHT, calibrationValue);          // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
+
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_NOMINAL_WEIGHT);  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
-
-            _connection.Write(ID_keys.LFT_SCALE_CALIBRATION_WEIGHT, calibrationValue);    // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
-
+                       
             this._isCalibrating = true;
         }
 

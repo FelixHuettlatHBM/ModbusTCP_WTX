@@ -902,7 +902,7 @@ namespace HBM.WT.API
         /// <summary>
         ///Gets or sets
         /// </summary>
-        int DownardsDosing
+        int DownwardsDosing
         {
             get;
             set;

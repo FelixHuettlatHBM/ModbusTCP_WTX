@@ -675,7 +675,7 @@ namespace WTXModbusExamples
                                 case 31: _wtxObj.DelayTimeAfterFineFlow = value; break;
                                 case 32: _wtxObj.ActivationTimeAfterFineFlow = value; break;
                                 case 33: _wtxObj.SystematicDifference = value; break;
-                                case 34: _wtxObj.DownardsDosing = value; break;
+                                case 34: _wtxObj.DownwardsDosing = value; break;
                                 case 35: _wtxObj.ValveControl = value; break;
                                 case 36: _wtxObj.EmptyingMode = value; break;
 

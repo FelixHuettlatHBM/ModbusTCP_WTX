@@ -492,7 +492,7 @@ namespace WTXModbus
 
                         Console.WriteLine("40) Delay time after fine flow:    " + _wtxObj.DelayTimeAfterFineFlow + " Press '40' and a value to write");
                         Console.WriteLine("41) Systematic difference:         " + _wtxObj.SystematicDifference + " Press '41' and a value to write");
-                        Console.WriteLine("42) Downwards dosing:              " + _wtxObj.DownardsDosing + " Press '42' and a value to write");
+                        Console.WriteLine("42) Downwards dosing:              " + _wtxObj.DownwardsDosing + " Press '42' and a value to write");
                         Console.WriteLine("43) Valve control:                 " + _wtxObj.ValveControl   + " Press '43' and a value to write");
                         Console.WriteLine("44) Emptying mode:                 " + _wtxObj.EmptyingMode   + " Press '44' and a value to write");
 

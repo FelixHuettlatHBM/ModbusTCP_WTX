@@ -157,7 +157,7 @@ namespace HBM.WT.API
         public abstract int DelayTimeAfterFineFlow { get; set; }
         public abstract int ActivationTimeAfterFineFlow { get; set; }
         public abstract int SystematicDifference { get; set; }
-        public abstract int DownardsDosing { get; set; }
+        public abstract int DownwardsDosing { get; set; }
         public abstract int ValveControl { get; set; }
         public abstract int EmptyingMode { get; set; }
         

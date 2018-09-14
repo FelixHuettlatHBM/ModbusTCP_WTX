@@ -11,7 +11,7 @@ namespace HBM.WT.API.WTX
     {
         private INetConnection _connection;
         private bool _dataReceived;
-        
+
         public override event EventHandler<DataEvent> DataUpdateEvent;
 
         private bool _isCalibrating;
@@ -27,28 +27,67 @@ namespace HBM.WT.API.WTX
 
         public struct ID_keys
         {
-            public const string NET_VALUE =   "601A/01";        
+            public const string NET_VALUE = "601A/01";
             public const string GROSS_VALUE = "6144/00";
 
-            public const string ZERO_VALUE  = "6142/00";
-            public const string TARE_VALUE  = "6143/00";
+            public const string ZERO_VALUE = "6142/00";
+            public const string TARE_VALUE = "6143/00";
 
-            public const string DECIMALS   = "6013/01";
-            public const string DOSING_COUNTER= "NDS";
+            public const string DECIMALS = "6013/01";
+            public const string DOSING_COUNTER = "NDS";
             public const string DOSING_STATUS = "SDO";
-            public const string DOSING_RESULT = "FRS1";           
+            public const string DOSING_RESULT = "FRS1";
 
             public const string WEIGHING_DEVICE_1_WEIGHT_STATUS = "6012/01";
 
             public const string SCALE_COMMAND = "6002/01";
 
-            public const string LDW_DEAD_WEIGHT   = "2110/06";
+            public const string LDW_DEAD_WEIGHT = "2110/06";
             public const string LWT_NOMINAL_VALUE = "2110/07";
 
             public const string LFT_SCALE_CALIBRATION_WEIGHT = "6152/00";
 
             public const string UNIT_PREFIX_FIXED_PARAMETER = "6014/01";
 
+            public const string FUNCTION_DIGITAL_INPUT_1 = "IM1";
+            public const string FUNCTION_DIGITAL_INPUT_2 = "IM2";
+            public const string FUNCTION_DIGITAL_INPUT_3 = "IM3";
+            public const string FUNCTION_DIGITAL_INPUT_4 = "IM4";
+
+            public const string FUNCTION_DIGITAL_OUTPUT_1 = "OM1";
+            public const string FUNCTION_DIGITAL_OUTPUT_2 = "OM2";
+            public const string FUNCTION_DIGITAL_OUTPUT_3 = "OM3";
+            public const string FUNCTION_DIGITAL_OUTPUT_4 = "OM4";
+
+            public const string STATUS_DIGITAL_OUTPUT_1 = "OS1";
+            public const string STATUS_DIGITAL_OUTPUT_2 = "OS2";
+            public const string STATUS_DIGITAL_OUTPUT_3 = "OS3";
+            public const string STATUS_DIGITAL_OUTPUT_4 = "OS4";
+
+            public const string COARSE_FLOW_TIME = "CFT";
+            public const string FINE_FLOW_TIME = "FFT";
+            public const string TARE_MODE = "TMD ";
+            public const string UPPER_TOLERANCE_LIMIT = "UTL";
+            public const string LOWER_TOLERANCE_LOMIT = "LTL";
+            public const string MINIMUM_START_WEIGHT = "MSW";
+            public const string EMPTY_WEIGHT = "EWT";
+            public const string TARE_DELAY = "TAD";
+            public const string COARSE_FLOW_MONITORING_TIME = "CBT";
+            public const string COARSE_FLOW_MONITORING = "CBK";
+            public const string FINE_FLOW_MONITORING = "FBK";
+            public const string FINE_FLOW_MONITORING_TIME = "FBT";
+            public const string SYSTEMATIC_DIFFERENCE = "SYD";
+            public const string VALVE_CONTROL = "VCT";
+            public const string EMPTYING_MODE = "EMD";
+            public const string COARSE_FLOW_CUT_OFF_POINT = "CFD";
+            public const string FINE_FLOW_CUT_OFF_POINT = "FFD";
+            public const string MEAN_VALUE_DOSING_RESULTS = "SDM";
+            public const string STANDARD_DEVIATION = "SDS";
+            public const string RESIDUAL_FLOW_TIME = "RFT";
+
+            public const string MAXIMUM_DOSING_TIME = "MDT";
+            public const string MINIMUM_FINE_FLOW = "FFM";
+            public const string OPTIMIZATION = "OSN";
         }
 
         public struct command_values
@@ -64,7 +103,7 @@ namespace HBM.WT.API.WTX
 
         public WtxJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
         {
-            if(connection is JetBusConnection)
+            if (connection is JetBusConnection)
             {
                 _connection = (JetBusConnection)connection;
             }
@@ -73,16 +112,16 @@ namespace HBM.WT.API.WTX
             {
                 _connection = (TestJetbusConnection)connection;
             }
-            
+
             _dataReceived = false;
             _dataStrArr = new string[185];
             _dataUshort = new ushort[185];
             _ID_value = 0;
 
-            for(int index=0; index < _dataStrArr.Length; index++)
+            for (int index = 0; index < _dataStrArr.Length; index++)
             {
                 _dataStrArr[index] = "";
-                _dataUshort[index] = 0; 
+                _dataUshort[index] = 0;
             }
 
             this._isCalibrating = false;
@@ -130,13 +169,13 @@ namespace HBM.WT.API.WTX
                 return this._connection.Read(ID_keys.NET_VALUE);     // Net value = measured value = "601A/01"
             }
         }
-        
+
         public override int GrossValue
         {
             get
             {
                 return this._connection.Read(ID_keys.GROSS_VALUE);        // GrossValue = "6144/00";
-            }           
+            }
         }
 
         public override int Decimals
@@ -274,7 +313,7 @@ namespace HBM.WT.API.WTX
             get
             {
                 _ID_value = this._connection.Read(ID_keys.UNIT_PREFIX_FIXED_PARAMETER);
-                return (_ID_value & 0xFF0000)>> 16;
+                return (_ID_value & 0xFF0000) >> 16;
             }
         }
 
@@ -291,10 +330,10 @@ namespace HBM.WT.API.WTX
             }
         }
 
-/* 
-*In the following methods the different options for the single integer values are used to define and
-*interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
-*/
+        /* 
+        *In the following methods the different options for the single integer values are used to define and
+        *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
+        */
         public string NetGrossValueStringComment(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
@@ -302,13 +341,13 @@ namespace HBM.WT.API.WTX
 
             switch (decimals)
             {
-                case 0:  returnvalue = dvalue.ToString(); break;
-                case 1:  returnvalue = dvalue.ToString("0.0"); break;
-                case 2:  returnvalue = dvalue.ToString("0.00"); break;
-                case 3:  returnvalue = dvalue.ToString("0.000"); break;
-                case 4:  returnvalue = dvalue.ToString("0.0000"); break;
-                case 5:  returnvalue = dvalue.ToString("0.00000"); break;
-                case 6:  returnvalue = dvalue.ToString("0.000000"); break;
+                case 0: returnvalue = dvalue.ToString(); break;
+                case 1: returnvalue = dvalue.ToString("0.0"); break;
+                case 2: returnvalue = dvalue.ToString("0.00"); break;
+                case 3: returnvalue = dvalue.ToString("0.000"); break;
+                case 4: returnvalue = dvalue.ToString("0.0000"); break;
+                case 5: returnvalue = dvalue.ToString("0.00000"); break;
+                case 6: returnvalue = dvalue.ToString("0.000000"); break;
                 default: returnvalue = dvalue.ToString(); break;
             }
             return returnvalue;
@@ -373,7 +412,7 @@ namespace HBM.WT.API.WTX
             _connection.Write(ID_keys.LFT_SCALE_CALIBRATION_WEIGHT, calibrationValue);          // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
 
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_NOMINAL_WEIGHT);  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
-                       
+
             this._isCalibrating = true;
         }
 
@@ -399,7 +438,7 @@ namespace HBM.WT.API.WTX
         // Calculates the values for deadload and nominal load in d from the inputs in mV/V
         // and writes the into the WTX registers.
         public void Calculate(double preload, double capacity)
-        {          
+        {
             dPreload = 0;
             dNominalLoad = 0;
 
@@ -417,7 +456,7 @@ namespace HBM.WT.API.WTX
 
             _connection.Write(ID_keys.LWT_NOMINAL_VALUE, Convert.ToInt32(dNominalLoad));    // Nominal value = LWT_NOMINAL_VALUE = "2110/07" ; 
 
-            this._isCalibrating = true;           
+            this._isCalibrating = true;
         }
 
         public void MeasureZero()
@@ -447,55 +486,171 @@ namespace HBM.WT.API.WTX
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
         */
 
-        public override int ApplicationMode { get { return 1; } }                                  
+        public override int ApplicationMode { get { return 1; } }
         public override int Handshake { get { return 1; } }
         public override int Status { get { return 1; } }
 
-        public override int Input1 { get { return 1; } }           
-        public override int Input2 { get { return 1; } }          
-        public override int Input3 { get { return 1; } }          
-        public override int Input4 { get { return 1; } }           
-        public override int Output1 { get { return 1; } }          
-        public override int Output2 { get { return 1; } }         
-        public override int Output3 { get { return 1; } }          
-        public override int Output4 { get { return 1; } }         
+        public override int Input1
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_INPUT_1);
+            }
+        }         // ID = IM1
 
-        public override int LimitStatus1 { get { return 1; } }   
-        public override int LimitStatus2 { get { return 1; } }    
-        public override int LimitStatus3 { get { return 1; } }   
-        public override int LimitStatus4 { get { return 1; } }  
+        public override int Input2
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_INPUT_2);
+            }
+        }         // ID = IM2
 
-        public override int WeightMemDay { get { return 1; } }      
-        public override int WeightMemMonth { get { return 1; } }    
-        public override int WeightMemYear { get { return 1; } }      
+        public override int Input3
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_INPUT_3);
+            }
+        }         // ID = IM3        
+
+        public override int Input4
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_INPUT_4);
+            }
+        }         // ID = IM4          
+
+        public override int Output1
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_OUTPUT_1);
+            }
+        }        // ID = OM1
+
+        public override int Output2
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_OUTPUT_2);
+            }
+        }        // ID = OM2 
+
+        public override int Output3
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_OUTPUT_3);
+            }
+        }        // ID = OM3
+
+        public override int Output4
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FUNCTION_DIGITAL_OUTPUT_4);
+            }
+        }        // ID = OM4
+
+        public override int LimitStatus1
+        {
+            get
+            {
+                return _connection.Read(ID_keys.STATUS_DIGITAL_OUTPUT_1);
+            }
+        }   // ID = OS1 
+
+        public override int LimitStatus2
+        {
+            get
+            {
+                return _connection.Read(ID_keys.STATUS_DIGITAL_OUTPUT_2);
+            }
+        }   // ID = OS2
+
+        public override int LimitStatus3
+        {
+            get
+            {
+                return _connection.Read(ID_keys.STATUS_DIGITAL_OUTPUT_3);
+            }
+        }   // ID = OS3
+
+        public override int LimitStatus4
+        {
+            get
+            {
+                return _connection.Read(ID_keys.STATUS_DIGITAL_OUTPUT_4);
+            }
+        }   // ID = OS4
+
+
+        public override int WeightMemDay { get { return 1; } }
+        public override int WeightMemMonth { get { return 1; } }
+        public override int WeightMemYear { get { return 1; } }
         public override int WeightMemSeqNumber { get { return 1; } }
-        public override int WeightMemGross { get { return 1; } }       
-        public override int WeightMemNet { get { return 1; } }          
+        public override int WeightMemGross { get { return 1; } }
+        public override int WeightMemNet { get { return 1; } }
 
-        public override int CoarseFlow { get { return 1; } } 
-        public override int FineFlow { get { return 1; } }  
-        public override int Ready { get { return 1; } }    
-        public override int ReDosing { get { return 1; } } 
-        public override int Emptying { get { return 1; } } 
-        public override int FlowError { get { return 1; } } 
-        public override int Alarm { get { return 1; } }   
-        public override int AdcOverUnderload { get { return 1; } }    
-        public override int MaxDosingTime { get { return 1; } }     
-        public override int LegalTradeOp { get { return 1; } }  
-        public override int ToleranceErrorPlus { get { return 1; } }  
-        public override int ToleranceErrorMinus { get { return 1; } } 
-        public override int StatusInput1 { get { return 1; } }   
-        public override int GeneralScaleError { get { return 1; } }         
+        public override int CoarseFlow { get { return 1; } }
+        public override int FineFlow { get { return 1; } }
+        public override int Ready { get { return 1; } }
+        public override int ReDosing { get { return 1; } }
+        public override int Emptying { get { return 1; } }
+        public override int FlowError { get { return 1; } }
+        public override int Alarm { get { return 1; } }
+        public override int AdcOverUnderload { get { return 1; } }
 
-        public override int MeanValueDosingResults { get { return 1; } } 
-        public override int StandardDeviation { get { return 1; } }     
-        public override int TotalWeight { get { return 1; } }          
-        public override int FineFlowCutOffPoint { get { return 1; } }  
-        public override int CoarseFlowCutOffPoint { get { return 1; } }
-        public override int CurrentDosingTime { get { return 1; } }    
+        public override int MaxDosingTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.MAXIMUM_DOSING_TIME);
+            }
+        } // MDT
+
+        public override int LegalTradeOp { get { return 1; } }
+        public override int ToleranceErrorPlus { get { return 1; } }
+        public override int ToleranceErrorMinus { get { return 1; } }
+        public override int StatusInput1 { get { return 1; } }
+        public override int GeneralScaleError { get { return 1; } }
+
+        public override int MeanValueDosingResults
+        {
+            get
+            {
+                return _connection.Read(ID_keys.MEAN_VALUE_DOSING_RESULTS);
+            }
+        }    // SDM
+        public override int StandardDeviation
+        {
+            get
+            {
+                return _connection.Read(ID_keys.STANDARD_DEVIATION);
+            }
+        }         // SDS 
+
+        public override int TotalWeight { get { return 1; } }
+        public override int FineFlowCutOffPoint
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FINE_FLOW_CUT_OFF_POINT);
+            }
+        }       // FFD
+        public override int CoarseFlowCutOffPoint
+        {
+            get
+            {
+                return _connection.Read(ID_keys.COARSE_FLOW_CUT_OFF_POINT);
+            }
+        }     // CFD
+        public override int CurrentDosingTime { get { return 1; } }
         public override int CurrentCoarseFlowTime { get { return 1; } }
-        public override int CurrentFineFlowTime { get { return 1; } }   
-        public override int ParameterSetProduct { get { return 1; } }   
+        public override int CurrentFineFlowTime { get { return 1; } }
+        public override int ParameterSetProduct { get { return 1; } }
 
         public override int ManualTareValue { get; set; }
         public override int LimitValue1Input { get; set; }
@@ -520,32 +675,177 @@ namespace HBM.WT.API.WTX
 
         // Output words for the filler application: Not used so far
 
-        public override int ResidualFlowTime { get; set; }
+        public override int ResidualFlowTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.RESIDUAL_FLOW_TIME);
+            }
+            set { throw new NotImplementedException(); }
+        }    // RFT
+
         public override int TargetFillingWeight { get; set; }
         public override int CoarseFlowCutOffPointSet { get; set; }
         public override int FineFlowCutOffPointSet { get; set; }
-        public override int MinimumFineFlow { get; set; }
-        public override int OptimizationOfCutOffPoints { get; set; }
-        public override int MaximumDosingTime { get; set; }
+
+        public override int MinimumFineFlow
+        {
+            get
+            {
+                return _connection.Read(ID_keys.MINIMUM_FINE_FLOW);
+            }
+            set { throw new NotImplementedException(); }
+        }     //FFM
+        public override int OptimizationOfCutOffPoints
+        {
+            get
+            {
+                return _connection.Read(ID_keys.OPTIMIZATION);
+            }
+            set { throw new NotImplementedException(); }
+        }   // OSN
+        public override int MaximumDosingTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.STATUS_DIGITAL_OUTPUT_3);
+            }
+            set { throw new NotImplementedException(); }
+        }   // MDT
+
         public override int StartWithFineFlow { get; set; }
-        public override int CoarseLockoutTime { get; set; }
-        public override int FineLockoutTime { get; set; }
-        public override int TareMode { get; set; }
-        public override int UpperToleranceLimit { get; set; }
-        public override int LowerToleranceLimit { get; set; }
-        public override int MinimumStartWeight { get; set; }
-        public override int EmptyWeight { get; set; }
-        public override int TareDelay { get; set; }
-        public override int CoarseFlowMonitoringTime { get; set; }
-        public override int CoarseFlowMonitoring { get; set; }
-        public override int FineFlowMonitoring { get; set; }
-        public override int FineFlowMonitoringTime { get; set; }
+
+        public override int CoarseLockoutTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.COARSE_FLOW_TIME);
+            }
+            set { throw new NotImplementedException(); }
+        }    // CFT
+        public override int FineLockoutTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FINE_FLOW_TIME);
+            }
+            set { throw new NotImplementedException(); }
+        }      // Fine flow time = FFT
+        public override int TareMode
+        {
+            get
+            {
+                return _connection.Read(ID_keys.TARE_MODE);
+            }
+            set { throw new NotImplementedException(); }
+        }             // ID = TMD 
+
+        public override int UpperToleranceLimit
+        {
+            get
+            {
+                return _connection.Read(ID_keys.UPPER_TOLERANCE_LIMIT);
+            }
+            set { throw new NotImplementedException(); }
+        }      // UTL
+        public override int LowerToleranceLimit
+        {
+            get
+            {
+                return _connection.Read(ID_keys.LOWER_TOLERANCE_LOMIT);
+            }
+            set { throw new NotImplementedException(); }
+        }      // LTL
+
+        public override int MinimumStartWeight
+        {
+            get
+            {
+                return _connection.Read(ID_keys.MINIMUM_START_WEIGHT);
+            }
+            set { throw new NotImplementedException(); }
+        }        // MSW
+        public override int EmptyWeight
+        {
+            get
+            {
+                return _connection.Read(ID_keys.EMPTY_WEIGHT);
+            }
+            set { throw new NotImplementedException(); }
+        }  // EWT
+
+        public override int TareDelay
+        {
+            get
+            {
+                return _connection.Read(ID_keys.TARE_DELAY);
+            }
+            set { throw new NotImplementedException(); }
+        }    // TAD
+
+        public override int CoarseFlowMonitoringTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.COARSE_FLOW_MONITORING_TIME);
+            }
+            set { throw new NotImplementedException(); }
+        }  // CBT
+        public override int CoarseFlowMonitoring
+        {
+            get
+            {
+                return _connection.Read(ID_keys.COARSE_FLOW_MONITORING);
+            }
+            set { throw new NotImplementedException(); }
+        }      // CBK
+        public override int FineFlowMonitoring
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FINE_FLOW_MONITORING);
+            }
+            set { throw new NotImplementedException(); }
+        }        // FBK
+        public override int FineFlowMonitoringTime
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FINE_FLOW_MONITORING_TIME);
+            }
+            set { throw new NotImplementedException(); }
+        }    // FBT
+
         public override int DelayTimeAfterFineFlow { get; set; }
         public override int ActivationTimeAfterFineFlow { get; set; }
-        public override int SystematicDifference { get; set; }
-        public override int DownardsDosing { get; set; }
-        public override int ValveControl { get; set; }
-        public override int EmptyingMode { get; set; }
+
+        public override int SystematicDifference
+        {
+            get
+            {
+                return _connection.Read(ID_keys.SYSTEMATIC_DIFFERENCE);
+            }
+            set { throw new NotImplementedException(); }
+        }  // SYD
+
+        public override int DownwardsDosing { get; set; }
+
+        public override int ValveControl
+        {
+            get
+            {
+                return _connection.Read(ID_keys.VALVE_CONTROL);
+            }
+            set { throw new NotImplementedException(); }
+        }      // VCT
+        public override int EmptyingMode
+        {
+            get
+            {
+                return _connection.Read(ID_keys.EMPTYING_MODE);
+            }
+            set { throw new NotImplementedException(); }
+        }      // EMD
 
         public override IDeviceData DeviceValues { get; }
     }

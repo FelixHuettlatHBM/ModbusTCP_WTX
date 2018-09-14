@@ -65,6 +65,7 @@ namespace HBM.WT.API.WTX.Jet
         t_UnitValue_Fail,
         t_UnitValue_Success,
 
+        /*
         kg_UnitValue_Fail,
         kg_UnitValue_Success,
 
@@ -73,6 +74,19 @@ namespace HBM.WT.API.WTX.Jet
 
         lb_UnitValue_Fail,
         lb_UnitValue_Success,
+        */
+
+        NetGrossValueStringComment_4D_Fail,
+        NetGrossValueStringComment_4D_Success,
+
+        NetGrossValueStringComment_3D_Fail,
+        NetGrossValueStringComment_3D_Success,
+
+        NetGrossValueStringComment_2D_Fail,
+        NetGrossValueStringComment_2D_Success,
+
+        NetGrossValueStringComment_1D_Fail,
+        NetGrossValueStringComment_1D_Success,
 
     }
 
@@ -226,6 +240,14 @@ namespace HBM.WT.API.WTX.Jet
                 case Behavior.t_UnitValue_Fail:
                     return _mTokenBuffer[""];
 
+                case Behavior.NetGrossValueStringComment_4D_Success:
+                    return _mTokenBuffer[""];
+                    break;
+
+                case Behavior.NetGrossValueStringComment_4D_Fail:
+                    return "";
+                    break; 
+
                 default:
                     break;
 
@@ -345,14 +367,10 @@ namespace HBM.WT.API.WTX.Jet
             lock (_mTokenBuffer)
             {  
                     _mTokenBuffer.Add("6144/00", simulateJTokenInstance("6144/00", 12345)["value"]);   // Read 'gross value'
-
-                    _mTokenBuffer.Add("601A/01", simulateJTokenInstance("601A/01", 12345)["value"]);    // Read 'net value'
-    
-                    _mTokenBuffer.Add("6153/00", simulateJTokenInstance("6153/00", 12345)["value"]);   // Read 'weight moving'
+                    _mTokenBuffer.Add("601A/01", simulateJTokenInstance("601A/01", 12345)["value"]);   // Read 'net value'
+                    _mTokenBuffer.Add("6153/00", simulateJTokenInstance("6153/00", 12345)["value"]);   // Read 'weight moving detection'        
+                    _mTokenBuffer.Add("6012/01", simulateJTokenInstance("6012/01", 12345)["value"]);   // Read 'Weighing device 1 (scale) weight status'
               
-                    _mTokenBuffer.Add("6012/01", simulateJTokenInstance("6012/01", 12345)["value"]);  // Read 'weight moving'
-
-                    _mTokenBuffer.Add("6013/01", simulateJTokenInstance("6013/01", 12345)["value"]);
                     _mTokenBuffer.Add("SDO", simulateJTokenInstance("SDO", 12345)["value"]);
                     _mTokenBuffer.Add("FRS1", simulateJTokenInstance("FRS1", 12345)["value"]);
                     _mTokenBuffer.Add("NDS", simulateJTokenInstance("FRS1", 12345)["value"]);
@@ -365,6 +383,11 @@ namespace HBM.WT.API.WTX.Jet
                 // 02 = kg = 0x20000  = 100000000000000000
                 // 4B = g  = 0x4B0000 = 10010110000000000000000
                 // 4C = t  = 0x4C0000 = 10011000000000000000000
+
+                //_mTokenBuffer.Remove("6013/01");
+
+                _mTokenBuffer.Add("6013/01", simulateJTokenInstance("6013/01", 4)["value"]);   // Read 'Weight decimal point', f.e. = 4.
+
 
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }

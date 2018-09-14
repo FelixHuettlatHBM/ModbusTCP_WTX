@@ -2082,7 +2082,7 @@ namespace HBM.WT.API.WTX
             get { return this._outputData[39]; }
             set { this._outputData[39] = (ushort)value; }
         }
-        public override int DownardsDosing
+        public override int DownwardsDosing
         {
             get { return this._outputData[40]; }
             set { this._outputData[40] = (ushort)value; }

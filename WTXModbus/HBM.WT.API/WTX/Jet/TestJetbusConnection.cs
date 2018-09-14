@@ -373,23 +373,60 @@ namespace HBM.WT.API.WTX.Jet
               
                     _mTokenBuffer.Add("SDO", simulateJTokenInstance("SDO", 12345)["value"]);
                     _mTokenBuffer.Add("FRS1", simulateJTokenInstance("FRS1", 12345)["value"]);
-                    _mTokenBuffer.Add("NDS", simulateJTokenInstance("FRS1", 12345)["value"]);
+                    _mTokenBuffer.Add("NDS", simulateJTokenInstance("NDS", 12345)["value"]);
 
                     _mTokenBuffer.Add("6014/01", simulateJTokenInstance("6014/01", 0x4C0000)["value"]);    // Read Unit, prefix or fixed parameters - for t.
+                
+                    _mTokenBuffer.Add("6013/01", simulateJTokenInstance("6013/01", 4)["value"]);   // Read 'Weight decimal point', f.e. = 4.
+                    _mTokenBuffer.Add("IM1", simulateJTokenInstance("IM1", 12345)["value"]);
+                    _mTokenBuffer.Add("IM2", simulateJTokenInstance("IM2", 12345)["value"]);
+                    _mTokenBuffer.Add("IM3", simulateJTokenInstance("IM3", 12345)["value"]);
+                    _mTokenBuffer.Add("IM4", simulateJTokenInstance("IM4", 12345)["value"]);
 
-                // Hex and bin. for Unit testing: 
+                    _mTokenBuffer.Add("OM1", simulateJTokenInstance("OM1", 12345)["value"]); 
+                    _mTokenBuffer.Add("OM2", simulateJTokenInstance("OM2", 12345)["value"]);
+                    _mTokenBuffer.Add("OM3", simulateJTokenInstance("OM3", 12345)["value"]);
+                    _mTokenBuffer.Add("OM4", simulateJTokenInstance("OM4", 12345)["value"]);
 
-                // A6 = lb = 0x530000 = 10100110000000000000000
-                // 02 = kg = 0x20000  = 100000000000000000
-                // 4B = g  = 0x4B0000 = 10010110000000000000000
-                // 4C = t  = 0x4C0000 = 10011000000000000000000
+                    _mTokenBuffer.Add("OS1", simulateJTokenInstance("OS1", 12345)["value"]); 
+                    _mTokenBuffer.Add("OS2", simulateJTokenInstance("OS2", 12345)["value"]);
+                    _mTokenBuffer.Add("OS3", simulateJTokenInstance("OS3", 12345)["value"]);
+                    _mTokenBuffer.Add("OS4", simulateJTokenInstance("OS4", 12345)["value"]);
 
-                //_mTokenBuffer.Remove("6013/01");
+                    _mTokenBuffer.Add("CFT", simulateJTokenInstance("CFT", 12345)["value"]);
+                    _mTokenBuffer.Add("FFT", simulateJTokenInstance("FFT", 12345)["value"]);
+                    _mTokenBuffer.Add("TMD", simulateJTokenInstance("TMD", 12345)["value"]);
+                    _mTokenBuffer.Add("UTL", simulateJTokenInstance("UTL", 12345)["value"]);
+                    _mTokenBuffer.Add("LTL", simulateJTokenInstance("LTL", 12345)["value"]);
+                    _mTokenBuffer.Add("MSW", simulateJTokenInstance("MSW", 12345)["value"]);
+                    _mTokenBuffer.Add("EWT", simulateJTokenInstance("EWT", 12345)["value"]);
+                    _mTokenBuffer.Add("TAD", simulateJTokenInstance("TAD", 12345)["value"]);
+                    _mTokenBuffer.Add("CBT", simulateJTokenInstance("CBT", 12345)["value"]);
+                    _mTokenBuffer.Add("CBK", simulateJTokenInstance("CBK", 12345)["value"]);
+                    _mTokenBuffer.Add("FBK", simulateJTokenInstance("FBK", 12345)["value"]);
+                    _mTokenBuffer.Add("FBT", simulateJTokenInstance("FBT", 12345)["value"]);
+                    _mTokenBuffer.Add("SYD", simulateJTokenInstance("SYD", 12345)["value"]);
+                    _mTokenBuffer.Add("VCT", simulateJTokenInstance("VCT", 12345)["value"]);
+                    _mTokenBuffer.Add("EMD", simulateJTokenInstance("EMD", 12345)["value"]);
+                    _mTokenBuffer.Add("CFD", simulateJTokenInstance("CFD", 12345)["value"]);
+                    _mTokenBuffer.Add("FFD", simulateJTokenInstance("FFD", 12345)["value"]);
+                    _mTokenBuffer.Add("SDM", simulateJTokenInstance("SDM", 12345)["value"]);
+                    _mTokenBuffer.Add("SDS", simulateJTokenInstance("SDS", 12345)["value"]);
+                    _mTokenBuffer.Add("RFT", simulateJTokenInstance("RFT", 12345)["value"]);
 
-                _mTokenBuffer.Add("6013/01", simulateJTokenInstance("6013/01", 4)["value"]);   // Read 'Weight decimal point', f.e. = 4.
+                    _mTokenBuffer.Add("MDT", simulateJTokenInstance("MDT", 12345)["value"]);
+                    _mTokenBuffer.Add("FFM", simulateJTokenInstance("FFM", 12345)["value"]);
+                    _mTokenBuffer.Add("OSN", simulateJTokenInstance("OSN", 12345)["value"]);
 
 
-                BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
+        // Hex and bin. for Unit testing: 
+
+        // A6 = lb = 0x530000 = 10100110000000000000000
+        // 02 = kg = 0x20000  = 100000000000000000
+        // 4B = g  = 0x4B0000 = 10010110000000000000000
+        // 4C = t  = 0x4C0000 = 10011000000000000000000
+
+        BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
 

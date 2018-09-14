@@ -66,7 +66,7 @@ namespace HBM.WT.API.WTX
 
             public const string COARSE_FLOW_TIME = "CFT";
             public const string FINE_FLOW_TIME = "FFT";
-            public const string TARE_MODE = "TMD ";
+            public const string TARE_MODE = "TMD";
             public const string UPPER_TOLERANCE_LIMIT = "UTL";
             public const string LOWER_TOLERANCE_LOMIT = "LTL";
             public const string MINIMUM_START_WEIGHT = "MSW";
@@ -481,14 +481,11 @@ namespace HBM.WT.API.WTX
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.TARING);       // SCALE_COMMAND = "6002/01"
         }
 
+
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
         */
-
-        public override int ApplicationMode { get { return 1; } }
-        public override int Handshake { get { return 1; } }
-        public override int Status { get { return 1; } }
 
         public override int Input1
         {
@@ -586,23 +583,6 @@ namespace HBM.WT.API.WTX
             }
         }   // ID = OS4
 
-
-        public override int WeightMemDay { get { return 1; } }
-        public override int WeightMemMonth { get { return 1; } }
-        public override int WeightMemYear { get { return 1; } }
-        public override int WeightMemSeqNumber { get { return 1; } }
-        public override int WeightMemGross { get { return 1; } }
-        public override int WeightMemNet { get { return 1; } }
-
-        public override int CoarseFlow { get { return 1; } }
-        public override int FineFlow { get { return 1; } }
-        public override int Ready { get { return 1; } }
-        public override int ReDosing { get { return 1; } }
-        public override int Emptying { get { return 1; } }
-        public override int FlowError { get { return 1; } }
-        public override int Alarm { get { return 1; } }
-        public override int AdcOverUnderload { get { return 1; } }
-
         public override int MaxDosingTime
         {
             get
@@ -610,12 +590,6 @@ namespace HBM.WT.API.WTX
                 return _connection.Read(ID_keys.MAXIMUM_DOSING_TIME);
             }
         } // MDT
-
-        public override int LegalTradeOp { get { return 1; } }
-        public override int ToleranceErrorPlus { get { return 1; } }
-        public override int ToleranceErrorMinus { get { return 1; } }
-        public override int StatusInput1 { get { return 1; } }
-        public override int GeneralScaleError { get { return 1; } }
 
         public override int MeanValueDosingResults
         {
@@ -632,7 +606,6 @@ namespace HBM.WT.API.WTX
             }
         }         // SDS 
 
-        public override int TotalWeight { get { return 1; } }
         public override int FineFlowCutOffPoint
         {
             get
@@ -647,33 +620,7 @@ namespace HBM.WT.API.WTX
                 return _connection.Read(ID_keys.COARSE_FLOW_CUT_OFF_POINT);
             }
         }     // CFD
-        public override int CurrentDosingTime { get { return 1; } }
-        public override int CurrentCoarseFlowTime { get { return 1; } }
-        public override int CurrentFineFlowTime { get { return 1; } }
-        public override int ParameterSetProduct { get { return 1; } }
 
-        public override int ManualTareValue { get; set; }
-        public override int LimitValue1Input { get; set; }
-        public override int LimitValue1Mode { get; set; }
-        public override int LimitValue1ActivationLevelLowerBandLimit { get; set; }
-        public override int LimitValue1HysteresisBandHeight { get; set; }
-
-        // Output words for the standard application: Not used so far
-
-        public override int LimitValue2Source { get; set; }
-        public override int LimitValue2Mode { get; set; }
-        public override int LimitValue2ActivationLevelLowerBandLimit { get; set; }
-        public override int LimitValue2HysteresisBandHeight { get; set; }
-        public override int LimitValue3Source { get; set; }
-        public override int LimitValue3Mode { get; set; }
-        public override int LimitValue3ActivationLevelLowerBandLimit { get; set; }
-        public override int LimitValue3HysteresisBandHeight { get; set; }
-        public override int LimitValue4Source { get; set; }
-        public override int LimitValue4Mode { get; set; }
-        public override int LimitValue4ActivationLevelLowerBandLimit { get; set; }
-        public override int LimitValue4HysteresisBandHeight { get; set; }
-
-        // Output words for the filler application: Not used so far
 
         public override int ResidualFlowTime
         {
@@ -683,10 +630,6 @@ namespace HBM.WT.API.WTX
             }
             set { throw new NotImplementedException(); }
         }    // RFT
-
-        public override int TargetFillingWeight { get; set; }
-        public override int CoarseFlowCutOffPointSet { get; set; }
-        public override int FineFlowCutOffPointSet { get; set; }
 
         public override int MinimumFineFlow
         {
@@ -712,8 +655,6 @@ namespace HBM.WT.API.WTX
             }
             set { throw new NotImplementedException(); }
         }   // MDT
-
-        public override int StartWithFineFlow { get; set; }
 
         public override int CoarseLockoutTime
         {
@@ -816,9 +757,6 @@ namespace HBM.WT.API.WTX
             set { throw new NotImplementedException(); }
         }    // FBT
 
-        public override int DelayTimeAfterFineFlow { get; set; }
-        public override int ActivationTimeAfterFineFlow { get; set; }
-
         public override int SystematicDifference
         {
             get
@@ -846,6 +784,74 @@ namespace HBM.WT.API.WTX
             }
             set { throw new NotImplementedException(); }
         }      // EMD
+
+
+/*
+// Input values : To implement these you have to get the ID's from the manual and set them like:
+// this._connection.Read(ParameterKeys.GROSS_VALUE);
+*/
+
+        public override int ApplicationMode { get { return 1; } }
+        public override int Handshake { get { return 1; } }
+        public override int Status { get { return 1; } }
+
+        public override int WeightMemDay { get { return 1; } }
+        public override int WeightMemMonth { get { return 1; } }
+        public override int WeightMemYear { get { return 1; } }
+        public override int WeightMemSeqNumber { get { return 1; } }
+        public override int WeightMemGross { get { return 1; } }
+        public override int WeightMemNet { get { return 1; } }
+
+        public override int CoarseFlow { get { return 1; } }
+        public override int FineFlow { get { return 1; } }
+        public override int Ready { get { return 1; } }
+        public override int ReDosing { get { return 1; } }
+        public override int Emptying { get { return 1; } }
+        public override int FlowError { get { return 1; } }
+        public override int Alarm { get { return 1; } }
+        public override int AdcOverUnderload { get { return 1; } }
+
+        public override int LegalTradeOp { get { return 1; } }
+        public override int ToleranceErrorPlus { get { return 1; } }
+        public override int ToleranceErrorMinus { get { return 1; } }
+        public override int StatusInput1 { get { return 1; } }
+        public override int GeneralScaleError { get { return 1; } }
+
+        public override int CurrentDosingTime { get { return 1; } }
+        public override int CurrentCoarseFlowTime { get { return 1; } }
+        public override int CurrentFineFlowTime { get { return 1; } }
+        public override int ParameterSetProduct { get { return 1; } }
+
+        public override int ManualTareValue { get; set; }
+        public override int LimitValue1Input { get; set; }
+        public override int LimitValue1Mode { get; set; }
+        public override int LimitValue1ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue1HysteresisBandHeight { get; set; }
+
+        // Output words for the standard application: Not implemented so far
+
+        public override int LimitValue2Source { get; set; }
+        public override int LimitValue2Mode { get; set; }
+        public override int LimitValue2ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue2HysteresisBandHeight { get; set; }
+        public override int LimitValue3Source { get; set; }
+        public override int LimitValue3Mode { get; set; }
+        public override int LimitValue3ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue3HysteresisBandHeight { get; set; }
+        public override int LimitValue4Source { get; set; }
+        public override int LimitValue4Mode { get; set; }
+        public override int LimitValue4ActivationLevelLowerBandLimit { get; set; }
+        public override int LimitValue4HysteresisBandHeight { get; set; }
+
+        // Output words for the filler application: Not implemented so far
+
+        public override int TotalWeight { get { return 1; } }
+        public override int TargetFillingWeight { get; set; }
+        public override int CoarseFlowCutOffPointSet { get; set; }
+        public override int FineFlowCutOffPointSet { get; set; }
+        public override int StartWithFineFlow { get; set; }
+        public override int DelayTimeAfterFineFlow { get; set; }
+        public override int ActivationTimeAfterFineFlow { get; set; }
 
         public override IDeviceData DeviceValues { get; }
     }

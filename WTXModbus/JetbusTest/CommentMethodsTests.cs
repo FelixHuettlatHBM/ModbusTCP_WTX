@@ -15,8 +15,8 @@ namespace JetbusTest
     [TestFixture]
     public class CommentMethodsTests
     {
-        //private TestJetbusConnection _jetTestConnection;
-        //private WtxJet _wtxObj;
+        private TestJetbusConnection _jetTestConnection;
+        private WtxJet _wtxObj;
 
         private int value;
 
@@ -31,7 +31,7 @@ namespace JetbusTest
             }
         }
 
-        /*
+        
         // Test case source for reading values from the WTX120 device. 
         public static IEnumerable KG_UnitValueTestCases
         {
@@ -64,7 +64,7 @@ namespace JetbusTest
 
             }
         }
-        */
+        
 
         // Test case source for reading values from the WTX120 device. 
         public static IEnumerable NetGrossValueStringComment_1D_TestCase
@@ -106,18 +106,126 @@ namespace JetbusTest
             }
         }
 
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable StatusStringComment_TestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.StatusStringComment_Fail).ExpectedResult = 0;
+                yield return new TestCaseData(Behavior.StatusStringComment_Success).ExpectedResult = 1;
+            }
+        }
+
         [SetUp]
         public void Setup()
         {
             value = 0;
         }
 
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "StatusStringComment_TestCases")]
+        public void test_StatusStringComment_OK(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = _wtxObj.Status;
+
+            string Strvalue = _wtxObj.StatusStringComment(value);
+            
+            Assert.AreEqual("Execution OK!", Strvalue);
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "StatusStringComment_TestCases")]
+        public void test_StatusStringComment_ONGO(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = 1634168417;
+
+            string Strvalue = _wtxObj.StatusStringComment(value);
+
+            Assert.AreEqual("Execution on go!", Strvalue);
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "StatusStringComment_TestCases")]
+        public void test_StatusStringComment_ErrorE1(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = 826629983;
+
+            string Strvalue = _wtxObj.StatusStringComment(value);
+
+            Assert.AreEqual("Error 1, E1", Strvalue);
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "StatusStringComment_TestCases")]
+        public void test_StatusStringComment_ErrorE2(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = 843407199;
+
+            string Strvalue = _wtxObj.StatusStringComment(value);
+
+            Assert.AreEqual("Error 2, E2", Strvalue);
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "StatusStringComment_TestCases")]
+        public void test_StatusStringComment_ErrorE3(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = 860184415;
+
+            string Strvalue = _wtxObj.StatusStringComment(value);
+
+            Assert.AreEqual("Error 3, E3", Strvalue);
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "StatusStringComment_TestCases")]
+        public void test_StatusStringComment_Default(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = 111199990;
+
+            string Strvalue = _wtxObj.StatusStringComment(value);
+
+            Assert.AreEqual("Invalid status", Strvalue);
+        }
+
+
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_4D_TestCase")]
         public void test_NetGrossValueStringComment_4Decimals(Behavior behavior)
         {
-             TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-             WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+             _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -131,9 +239,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_3D_TestCase")]
         public void test_NetGrossValueStringComment_3Decimals(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -147,9 +255,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_2D_TestCase")]
         public void test_NetGrossValueStringComment_2Decimals(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -163,9 +271,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_1D_TestCase")]
         public void test_NetGrossValueStringComment_1Decimals(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -179,9 +287,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_1D_TestCase")]
         public void test_NetGrossValueStringComment_5Decimals(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -195,9 +303,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_1D_TestCase")]
         public void test_NetGrossValueStringComment_6Decimals(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -211,9 +319,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_1D_TestCase")]
         public void test_NetGrossValueStringComment_Default(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -227,9 +335,9 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "NetGrossValueStringComment_1D_TestCase")]
         public void test_NetGrossValueStringComment_0Decimals(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
@@ -244,18 +352,18 @@ namespace JetbusTest
         [Test, TestCaseSource(typeof(CommentMethodsTests), "T_UnitValueTestCases")]
         public void testUnit_t(Behavior behavior)
         {
-            TestJetbusConnection _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
-            WtxJet _wtxObj = new WtxJet(_jetTestConnection);
+            _wtxObj = new WtxJet(_jetTestConnection);
 
             _wtxObj.Connect(this.OnConnect, 100);
 
             value = _wtxObj.Unit;
 
-            Assert.AreEqual("t", _wtxObj.UnitStringComment());
+            Assert.AreEqual("t", _wtxObj.UnitStringComment(value));
         }     
 
-        /*
+        
         [Test, TestCaseSource(typeof(CommentMethodsTests), "KG_UnitValueTestCases")]
         public void testUnit_kg(Behavior behavior)
         {
@@ -265,9 +373,9 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = _wtxObj.Unit;
+            value = 0x02;
 
-            Assert.AreEqual("kg", _wtxObj.UnitStringComment());
+            Assert.AreEqual("kg", _wtxObj.UnitStringComment(value));
         }
 
         [Test, TestCaseSource(typeof(CommentMethodsTests), "G_UnitValueTestCases")]
@@ -279,9 +387,9 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = _wtxObj.Unit;
+            value = 0x4B;
 
-            Assert.AreEqual("g", _wtxObj.UnitStringComment());
+            Assert.AreEqual("g", _wtxObj.UnitStringComment(value));
         }
 
         [Test, TestCaseSource(typeof(CommentMethodsTests), "LB_UnitValueTestCases")]
@@ -293,17 +401,31 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = _wtxObj.Unit;
+            value = 0XA6;
 
-            Assert.AreEqual("lb", _wtxObj.UnitStringComment());
+            Assert.AreEqual("lb", _wtxObj.UnitStringComment(value));
         }
-        */
+
+        [Test, TestCaseSource(typeof(CommentMethodsTests), "LB_UnitValueTestCases")]
+        public void testUnit_default(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            value = 0XCC; // default value
+
+            Assert.AreEqual("error", _wtxObj.UnitStringComment(value));
+        }
+
 
         // A6 = lb = 0x530000 = 10100110000000000000000
         // 02 = kg = 0x20000  = 100000000000000000
         // 4B = g  = 0x4B0000 = 10010110000000000000000
         // 4C = t  = 0x4C0000 = 10011000000000000000000
-
+        // CC = default , error value 
         private void OnConnect(bool obj)
         {
             throw new NotImplementedException();

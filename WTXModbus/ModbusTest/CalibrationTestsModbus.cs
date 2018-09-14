@@ -24,7 +24,6 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-
         // The following 2 tests as a first draw : Implementation for the following 2 tests follows in the week from 27.08-31.08
 
         [Test, TestCaseSource(typeof(CalibrationTestsModbus), "CalculateCalibrationTestCases")]

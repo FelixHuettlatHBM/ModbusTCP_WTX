@@ -138,9 +138,9 @@ namespace WTXGUISimple
 
             textBox2.Invoke(new Action(() =>
             {
-                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
-                + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
-                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment();
+                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment(_wtxObj.Unit) + Environment.NewLine
+                + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment(_wtxObj.Unit) + Environment.NewLine
+                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment(_wtxObj.Unit);
                 textBox2.TextAlign = HorizontalAlignment.Right;
 
                 pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;

@@ -64,8 +64,7 @@ namespace HBM.WT.API.WTX.Jet
 
         t_UnitValue_Fail,
         t_UnitValue_Success,
-
-        /*
+ 
         kg_UnitValue_Fail,
         kg_UnitValue_Success,
 
@@ -74,7 +73,6 @@ namespace HBM.WT.API.WTX.Jet
 
         lb_UnitValue_Fail,
         lb_UnitValue_Success,
-        */
 
         NetGrossValueStringComment_4D_Fail,
         NetGrossValueStringComment_4D_Success,
@@ -87,6 +85,12 @@ namespace HBM.WT.API.WTX.Jet
 
         NetGrossValueStringComment_1D_Fail,
         NetGrossValueStringComment_1D_Success,
+
+        ReadFail_Attributes,
+        ReadSuccess_Attributes,
+
+        StatusStringComment_Fail,
+        StatusStringComment_Success,
 
     }
 
@@ -418,15 +422,19 @@ namespace HBM.WT.API.WTX.Jet
                     _mTokenBuffer.Add("FFM", simulateJTokenInstance("FFM", 12345)["value"]);
                     _mTokenBuffer.Add("OSN", simulateJTokenInstance("OSN", 12345)["value"]);
 
+                //StatusStringComment:
 
-        // Hex and bin. for Unit testing: 
+                _mTokenBuffer.Add("6002/02", simulateJTokenInstance("6002/02", 1801543519)["value"]);
 
-        // A6 = lb = 0x530000 = 10100110000000000000000
-        // 02 = kg = 0x20000  = 100000000000000000
-        // 4B = g  = 0x4B0000 = 10010110000000000000000
-        // 4C = t  = 0x4C0000 = 10011000000000000000000
 
-        BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
+                // Hex and bin. for Unit testing: 
+
+                // A6 = lb = 0x530000 = 10100110000000000000000
+                // 02 = kg = 0x20000  = 100000000000000000
+                // 4B = g  = 0x4B0000 = 10010110000000000000000
+                // 4C = t  = 0x4C0000 = 10011000000000000000000
+
+                BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
 

@@ -112,7 +112,18 @@ namespace JetbusTest
             }
         }
 
-        
+        // Test case source for reading values from the WTX120 device : Unit or prefix or fixed parameters 
+        public static IEnumerable ReadTestCases_Attributes
+        {
+            get
+            {
+
+                yield return new TestCaseData(Behavior.ReadFail_Attributes).ExpectedResult = 0;
+                yield return new TestCaseData(Behavior.ReadSuccess_Attributes).ExpectedResult = 1;
+            }
+        }
+
+
 
         [SetUp]
         public void Setup()
@@ -391,7 +402,7 @@ namespace JetbusTest
         }
 
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testInput1(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -405,7 +416,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM1"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testInput2(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -419,7 +430,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM2"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testInput3(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -433,7 +444,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM3"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testInput4(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -447,7 +458,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM4"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testOutput1(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -461,7 +472,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM1"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testOutput2(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -475,7 +486,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM2"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testOutput3(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -489,7 +500,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM3"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testOutput4(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -503,7 +514,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM4"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testLimitStatus1(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -517,7 +528,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS1"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testLimitStatus2(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -531,7 +542,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS2"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testLimitStatus3(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -546,7 +557,7 @@ namespace JetbusTest
         }
 
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testLimitStatus4(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -560,7 +571,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS4"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testMaxDosingTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -574,7 +585,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("MDT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testMeanValueDosingResults(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -588,7 +599,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SDM"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testStandardDeviation(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -602,7 +613,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SDS"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testFineFlowCutOffPoint(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -616,7 +627,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFD"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testCoarseFlowCutOffPoint(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -630,7 +641,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CFD"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testResidualFlowTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -644,7 +655,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("RFT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testMinimumFineFlow(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -658,7 +669,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFM"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testOptimizationOfCutOffPoints(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -672,7 +683,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OSN"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testMaximumDosingTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -686,7 +697,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("MDT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testCoarseLockoutTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -700,7 +711,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CFT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testFineLockoutTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -714,7 +725,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testTareMode(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -728,7 +739,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("TMD"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testUpperToleranceLimit(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -742,7 +753,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("UTL"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testLowerToleranceLimit(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -756,7 +767,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("LTL"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testMinimumStartWeight(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -770,7 +781,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("MSW"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testEmptyWeight(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -784,7 +795,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("EWT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testTareDelay(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -798,7 +809,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("TAD"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testCoarseFlowMonitoringTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -812,7 +823,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CBT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testCoarseFlowMonitoring(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -826,7 +837,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CBK"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testFineFlowMonitoring(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -840,7 +851,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FBK"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testFineFlowMonitoringTime(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -854,7 +865,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FBT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testSystematicDifference(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -868,7 +879,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SYD"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testValveControl(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -882,7 +893,7 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("VCT"));
         }
 
-        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testEmptyingMode(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -895,5 +906,20 @@ namespace JetbusTest
 
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("EMD"));
         }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testGetDataStr(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            testGrossValue = _wtxObj.NetValue;
+
+            Assert.IsNotNull(_wtxObj.GetDataStr);
+        }
+
     }
 }

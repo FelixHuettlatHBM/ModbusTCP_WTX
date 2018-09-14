@@ -41,6 +41,7 @@ namespace HBM.WT.API.WTX
             public const string WEIGHING_DEVICE_1_WEIGHT_STATUS = "6012/01";
 
             public const string SCALE_COMMAND = "6002/01";
+            public const string SCALE_COMMAND_STATUS = "6002/02";
 
             public const string LDW_DEAD_WEIGHT = "2110/06";
             public const string LWT_NOMINAL_VALUE = "2110/07";
@@ -150,15 +151,6 @@ namespace HBM.WT.API.WTX
             set
             {
                 this._dataReceived = value;
-            }
-        }
-
-
-        public string[] GetDataString
-        {
-            get
-            {
-                return this._dataStrArr;
             }
         }
 
@@ -354,9 +346,9 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public string UnitStringComment()
+        public string UnitStringComment(int unitParam)
         {
-            switch (this.Unit)
+            switch (unitParam)
             {
                 case 0x02:
                     return "kg";
@@ -371,17 +363,30 @@ namespace HBM.WT.API.WTX
             }
         }
 
-        public string StatusStringComment()
+        public string StatusStringComment(int statusParam)
         {
-            if (this.Status == 1)
-                return "Execution OK!";
-            else
-                if (this.Status != 1)
-                return "Execution not OK!";
-            else
-                return "error.";
+            switch(statusParam)
+            {
+                case 1801543519:
+                    return "Execution OK!";
 
+                case 1634168417:
+                    return "Execution on go!";
+
+                case 826629983:
+                    return "Error 1, E1";
+
+                case 843407199:
+                    return "Error 2, E2";
+
+                case 860184415:
+                    return "Error 3, E3";
+
+                default:
+                    return "Invalid status";
+            }
         }
+
         public override void Disconnect(Action<bool> DisconnectCompleted)
         {
             throw new NotImplementedException();
@@ -621,7 +626,6 @@ namespace HBM.WT.API.WTX
             }
         }     // CFD
 
-
         public override int ResidualFlowTime
         {
             get
@@ -786,14 +790,21 @@ namespace HBM.WT.API.WTX
         }      // EMD
 
 
-/*
-// Input values : To implement these you have to get the ID's from the manual and set them like:
-// this._connection.Read(ParameterKeys.GROSS_VALUE);
-*/
+        public override int Status
+        {
+            get
+            {
+                return _connection.Read(ID_keys.SCALE_COMMAND_STATUS);
+            }
+        }
+
+        /*
+        // Input values : To implement these you have to get the ID's from the manual and set them like:
+        // this._connection.Read(ParameterKeys.GROSS_VALUE);
+        */
 
         public override int ApplicationMode { get { return 1; } }
         public override int Handshake { get { return 1; } }
-        public override int Status { get { return 1; } }
 
         public override int WeightMemDay { get { return 1; } }
         public override int WeightMemMonth { get { return 1; } }

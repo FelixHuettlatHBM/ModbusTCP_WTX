@@ -75,7 +75,18 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        // Test case source for checking the values of the application mode: 
 
+        public static IEnumerable LogEventTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.LogEvent_Fail).Returns(false);
+                yield return new TestCaseData(Behavior.LogEvent_Success).Returns(true);
+            }
+        }
+
+        
 
         [SetUp]
         public void Setup()
@@ -207,6 +218,57 @@ namespace HBM.WT.API.WTX.Modbus
 
             //return WTXModbusObj.ApplicationMode;
         }
+
+        [Test, TestCaseSource(typeof(ReadTestsModbus), "LogEventTestCases")]
+        public bool LogEventGetTest(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WTXModbusObj = new WtxModbus(testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+            testConnection.IsConnected = true;
+
+            WTXModbusObj.Async_Call(0x00, callbackMethod);
+
+            Thread.Sleep(100);
+
+            if (testConnection._logObj.Args.Equals("Read successful: Registers have been read"))
+                return true;
+
+            else
+                if (testConnection._logObj.Args.Equals("Read failed : Registers have not been read"))
+                return false;
+
+            else
+                return false; 
+            //return WTXModbusObj.ApplicationMode;
+        }
+
+        [Test, TestCaseSource(typeof(ReadTestsModbus), "LogEventTestCases")]
+        public bool LogEventSetTest(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WTXModbusObj = new WtxModbus(testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+            testConnection.IsConnected = true;
+
+            WTXModbusObj.Async_Call(0x00, callbackMethod);
+
+            Thread.Sleep(100);
+
+            if (testConnection._logObj.Args.Equals("Read successful: Registers have been read"))
+                return true;
+
+            else
+                if (testConnection._logObj.Args.Equals("Read failed : Registers have not been read"))
+                return false;
+
+            else
+                return false;
+            //return WTXModbusObj.ApplicationMode;
+        }
+
 
         private void OnConnect(bool obj)
         {

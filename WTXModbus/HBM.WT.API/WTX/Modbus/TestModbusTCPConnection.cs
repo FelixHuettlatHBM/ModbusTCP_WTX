@@ -44,7 +44,18 @@ namespace HBM.WT.API.WTX.Modbus
 
          InStandardMode,
          InFillerMode,
-         
+
+         LogEvent_Fail,
+         LogEvent_Success,
+
+         t_UnitValue_Fail,
+         t_UnitValue_Success,
+         kg_UnitValue_Success,
+         kg_UnitValue_Fail,
+         g_UnitValue_Success,
+         g_UnitValue_Fail,
+         lb_UnitValue_Success,
+         lb_UnitValue_Fail,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -68,7 +79,9 @@ namespace HBM.WT.API.WTX.Modbus
         private string IP;
         private int interval;
 
-        private int numPoints; 
+        private int numPoints;
+
+        public LogEvent _logObj;
 
         public TestModbusTCPConnection(Behavior behavior,string ipAddress) 
         {
@@ -121,7 +134,7 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-        public new void Disconnect()
+        public void Disconnect()
         {
             switch (this.behavior)
             {
@@ -197,7 +210,10 @@ namespace HBM.WT.API.WTX.Modbus
                     {
                         _dataWTX[index] = 0x0000;
                     }
-                    BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
+
+                    _logObj = new LogEvent("Read failed : Registers have not been read");
+
+                    BusActivityDetection?.Invoke(this, _logObj);
                     
                     break;
 
@@ -212,9 +228,55 @@ namespace HBM.WT.API.WTX.Modbus
                     _dataWTX[4] = 0x0000;
                     _dataWTX[5] = 0x0000;
                     
-                    BusActivityDetection?.Invoke(this, new LogEvent("Read successful: Registers have been read"));
+                    _logObj = new LogEvent("Read successful: Registers have been read");
+                    BusActivityDetection?.Invoke(this, _logObj);
                     break;
 
+
+                case Behavior.t_UnitValue_Success:
+                    _dataWTX[5] = 0x100;
+                    break;
+                case Behavior.t_UnitValue_Fail:
+                    _dataWTX[5] = 0x0000;
+                    break;
+
+                case Behavior.kg_UnitValue_Success:
+                    _dataWTX[5] = 0x0000;
+                    break;
+
+                case Behavior.kg_UnitValue_Fail:
+                    _dataWTX[5] = 0xFFFF;
+                    break;
+
+                case Behavior.g_UnitValue_Success:
+                    _dataWTX[5] = 0x80;
+                    break;
+
+                case Behavior.g_UnitValue_Fail:
+                    _dataWTX[5] = 0x0000;
+                    break;
+
+                case Behavior.lb_UnitValue_Success:
+                    _dataWTX[5] = 0x180;
+                    break;
+
+                case Behavior.lb_UnitValue_Fail:
+                    _dataWTX[5] = 0x0000;
+                    break;
+
+
+                case Behavior.LogEvent_Fail:
+
+                    _logObj = new LogEvent("Read failed : Registers have not been read");
+                    BusActivityDetection?.Invoke(this, _logObj);
+                    break;
+
+                case Behavior.LogEvent_Success:
+
+                    _logObj = new LogEvent("Read successful: Registers have been read");
+                    BusActivityDetection?.Invoke(this, _logObj);
+
+                    break;
 
                 default:
                     /*
@@ -222,7 +284,8 @@ namespace HBM.WT.API.WTX.Modbus
                     {
                         _dataWTX[index] = 0;
                     }
-                    BusActivityDetection?.Invoke(this, new LogEvent("Read failed : Registers have not been read"));
+                    _logObj = new LogEvent("Read failed : Registers have not been read");
+                    BusActivityDetection?.Invoke(this, _logObj);
                     */
                     break; 
             }

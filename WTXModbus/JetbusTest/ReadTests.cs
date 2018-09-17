@@ -123,7 +123,16 @@ namespace JetbusTest
             }
         }
 
+        // Test case source for reading values from the WTX120 device : Have data been reveiceid? (Property 'isDataReceived') 
+        public static IEnumerable ReadTestCases_DataReceived
+        {
+            get
+            {
 
+                yield return new TestCaseData(Behavior.ReadFail_DataReceived).Returns(false);
+                yield return new TestCaseData(Behavior.ReadSuccess_DataReceived).Returns(true);
+            }
+        }
 
         [SetUp]
         public void Setup()
@@ -908,6 +917,34 @@ namespace JetbusTest
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testDelayTimeAfterFineFlow(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            testGrossValue = _wtxObj.DelayTimeAfterFineFlow;
+
+            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("DL1"));
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testActivationTimeAfterFineFlow(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            testGrossValue = _wtxObj.ActivationTimeAfterFineFlow;
+
+            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFL"));
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testGetDataStr(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -919,6 +956,40 @@ namespace JetbusTest
             testGrossValue = _wtxObj.NetValue;
 
             Assert.IsNotNull(_wtxObj.GetDataStr);
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_DataReceived")]
+        public bool testIsDataReceived(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            _wtxObj.IsDataReceived = false;
+
+            testGrossValue = _wtxObj.NetValue;
+
+            return _wtxObj.IsDataReceived;
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testGetDataUshort(Behavior behavior)
+        {
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            ushort[] testArray = new ushort[185];
+
+            for (int index = 0; index < testArray.Length; index++)
+                testArray[index] = 0;
+
+            Assert.AreEqual(testArray, _wtxObj.GetDataUshort);
+
         }
 
     }

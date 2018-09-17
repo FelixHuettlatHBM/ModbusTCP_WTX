@@ -89,6 +89,9 @@ namespace HBM.WT.API.WTX
             public const string MAXIMUM_DOSING_TIME = "MDT";
             public const string MINIMUM_FINE_FLOW = "FFM";
             public const string OPTIMIZATION = "OSN";
+
+            public const string FINEFLOW_PHASE_BEFORE_COARSEFLOW = "FFL";
+            public const string DELAY1_DOSING = "DL1";
         }
 
         public struct command_values
@@ -389,7 +392,7 @@ namespace HBM.WT.API.WTX
 
         public override void Disconnect(Action<bool> DisconnectCompleted)
         {
-            throw new NotImplementedException();
+            _connection.Disconnect();
         }
 
         public override bool isConnected
@@ -420,13 +423,7 @@ namespace HBM.WT.API.WTX
 
             this._isCalibrating = true;
         }
-
-        private void Write_DataReceived(IDeviceData obj)
-        {
-            // callback function : Do something 
-        }
-
-
+        
         public override ushort[] GetDataUshort
         {
             get
@@ -798,6 +795,30 @@ namespace HBM.WT.API.WTX
             }
         }
 
+        public override int DelayTimeAfterFineFlow
+        {
+            get
+            {
+                return _connection.Read(ID_keys.DELAY1_DOSING);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }      // ID = DL1 : Delay 1 für Dosieren. 
+
+        public override int ActivationTimeAfterFineFlow
+        {
+            get
+            {
+                return _connection.Read(ID_keys.FINEFLOW_PHASE_BEFORE_COARSEFLOW);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        } // ID = FFL : "Feinstromphase vor Grobstrom". 
+
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
@@ -861,8 +882,6 @@ namespace HBM.WT.API.WTX
         public override int CoarseFlowCutOffPointSet { get; set; }
         public override int FineFlowCutOffPointSet { get; set; }
         public override int StartWithFineFlow { get; set; }
-        public override int DelayTimeAfterFineFlow { get; set; }
-        public override int ActivationTimeAfterFineFlow { get; set; }
 
         public override IDeviceData DeviceValues { get; }
     }

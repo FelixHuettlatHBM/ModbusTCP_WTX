@@ -22,12 +22,21 @@ namespace HBM.WT.API.WTX.Jet
 
         private int testGrossValue;
 
-        public static IEnumerable TestCases
+        public static IEnumerable Connect_TestCases_Jetbus
         {
             get
             {
                 yield return new TestCaseData(Behavior.ConnectionSuccess).Returns(true);
                 yield return new TestCaseData(Behavior.ConnectionFail).Returns(false);
+            }
+        }
+
+        public static IEnumerable Disconnect_Testcases_Jetbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.DisconnectionSuccess).Returns(false);
+                yield return new TestCaseData(Behavior.DisconnectionFail).Returns(true);
             }
         }
 
@@ -40,8 +49,8 @@ namespace HBM.WT.API.WTX.Jet
             this.connectCompleted = true;
         }
 
-        [Test, TestCaseSource(typeof(ConnectTestsJetbus), "TestCases")]
-        public bool ConnectTestJetbus(Behavior behaviour)
+        [Test, TestCaseSource(typeof(ConnectTestsJetbus), "Connect_TestCases_Jetbus")]
+        public bool TestConnectJetbus(Behavior behaviour)
         {        
             testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
@@ -49,14 +58,28 @@ namespace HBM.WT.API.WTX.Jet
 
             this.connectCallbackCalled = false;
 
+            WTXJetObj.isConnected = false; 
+
             WTXJetObj.Connect(this.OnConnect, 100);
             
             return WTXJetObj.isConnected;
-            
-            //Assert.AreEqual(this.connectCallbackCalled, WTXJetObj.isConnected);
         }
 
+        [Test, TestCaseSource(typeof(ConnectTestsJetbus), "Disconnect_Testcases_Jetbus")]
+        public bool TestDisconnectJetbus(Behavior behaviour)
+        {
+            testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
 
+            WtxJet WTXJetObj = new WtxJet(testConnection);
+
+            this.connectCallbackCalled = false;
+            
+            WTXJetObj.Connect(this.OnConnect, 100);
+
+            WTXJetObj.Disconnect(this.OnDisconnect);
+
+            return WTXJetObj.isConnected;
+        }
 
         private void OnResponse(bool arg1, JToken arg2)
         {
@@ -71,6 +94,14 @@ namespace HBM.WT.API.WTX.Jet
         private void OnConnect(bool completed)
         {
             this.connectCallbackCalled = true; 
+
+            this.connectCompleted = completed;
+        }
+
+
+        private void OnDisconnect(bool completed)
+        {
+            this.connectCallbackCalled = false;
 
             this.connectCompleted = completed;
         }

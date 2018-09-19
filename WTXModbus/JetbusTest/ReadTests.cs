@@ -193,11 +193,12 @@ namespace JetbusTest
             Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
         }
 
+        
         private void OnConnect(bool obj)
         {
             throw new NotImplementedException();
         }
-
+        
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
         public void testGeneralWeightError(Behavior behavior)
         {

@@ -81,15 +81,6 @@ namespace HBM.WT.API.WTX.Jet
             return WTXJetObj.isConnected;
         }
 
-        private void OnResponse(bool arg1, JToken arg2)
-        {
-            throw new NotImplementedException();
-        }
-
-        private JToken OnSet(string arg1, JToken arg2)
-        {
-            throw new NotImplementedException();
-        }
 
         private void OnConnect(bool completed)
         {

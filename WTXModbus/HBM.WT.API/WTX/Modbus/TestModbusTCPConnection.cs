@@ -56,6 +56,21 @@ namespace HBM.WT.API.WTX.Modbus
          g_UnitValue_Fail,
          lb_UnitValue_Success,
          lb_UnitValue_Fail,
+
+         NetGrossValueStringComment_0D_Fail,
+         NetGrossValueStringComment_0D_Success,
+         NetGrossValueStringComment_1D_Fail,
+         NetGrossValueStringComment_1D_Success,
+         NetGrossValueStringComment_2D_Fail,
+         NetGrossValueStringComment_2D_Success,
+         NetGrossValueStringComment_3D_Fail,
+         NetGrossValueStringComment_3D_Success,
+         NetGrossValueStringComment_4D_Fail,
+         NetGrossValueStringComment_4D_Success,
+         NetGrossValueStringComment_5D_Fail,
+         NetGrossValueStringComment_5D_Success,
+         NetGrossValueStringComment_6D_Fail,
+         NetGrossValueStringComment_6D_Success,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -260,8 +275,37 @@ namespace HBM.WT.API.WTX.Modbus
                     _dataWTX[5] = 0x180;
                     break;
 
+
                 case Behavior.lb_UnitValue_Fail:
                     _dataWTX[5] = 0x0000;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_0D_Success:
+                    _dataWTX[5] = 0x0000;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_1D_Success:
+                    _dataWTX[5] = 0x10;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_2D_Success:
+                    _dataWTX[5] = 0x20;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_3D_Success:
+                    _dataWTX[5] = 0x30;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_4D_Success:
+                    _dataWTX[5] = 0x40;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_5D_Success:
+                    _dataWTX[5] = 0x50;
+                    break;
+
+                case Behavior.NetGrossValueStringComment_6D_Success:
+                    _dataWTX[5] = 0x60;
                     break;
 
 
@@ -269,6 +313,7 @@ namespace HBM.WT.API.WTX.Modbus
 
                     _logObj = new LogEvent("Read failed : Registers have not been read");
                     BusActivityDetection?.Invoke(this, _logObj);
+
                     break;
 
                 case Behavior.LogEvent_Success:

@@ -153,7 +153,7 @@ namespace HBM.WT.API.WTX.Modbus
 
             WTXModbusObj.Async_Call(0x2, OnWriteData);
 
-            Thread.Sleep(200);        // Include a short sleep time for the former asynchronous call (Async_Call). 
+            Thread.Sleep(300);        // Include a short sleep time for the former asynchronous call (Async_Call). 
 
             return testConnection.getCommand;
             // Alternative Assert.AreEqual(0x2, testConnection.getCommand);

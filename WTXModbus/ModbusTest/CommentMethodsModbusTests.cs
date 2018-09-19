@@ -125,6 +125,142 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable ScaleRangeStringComment_Range1_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ScaleRangeStringComment_Range1_Fail).Returns("Range 3");
+                yield return new TestCaseData(Behavior.ScaleRangeStringComment_Range1_Success).Returns("Range 1");
+            }
+        }
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable ScaleRangeStringComment_Range2_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ScaleRangeStringComment_Range2_Fail).Returns("Range 1");
+                yield return new TestCaseData(Behavior.ScaleRangeStringComment_Range2_Success).Returns("Range 2");
+            }
+        }
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable ScaleRangeStringComment_Range3_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ScaleRangeStringComment_Range3_Fail).Returns("Range 2");
+                yield return new TestCaseData(Behavior.ScaleRangeStringComment_Range3_Success).Returns("Range 3");
+            }
+        }
+
+
+
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable LimitStatusStringComment_Case0_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case0_Fail).Returns("Higher than safe load limit");
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case0_Success).Returns("Weight within limits");
+            }
+        }
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable LimitStatusStringComment_Case1_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case1_Fail).Returns("Higher than maximum capacity");
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case1_Success).Returns("Lower than minimum");
+            }
+        }
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable LimitStatusStringComment_Case2_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case2_Fail).Returns("Weight within limits");
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case2_Success).Returns("Higher than maximum capacity");
+            }
+        }
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable LimitStatusStringComment_Case3_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case3_Fail).Returns("Lower than minimum");
+                yield return new TestCaseData(Behavior.LimitStatusStringComment_Case3_Success).Returns("Higher than safe load limit");
+            }
+        }
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable WeightMovingStringComment_Case0_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WeightMovingStringComment_Case0_Fail).Returns("1=Weight is moving");
+                yield return new TestCaseData(Behavior.WeightMovingStringComment_Case0_Success).Returns("0=Weight is not moving.");
+            }
+        }
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable WeightMovingStringComment_Case1_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WeightMovingStringComment_Case1_Fail).Returns("0=Weight is not moving.");
+                yield return new TestCaseData(Behavior.WeightMovingStringComment_Case1_Success).Returns("1=Weight is moving");
+            }
+        }
+
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable WeightTypeStringComment_Case0_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case0_Fail).Returns("net");
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case0_Success).Returns("gross");
+            }
+        }
+
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable WeightTypeStringComment_Case1_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case1_Fail).Returns("gross");
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case1_Success).Returns("net");
+            }
+        }
+
+
+        /*
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable WeightTypeStringComment_Case0_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case0_Fail).ExpectedResult = 0;
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case0_Success).ExpectedResult = 1;
+            }
+        }
+
+
+        // Test case source for reading values from the WTX120 device. 
+        public static IEnumerable WeightTypeStringComment_Case1_TestCase_Modbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case1_Fail).ExpectedResult = 0;
+                yield return new TestCaseData(Behavior.WeightTypeStringComment_Case1_Success).ExpectedResult = 1;
+            }
+        }
+        */
+
 
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "T_UnitValueTestCases")]
         public int testUnit_t(Behavior behavior)
@@ -294,87 +430,159 @@ namespace HBM.WT.API.WTX.Modbus
         }
 
 
-
-
-        /*
-        public string NetGrossValueStringComment(int value, int decimals)
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "ScaleRangeStringComment_Range1_TestCase_Modbus")]
+        public string testModbus_ScaleRangeStringComment_Range1(Behavior behavior)
         {
-            double dvalue = value / Math.Pow(10, decimals);
-            string returnvalue = "";
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
-            switch (decimals)
-            {
-                case 0: returnvalue = dvalue.ToString(); break;
-                case 1: returnvalue = dvalue.ToString("0.0"); break;
-                case 2: returnvalue = dvalue.ToString("0.00"); break;
-                case 3: returnvalue = dvalue.ToString("0.000"); break;
-                case 4: returnvalue = dvalue.ToString("0.0000"); break;
-                case 5: returnvalue = dvalue.ToString("0.00000"); break;
-                case 6: returnvalue = dvalue.ToString("0.000000"); break;
-                default: returnvalue = dvalue.ToString(); break;
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-            }
-            return returnvalue;
+            return _wtxObj.ScaleRangeStringComment();
         }
 
-        public string WeightMovingStringComment()
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "ScaleRangeStringComment_Range2_TestCase_Modbus")]
+        public string testModbus_ScaleRangeStringComment_Range2(Behavior behavior)
         {
-            if (this.WeightMoving == 0)
-                return "0=Weight is not moving.";
-            else
-                if (this.WeightMoving == 1)
-                return "1=Weight is moving";
-            else
-                return "Error";
-        }
-        public string LimitStatusStringComment()
-        {
-            switch (this.LimitStatus)
-            {
-                case 0:
-                    return "Weight within limits";
-                case 1:
-                    return "Lower than minimum";
-                case 2:
-                    return "Higher than maximum capacity";
-                case 3:
-                    return "Higher than safe load limit";
-                default:
-                    return "Error.";
-            }
-        }
-        public string WeightTypeStringComment()
-        {
-            if (this.WeightType == 0)
-            {
-                this._isNet = false;
-                return "gross";
-            }
-            else
-                if (this.WeightType == 1)
-            {
-                this._isNet = true;
-                return "net";
-            }
-            else
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
-                return "error";
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.ScaleRangeStringComment();
         }
-        public string ScaleRangeStringComment()
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "ScaleRangeStringComment_Range3_TestCase_Modbus")]
+        public string testModbus_ScaleRangeStringComment_Range3(Behavior behavior)
         {
-            switch (this.ScaleRange)
-            {
-                case 0:
-                    return "Range 1";
-                case 1:
-                    return "Range 2";
-                case 2:
-                    return "Range 3";
-                default:
-                    return "error";
-            }
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.ScaleRangeStringComment();       
         }
-        */
+
+
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "LimitStatusStringComment_Case0_TestCase_Modbus")]
+        public string testModbus_LimitStatusStringComment_Case0(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.LimitStatusStringComment();
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "LimitStatusStringComment_Case1_TestCase_Modbus")]
+        public string testModbus_LimitStatusStringComment_Case1(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.LimitStatusStringComment();
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "LimitStatusStringComment_Case2_TestCase_Modbus")]
+        public string testModbus_LimitStatusStringComment_Case2(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.LimitStatusStringComment();
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "LimitStatusStringComment_Case3_TestCase_Modbus")]
+        public string testModbus_LimitStatusStringComment_Case3(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.LimitStatusStringComment();
+        }
+
+
+
+
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "WeightMovingStringComment_Case0_TestCase_Modbus")]
+        public string testModbus_WeightMovingStringComment_Case0(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+             return _wtxObj.WeightMovingStringComment();
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "WeightMovingStringComment_Case1_TestCase_Modbus")]
+        public string testModbus_WeightMovingStringComment_Case1(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.WeightMovingStringComment();        
+        }
+
+
+
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "WeightTypeStringComment_Case0_TestCase_Modbus")]
+        public string testModbus_WeightTypeStringComment_Case0(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.WeightTypeStringComment();
+            //Assert.AreEqual("gross", strValue);
+        }
+
+        [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "WeightTypeStringComment_Case1_TestCase_Modbus")]
+        public string testModbus_WeightTypeStringComment_Case1(Behavior behavior)
+        {
+            TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            return _wtxObj.WeightTypeStringComment();
+            //Assert.AreEqual("net", strValue);
+        }
 
         private void ReadDataReceived(IDeviceData obj)
         {

@@ -2141,10 +2141,7 @@ namespace HBM.WT.API.WTX
             if (this.WeightMoving == 0)
                 return "0=Weight is not moving.";
             else
-                if (this.WeightMoving == 1)
                 return "1=Weight is moving";
-            else
-                return "Error";
         }
         public string LimitStatusStringComment()
         {
@@ -2158,8 +2155,8 @@ namespace HBM.WT.API.WTX
                     return "Higher than maximum capacity";
                 case 3:
                     return "Higher than safe load limit";
-                default:
-                    return "Error.";
+                default: 
+                    return "Lower than minimum";
             }
         }
         public string WeightTypeStringComment()
@@ -2169,15 +2166,11 @@ namespace HBM.WT.API.WTX
                 this._isNet = false;
                 return "gross";
             }
-            else
-                if (this.WeightType == 1)
+            else // if (this.WeightType == 1)
             {
                 this._isNet = true;
                 return "net";
             }
-            else
-
-                return "error";
         }
         public string ScaleRangeStringComment()
         {

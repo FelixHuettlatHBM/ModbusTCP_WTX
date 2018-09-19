@@ -71,6 +71,33 @@ namespace HBM.WT.API.WTX.Modbus
          NetGrossValueStringComment_5D_Success,
          NetGrossValueStringComment_6D_Fail,
          NetGrossValueStringComment_6D_Success,
+
+         ScaleRangeStringComment_Range1_Fail,
+         ScaleRangeStringComment_Range1_Success,
+         ScaleRangeStringComment_Range2_Fail,
+         ScaleRangeStringComment_Range2_Success,
+         ScaleRangeStringComment_Range3_Fail,
+         ScaleRangeStringComment_Range3_Success,
+
+         LimitStatusStringComment_Case0_Fail,
+         LimitStatusStringComment_Case0_Success,
+         LimitStatusStringComment_Case1_Fail,
+         LimitStatusStringComment_Case1_Success,
+         LimitStatusStringComment_Case2_Fail,
+         LimitStatusStringComment_Case2_Success,
+         LimitStatusStringComment_Case3_Fail,
+         LimitStatusStringComment_Case3_Success,
+
+         WeightMovingStringComment_Case0_Fail,
+         WeightMovingStringComment_Case0_Success,
+         WeightMovingStringComment_Case1_Fail,
+         WeightMovingStringComment_Case1_Success,
+
+         WeightTypeStringComment_Case0_Fail,
+         WeightTypeStringComment_Case0_Success,
+         WeightTypeStringComment_Case1_Fail,
+         WeightTypeStringComment_Case1_Success,
+
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -308,6 +335,88 @@ namespace HBM.WT.API.WTX.Modbus
                     _dataWTX[5] = 0x60;
                     break;
 
+                // Simulate for testing 'Scale range': 
+
+                case Behavior.ScaleRangeStringComment_Range1_Fail:
+                    _dataWTX[4] = 0x200;
+                    break;
+
+                case Behavior.ScaleRangeStringComment_Range2_Fail:
+                    _dataWTX[4] = 0x0000;
+                    break;
+
+                case Behavior.ScaleRangeStringComment_Range3_Fail:
+                    _dataWTX[4] = 0x100;
+                    break;
+
+                case Behavior.ScaleRangeStringComment_Range1_Success:
+                    _dataWTX[4] = 0x0000;
+                    break;
+
+                case Behavior.ScaleRangeStringComment_Range2_Success:
+                    _dataWTX[4] = 0x100;
+                    break;
+
+                case Behavior.ScaleRangeStringComment_Range3_Success:
+                    _dataWTX[4] = 0x200;
+                    break;
+
+                // Simulate for testing 'Limit status': 
+
+                case Behavior.LimitStatusStringComment_Case0_Fail:
+                    _dataWTX[4] = 0xC;
+                    break;
+                case Behavior.LimitStatusStringComment_Case1_Fail:
+                    _dataWTX[4] = 0x8;
+                    break;
+                case Behavior.LimitStatusStringComment_Case2_Fail:
+                    _dataWTX[4] = 0x0000;
+                    break;
+                case Behavior.LimitStatusStringComment_Case3_Fail:
+                    _dataWTX[4] = 0x4;
+                    break;
+
+                case Behavior.LimitStatusStringComment_Case0_Success:
+                    _dataWTX[4] = 0x0000;
+                    break;
+                case Behavior.LimitStatusStringComment_Case1_Success:
+                    _dataWTX[4] = 0x4;
+                    break;
+                case Behavior.LimitStatusStringComment_Case2_Success:
+                    _dataWTX[4] = 0x8;
+                    break;
+                case Behavior.LimitStatusStringComment_Case3_Success:
+                    _dataWTX[4] = 0xC;
+                    break;
+
+                // Simulate for testing 'Weight moving': 
+                case Behavior.WeightMovingStringComment_Case0_Fail:
+                    _dataWTX[4] = 0x0010;
+                    break;
+                case Behavior.WeightMovingStringComment_Case1_Fail:
+                    _dataWTX[4] = 0x0000;
+                    break;
+                case Behavior.WeightMovingStringComment_Case0_Success:
+                    _dataWTX[4] = 0x0000;
+                    break;
+                case Behavior.WeightMovingStringComment_Case1_Success:
+                    _dataWTX[4] = 0x0010;
+                    break;
+
+                // Simulate for testing 'Weight type': 
+                case Behavior.WeightTypeStringComment_Case0_Fail:
+                    _dataWTX[4] = 0x0080;
+                    break;
+                case Behavior.WeightTypeStringComment_Case1_Fail:
+                    _dataWTX[4] = 0x0000;
+                    break;
+
+                case Behavior.WeightTypeStringComment_Case0_Success:
+                    _dataWTX[4] = 0x0000;
+                    break;
+                case Behavior.WeightTypeStringComment_Case1_Success:
+                    _dataWTX[4] = 0x0080;
+                    break;
 
                 case Behavior.LogEvent_Fail:
 

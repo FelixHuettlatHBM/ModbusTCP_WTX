@@ -9,7 +9,6 @@ namespace HBM.WT.API.WTX.Jet
     using HBM.WT.API.WTX.Modbus;
     
     using HBM.WT.API.WTX.Jet;
-    using Hbm.Devices.Jet;
 
     [TestFixture]
     public class ConnectTestsJetbus

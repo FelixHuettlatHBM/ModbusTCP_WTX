@@ -59,21 +59,6 @@ namespace WTXGUISimple
 
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisPassive;
 
-            // Setting the connection for Modbus: 
-            /*
-            s_Connection = new ModbusTCPConnection(ipAddr);
-
-            WTXObj = new Hbm.Wt.WTXInterface.WTX120_Modbus.WTX120_Jet(s_Connection);     // WTX120_Jet umändern 
-
-            WTXObj.getConnection.Connect();
-
-            timerInterval = 200; 
-
-            WTXObj.getConnection.Sending_interval = timerInterval;
-
-            initializeTimerModbus(timerInterval);
-            */
-
             // Setting the connection for jetbus: 
             if (args.Length > 0)
             {

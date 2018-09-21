@@ -156,7 +156,7 @@ namespace WtConsole
                                 Console.WriteLine("Unknown instruction - try again \n");
                             }
                         }
-                        catch (InterfaceException operationException)
+                        catch (Exception operationException)
                         {
 
                             Console.WriteLine("Exception is thrown: " + operationException.Message);
@@ -169,8 +169,8 @@ namespace WtConsole
 
                 }
             }
-            catch (InterfaceException e) {
-                Console.WriteLine("FAILED with error: " + e.Error);
+            catch (Exception e) {
+                Console.WriteLine("FAILED with error: " + e.Message);
                 Console.ReadLine();
             }
             /*

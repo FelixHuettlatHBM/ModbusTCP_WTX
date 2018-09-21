@@ -29,7 +29,7 @@ namespace HBM.WT.API
 
     }
 
-
+    /*
     /// <summary>
     /// Common Exception-type wich thrown if catch a Exception from spezific Interface
     /// </summary>
@@ -47,7 +47,7 @@ namespace HBM.WT.API
 
         public uint Error { get; }
     }
-
+    */
 
     
     

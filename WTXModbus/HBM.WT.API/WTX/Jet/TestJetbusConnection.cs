@@ -163,7 +163,8 @@ namespace HBM.WT.API.WTX.Jet
             }
             catch (FormatException)
             {
-                throw new InterfaceException(new FormatException("Invalid data format"), 0);
+                throw new Exception("Invalid data format");
+                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -358,7 +359,9 @@ namespace HBM.WT.API.WTX.Jet
                 //
                 // Timeout-Exception
                 //
-                throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
+
+                throw new TimeoutException("Interface Timeout - signal-handler will never reset");
+            //throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
             }
             if (_mException != null)
             {

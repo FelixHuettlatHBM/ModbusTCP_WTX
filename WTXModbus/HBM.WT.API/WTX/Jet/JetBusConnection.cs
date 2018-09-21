@@ -141,7 +141,8 @@ namespace HBM.WT.API.WTX.Jet
 
                             this.JetConnected = false;
                             JetBusException exception = new JetBusException(token);
-                            _mException = new InterfaceException(exception, (uint)exception.Error);
+                            _mException = new Exception(exception.Error.ToString());
+                            //_mException = new InterfaceException(exception, (uint)exception.Error);
                         }
 
                         this.JetConnected = true;
@@ -169,7 +170,8 @@ namespace HBM.WT.API.WTX.Jet
                     this.JetConnected = false;
 
                     JetBusException exception = new JetBusException(token);
-                    _mException = new InterfaceException(exception, (uint)exception.Error);
+                    _mException = new Exception(exception.Error.ToString());
+                    //_mException = new InterfaceException(exception, (uint)exception.Error);
                 }
                 //
                 // Wake up the waiting thread where call the construktor to connect the session
@@ -191,7 +193,8 @@ namespace HBM.WT.API.WTX.Jet
                 //
                 // Timeout-Exception
                 //
-                throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
+                throw new Exception("Interface Timeout - signal-handler will never reset");
+                //throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
             }
 
             this.JetConnected = true; 
@@ -258,8 +261,9 @@ namespace HBM.WT.API.WTX.Jet
                     return _mTokenBuffer[index.ToString()];
                 }
                 else {
-                    throw new InterfaceException(
-                        new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
+
+                    throw new Exception("Object does not exist in the object dictionary");
+                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                 }
             }
         }
@@ -286,7 +290,8 @@ namespace HBM.WT.API.WTX.Jet
             }
             catch (FormatException)
             {
-                throw new InterfaceException(new FormatException("Invalid data format"), 0);
+                throw new FormatException("Invalid data format");
+                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -300,7 +305,8 @@ namespace HBM.WT.API.WTX.Jet
                 return Convert.ToInt32(ReadObj(index));
             }
             catch (FormatException) {
-                throw new InterfaceException(new FormatException("Invalid data format"), 0);
+                throw new FormatException("Invalid data format");
+                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -309,7 +315,8 @@ namespace HBM.WT.API.WTX.Jet
                 return Convert.ToInt64(ReadObj(index));
             }
             catch (FormatException) {
-                throw new InterfaceException(new FormatException("Invalid data format"), 0);
+                throw new FormatException("Invalid data format");
+                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -335,7 +342,8 @@ namespace HBM.WT.API.WTX.Jet
                 JObject request = MPeer.Set(path.ToString(), value, delegate (bool success, JToken token) {
                     if (!success) {
                         JetBusException exception = new JetBusException(token);
-                        _mException = new InterfaceException(exception, (uint)exception.Error);
+                        _mException = new Exception(exception.Error.ToString());
+                        //_mException = new InterfaceException(exception, (uint)exception.Error);
                     }
 
                     this.JetConnected = true; 
@@ -348,7 +356,8 @@ namespace HBM.WT.API.WTX.Jet
                 }, _mTimeoutMs);
             }
             catch (Exception e) {
-                throw new InterfaceException(e, 0x01);
+                throw new Exception(0x01.ToString());
+                //throw new InterfaceException(e, 0x01);
             }
 
             //WaitOne();

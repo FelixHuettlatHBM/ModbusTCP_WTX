@@ -22,12 +22,11 @@ namespace WTXGUISimple
     public partial class LiveValue : Form
     {
 
-        const string DEFAULT_IP_ADDRESS = "172.19.103.8";
+        const string DEFAULT_IP_ADDRESS = "192.168.100.88";
 
         private static WtxJet _wtxObj;
 
         private static System.Timers.Timer _aTimer;
-        private static String _ipAddr;
         private static int _timerInterval;
 
         static JetBusConnection _sConnection;
@@ -53,28 +52,16 @@ namespace WTXGUISimple
 
         public LiveValue(string[] args)
         {
+            String _ipAddr;
+            string _uri;
+
             InitializeComponent();
-
-            textBox1.Text = DEFAULT_IP_ADDRESS;
-
+            
+            _ipAddr = DEFAULT_IP_ADDRESS;
+            
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisPassive;
 
-            // Setting the connection for Modbus: 
-            /*
-            s_Connection = new ModbusTCPConnection(ipAddr);
-
-            WTXObj = new Hbm.Wt.WTXInterface.WTX120_Modbus.WTX120_Jet(s_Connection);     // WTX120_Jet umändern 
-
-            WTXObj.getConnection.Connect();
-
-            timerInterval = 200; 
-
-            WTXObj.getConnection.Sending_interval = timerInterval;
-
-            initializeTimerModbus(timerInterval);
-            */
-
-            // Setting the connection for jetbus: 
+            // Setting the connection from command line
             if (args.Length > 0)
             {
                 if (args[0] == "modbus" || args[0] == "Modbus")
@@ -82,16 +69,25 @@ namespace WTXGUISimple
 
                 if (args[0] == "jet" || args[0] == "Jet")
                     toolStripStatusLabel2.Text = "Jetbus";
+
+
+            }
+
+            if (args.Length > 1)
+            {
+                _ipAddr = args[1];
             }
 
             _timerInterval = 200;
 
-            _ipAddr = "wss://" + args[1];
-            _ipAddr = _ipAddr + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen
+            textBox1.Text = _ipAddr;
+
+            _uri = "wss://" + _ipAddr;
+            _uri = _uri + ":443/jet/canopen";     // e.g. -jet 172.19.103.8:443/jet/canopen
 
             Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
 
-            _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
+            _sConnection = new JetBusConnection(_uri, "Administrator", "wtx", delegate { return true; });
 
             //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;
 

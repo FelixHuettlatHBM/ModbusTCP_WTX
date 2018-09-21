@@ -142,7 +142,6 @@ namespace HBM.WT.API.WTX.Jet
                             this.JetConnected = false;
                             JetBusException exception = new JetBusException(token);
                             _mException = new Exception(exception.Error.ToString());
-                            //_mException = new InterfaceException(exception, (uint)exception.Error);
                         }
 
                         this.JetConnected = true;
@@ -171,7 +170,6 @@ namespace HBM.WT.API.WTX.Jet
 
                     JetBusException exception = new JetBusException(token);
                     _mException = new Exception(exception.Error.ToString());
-                    //_mException = new InterfaceException(exception, (uint)exception.Error);
                 }
                 //
                 // Wake up the waiting thread where call the construktor to connect the session
@@ -194,7 +192,6 @@ namespace HBM.WT.API.WTX.Jet
                 // Timeout-Exception
                 //
                 throw new Exception("Interface Timeout - signal-handler will never reset");
-                //throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
             }
 
             this.JetConnected = true; 
@@ -263,7 +260,6 @@ namespace HBM.WT.API.WTX.Jet
                 else {
 
                     throw new Exception("Object does not exist in the object dictionary");
-                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                 }
             }
         }
@@ -291,7 +287,6 @@ namespace HBM.WT.API.WTX.Jet
             catch (FormatException)
             {
                 throw new FormatException("Invalid data format");
-                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -306,7 +301,6 @@ namespace HBM.WT.API.WTX.Jet
             }
             catch (FormatException) {
                 throw new FormatException("Invalid data format");
-                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -316,7 +310,6 @@ namespace HBM.WT.API.WTX.Jet
             }
             catch (FormatException) {
                 throw new FormatException("Invalid data format");
-                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -343,7 +336,6 @@ namespace HBM.WT.API.WTX.Jet
                     if (!success) {
                         JetBusException exception = new JetBusException(token);
                         _mException = new Exception(exception.Error.ToString());
-                        //_mException = new InterfaceException(exception, (uint)exception.Error);
                     }
 
                     this.JetConnected = true; 
@@ -351,13 +343,11 @@ namespace HBM.WT.API.WTX.Jet
                     _mSuccessEvent.Set();
 
                     BusActivityDetection?.Invoke(this, new LogEvent("Set data" + success ));
-                    // Alternative : BusActivityDetection?.Invoke(this, new NetConnectionEventArgs<string>(EventArgType.Message, "Set data: " + success)); 
 
                 }, _mTimeoutMs);
             }
             catch (Exception e) {
                 throw new Exception(0x01.ToString());
-                //throw new InterfaceException(e, 0x01);
             }
 
             //WaitOne();
@@ -413,9 +403,12 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         // This code added to correctly implement the disposable pattern.
-        public void Dispose() {
+        public void Dispose()
+        {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+
             Dispose(true);
+
             // uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }

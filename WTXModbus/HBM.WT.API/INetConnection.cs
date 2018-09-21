@@ -28,27 +28,5 @@ namespace HBM.WT.API
         int SendingInterval { get; set; }
 
     }
-
-    /*
-    /// <summary>
-    /// Common Exception-type wich thrown if catch a Exception from spezific Interface
-    /// </summary>
-    public class InterfaceException : Exception
-    {
-        public InterfaceException(Exception innerException, uint error) : base(innerException.Message, innerException)
-        {
-            Error = error;
-        }
-
-        public InterfaceException(uint error)
-        {
-            Error = error;
-        }
-
-        public uint Error { get; }
-    }
-    */
-
-    
     
 }

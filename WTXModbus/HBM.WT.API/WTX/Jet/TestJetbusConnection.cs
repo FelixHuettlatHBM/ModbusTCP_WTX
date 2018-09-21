@@ -164,7 +164,6 @@ namespace HBM.WT.API.WTX.Jet
             catch (FormatException)
             {
                 throw new Exception("Invalid data format");
-                //throw new InterfaceException(new FormatException("Invalid data format"), 0);
             }
         }
 
@@ -178,7 +177,6 @@ namespace HBM.WT.API.WTX.Jet
                         return _mTokenBuffer[index.ToString()];
                     break;
                 case Behavior.ReadGrossValueFail:
-                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                     return _mTokenBuffer[""];
                     break;
 
@@ -187,7 +185,6 @@ namespace HBM.WT.API.WTX.Jet
                         return _mTokenBuffer[index.ToString()];
                     break;
                 case Behavior.ReadNetValueFail:
-                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                     return _mTokenBuffer[""];
                     break;
 
@@ -196,7 +193,6 @@ namespace HBM.WT.API.WTX.Jet
                         return _mTokenBuffer[index.ToString()];
                     break;
                 case Behavior.ReadFail_WEIGHING_DEVICE_1_WEIGHT_STATUS:
-                    //throw new InterfaceException(new KeyNotFoundException("Object does not exist in the object dictionary"), 0);
                     return _mTokenBuffer[""];
                     break;
 
@@ -361,7 +357,6 @@ namespace HBM.WT.API.WTX.Jet
                 //
 
                 throw new TimeoutException("Interface Timeout - signal-handler will never reset");
-            //throw new InterfaceException(new TimeoutException("Interface Timeout - signal-handler will never reset"), 0x1);
             }
             if (_mException != null)
             {

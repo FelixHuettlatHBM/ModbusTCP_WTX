@@ -87,6 +87,8 @@ namespace WTXGUISimple
             _timerInterval = 200;
 
             _ipAddr = "wss://" + args[1];
+            _ipAddr = _ipAddr + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen
+
             Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
 
             _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });

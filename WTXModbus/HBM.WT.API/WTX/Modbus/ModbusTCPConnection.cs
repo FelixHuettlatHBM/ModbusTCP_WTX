@@ -16,7 +16,7 @@ namespace HBM.WT.API.WTX.Modbus
     ///     The data exchange for reading a register between class "Modbus_TCP" and class "WTX_120" is event-based.
     ///     This class publishes the event (MessageEvent) and read the register, afterwards it will be sent back to WTX120.
     /// </summary>
-    public class ModbusTcpConnection : INetConnection //IModbusConnection
+    public class ModbusTcpConnection : INetConnection 
     {
         private TcpClient _client;
         private bool _connected;     

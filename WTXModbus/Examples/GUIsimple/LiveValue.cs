@@ -96,7 +96,6 @@ namespace WTXModbusGUIsimple
             this.Connect();
         }
 
-
         private void LiveValue_Shown(object sender, EventArgs e)
         {
             this.Connect();

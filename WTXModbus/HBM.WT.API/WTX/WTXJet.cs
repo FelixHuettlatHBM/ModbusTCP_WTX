@@ -92,6 +92,8 @@ namespace HBM.WT.API.WTX
 
             public const string FINEFLOW_PHASE_BEFORE_COARSEFLOW = "FFL";
             public const string DELAY1_DOSING = "DL1";
+
+            public const string LIMIT_VALUE = "2020/25";
         }
 
         public struct command_values
@@ -819,6 +821,60 @@ namespace HBM.WT.API.WTX
             }
         } // ID = FFL : "Feinstromphase vor Grobstrom". 
 
+
+        // Limit values 1-4: 
+        public override int LimitValue1Input
+        {
+            get
+            {
+                int value = _connection.Read(ID_keys.LIMIT_VALUE);
+                return (value & 0x1);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override int LimitValue2Source
+        {
+            get
+            {
+                int value = _connection.Read(ID_keys.LIMIT_VALUE);
+                return (value & 0x2)>>1;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override int LimitValue3Source
+        {
+            get
+            {
+                int value = _connection.Read(ID_keys.LIMIT_VALUE);
+                return (value & 0x4) >> 2;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override int LimitValue4Source
+        {
+            get
+            {
+                int value = _connection.Read(ID_keys.LIMIT_VALUE);
+                return (value & 0x8) >> 3;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
@@ -855,22 +911,18 @@ namespace HBM.WT.API.WTX
         public override int ParameterSetProduct { get { return 1; } }
 
         public override int ManualTareValue { get; set; }
-        public override int LimitValue1Input { get; set; }
         public override int LimitValue1Mode { get; set; }
         public override int LimitValue1ActivationLevelLowerBandLimit { get; set; }
         public override int LimitValue1HysteresisBandHeight { get; set; }
 
         // Output words for the standard application: Not implemented so far
 
-        public override int LimitValue2Source { get; set; }
         public override int LimitValue2Mode { get; set; }
         public override int LimitValue2ActivationLevelLowerBandLimit { get; set; }
-        public override int LimitValue2HysteresisBandHeight { get; set; }
-        public override int LimitValue3Source { get; set; }
+        public override int LimitValue2HysteresisBandHeight { get; set; }        
         public override int LimitValue3Mode { get; set; }
         public override int LimitValue3ActivationLevelLowerBandLimit { get; set; }
         public override int LimitValue3HysteresisBandHeight { get; set; }
-        public override int LimitValue4Source { get; set; }
         public override int LimitValue4Mode { get; set; }
         public override int LimitValue4ActivationLevelLowerBandLimit { get; set; }
         public override int LimitValue4HysteresisBandHeight { get; set; }

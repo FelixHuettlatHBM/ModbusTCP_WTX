@@ -86,6 +86,15 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        public static IEnumerable WriteHandshakeTestModbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteHandshakeTestSuccess).Returns(0x1);
+                yield return new TestCaseData(Behavior.WriteHandshakeTestFail).Returns(0x0);
+            }
+        }
+
 
         [SetUp]
         public void Setup()
@@ -123,6 +132,25 @@ namespace HBM.WT.API.WTX.Modbus
             _dataReadSuccess[17] = 0;          // Status
 
         }
+
+        // Test for handshake:
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteHandshakeTestModbus")]
+        public int WriteHandshakeTest(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            WTXModbusObj = new WtxModbus(testConnection, 200);
+
+            WTXModbusObj.Connect(this.OnConnect, 100);
+            WTXModbusObj.isConnected = true;
+
+            WTXModbusObj.Async_Call(0x1, callbackMethod);
+
+            return testConnection.getCommand;
+            // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
+        }
+
+
         // Test for writing : Tare 
         [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteSyncTestModbus")]
         public int WriteSyncTest(Behavior behavior)

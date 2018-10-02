@@ -98,6 +98,9 @@ namespace HBM.WT.API.WTX.Modbus
          WeightTypeStringComment_Case1_Fail,
          WeightTypeStringComment_Case1_Success,
 
+         WriteHandshakeTestSuccess,
+         WriteHandshakeTestFail,
+
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -464,6 +467,19 @@ namespace HBM.WT.API.WTX.Modbus
             
             switch (this.behavior)
             {
+
+                case Behavior.WriteHandshakeTestSuccess:
+                    _dataWTX[4] = 0x4000;
+                    Thread.Sleep(3000);
+                    _dataWTX[4] = 0x0000;
+                    break;
+
+                case Behavior.WriteHandshakeTestFail:
+                    _dataWTX[4] = 0x0000;
+                    Thread.Sleep(3000);
+                    _dataWTX[4] = 0x0000;
+                    break;
+
                 case Behavior.InFillerMode:
                     //data word for a application mode being in filler mode: Bit .0-1 = 1 || 2 (2 is the given value for filler mode according to the manual, but actually it is 1.)
                     _dataWTX[5] = 0x1;

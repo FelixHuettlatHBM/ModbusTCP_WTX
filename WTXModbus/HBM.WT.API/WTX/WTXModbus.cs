@@ -274,9 +274,6 @@ namespace HBM.WT.API.WTX
             this._callbackObj(this);         // Neu : 21.11.2017         Interface übergeben. 
         }
 
-        private ushort arrayElement1; // For test purpose
-        private ushort arrayElement2; // For test purpose
-
         public void WriteOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this._callbackObj = callbackParam;

@@ -137,6 +137,11 @@ namespace HBM.WT.API.WTX.Modbus
          ManualRedosingMethodTestSuccess,
          ManualRedosingMethodTestFail,
 
+         WriteS32ArrayTestSuccess,
+         WriteS32ArrayTestFail,
+ 
+         WriteU16ArrayTestSuccess,
+         WriteU16ArrayTestFail,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -159,6 +164,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         private string IP;
         private int interval;
+        private int wordNumberIndex; 
 
         private int numPoints;
 
@@ -511,6 +517,14 @@ namespace HBM.WT.API.WTX.Modbus
         {
             switch (this.behavior)
             {
+                case Behavior.WriteU16ArrayTestSuccess:
+                    this.wordNumberIndex = (ushort)index;
+                    this.arrayElement1 = (ushort)data;
+                    break;
+                case Behavior.WriteU16ArrayTestFail:
+                    this.wordNumberIndex = 0;
+                    this.arrayElement1 = 0;
+                    break;
                 case Behavior.GrosMethodTestSuccess:
                     command = data;
                     break;
@@ -659,12 +673,22 @@ namespace HBM.WT.API.WTX.Modbus
 
             switch (this.behavior)
             {
+                case Behavior.WriteS32ArrayTestSuccess:
+                        this.wordNumberIndex = index;
+                        this.arrayElement1 = data[0];
+                        this.arrayElement2 = data[1];
+                    break;
 
-            case Behavior.CalibrationFail:
-                    this.arrayElement1 = 0;
-                    this.arrayElement2 = 0;
+                case Behavior.WriteS32ArrayTestFail:
+                        this.wordNumberIndex = 0;
+                        this.arrayElement1 = 0;
+                        this.arrayElement2 = 0;
+                    break;
 
-            break;
+                case Behavior.CalibrationFail:
+                        this.arrayElement1 = 0;
+                        this.arrayElement2 = 0;
+                   break;
 
                 case Behavior.CalibrationSuccess:
 
@@ -717,6 +741,14 @@ namespace HBM.WT.API.WTX.Modbus
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        public int getWordNumber
+        {
+            get
+            {
+                return this.wordNumberIndex;
+            }
         }
 
         public ushort getArrElement1

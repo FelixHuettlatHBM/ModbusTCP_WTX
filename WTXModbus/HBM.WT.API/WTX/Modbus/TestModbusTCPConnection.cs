@@ -101,6 +101,42 @@ namespace HBM.WT.API.WTX.Modbus
          WriteHandshakeTestSuccess,
          WriteHandshakeTestFail,
 
+         GrosMethodTestSuccess,
+         GrosMethodTestFail, 
+
+         TareMethodTestSuccess,
+         TareMethodTestFail,
+
+         ZeroMethodTestSuccess,
+         ZeroMethodTestFail,
+
+         AdjustingZeroMethodSuccess,
+         AdjustingZeroMethodFail,
+
+         AdjustNominalMethodTestSuccess,
+         AdjustNominalMethodTestFail,
+
+         ActivateDataMethodTestSuccess,
+         ActivateDataMethodTestFail,
+
+         ManualTaringMethodTestSuccess,
+         ManualTaringMethodTestFail,
+
+         ClearDosingResultsMethodTestSuccess,
+         ClearDosingResultsMethodTestFail,
+
+         AbortDosingMethodTestSuccess,
+         AbortDosingMethodTestFail,
+
+         StartDosingMethodTestSuccess,
+         StartDosingMethodTestFail,
+ 
+         RecordWeightMethodTestSuccess,
+         RecordWeightMethodTestFail,
+
+         ManualRedosingMethodTestSuccess,
+         ManualRedosingMethodTestFail,
+
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -212,6 +248,15 @@ namespace HBM.WT.API.WTX.Modbus
 
             switch (this.behavior)
             {
+                case Behavior.WriteHandshakeTestSuccess:
+
+                    if (_dataWTX[4] == 0x0000)
+                        _dataWTX[4] = 0x4000;
+                    else
+                        if (_dataWTX[4] == 0x4000)
+                        _dataWTX[4] = 0x0000;
+                    break;
+            
                 case Behavior.InFillerMode:
 
                     //data word for a application mode being in filler mode: Bit .0-1 = 1 || 2 (2 is the given value for filler mode according to the manual, but actually it is 1.)
@@ -464,20 +509,98 @@ namespace HBM.WT.API.WTX.Modbus
 
         public void Write(object index, int data)
         {
-            
             switch (this.behavior)
             {
-
+                case Behavior.GrosMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.GrosMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.TareMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.TareMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.ZeroMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.ZeroMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.AdjustingZeroMethodSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.AdjustingZeroMethodFail:
+                    this.command = 0;
+                    break;
+                case Behavior.AdjustNominalMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.AdjustNominalMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.ActivateDataMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.ActivateDataMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.ManualTaringMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.ManualTaringMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.ClearDosingResultsMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.ClearDosingResultsMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.AbortDosingMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.AbortDosingMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.StartDosingMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.StartDosingMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.RecordWeightMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.RecordWeightMethodTestFail:
+                    command = 0;
+                    break;
+                case Behavior.ManualRedosingMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.ManualRedosingMethodTestFail:
+                    command = 0;
+                    break;
                 case Behavior.WriteHandshakeTestSuccess:
-                    _dataWTX[4] = 0x4000;
-                    Thread.Sleep(3000);
-                    _dataWTX[4] = 0x0000;
+
+                    if(_dataWTX[4]==0x0000)
+                    {
+                        command = data;
+                        _dataWTX[4] = 0x4000;
+                    }
+                    else
+                    if(_dataWTX[4]==0x4000)
+                    {
+                        command = 0x0;
+                        _dataWTX[4] = 0x0000;
+                    }
+                   
                     break;
 
                 case Behavior.WriteHandshakeTestFail:
-                    _dataWTX[4] = 0x0000;
-                    Thread.Sleep(3000);
-                    _dataWTX[4] = 0x0000;
+                    _dataWTX[4] = 0x0000;                  
                     break;
 
                 case Behavior.InFillerMode:

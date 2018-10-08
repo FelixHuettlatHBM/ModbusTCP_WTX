@@ -215,7 +215,16 @@ namespace HBM.WT.API.WTX.Modbus
                 yield return new TestCaseData(Behavior.WriteU16ArrayTestFail).Returns(false);
             }
         }
-       
+
+        public static IEnumerable ResetTimerTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ResetTimerTestSuccess).Returns(500);
+                //yield return new TestCaseData(Behavior.ResetTimerTestFail).Returns(200);
+            }
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -250,6 +259,23 @@ namespace HBM.WT.API.WTX.Modbus
             _dataReadSuccess[15] = 0; //2;     // Unit
             _dataReadSuccess[16] = 0;          // Handshake
             _dataReadSuccess[17] = 0;          // Status
+
+        }
+
+        // Test for method : Zeroing
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ZeroMethodTestCases")]
+        public int ZeroMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.taring(callbackMethod);
+
+            return testConnection.getCommand;
+            //Assert.AreEqual(0x40, _wtxObj.getCommand);
 
         }
 
@@ -445,23 +471,6 @@ namespace HBM.WT.API.WTX.Modbus
 
         }
 
-        // Test for method : Zeroing
-        [Test, TestCaseSource(typeof(WriteTestsModbus), "ZeroMethodTestCases")]
-        public int ZeroMethodTestModbus(Behavior behavior)
-        {
-            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            _wtxObj = new WtxModbus(testConnection, 200);
-
-            _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
-
-            _wtxObj.taring(callbackMethod);
-
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x40, _wtxObj.getCommand);
-
-        }
-
         // Test for method : Adjusting zero
         [Test, TestCaseSource(typeof(WriteTestsModbus), "AdjustingZeroMethodTestCases")]
         public int AdjustingZeroMethodTestModbus(Behavior behavior)
@@ -608,7 +617,6 @@ namespace HBM.WT.API.WTX.Modbus
             else
                 return false;
 
-
             //return _wtxObj.getCommand;
             //Assert.AreEqual(0x8000, _wtxObj.getCommand);
         }
@@ -663,6 +671,20 @@ namespace HBM.WT.API.WTX.Modbus
 
         }
 
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ResetTimerTestCases")]
+        public int ResetTimerTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.ResetTimer(500);
+
+            return (int)_wtxObj._aTimer.Interval;
+            //Assert.AreEqual(_wtxObj._aTimer.Interval, 500);
+        }
 
     }
 }

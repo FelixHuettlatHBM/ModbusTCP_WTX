@@ -142,6 +142,9 @@ namespace HBM.WT.API.WTX.Modbus
  
          WriteU16ArrayTestSuccess,
          WriteU16ArrayTestFail,
+
+         ResetTimerTestSuccess,
+         //ResetTimerTestFail,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -526,22 +529,22 @@ namespace HBM.WT.API.WTX.Modbus
                     this.arrayElement1 = 0;
                     break;
                 case Behavior.GrosMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.GrosMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.TareMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.TareMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.ZeroMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.ZeroMethodTestFail:
-                    command = 0;
+                    //this.command = 0;
                     break;
                 case Behavior.AdjustingZeroMethodSuccess:
                     this.command = data;
@@ -550,64 +553,64 @@ namespace HBM.WT.API.WTX.Modbus
                     this.command = 0;
                     break;
                 case Behavior.AdjustNominalMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.AdjustNominalMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.ActivateDataMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.ActivateDataMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.ManualTaringMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.ManualTaringMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.ClearDosingResultsMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.ClearDosingResultsMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.AbortDosingMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.AbortDosingMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.StartDosingMethodTestSuccess:
                     command = data;
                     break;
                 case Behavior.StartDosingMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.RecordWeightMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.RecordWeightMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.ManualRedosingMethodTestSuccess:
-                    command = data;
+                    this.command = data;
                     break;
                 case Behavior.ManualRedosingMethodTestFail:
-                    command = 0;
+                    this.command = 0;
                     break;
                 case Behavior.WriteHandshakeTestSuccess:
 
                     if(_dataWTX[4]==0x0000)
                     {
-                        command = data;
+                        this.command = data;
                         _dataWTX[4] = 0x4000;
                     }
                     else
                     if(_dataWTX[4]==0x4000)
                     {
-                        command = 0x0;
+                        this.command = 0x0;
                         _dataWTX[4] = 0x0000;
                     }
                    
@@ -628,20 +631,20 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
                 case Behavior.CalibrationFail:
-                    command = 0;
+                    this.command = 0;
                     break;
 
                 case Behavior.CalibrationSuccess:
-                    command = data;
+                    this.command = data;
                     break;
 
                 case Behavior.WriteSyncSuccess:
-                    command = data;
+                    this.command = data;
                     _dataWTX[5] = 0x4040;
                     break;
 
                 case Behavior.WriteSyncFail:
-                    command = 0;
+                    this.command = 0;
                     _dataWTX[5] = 0x40;
                     break;
 

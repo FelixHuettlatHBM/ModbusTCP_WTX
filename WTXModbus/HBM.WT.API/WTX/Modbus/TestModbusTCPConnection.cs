@@ -144,7 +144,10 @@ namespace HBM.WT.API.WTX.Modbus
          WriteU16ArrayTestFail,
 
          ResetTimerTestSuccess,
-         //ResetTimerTestFail,
+        //ResetTimerTestFail,
+
+         WriteU08ArrayTestSuccess,
+         WriteU08ArrayTestFail,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -520,6 +523,15 @@ namespace HBM.WT.API.WTX.Modbus
         {
             switch (this.behavior)
             {
+                case Behavior.WriteU08ArrayTestSuccess:
+                    this.wordNumberIndex = (ushort)index;
+                    this.arrayElement1 = (ushort)data;
+                    break;
+
+                case Behavior.WriteU08ArrayTestFail:
+                    this.wordNumberIndex = 0;
+                    this.arrayElement1 = 0;
+                    break;
                 case Behavior.WriteU16ArrayTestSuccess:
                     this.wordNumberIndex = (ushort)index;
                     this.arrayElement1 = (ushort)data;

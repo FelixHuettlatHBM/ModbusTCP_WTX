@@ -284,17 +284,12 @@ namespace HBM.WT.API.WTX
             this._connection.WriteArray(wordNumber, _dataWritten);
         }
 
-
         public void WriteOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this._callbackObj = callbackParam;
-
-            /*
-            data_written[0] = (ushort)((valueParam & 0x000000ff));
-            this._connection.Write(wordNumber, data_written[0]);
-            */
-
-            this._connection.Write(wordNumber, (ushort)valueParam);
+      
+            _dataWritten[0] = (ushort)((valueParam & 0x000000ff));
+            this._connection.Write(wordNumber, _dataWritten[0]);
         }
 
         public void WriteOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)

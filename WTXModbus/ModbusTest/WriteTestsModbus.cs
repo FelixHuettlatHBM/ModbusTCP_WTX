@@ -216,6 +216,17 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        public static IEnumerable WriteU08ArrayTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteU08ArrayTestSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.WriteU08ArrayTestFail).Returns(false);
+            }
+        }
+
+        
+
         public static IEnumerable ResetTimerTestCases
         {
             get
@@ -665,6 +676,29 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj.WriteOutputWordU16(0x7FFFFFFF, 50, callbackMethod);
             
             if (testConnection.getArrElement1 == _data[0] && testConnection.getWordNumber == 50)
+                return true;
+            else
+                return false;
+
+        }
+
+        // Test for method : Write an Array of type unsigned integer 16 bit. 
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteU08ArrayTestCases")]
+        public bool WriteU08ArrayTestModbus(Behavior behavior)
+        {
+            ushort[] _data = new ushort[1];
+
+            _data[0] = (ushort)(0xA1 & 0xFF);
+
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.WriteOutputWordU08(0xA1, 1, callbackMethod);
+
+            if (testConnection.getArrElement1 == _data[0] && testConnection.getWordNumber == 1)
                 return true;
             else
                 return false;

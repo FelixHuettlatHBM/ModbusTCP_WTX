@@ -444,10 +444,6 @@ namespace HBM.WT.API.WTX.Modbus
             throw new NotImplementedException();
         }
 
-
-
-
-
         // Test for method : Switch to gross value or net value
         [Test, TestCaseSource(typeof(WriteTestsModbus), "GrosMethodTestCases")]
         public int GrosMethodTestModbus(Behavior behavior)
@@ -462,7 +458,6 @@ namespace HBM.WT.API.WTX.Modbus
 
             return _wtxObj.getCommand;
             //Assert.AreEqual(0x2, _wtxObj.getCommand);
-
         }
 
         // Test for method : Taring
@@ -492,7 +487,7 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj.Connect(this.OnConnect, 100);
             _wtxObj.isConnected = true;
 
-            _wtxObj.taring(callbackMethod);
+            _wtxObj.adjustZero(callbackMethod);
 
             return _wtxObj.getCommand;
             //Assert.AreEqual(0x80, _wtxObj.getCommand);
@@ -524,7 +519,7 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj.Connect(this.OnConnect, 100);
             _wtxObj.isConnected = true;
 
-            _wtxObj.adjustNominal(callbackMethod);
+            _wtxObj.activateData(callbackMethod);
 
             return _wtxObj.getCommand;
             //Assert.AreEqual(0x800, _wtxObj.getCommand);
@@ -631,8 +626,6 @@ namespace HBM.WT.API.WTX.Modbus
             //return _wtxObj.getCommand;
             //Assert.AreEqual(0x8000, _wtxObj.getCommand);
         }
-
-
 
         // Test for method : Write an Array of type signed integer 32 bit. 
         [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteS32ArrayTestCases")]

@@ -35,7 +35,7 @@ namespace WTXModbusGUIsimple
     /// </summary>
     public partial class LiveValue : Form
     {
-        const string DEFAULT_IP_ADDRESS = "172.19.103.8";
+        string DEFAULT_IP_ADDRESS = "192.168.100.88";
 
         private static ModbusTcpConnection _modbusObj;
         private static WtxModbus _wtxObj;
@@ -69,8 +69,8 @@ namespace WTXModbusGUIsimple
         {
             this.Show();
 
-            this._ipAddress = "172.19.103.8"; ; // Default Setting
-            this._timerInterval = 500;          // Default setting
+            this._ipAddress = DEFAULT_IP_ADDRESS; ;  // Default Setting
+            this._timerInterval = 500;             // Default setting
 
             if (args.Length > 0)
             {
@@ -80,10 +80,19 @@ namespace WTXModbusGUIsimple
                 if (args[0] == "jet" || args[0] == "Jet")
                     toolStripLabel4.Text = "Jetbus";
             }
+
             if (args.Length > 1)
             {
-                this._ipAddress = args[1];                
-                textBox1.Text  = args[1];
+                _ipAddress = args[1];
+
+                DEFAULT_IP_ADDRESS = args[1];
+                textBox1.Text = DEFAULT_IP_ADDRESS;
+            }
+            else
+            {
+                WTXModbusGUIsimple.Properties.Settings.Default.Reload();        
+                _ipAddress = WTXModbusGUIsimple.Properties.Settings.Default.IPAddress;
+                textBox1.Text = _ipAddress;
             }
 
             if (args.Length > 2)
@@ -92,6 +101,10 @@ namespace WTXModbusGUIsimple
             }
             else
                 this._timerInterval = 200; // Default value for the timer interval. 
+
+            WTXModbusGUIsimple.Properties.Settings.Default.Reload();
+            _ipAddress = WTXModbusGUIsimple.Properties.Settings.Default.IPAddress;
+            textBox1.Text = _ipAddress;
 
             this.Connect();
         }
@@ -144,7 +157,6 @@ namespace WTXModbusGUIsimple
                     this.toolStripLabel1.Text = "connected";
                     RenameButtonGrossNet();
                     _wtxObj.getConnection.SendingInterval = this._timerInterval;
-
                 }
                 else
                 {

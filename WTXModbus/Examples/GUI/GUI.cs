@@ -91,15 +91,21 @@ namespace WTXModbusExamples
                 this._ipAddress = this._args[1];
             }
             else
-                MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau.");
+            {
+                MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau. Es wird mit der 'Default IP-Adresse fortgefahren.");
 
+                WTXModbus.Properties.Settings.Default.Reload();
+                _ipAddress = WTXModbus.Properties.Settings.Default.IPAddress;
+            }
             if (this._args.Length > 2)
             {
                 this._timerInterval = Convert.ToInt32(_args[2]);
             }
             else
-                this._timerInterval = 200; // Default value for the timer interval.
-
+            {
+                MessageBox.Show("Kein Timer-Intervall in der Kommandozeile gegeben, bitte unter Edit->Settings einfügen. Es wird einem Timer-Intervall von 100 msec. fortgefahren.");
+                this._timerInterval = 100; // Default value for the timer interval.
+            }
             _modbusObj = new ModbusTcpConnection(_ipAddress);
             _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusObj, this._timerInterval);
 
@@ -904,6 +910,11 @@ namespace WTXModbusExamples
             _wtxObj.Refreshed = true;
         }
 
+        private void Gui_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
 
@@ -913,7 +924,5 @@ namespace WTXModbusExamples
         {
 
         }
-
-
     }
 }

@@ -69,7 +69,6 @@ namespace WTXModbus
         {
             // Input for the ip adress, the timer interval and the input mode: 
 
-            _ipAddress = "172.19.103.8";     // Default setting. 
             _inputMode = 6;
             _timerInterval = 200;           
 
@@ -77,6 +76,13 @@ namespace WTXModbus
             {
                 _ipAddress = args[0];
             }
+            else
+            {
+                // Default setting. 
+                WTXModbusExamples.Properties.Settings.Default.Reload();
+                _ipAddress = WTXModbusExamples.Properties.Settings.Default.IPaddress;
+            }
+
             if (args.Length > 1)
             {
                 _timerInterval = Convert.ToInt32(args[1]);
@@ -114,6 +120,9 @@ namespace WTXModbus
                 if (_wtxObj.getConnection.IsConnected == true)
                 {
                     Console.WriteLine("\nThe connection has been established successfully.\nThe values of the WTX device are printed on the console ... :");
+
+                    WTXModbusExamples.Properties.Settings.Default.IPaddress = _ipAddress;                 
+                    WTXModbusExamples.Properties.Settings.Default.Save();
                 }
                 else
                 {

@@ -239,6 +239,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LiveValue";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LiveValue_FormClosing);
             this.Load += new System.EventHandler(this.LiveValue_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

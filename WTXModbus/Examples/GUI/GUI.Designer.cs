@@ -421,6 +421,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "Gui";
             this.Text = "GUI";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Gui_FormClosing);
             this.Load += new System.EventHandler(this.GUI_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.statusStrip1.ResumeLayout(false);

@@ -51,9 +51,6 @@ namespace HBM.WT.API.WTX
                 _connection = (TestModbusTCPConnection)connection;
             }
 
-
-            this._ipAddr = "172.19.103.8";
-
             this._previousData = new ushort[59];
             this._dataStr = new string[59];
             this._data = new ushort[59];

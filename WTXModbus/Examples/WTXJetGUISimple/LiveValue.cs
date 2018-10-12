@@ -28,6 +28,7 @@ namespace WTXGUISimple
         private static WtxJet _wtxObj;
 
         private string _ipAddress;
+        private string _uri;
 
         private static System.Timers.Timer _aTimer;
         private static int _timerInterval;
@@ -54,11 +55,10 @@ namespace WTXGUISimple
 
         public LiveValue(string[] args)
         {
-
             InitializeComponent();
-            DEFAULT_IP_ADDRESS = args[1];
-            textBox1.Text = DEFAULT_IP_ADDRESS;
+
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisPassive;
+
 
             // Setting the connection for jetbus: 
             if (args.Length > 0)
@@ -73,15 +73,24 @@ namespace WTXGUISimple
             if (args.Length > 1)
             {
                 _ipAddress = args[1];
+
+                DEFAULT_IP_ADDRESS = args[1];
+                textBox1.Text = DEFAULT_IP_ADDRESS;
+            }
+            else
+            {
+                WTXJetGUISimple.Properties.Settings.Default.Reload();
+                _ipAddress = WTXJetGUISimple.Properties.Settings.Default.IPAddress;
+                textBox1.Text = _ipAddress;
             }
 
-            _timerInterval = 200;                       // A default value for the timer interval , 200 ms. 
+            _timerInterval = 200;                 // A default value for the timer interval , 200 ms. 
 
-            _ipAddress = "wss://" + args[1];
-            _ipAddress = _ipAddress + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
+            _uri = "wss://" + _ipAddress;
+            _uri = _uri + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
             // Initializing an object of JetBusConnection and WtxJet to establish a connection to the WTX device, to read and write values. 
 
-            _sConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx", delegate { return true; });
+            _sConnection = new JetBusConnection(_uri, "Administrator", "wtx", delegate { return true; });
             _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             try
@@ -364,11 +373,14 @@ namespace WTXGUISimple
         private void button1_Click(object sender, EventArgs e)
         {
             // Newly written IP address from textbox1: 
-            string _newIPAddr = "wss://" + textBox1.Text + ":443/jet/canopen";   // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
+
+            string _newIPAdress = textBox1.Text;
+            string _newUri = "wss://" + _newIPAdress + ":443/jet/canopen";   // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
+
 
             // Initializing an object of JetBusConnection and WtxJet to establish a connection to the WTX device, to read and write values. 
 
-            _sConnection = new JetBusConnection(_newIPAddr, "Administrator", "wtx", delegate { return true; });
+            _sConnection = new JetBusConnection(_newUri, "Administrator", "wtx", delegate { return true; });
             _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             _sConnection.IpAddress = textBox1.Text;
@@ -385,7 +397,16 @@ namespace WTXGUISimple
                 
             }
             if (_wtxObj.isConnected)
+            {
                 InitializeTimerJetbus(_timerInterval);
+                _ipAddress = _newIPAdress;
+            }
+        }
+
+        private void LiveValue_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            WTXJetGUISimple.Properties.Settings.Default.IPAddress = _ipAddress;
+            WTXJetGUISimple.Properties.Settings.Default.Save();
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)

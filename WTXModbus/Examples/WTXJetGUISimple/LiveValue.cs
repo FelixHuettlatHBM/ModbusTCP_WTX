@@ -23,9 +23,11 @@ namespace WTXGUISimple
     public partial class LiveValue : Form
     {
 
-        private string DEFAULT_IP_ADDRESS;
+        private string DEFAULT_IP_ADDRESS="192.168.100.88";
 
         private static WtxJet _wtxObj;
+
+        private string _ipAddress;
 
         private static System.Timers.Timer _aTimer;
         private static int _timerInterval;
@@ -66,22 +68,20 @@ namespace WTXGUISimple
 
                 if (args[0] == "jet" || args[0] == "Jet")
                     toolStripStatusLabel2.Text = "Jetbus";
-
-
             }
 
             if (args.Length > 1)
             {
-                _ipAddr = args[1];
+                _ipAddress = args[1];
             }
 
             _timerInterval = 200;                       // A default value for the timer interval , 200 ms. 
 
-            _ipAddr = "wss://" + args[1];
-            _ipAddr = _ipAddr + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
+            _ipAddress = "wss://" + args[1];
+            _ipAddress = _ipAddress + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
             // Initializing an object of JetBusConnection and WtxJet to establish a connection to the WTX device, to read and write values. 
 
-            _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
+            _sConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx", delegate { return true; });
             _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
 
             try

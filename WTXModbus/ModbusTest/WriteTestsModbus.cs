@@ -18,7 +18,7 @@ namespace HBM.WT.API.WTX.Modbus
     {
 
         private TestModbusTCPConnection testConnection;
-        private WtxModbus WTXModbusObj;
+        private WtxModbus _wtxObj;
 
         private bool connectCallbackCalled;
         private bool connectCompleted;
@@ -86,6 +86,150 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
+        public static IEnumerable WriteHandshakeTestModbus
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteHandshakeTestSuccess).Returns(0x1);
+                yield return new TestCaseData(Behavior.WriteHandshakeTestFail).Returns(0x0);
+            }
+        }
+
+        public static IEnumerable GrosMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.GrosMethodTestSuccess).ExpectedResult = (0x2);
+                yield return new TestCaseData(Behavior.GrosMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable TareMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.TareMethodTestSuccess).ExpectedResult = (0x1);
+                yield return new TestCaseData(Behavior.TareMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable ZeroMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ZeroMethodTestSuccess).ExpectedResult = (0x40);
+                yield return new TestCaseData(Behavior.ZeroMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+   
+        public static IEnumerable AdjustingZeroMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.AdjustingZeroMethodSuccess).ExpectedResult = (0x80);
+                yield return new TestCaseData(Behavior.AdjustingZeroMethodFail).ExpectedResult = (0x0);
+            }
+        }
+
+        public static IEnumerable AdjustNominalMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.AdjustNominalMethodTestSuccess).ExpectedResult = (0x100);
+                yield return new TestCaseData(Behavior.AdjustNominalMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable ActivateDataMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ActivateDataMethodTestSuccess).ExpectedResult  =(0x800);
+                yield return new TestCaseData(Behavior.ActivateDataMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable ManualTaringMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ManualTaringMethodTestSuccess).ExpectedResult = (0x1000);
+                yield return new TestCaseData(Behavior.ManualTaringMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable ClearDosingResultsMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ClearDosingResultsMethodTestSuccess).ExpectedResult = (0x4);
+                yield return new TestCaseData(Behavior.ClearDosingResultsMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable AbortDosingMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.AbortDosingMethodTestSuccess).ExpectedResult = (0x8);
+                yield return new TestCaseData(Behavior.AbortDosingMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable StartDosingMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.StartDosingMethodTestSuccess).ExpectedResult = (0x10);
+                yield return new TestCaseData(Behavior.StartDosingMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable RecordWeightMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.RecordWeightMethodTestSuccess).ExpectedResult = (0x4000);
+                yield return new TestCaseData(Behavior.RecordWeightMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+        public static IEnumerable ManualRedosingMethodTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ManualRedosingMethodTestSuccess).ExpectedResult = (0x8000);
+                yield return new TestCaseData(Behavior.ManualRedosingMethodTestFail).ExpectedResult = (0x0);
+            }
+        }
+
+        public static IEnumerable WriteS32ArrayTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteS32ArrayTestSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.WriteS32ArrayTestFail).Returns(false);
+            }
+        }
+
+
+        public static IEnumerable WriteU16ArrayTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteU16ArrayTestSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.WriteU16ArrayTestFail).Returns(false);
+            }
+        }
+
+        public static IEnumerable WriteU08ArrayTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.WriteU08ArrayTestSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.WriteU08ArrayTestFail).Returns(false);
+            }
+        }
+
+        public static IEnumerable ResetTimerTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.ResetTimerTestSuccess).Returns(500);
+                //yield return new TestCaseData(Behavior.ResetTimerTestFail).Returns(200);
+            }
+        }
 
         [SetUp]
         public void Setup()
@@ -123,18 +267,56 @@ namespace HBM.WT.API.WTX.Modbus
             _dataReadSuccess[17] = 0;          // Status
 
         }
+
+        // Test for method : Zeroing
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ZeroMethodTestCases")]
+        public void ZeroMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.zeroing(callbackMethod);
+
+            //return testConnection.getCommand;
+            Assert.AreEqual(0x40, _wtxObj.getCommand);
+
+        }
+
+        // Test for handshake:
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteHandshakeTestModbus")]
+        public int WriteHandshakeTest(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.Async_Call(0x1, callbackMethod);
+
+            Thread.Sleep(300);
+
+            return testConnection.getCommand;
+            // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
+        }
+
+
         // Test for writing : Tare 
         [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteSyncTestModbus")]
         public int WriteSyncTest(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
 
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            _wtxObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
-            WTXModbusObj.SyncCall(0, 0x100, callbackMethod);
+            _wtxObj.SyncCall(0, 0x100, callbackMethod);
 
             return testConnection.getCommand;
             // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
@@ -144,14 +326,14 @@ namespace HBM.WT.API.WTX.Modbus
         public int WriteTestCasesModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            _wtxObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
             // Write : Gross/Net 
 
-            WTXModbusObj.Async_Call(0x2, OnWriteData);
+            _wtxObj.Async_Call(0x2, OnWriteData);
 
             Thread.Sleep(300);        // Include a short sleep time for the former asynchronous call (Async_Call). 
 
@@ -165,10 +347,10 @@ namespace HBM.WT.API.WTX.Modbus
             var runner = new BackgroundWorker();
 
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            _wtxObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
             ManualResetEvent done = new ManualResetEvent(false);
 
@@ -181,7 +363,7 @@ namespace HBM.WT.API.WTX.Modbus
 
             while ((!res) && (DateTime.Now < end))
             {
-                WTXModbusObj.Async_Call(0x2, callbackMethod);       // Read data from register 
+                _wtxObj.Async_Call(0x2, callbackMethod);       // Read data from register 
 
                 res = done.WaitOne(0);
             }
@@ -209,12 +391,12 @@ namespace HBM.WT.API.WTX.Modbus
             bool parameterEqualArrayWritten = false;
 
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
+            WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
-            WTXModbusObj.WriteOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
+            _wtxObj.WriteOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
 
             if ((testConnection.getArrElement1 == (0x7FFFFFFF & 0xffff0000) >> 16) &&
                 (testConnection.getArrElement2 == (0x7FFFFFFF & 0x0000ffff)))
@@ -236,14 +418,14 @@ namespace HBM.WT.API.WTX.Modbus
         public void TareAsyncTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            _wtxObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
 
-            WTXModbusObj.Async_Call(0x1, callbackMethod);
+            _wtxObj.Async_Call(0x1, callbackMethod);
 
-            Assert.AreEqual(0x1, WTXModbusObj.getCommand);
+            Assert.AreEqual(0x1, _wtxObj.getCommand);
 
         }
 
@@ -257,7 +439,269 @@ namespace HBM.WT.API.WTX.Modbus
             throw new NotImplementedException();
         }
 
+        // Test for method : Switch to gross value or net value
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "GrosMethodTestCases")]
+        public void GrosMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
 
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.gross(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x2, _wtxObj.getCommand);
+        }
+
+        // Test for method : Taring
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "TareMethodTestCases")]
+        public void TareMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.taring(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x1, _wtxObj.getCommand);
+
+        }
+
+        // Test for method : Adjusting zero
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "AdjustingZeroMethodTestCases")]
+        public void AdjustingZeroMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.adjustZero(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x80, _wtxObj.getCommand);
+        }
+
+        // Test for method : Adjusting nominal
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "AdjustNominalMethodTestCases")]
+        public void AdjustingNominalMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.adjustNominal(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x100, _wtxObj.getCommand);
+        }
+
+        // Test for method : Adjusting nominal
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ActivateDataMethodTestCases")]
+        public void /*int*/ ActivateDataMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.activateData(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x800, _wtxObj.getCommand);
+        }
+
+        // Test for method : Adjusting nominal
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ManualTaringMethodTestCases")]
+        public void ManualTaringTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.manualTaring(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x1000, _wtxObj.getCommand);
+        }
+
+
+        // Test for method : Adjusting nominal
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ClearDosingResultsMethodTestCases")]
+        public void ClearDosingResultsMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.clearDosingResults(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x4, _wtxObj.getCommand);
+        }
+
+        // Test for method : Adjusting nominal
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "AbortDosingMethodTestCases")]
+        public void AbortDosingMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.abortDosing(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x8, _wtxObj.getCommand);
+        }
+
+        // Test for method : Adjusting nominal
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "StartDosingMethodTestCases")]
+        public void StartDosingMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.startDosing(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x10, _wtxObj.getCommand);
+        }
+
+        // Test for method : Record weight
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "RecordWeightMethodTestCases")]
+        public void RecordweightMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.recordWeight(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x4000, _wtxObj.getCommand);
+        }
+
+        // Test for method : manualReDosing
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ManualRedosingMethodTestCases")]
+        public void ManualRedosingMethodTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.manualReDosing(callbackMethod);
+
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x8000, _wtxObj.getCommand);
+        }
+
+        // Test for method : Write an Array of type signed integer 32 bit. 
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteS32ArrayTestCases")]
+        public bool WriteS32ArrayTestModbus(Behavior behavior)
+        {
+            ushort[] _data = new ushort[2];
+
+            _data[0] = (ushort)((0x7FFFFFFF & 0xFFFF0000) >> 16);
+            _data[1] = (ushort)(0x7FFFFFFF & 0x0000FFFF);
+
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.WriteOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);
+
+            if (testConnection.getArrElement1 == _data[0] && testConnection.getArrElement2 == _data[1] &&
+                testConnection.getWordNumber == 48)
+                return true;
+            else
+                return false;
+           
+        }
+
+        // Test for method : Write an Array of type unsigned integer 16 bit. 
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteU16ArrayTestCases")]
+        public bool WriteU16ArrayTestModbus(Behavior behavior)
+        {
+            ushort[] _data = new ushort[1];
+
+            _data[0] = (ushort)((0x7FFFFFFF & 0xFFFF0000) >> 16);
+
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.WriteOutputWordU16(0x7FFFFFFF, 50, callbackMethod);
+            
+            if (testConnection.getArrElement1 == _data[0] && testConnection.getWordNumber == 50)
+                return true;
+            else
+                return false;
+
+        }
+
+        // Test for method : Write an Array of type unsigned integer 16 bit. 
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteU08ArrayTestCases")]
+        public bool WriteU08ArrayTestModbus(Behavior behavior)
+        {
+            ushort[] _data = new ushort[1];
+
+            _data[0] = (ushort)(0xA1 & 0xFF);
+
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.WriteOutputWordU08(0xA1, 1, callbackMethod);
+
+            if (testConnection.getArrElement1 == _data[0] && testConnection.getWordNumber == 1)
+                return true;
+            else
+                return false;
+
+        }
+
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "ResetTimerTestCases")]
+        public int ResetTimerTestModbus(Behavior behavior)
+        {
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+            _wtxObj.isConnected = true;
+
+            _wtxObj.ResetTimer(500);
+
+            return (int)_wtxObj._aTimer.Interval;
+            //Assert.AreEqual(_wtxObj._aTimer.Interval, 500);
+        }
 
     }
 }

@@ -36,39 +36,37 @@ namespace HBM.WT.API.WTX.Jet
         private ushort[] DataUshortArray;
         private string[] DataStrArray;
 
+        private string passwd;
+        private string user;
+        private int timeoutMs;
+
         #endregion
 
         #region constructors
 
         // Constructor: Without ssh certification. 
-        public JetBusConnection(string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) {
+        public JetBusConnection(string ipAddrParam, string userParam, string passwdParam, RemoteCertificateValidationCallback certificationCallbackParam, int timeoutMsParam = 5000) {
 
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, certificationCallback);
+            IJetConnection jetConnection = new WebSocketJetConnection(ipAddrParam, certificationCallbackParam);
             MPeer = new JetPeer(jetConnection);
 
-            ConnectOnPeer(user, passwd, timeoutMs);
-            FetchAll();
+            this.passwd = passwdParam;
+            this.user = userParam;
+            this.timeoutMs = timeoutMsParam;
         }
 
         // Constructor: With ssh certification as a parameter (NetConnectionSecurity) . 
-        public JetBusConnection(string ipAddr, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) {
+        public JetBusConnection(string ipAddrParam, RemoteCertificateValidationCallback certificationCallbackParam, int timeoutMsParam = 5000) {
 
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
+            IJetConnection jetConnection = new WebSocketJetConnection(ipAddrParam, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
-
-            ConnectOnPeer(timeoutMs);
-            FetchAll();
         }
 
-        public JetBusConnection(string ipAddr, string user, string passwd, int timeoutMs = 5000) 
-            : this(ipAddr, user, passwd, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs){
+        public JetBusConnection(string ipAddrParam, string userParam, string passwdParam, int timeoutMsParam = 5000) 
+            : this(ipAddrParam, userParam, passwdParam, NetConnectionSecurity.RemoteCertificationCheck, timeoutMsParam){
 
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
+            IJetConnection jetConnection = new WebSocketJetConnection(ipAddrParam, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
-
-            ConnectOnPeer(timeoutMs);
-            FetchAll();
-
         }
 
         public JetBusConnection(string ipAddr, int timeoutMs = 5000) 
@@ -76,9 +74,6 @@ namespace HBM.WT.API.WTX.Jet
 
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
-
-            ConnectOnPeer(timeoutMs);
-            FetchAll();
         }
 
         #endregion
@@ -87,7 +82,8 @@ namespace HBM.WT.API.WTX.Jet
 
         public void Connect()
         {
-
+            ConnectOnPeer(this.user, this.passwd, this.timeoutMs);
+            FetchAll();
         }
 
         public bool IsConnected

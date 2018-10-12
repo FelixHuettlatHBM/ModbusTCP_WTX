@@ -98,6 +98,56 @@ namespace HBM.WT.API.WTX.Modbus
          WeightTypeStringComment_Case1_Fail,
          WeightTypeStringComment_Case1_Success,
 
+         WriteHandshakeTestSuccess,
+         WriteHandshakeTestFail,
+
+         GrosMethodTestSuccess,
+         GrosMethodTestFail, 
+
+         TareMethodTestSuccess,
+         TareMethodTestFail,
+
+         ZeroMethodTestSuccess,
+         ZeroMethodTestFail,
+
+         AdjustingZeroMethodSuccess,
+         AdjustingZeroMethodFail,
+
+         AdjustNominalMethodTestSuccess,
+         AdjustNominalMethodTestFail,
+
+         ActivateDataMethodTestSuccess,
+         ActivateDataMethodTestFail,
+
+         ManualTaringMethodTestSuccess,
+         ManualTaringMethodTestFail,
+
+         ClearDosingResultsMethodTestSuccess,
+         ClearDosingResultsMethodTestFail,
+
+         AbortDosingMethodTestSuccess,
+         AbortDosingMethodTestFail,
+
+         StartDosingMethodTestSuccess,
+         StartDosingMethodTestFail,
+ 
+         RecordWeightMethodTestSuccess,
+         RecordWeightMethodTestFail,
+
+         ManualRedosingMethodTestSuccess,
+         ManualRedosingMethodTestFail,
+
+         WriteS32ArrayTestSuccess,
+         WriteS32ArrayTestFail,
+ 
+         WriteU16ArrayTestSuccess,
+         WriteU16ArrayTestFail,
+
+         ResetTimerTestSuccess,
+        //ResetTimerTestFail,
+
+         WriteU08ArrayTestSuccess,
+         WriteU08ArrayTestFail,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -120,6 +170,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         private string IP;
         private int interval;
+        private int wordNumberIndex; 
 
         private int numPoints;
 
@@ -209,6 +260,15 @@ namespace HBM.WT.API.WTX.Modbus
 
             switch (this.behavior)
             {
+                case Behavior.WriteHandshakeTestSuccess:
+
+                    if (_dataWTX[4] == 0x0000)
+                        _dataWTX[4] = 0x4000;
+                    else
+                        if (_dataWTX[4] == 0x4000)
+                        _dataWTX[4] = 0x0000;
+                    break;
+            
                 case Behavior.InFillerMode:
 
                     //data word for a application mode being in filler mode: Bit .0-1 = 1 || 2 (2 is the given value for filler mode according to the manual, but actually it is 1.)
@@ -461,9 +521,117 @@ namespace HBM.WT.API.WTX.Modbus
 
         public void Write(object index, int data)
         {
-            
             switch (this.behavior)
             {
+                case Behavior.WriteU08ArrayTestSuccess:
+                    this.wordNumberIndex = (ushort)index;
+                    this.arrayElement1 = (ushort)data;
+                    break;
+
+                case Behavior.WriteU08ArrayTestFail:
+                    this.wordNumberIndex = 0;
+                    this.arrayElement1 = 0;
+                    break;
+                case Behavior.WriteU16ArrayTestSuccess:
+                    this.wordNumberIndex = (ushort)index;
+                    this.arrayElement1 = (ushort)data;
+                    break;
+                case Behavior.WriteU16ArrayTestFail:
+                    this.wordNumberIndex = 0;
+                    this.arrayElement1 = 0;
+                    break;
+                case Behavior.GrosMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.GrosMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.TareMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.TareMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.ZeroMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.ZeroMethodTestFail:
+                    //this.command = 0;
+                    break;
+                case Behavior.AdjustingZeroMethodSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.AdjustingZeroMethodFail:
+                    this.command = 0;
+                    break;
+                case Behavior.AdjustNominalMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.AdjustNominalMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.ActivateDataMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.ActivateDataMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.ManualTaringMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.ManualTaringMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.ClearDosingResultsMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.ClearDosingResultsMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.AbortDosingMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.AbortDosingMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.StartDosingMethodTestSuccess:
+                    command = data;
+                    break;
+                case Behavior.StartDosingMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.RecordWeightMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.RecordWeightMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.ManualRedosingMethodTestSuccess:
+                    this.command = data;
+                    break;
+                case Behavior.ManualRedosingMethodTestFail:
+                    this.command = 0;
+                    break;
+                case Behavior.WriteHandshakeTestSuccess:
+
+                    if(_dataWTX[4]==0x0000)
+                    {
+                        this.command = data;
+                        _dataWTX[4] = 0x4000;
+                    }
+                    else
+                    if(_dataWTX[4]==0x4000)
+                    {
+                        this.command = 0x0;
+                        _dataWTX[4] = 0x0000;
+                    }
+                   
+                    break;
+
+                case Behavior.WriteHandshakeTestFail:
+                    _dataWTX[4] = 0x0000;                  
+                    break;
+
                 case Behavior.InFillerMode:
                     //data word for a application mode being in filler mode: Bit .0-1 = 1 || 2 (2 is the given value for filler mode according to the manual, but actually it is 1.)
                     _dataWTX[5] = 0x1;
@@ -475,20 +643,20 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
                 case Behavior.CalibrationFail:
-                    command = 0;
+                    this.command = 0;
                     break;
 
                 case Behavior.CalibrationSuccess:
-                    command = data;
+                    this.command = data;
                     break;
 
                 case Behavior.WriteSyncSuccess:
-                    command = data;
+                    this.command = data;
                     _dataWTX[5] = 0x4040;
                     break;
 
                 case Behavior.WriteSyncFail:
-                    command = 0;
+                    this.command = 0;
                     _dataWTX[5] = 0x40;
                     break;
 
@@ -520,12 +688,22 @@ namespace HBM.WT.API.WTX.Modbus
 
             switch (this.behavior)
             {
+                case Behavior.WriteS32ArrayTestSuccess:
+                        this.wordNumberIndex = index;
+                        this.arrayElement1 = data[0];
+                        this.arrayElement2 = data[1];
+                    break;
 
-            case Behavior.CalibrationFail:
-                    this.arrayElement1 = 0;
-                    this.arrayElement2 = 0;
+                case Behavior.WriteS32ArrayTestFail:
+                        this.wordNumberIndex = 0;
+                        this.arrayElement1 = 0;
+                        this.arrayElement2 = 0;
+                    break;
 
-            break;
+                case Behavior.CalibrationFail:
+                        this.arrayElement1 = 0;
+                        this.arrayElement2 = 0;
+                   break;
 
                 case Behavior.CalibrationSuccess:
 
@@ -578,6 +756,14 @@ namespace HBM.WT.API.WTX.Modbus
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        public int getWordNumber
+        {
+            get
+            {
+                return this.wordNumberIndex;
+            }
         }
 
         public ushort getArrElement1

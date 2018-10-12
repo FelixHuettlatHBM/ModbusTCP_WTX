@@ -16,13 +16,14 @@ using HBM.WT.API;
 using HBM.WT.API.WTX;
 using WTXJetGUISimple.Properties;
 using HBM.WT.API.WTX.Jet;
+using System.Threading;
 
 namespace WTXGUISimple
 {
     public partial class LiveValue : Form
     {
 
-        const string DEFAULT_IP_ADDRESS = "192.168.100.88";
+        private string DEFAULT_IP_ADDRESS;
 
         private static WtxJet _wtxObj;
 
@@ -49,19 +50,15 @@ namespace WTXGUISimple
             { "test" , TestDeviceLayer },
         };
 
-
         public LiveValue(string[] args)
         {
-            String _ipAddr;
-            string _uri;
 
             InitializeComponent();
-            
-            _ipAddr = DEFAULT_IP_ADDRESS;
-            
+            DEFAULT_IP_ADDRESS = args[1];
+            textBox1.Text = DEFAULT_IP_ADDRESS;
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisPassive;
 
-            // Setting the connection from command line
+            // Setting the connection for jetbus: 
             if (args.Length > 0)
             {
                 if (args[0] == "modbus" || args[0] == "Modbus")
@@ -78,29 +75,33 @@ namespace WTXGUISimple
                 _ipAddr = args[1];
             }
 
-            _timerInterval = 200;
+            _timerInterval = 200;                       // A default value for the timer interval , 200 ms. 
 
-            textBox1.Text = _ipAddr;
+            _ipAddr = "wss://" + args[1];
+            _ipAddr = _ipAddr + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
+            // Initializing an object of JetBusConnection and WtxJet to establish a connection to the WTX device, to read and write values. 
 
-            _uri = "wss://" + _ipAddr;
-            _uri = _uri + ":443/jet/canopen";     // e.g. -jet 172.19.103.8:443/jet/canopen
-
-            Console.Write("Initialize Jet-Peer to address " + _ipAddr + "...");
-
-            _sConnection = new JetBusConnection(_uri, "Administrator", "wtx", delegate { return true; });
-
-            //s_Connection.BusActivityDetection += S_Connection_BusActivityDetection;
-
-            Console.WriteLine("Parameter are fetching: ");
-
-            Console.Write((_sConnection as JetBusConnection).BufferToString());
-
+            _sConnection = new JetBusConnection(_ipAddr, "Administrator", "wtx", delegate { return true; });
             _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
-            
+
+            try
+            {
+                _sConnection.Connect();
+            }
+            catch (Exception exc)
+            {
+                _wtxObj.isConnected = false;
+                textBox2.Text = "Connection failed, enter an other IP address please.";
+            }
+
             pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;  // Check, ob der Verbindungsaufbau erfolgreich war? 
 
-            InitializeTimerJetbus(_timerInterval);
+            if (_wtxObj.isConnected)
+            {
+                InitializeTimerJetbus(_timerInterval);
+            }
         }
+
 
         //Opens a menu window for calculated calibration
         private void calculateCalibrationToolStripMenuItem_Click_2(object sender, EventArgs e)
@@ -132,14 +133,33 @@ namespace WTXGUISimple
         // After triggering (after 500ms) the register is read. 
         private void JetbusOnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            int taraValue = _wtxObj.GrossValue - _wtxObj.NetValue;
+            int taraValue = 0;
+
+            try
+            {
+                taraValue = _wtxObj.GrossValue - _wtxObj.NetValue;
+            }
+            catch (Exception exc)
+            {
+                _aTimer.Stop();
+                _aTimer.Enabled = false;
+                Console.WriteLine(exc.ToString());
+            }
 
             textBox2.Invoke(new Action(() =>
+            {
+            try
             {
                 textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment(_wtxObj.Unit) + Environment.NewLine
                 + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment(_wtxObj.Unit) + Environment.NewLine
                 + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment(_wtxObj.Unit);
                 textBox2.TextAlign = HorizontalAlignment.Right;
+
+                }
+                catch (Exception exx)
+                {
+                    Console.WriteLine(exx.ToString());
+                }
 
                 pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;
             }));
@@ -314,7 +334,6 @@ namespace WTXGUISimple
                 //parameter = new HBM.WT.API.WTX.WTXJet(s_Connection);
             }
 
-
             /*
             Console.Write("Read Measure... ");
             int value = parameter.MeasureValue;
@@ -344,7 +363,29 @@ namespace WTXGUISimple
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Newly written IP address from textbox1: 
+            string _newIPAddr = "wss://" + textBox1.Text + ":443/jet/canopen";   // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
 
+            // Initializing an object of JetBusConnection and WtxJet to establish a connection to the WTX device, to read and write values. 
+
+            _sConnection = new JetBusConnection(_newIPAddr, "Administrator", "wtx", delegate { return true; });
+            _wtxObj = new HBM.WT.API.WTX.WtxJet(_sConnection);
+
+            _sConnection.IpAddress = textBox1.Text;
+
+            try
+            {               
+                _sConnection.Connect();
+            }
+            catch (Exception exc)
+            {
+                _aTimer.Enabled = false;
+                _aTimer.Stop();
+                _wtxObj.isConnected = false;
+                
+            }
+            if (_wtxObj.isConnected)
+                InitializeTimerJetbus(_timerInterval);
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)

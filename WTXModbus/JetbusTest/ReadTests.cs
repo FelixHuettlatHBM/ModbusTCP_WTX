@@ -946,6 +946,90 @@ namespace JetbusTest
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testLimitValueStatusLVS1(Behavior behavior)
+        {
+            bool testVar = false;
+
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            int limitvalue1 = _wtxObj.LimitValue1Input;
+
+            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue1 == 0)
+                testVar = true;
+            else
+                testVar = false;
+
+            Assert.IsTrue(testVar);
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testLimitValueStatusLVS2(Behavior behavior)
+        {
+            bool testVar = false;
+
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            int limitvalue2 = _wtxObj.LimitValue2Source;
+
+            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue2 == 1)
+                testVar = true;
+            else
+                testVar = false;
+
+            Assert.IsTrue(testVar);
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testLimitValueStatusLVS3(Behavior behavior)
+        {
+            bool testVar = false;
+
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            int limitvalue3 = _wtxObj.LimitValue3Source;
+
+            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue3 == 0)
+                testVar = true;
+            else
+                testVar = false;
+
+            Assert.IsTrue(testVar);
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
+        public void testLimitValueStatusLVS4(Behavior behavior)
+        {
+            bool testVar = false;
+
+            _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+
+            _wtxObj = new WtxJet(_jetTestConnection);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            int limitvalue4 = _wtxObj.LimitValue4Source;
+
+            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue4 == 1)
+                testVar = true;
+            else
+                testVar = false;
+
+            Assert.IsTrue(testVar);
+        }
+
+        [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testGetDataStr(Behavior behavior)
         {
             _jetTestConnection = new TestJetbusConnection(behavior, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
@@ -992,6 +1076,5 @@ namespace JetbusTest
             Assert.AreEqual(testArray, _wtxObj.GetDataUshort);
 
         }
-
     }
 }

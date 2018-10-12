@@ -186,8 +186,7 @@ namespace HBM.WT.API.WTX.Modbus
                 Connect();
                 Thread.Sleep(100);
             }
-
-            //this.data = e.Message;
+            
             _data = e.ushortArgs;
 
             // copy of the event to avoid that a race condition is prevented, if the former subscriber directly logs off after the last

@@ -347,11 +347,11 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
-            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
+            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 1 /*_wtxObj.Decimals*/);
 
-            double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
+            double dValue = _wtxObj.GrossValue / Math.Pow(10, 1 /*_wtxObj.Decimals*/);
 
-            Assert.AreEqual(dValue.ToString(), strValue);
+            Assert.AreEqual(dValue.ToString("0.0"), strValue);
         }
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "NetGrossValueStringComment_2D_TestCase_Modbus")]
         public void testModbus_NetGrossValueStringComment_2D(Behavior behavior)
@@ -363,10 +363,10 @@ namespace HBM.WT.API.WTX.Modbus
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
-            double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
+            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 2/*_wtxObj.Decimals*/);
+            double dValue = _wtxObj.GrossValue / Math.Pow(10, 2 /*_wtxObj.Decimals*/);
 
-            Assert.AreEqual(dValue.ToString(), strValue);
+            Assert.AreEqual(dValue.ToString("0.00"), strValue);
         }
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "NetGrossValueStringComment_3D_TestCase_Modbus")]
         public void testModbus_NetGrossValueStringComment_3D(Behavior behavior)
@@ -378,10 +378,10 @@ namespace HBM.WT.API.WTX.Modbus
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
-            double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
+            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 3/*_wtxObj.Decimals*/);
+            double dValue = _wtxObj.GrossValue / Math.Pow(10, 3 /*_wtxObj.Decimals*/);
 
-            Assert.AreEqual(dValue.ToString(), strValue);
+            Assert.AreEqual(dValue.ToString("0.000"), strValue);
         }
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "NetGrossValueStringComment_4D_TestCase_Modbus")]
         public void testModbus_NetGrossValueStringComment_4D(Behavior behavior)
@@ -393,10 +393,10 @@ namespace HBM.WT.API.WTX.Modbus
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
-            double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
+            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 4/*_wtxObj.Decimals*/);
+            double dValue = _wtxObj.GrossValue / Math.Pow(10, 4 /*_wtxObj.Decimals*/);
 
-            Assert.AreEqual(dValue.ToString(), strValue);
+            Assert.AreEqual(dValue.ToString("0.0000"), strValue);
         }
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "NetGrossValueStringComment_5D_TestCase_Modbus")]
         public void testModbus_NetGrossValueStringComment_5D(Behavior behavior)
@@ -408,10 +408,10 @@ namespace HBM.WT.API.WTX.Modbus
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
-            double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
+            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 5/*_wtxObj.Decimals*/);
+            double dValue = _wtxObj.GrossValue / Math.Pow(10, 5 /*_wtxObj.Decimals*/);
 
-            Assert.AreEqual(dValue.ToString(), strValue);
+            Assert.AreEqual(dValue.ToString("0.00000"), strValue);
         }
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "NetGrossValueStringComment_6D_TestCase_Modbus")]
         public void testModbus_NetGrossValueStringComment_6D(Behavior behavior)
@@ -423,12 +423,11 @@ namespace HBM.WT.API.WTX.Modbus
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
-            double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
+            string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 6/*_wtxObj.Decimals*/);
+            double dValue = _wtxObj.GrossValue / Math.Pow(10, 6 /*_wtxObj.Decimals*/);
 
-            Assert.AreEqual(dValue.ToString(), strValue);
+            Assert.AreEqual(dValue.ToString("0.000000"), strValue);
         }
-
 
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "ScaleRangeStringComment_Range1_TestCase_Modbus")]
         public string testModbus_ScaleRangeStringComment_Range1(Behavior behavior)

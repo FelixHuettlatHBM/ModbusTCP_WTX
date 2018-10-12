@@ -247,26 +247,32 @@ namespace HBM.WT.API.WTX
         public void WriteDoWork(object sender, DoWorkEventArgs e)
         {
             // (1) Sending of a command:        
-
+            
             this._connection.Write(0, this._command);
+            this._connection.Read(0);
 
-            while (this.Handshake == 0) ;
+            while (this.Handshake == 0)
+            {
+                this._connection.Read(0);
+            }
 
-            // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
+            // (2) If the handshake bit is equal to 1, the command has to be set to 0x00:
             if (this.Handshake == 1)
             {
                 this._connection.Write(0, 0x00);
             }
-            while (/*this.status == 1 && */this.Handshake == 1) ;
+
+            // (3) Wait until the handshake bit is reset to 0x00: 
+            while (/*this.status == 1 && */this.Handshake == 1)
+            {
+                this._connection.Read(0);
+            }
         }
 
         public void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this._callbackObj(this);         // Neu : 21.11.2017         Interface übergeben. 
         }
-
-        private ushort arrayElement1; // For test purpose
-        private ushort arrayElement2; // For test purpose
 
         public void WriteOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
@@ -278,17 +284,12 @@ namespace HBM.WT.API.WTX
             this._connection.WriteArray(wordNumber, _dataWritten);
         }
 
-
         public void WriteOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
         {
             this._callbackObj = callbackParam;
-
-            /*
-            data_written[0] = (ushort)((valueParam & 0x000000ff));
-            this._connection.Write(wordNumber, data_written[0]);
-            */
-
-            this._connection.Write(wordNumber, (ushort)valueParam);
+      
+            _dataWritten[0] = (ushort)((valueParam & 0x000000ff));
+            this._connection.Write(wordNumber, _dataWritten[0]);
         }
 
         public void WriteOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
@@ -2397,27 +2398,27 @@ namespace HBM.WT.API.WTX
 
         public void clearDosingResults(Action<IDeviceData> WriteDataCompleted)
         {
-            this.clearDosingResults(Write_DataReceived);
+            this.Async_Call(0x4, Write_DataReceived);
         }
 
         public void abortDosing(Action<IDeviceData> WriteDataCompleted)
         {
-            this.abortDosing(Write_DataReceived);
+            this.Async_Call(0x8, Write_DataReceived);
         }
 
         public void startDosing(Action<IDeviceData> WriteDataCompleted)
         {
-            this.startDosing(Write_DataReceived);
+            this.Async_Call(0x10, Write_DataReceived);
         }
 
         public void recordWeight(Action<IDeviceData> WriteDataCompleted)
         {
-            this.recordWeight(Write_DataReceived);
+            this.Async_Call(0x4000,Write_DataReceived);
         }
 
         public void manualReDosing(Action<IDeviceData> WriteDataCompleted)
         {
-            this.manualReDosing(Write_DataReceived);
+            this.Async_Call(0x8000, Write_DataReceived);
         }
     }
 }

@@ -426,10 +426,14 @@ namespace HBM.WT.API.WTX.Jet
                     _mTokenBuffer.Add("OSN", simulateJTokenInstance("OSN", 1)["value"]);
                     _mTokenBuffer.Add("FFL", simulateJTokenInstance("FFL", 1)["value"]);
                     _mTokenBuffer.Add("DL1", simulateJTokenInstance("DL1", 1)["value"]);
-                 
+
                 //StatusStringComment:
 
                 _mTokenBuffer.Add("6002/02", simulateJTokenInstance("6002/02", 1801543519)["value"]);
+
+                //Limit value status:
+
+                _mTokenBuffer.Add("2020/25", simulateJTokenInstance("2020/25", 0xA)["value"]);   // 0xA(hex)=1010(binary)
 
                 // Hex and bin. for Unit testing: 
 

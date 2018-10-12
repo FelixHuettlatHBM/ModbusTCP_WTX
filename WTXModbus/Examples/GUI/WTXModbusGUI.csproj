@@ -113,9 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\HBM.WT.API\HBM.WT.API.csproj">
-      <Project>{F8FB1D85-0FBA-4905-A559-A1C654675662}</Project>
+      <Project>{f8fb1d85-0fba-4905-a559-a1c654675662}</Project>
       <Name>HBM.WT.API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toolStripDropDownButton1.Image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

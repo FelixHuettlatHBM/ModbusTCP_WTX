@@ -6,7 +6,6 @@
 
 namespace HBM.WT.API.WTX.Jet
 {
-    using Hbm.Devices.Jet;
     using HBM.WT.API;
     using Newtonsoft.Json.Linq;
     using System;
@@ -114,9 +113,7 @@ namespace HBM.WT.API.WTX.Jet
         private Dictionary<string, JToken> _mTokenBuffer;
 
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
-
-        protected JetPeer MPeer;
-        
+                
         private Exception _mException = null;
 
         private string IP;

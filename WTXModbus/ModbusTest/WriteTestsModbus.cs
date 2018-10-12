@@ -95,31 +95,28 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-
-
-
         public static IEnumerable GrosMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.GrosMethodTestSuccess).Returns(0x2);
-                yield return new TestCaseData(Behavior.GrosMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.GrosMethodTestSuccess).ExpectedResult = (0x2);
+                yield return new TestCaseData(Behavior.GrosMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable TareMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.TareMethodTestSuccess).Returns(0x1);
-                yield return new TestCaseData(Behavior.TareMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.TareMethodTestSuccess).ExpectedResult = (0x1);
+                yield return new TestCaseData(Behavior.TareMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable ZeroMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.ZeroMethodTestSuccess).Returns(0x40);
-                yield return new TestCaseData(Behavior.ZeroMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.ZeroMethodTestSuccess).ExpectedResult = (0x40);
+                yield return new TestCaseData(Behavior.ZeroMethodTestFail).ExpectedResult = (0x0);
             }
         }
    
@@ -127,8 +124,8 @@ namespace HBM.WT.API.WTX.Modbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.AdjustingZeroMethodSuccess).Returns(0x80);
-                yield return new TestCaseData(Behavior.AdjustingZeroMethodFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.AdjustingZeroMethodSuccess).ExpectedResult = (0x80);
+                yield return new TestCaseData(Behavior.AdjustingZeroMethodFail).ExpectedResult = (0x0);
             }
         }
 
@@ -136,64 +133,64 @@ namespace HBM.WT.API.WTX.Modbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.AdjustNominalMethodTestSuccess).Returns(0x100);
-                yield return new TestCaseData(Behavior.AdjustNominalMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.AdjustNominalMethodTestSuccess).ExpectedResult = (0x100);
+                yield return new TestCaseData(Behavior.AdjustNominalMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable ActivateDataMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.ActivateDataMethodTestSuccess).Returns(0x800);
-                yield return new TestCaseData(Behavior.ActivateDataMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.ActivateDataMethodTestSuccess).ExpectedResult  =(0x800);
+                yield return new TestCaseData(Behavior.ActivateDataMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable ManualTaringMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.ManualTaringMethodTestSuccess).Returns(0x1000);
-                yield return new TestCaseData(Behavior.ManualTaringMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.ManualTaringMethodTestSuccess).ExpectedResult = (0x1000);
+                yield return new TestCaseData(Behavior.ManualTaringMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable ClearDosingResultsMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.ClearDosingResultsMethodTestSuccess).Returns(0x4);
-                yield return new TestCaseData(Behavior.ClearDosingResultsMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.ClearDosingResultsMethodTestSuccess).ExpectedResult = (0x4);
+                yield return new TestCaseData(Behavior.ClearDosingResultsMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable AbortDosingMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.AbortDosingMethodTestSuccess).Returns(0x8);
-                yield return new TestCaseData(Behavior.AbortDosingMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.AbortDosingMethodTestSuccess).ExpectedResult = (0x8);
+                yield return new TestCaseData(Behavior.AbortDosingMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable StartDosingMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.StartDosingMethodTestSuccess).Returns(0x10);
-                yield return new TestCaseData(Behavior.StartDosingMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.StartDosingMethodTestSuccess).ExpectedResult = (0x10);
+                yield return new TestCaseData(Behavior.StartDosingMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable RecordWeightMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.RecordWeightMethodTestSuccess).Returns(0x4000);
-                yield return new TestCaseData(Behavior.RecordWeightMethodTestFail).Returns(0x0);
+                yield return new TestCaseData(Behavior.RecordWeightMethodTestSuccess).ExpectedResult = (0x4000);
+                yield return new TestCaseData(Behavior.RecordWeightMethodTestFail).ExpectedResult = (0x0);
             }
         }
         public static IEnumerable ManualRedosingMethodTestCases
         {
             get
             {
-                yield return new TestCaseData(Behavior.ManualRedosingMethodTestSuccess).Returns(true);
-                yield return new TestCaseData(Behavior.ManualRedosingMethodTestFail).Returns(false);
+                yield return new TestCaseData(Behavior.ManualRedosingMethodTestSuccess).ExpectedResult = (0x8000);
+                yield return new TestCaseData(Behavior.ManualRedosingMethodTestFail).ExpectedResult = (0x0);
             }
         }
 
@@ -224,8 +221,6 @@ namespace HBM.WT.API.WTX.Modbus
                 yield return new TestCaseData(Behavior.WriteU08ArrayTestFail).Returns(false);
             }
         }
-
-        
 
         public static IEnumerable ResetTimerTestCases
         {
@@ -275,7 +270,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         // Test for method : Zeroing
         [Test, TestCaseSource(typeof(WriteTestsModbus), "ZeroMethodTestCases")]
-        public int ZeroMethodTestModbus(Behavior behavior)
+        public void ZeroMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -283,10 +278,10 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj.Connect(this.OnConnect, 100);
             _wtxObj.isConnected = true;
 
-            _wtxObj.taring(callbackMethod);
+            _wtxObj.zeroing(callbackMethod);
 
-            return testConnection.getCommand;
-            //Assert.AreEqual(0x40, _wtxObj.getCommand);
+            //return testConnection.getCommand;
+            Assert.AreEqual(0x40, _wtxObj.getCommand);
 
         }
 
@@ -446,7 +441,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         // Test for method : Switch to gross value or net value
         [Test, TestCaseSource(typeof(WriteTestsModbus), "GrosMethodTestCases")]
-        public int GrosMethodTestModbus(Behavior behavior)
+        public void GrosMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -456,13 +451,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.gross(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x2, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x2, _wtxObj.getCommand);
         }
 
         // Test for method : Taring
         [Test, TestCaseSource(typeof(WriteTestsModbus), "TareMethodTestCases")]
-        public int TareMethodTestModbus(Behavior behavior)
+        public void TareMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -472,14 +467,14 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.taring(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x1, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x1, _wtxObj.getCommand);
 
         }
 
         // Test for method : Adjusting zero
         [Test, TestCaseSource(typeof(WriteTestsModbus), "AdjustingZeroMethodTestCases")]
-        public int AdjustingZeroMethodTestModbus(Behavior behavior)
+        public void AdjustingZeroMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -489,13 +484,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.adjustZero(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x80, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x80, _wtxObj.getCommand);
         }
 
         // Test for method : Adjusting nominal
         [Test, TestCaseSource(typeof(WriteTestsModbus), "AdjustNominalMethodTestCases")]
-        public int AdjustingNominalMethodTestModbus(Behavior behavior)
+        public void AdjustingNominalMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -505,13 +500,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.adjustNominal(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x100, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x100, _wtxObj.getCommand);
         }
 
         // Test for method : Adjusting nominal
         [Test, TestCaseSource(typeof(WriteTestsModbus), "ActivateDataMethodTestCases")]
-        public int ActivateDataMethodTestModbus(Behavior behavior)
+        public void /*int*/ ActivateDataMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -521,13 +516,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.activateData(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x800, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x800, _wtxObj.getCommand);
         }
 
         // Test for method : Adjusting nominal
         [Test, TestCaseSource(typeof(WriteTestsModbus), "ManualTaringMethodTestCases")]
-        public int ManualTaringTestModbus(Behavior behavior)
+        public void ManualTaringTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -537,14 +532,14 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.manualTaring(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x1000, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x1000, _wtxObj.getCommand);
         }
 
 
         // Test for method : Adjusting nominal
         [Test, TestCaseSource(typeof(WriteTestsModbus), "ClearDosingResultsMethodTestCases")]
-        public int ClearDosingResultsMethodTestModbus(Behavior behavior)
+        public void ClearDosingResultsMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -554,13 +549,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.clearDosingResults(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x4, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x4, _wtxObj.getCommand);
         }
 
         // Test for method : Adjusting nominal
         [Test, TestCaseSource(typeof(WriteTestsModbus), "AbortDosingMethodTestCases")]
-        public int AbortDosingMethodTestModbus(Behavior behavior)
+        public void AbortDosingMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -570,13 +565,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.abortDosing(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x8, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x8, _wtxObj.getCommand);
         }
 
         // Test for method : Adjusting nominal
         [Test, TestCaseSource(typeof(WriteTestsModbus), "StartDosingMethodTestCases")]
-        public int StartDosingMethodTestModbus(Behavior behavior)
+        public void StartDosingMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -586,13 +581,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.startDosing(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x10, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x10, _wtxObj.getCommand);
         }
 
         // Test for method : Record weight
         [Test, TestCaseSource(typeof(WriteTestsModbus), "RecordWeightMethodTestCases")]
-        public int RecordweightMethodTestModbus(Behavior behavior)
+        public void RecordweightMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -602,13 +597,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.recordWeight(callbackMethod);
 
-            return _wtxObj.getCommand;
-            //Assert.AreEqual(0x4000, _wtxObj.getCommand);
+            //return _wtxObj.getCommand;
+            Assert.AreEqual(0x4000, _wtxObj.getCommand);
         }
 
         // Test for method : manualReDosing
         [Test, TestCaseSource(typeof(WriteTestsModbus), "ManualRedosingMethodTestCases")]
-        public bool ManualRedosingMethodTestModbus(Behavior behavior)
+        public void ManualRedosingMethodTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             _wtxObj = new WtxModbus(testConnection, 200);
@@ -618,13 +613,8 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.manualReDosing(callbackMethod);
 
-            if (_wtxObj.getCommand == 0x8000)
-                return true;
-            else
-                return false;
-
             //return _wtxObj.getCommand;
-            //Assert.AreEqual(0x8000, _wtxObj.getCommand);
+            Assert.AreEqual(0x8000, _wtxObj.getCommand);
         }
 
         // Test for method : Write an Array of type signed integer 32 bit. 

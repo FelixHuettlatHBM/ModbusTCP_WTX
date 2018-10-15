@@ -33,7 +33,7 @@ namespace WTXGUISimple
         private static System.Timers.Timer _aTimer;
         private static int _timerInterval;
 
-        static JetBusConnection _sConnection;
+        private static JetBusConnection _sConnection;
 
         private CalcCalibration _calcCalObj;
         private WeightCalibration _weightCalObj;
@@ -429,5 +429,9 @@ namespace WTXGUISimple
 
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

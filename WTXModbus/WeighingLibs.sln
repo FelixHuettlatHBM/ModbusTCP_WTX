@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JetbusTest", "JetbusTest\Je
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusTest", "ModbusTest\ModbusTest.csproj", "{26F43279-CF92-4468-98B8-A78D4274C5A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXGUIsimple", "WTXGUIsimple\WTXGUIsimple.csproj", "{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,18 @@ Global
 		{26F43279-CF92-4468-98B8-A78D4274C5A0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{26F43279-CF92-4468-98B8-A78D4274C5A0}.Release|x86.ActiveCfg = Release|Any CPU
 		{26F43279-CF92-4468-98B8-A78D4274C5A0}.Release|x86.Build.0 = Release|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Debug|x86.Build.0 = Debug|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +151,7 @@ Global
 		{1B8BDE86-5015-40A3-B364-5716EC95B932} = {88A9A036-C2E9-4BB5-A757-DF2164D246A4}
 		{8241DD4F-A40A-4E8D-8BAC-8CD878BC1ABF} = {88A9A036-C2E9-4BB5-A757-DF2164D246A4}
 		{730CFDEE-9195-4601-841D-02276A8C7F06} = {88A9A036-C2E9-4BB5-A757-DF2164D246A4}
+		{BD4E877B-0A77-4976-8FE6-53D9450B9CA0} = {88A9A036-C2E9-4BB5-A757-DF2164D246A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0DFD5B88-96A3-4B7C-AA27-675E748F5775}

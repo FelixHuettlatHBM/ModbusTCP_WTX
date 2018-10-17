@@ -1,15 +1,8 @@
-﻿using HBM.WT.API;
-using HBM.WT.API.WTX;
-using HBM.WT.API.WTX.Modbus;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace HBM.WT.API.WTX.Modbus
 {

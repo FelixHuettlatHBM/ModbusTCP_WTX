@@ -1,17 +1,10 @@
 ﻿
 namespace HBM.WT.API.WTX.Modbus
 {
-    using System;
     using System.Collections;
     using NUnit.Framework;
-    using Newtonsoft.Json.Linq;
     using HBM.WT.API.WTX;
-    using HBM.WT.API.WTX.Modbus;
-    using System.ComponentModel;
     using System.Threading;
-    using Moq;
-    using Moq.Language;
-    using System.Timers;
 
     [TestFixture]
     public class ConnectTestsModbus 

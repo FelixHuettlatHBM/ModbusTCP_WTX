@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
@@ -45,87 +46,76 @@ namespace HBM.WT.API.WTX.Jet
     public class JetBusConnection : INetConnection, IDisposable
     {
         #region member
-        protected JetPeer MPeer;
+        protected JetPeer _peer;
 
         private Dictionary<string, JToken> _mTokenBuffer = new Dictionary<string, JToken>();
 
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
         private Exception _mException = null;
-        private int _mTimeoutMs;
 
         public event EventHandler BusActivityDetection;
         public event EventHandler<DataEvent> RaiseDataEvent;
 
-        private bool JetConnected;
+        private bool _connected;
 
-        private string IP;
+        private string _ipaddress;
         private int interval;
 
         private JToken[] JTokenArray;
         private ushort[] DataUshortArray;
         private string[] DataStrArray;
 
-        private string passwd;
-        private string user;
-        private int timeoutMs;
+        private string _password;
+        private string _user;
+        private int _timeoutMs;
 
         #endregion
 
         #region constructors
 
-        // Constructor: Without ssh certification. 
-        public JetBusConnection(string ipAddrParam, string userParam, string passwdParam, RemoteCertificateValidationCallback certificationCallbackParam, int timeoutMsParam = 5000) {
-
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddrParam, certificationCallbackParam);
-            MPeer = new JetPeer(jetConnection);
-
-            this.passwd = passwdParam;
-            this.user = userParam;
-            this.timeoutMs = timeoutMsParam;
-        }
-
-        // Constructor: With ssh certification as a parameter (NetConnectionSecurity) . 
-        public JetBusConnection(string ipAddrParam, RemoteCertificateValidationCallback certificationCallbackParam, int timeoutMsParam = 5000) {
-
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddrParam, NetConnectionSecurity.RemoteCertificationCheck);
-            MPeer = new JetPeer(jetConnection);
-        }
-
-        public JetBusConnection(string ipAddrParam, string userParam, string passwdParam, int timeoutMsParam = 5000) 
-            : this(ipAddrParam, userParam, passwdParam, NetConnectionSecurity.RemoteCertificationCheck, timeoutMsParam){
-
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddrParam, NetConnectionSecurity.RemoteCertificationCheck);
-            MPeer = new JetPeer(jetConnection);
-        }
-
-        public JetBusConnection(string ipAddr, int timeoutMs = 5000) 
-            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs)
+        // Constructor without ssh certification. 
+        public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 5000)
         {
-            IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
-            MPeer = new JetPeer(jetConnection);
+            IJetConnection jetConnection = new WebSocketJetConnection(IPAddress);
+            _peer = new JetPeer(jetConnection);
+            this._user = User;
+            this._password = Password;
+            this._timeoutMs = TimeoutMs;
+            this._ipaddress = IPAddress;
         }
 
+        // Constructor with ssh certification
+        public JetBusConnection(string IPAddress, int TimeoutMs = 5000)
+        {
+            IJetConnection jetConnection = new WebSocketJetConnection(IPAddress, RemoteCertificationCheck);
+            _peer = new JetPeer(jetConnection);
+            this._timeoutMs = TimeoutMs;
+        }
         #endregion
 
         #region support functions
 
         public void Connect()
         {
-            ConnectOnPeer(this.user, this.passwd, this.timeoutMs);
+            ConnectPeer(this._user, this._password, this._timeoutMs);
             FetchAll();
         }
+
+
+        public void DisconnectDevice()
+        {
+            _peer.Disconnect();
+        }
+
 
         public bool IsConnected
         {
             get
             {
-                return JetConnected;
-            }
-            set
-            {
-                JetConnected = value;
-            }
+                return _connected;
+            } 
         }
+
 
         public string[] getStringData
         {
@@ -135,92 +125,114 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public virtual void ConnectOnPeer(int timeoutMs = 5000) {   // before it was "protected". 
-            MPeer.Connect(delegate (bool connected) {
-                if (!connected) {
-                    _mException = new Exception("Connection failed.");
-                }
 
-                this.JetConnected = true; 
+
+        private void OnAuthenticate(bool success, JToken token)
+        {           
+            if (!success)
+            {
+
+                this._connected = false;
+                JetBusException exception = new JetBusException(token);
+                _mException = new Exception(exception.Error.ToString());
+            }
+            _mSuccessEvent.Set();
+        }
+                     
+
+        private void OnConnect(bool connected)
+        {
+            if (!connected)
+            {
+                _mException = new Exception("Connection failed.");
+            }
+
+            this._connected = true;
+            _mSuccessEvent.Set();
+        }
+
+
+        private void OnConnectAuhtenticate(bool connected)
+        {
+            if (connected)
+            {
+                this._connected = true;
+
+                _peer.Authenticate(this._user, this._password, OnAuthenticate, this._timeoutMs);
+            }
+            else
+            {
+                this._connected = false;
+                _mException = new Exception("Connection failed");
                 _mSuccessEvent.Set();
-            }, timeoutMs);
-            _mTimeoutMs = timeoutMs;
+            }
 
-            // 
-            // Das WaitOne und der Timeout bezieht sich auf die gesamte Routine einschließlich aller
-            // Instruktionen in die Callbacks der Connect-Methode
-            //
+        }
 
+
+        private void ConnectPeer(int timeoutMs)
+        {
+            _peer.Connect(OnConnect, timeoutMs);
             WaitOne();
         }
 
-        public virtual void ConnectOnPeer(string user, string passwd, int timeoutMs = 5000)   // before it was "protected". 
-        {   
-            MPeer.Connect(delegate (bool connected) {
-                if (connected) {
 
-                    this.JetConnected = true;
+        private void ConnectPeer(string User, string Password, int TimeoutMs)
+        {
+            this._user = User;
+            this._password = Password;
 
-                    MPeer.Authenticate(user, passwd, delegate (bool success, JToken token) {
-                        if (!success) {
-
-                            this.JetConnected = false;
-                            JetBusException exception = new JetBusException(token);
-                            _mException = new Exception(exception.Error.ToString());
-                        }
-
-                        this.JetConnected = true;
-                        _mSuccessEvent.Set();
-                    }, _mTimeoutMs); 
-                }
-                else {
-                    this.JetConnected = false;
-                    _mException = new Exception("Connection failed");
-                    _mSuccessEvent.Set();
-                }
-            }, timeoutMs);
-            _mTimeoutMs = timeoutMs;
+            _peer.Connect(OnConnectAuhtenticate, TimeoutMs);
             WaitOne(2);
         }
+
+
+        private void OnFetch(bool success, JToken token)
+        {
+            if (!success)
+            {
+
+                this._connected = false;
+
+                JetBusException exception = new JetBusException(token);
+                _mException = new Exception(exception.Error.ToString());
+            }
+            //
+            // Wake up the waiting thread where call the construktor to connect the session
+            //
+
+            this._connected = true;
+            _mSuccessEvent.Set();
+
+            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
+
+        }
+
 
         public virtual void FetchAll()
         {
             Matcher matcher = new Matcher();
             FetchId id;
 
-            MPeer.Fetch(out id, matcher, OnFetchData, delegate (bool success, JToken token) {
-                if (!success) {
-
-                    this.JetConnected = false;
-
-                    JetBusException exception = new JetBusException(token);
-                    _mException = new Exception(exception.Error.ToString());
-                }
-                //
-                // Wake up the waiting thread where call the construktor to connect the session
-                //
-
-                this.JetConnected = true;
-                _mSuccessEvent.Set();
-               
-                BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
-               
-            }, _mTimeoutMs);
+            _peer.Fetch(out id, matcher, OnFetchData, OnFetch , this._timeoutMs);
             WaitOne(3);
         }
         
-        protected virtual void WaitOne(int timeoutMultiplier = 1) {
-            if (!_mSuccessEvent.WaitOne(_mTimeoutMs * timeoutMultiplier)) {
+        protected virtual void WaitOne(int timeoutMultiplier = 1)
+        {
+            if (!_mSuccessEvent.WaitOne(_timeoutMs * timeoutMultiplier))
+            {
 
-                this.JetConnected = false;
-                //
+                this._connected = false;
+  
                 // Timeout-Exception
-                //
-                throw new Exception("Interface Timeout - signal-handler will never reset");
+                throw new Exception("Jet interface Timeout");
             }
 
-            this.JetConnected = true; 
-            if (_mException != null) {
+            this._connected = true; 
+
+            if (_mException != null)
+            {
                 Exception exception = _mException;
                 _mException = null;
                 throw exception;
@@ -344,60 +356,65 @@ namespace HBM.WT.API.WTX.Jet
 
         #endregion
 
-        #region write-functions
+
+        #region Write functions
+        private void OnSet(bool success, JToken token)
+        {
+           if (!success)
+           {
+                JetBusException exception = new JetBusException(token);
+                _mException = new Exception(exception.Error.ToString());
+           }
+            
+           _mSuccessEvent.Set();
+            
+           BusActivityDetection?.Invoke(this, new LogEvent("Set data" + success ));
+        }
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="path"></param>
         /// <param name="value"></param>
-        protected virtual void SetData(object path, JValue value) {
-            //
-            // Over the JetPeer.Change(...) will be change the OWN object. Therefore 
-            // will be calling the JetPeer.Set(...) to change the foreign object.
-            //
-            try {
-                JObject request = MPeer.Set(path.ToString(), value, delegate (bool success, JToken token) {
-                    if (!success) {
-                        JetBusException exception = new JetBusException(token);
-                        _mException = new Exception(exception.Error.ToString());
-                    }
-
-                    this.JetConnected = true; 
-
-                    _mSuccessEvent.Set();
-
-                    BusActivityDetection?.Invoke(this, new LogEvent("Set data" + success ));
-
-                }, _mTimeoutMs);
+        protected virtual void SetData(object path, JValue value)
+        {
+            try
+            {
+                JObject request = _peer.Set(path.ToString(), value, OnSet, this._timeoutMs);
             }
-            catch (Exception e) {
-                throw new Exception(0x01.ToString());
+            catch (Exception e)
+            {
+                throw new Exception(e.ToString());
             }
-
-            //WaitOne();
         }
 
-        public void WriteInt(object index, int data) {
+
+        public void WriteInt(object index, int data)
+        {
             JValue value = new JValue(data);
             SetData(index, value);
         }
 
-        public void WriteDint(object index, long data) {
+
+        public void WriteDint(object index, long data)
+        {
             JValue value = new JValue(data);
             SetData(index, value);
         }
-        public void WriteAsc(object index, string data) {
+
+
+        public void WriteAsc(object index, string data)
+        {
             JValue value = new JValue(data);
             SetData(index, value);
         }
         #endregion
 
-        public void DisconnectDevice() {
-            MPeer.Disconnect();
-        }
 
-        public string BufferToString() {
+
+        public string BufferToString()
+        {
             StringBuilder sb = new StringBuilder();
             lock (_mTokenBuffer) {
                 int i = 0;
@@ -409,9 +426,69 @@ namespace HBM.WT.API.WTX.Jet
             return sb.ToString();
         }
 
-        public void Disconnect() {
-            MPeer.Disconnect();
+
+        public void Disconnect()
+        {
+            _peer.Disconnect();
+            this._connected = false;
         }
+
+
+        /// <summary>
+        /// RemoteCertificationCheck:
+        /// Callback-Method wich is called from SslStream. Is a customized implementation of a certification-check.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="certificate"></param>
+        /// <param name="chain"></param>
+        /// <param name="sslPolicyErrors"></param>
+        /// <returns></returns>
+        private bool RemoteCertificationCheck(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            try
+            {
+                X509Certificate2 clientCertificate = new X509Certificate2("ssh_server_cert.pem");
+                SslStream sslStream = (sender as SslStream);
+
+                if (sslPolicyErrors == SslPolicyErrors.None || sslPolicyErrors == SslPolicyErrors.RemoteCertificateChainErrors)
+                {
+                    foreach (X509ChainElement item in chain.ChainElements)
+                    {
+                        item.Certificate.Export(X509ContentType.Cert);
+                        //
+                        // If one of the included status-flags is not posiv then the cerficate-check
+                        // failed. Except the "untrusted root" because it is a self-signed certificate
+                        //
+                        foreach (X509ChainStatus status in item.ChainElementStatus)
+                        {
+                            if (status.Status != X509ChainStatusFlags.NoError
+                                && status.Status != X509ChainStatusFlags.UntrustedRoot
+                                 && status.Status != X509ChainStatusFlags.NotTimeValid)
+                            {
+
+                                return false;
+                            }
+                        }
+                        //
+                        // compare the certificate in the chain-collection. If on of the certificate at
+                        // the path to root equal, are the check ist positive
+                        //
+                        if (clientCertificate.Equals(item.Certificate))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                // TODO: to reactivate the hostename-check returning false.
+                return true;
+            }
+            catch (Exception)
+            {
+                // If thrown any exception then is the certification-check failed
+                return false;
+            }
+        }
+
 
         #region IDisposable Support
         private bool _disposedValue = false; // To detect redundant calls
@@ -469,13 +546,8 @@ namespace HBM.WT.API.WTX.Jet
         {
             get
             {
-                return this.IP;
+                return this._ipaddress;
             }
-            set
-            {
-                this.IP = value;
-            }
-
         }
 
         public int SendingInterval
@@ -509,12 +581,12 @@ namespace HBM.WT.API.WTX.Jet
 
         public int Error { get { return _mError; } }
 
-        public override string Message {
+        public override string Message
+        {
             get {
                 return _mMessage + " [ 0x" + _mError.ToString("X") + " ]";
             }
         }
-
     }
-   
+
 }

@@ -35,12 +35,10 @@ namespace WTXGUIsimple
         private static ModbusTcpConnection _modbusObj;
         private static JetBusConnection _sConnection;
 
-        private static BaseWtDevice _wtxModbusObj;
-        private static BaseWtDevice _wtxJetObj;
+        private static BaseWtDevice _wtxObj;
 
         private CalcCalibration _calcCalObj;
         private WeightCalibration _weightCalObj;
-
 
         public Form1()
         {
@@ -112,17 +110,17 @@ namespace WTXGUIsimple
             {
                 _modbusObj = new ModbusTcpConnection(this._ipAddress);
 
-                _wtxModbusObj = new WtxModbus(_modbusObj, this._timerInterval);
+                _wtxObj = new WtxModbus(_modbusObj, this._timerInterval);
 
-                _wtxModbusObj.getConnection.NumofPoints = 6;
+                _wtxObj.getConnection.NumofPoints = 6;
 
-                _wtxModbusObj.getConnection.Connect();
+                _wtxObj.getConnection.Connect();
 
-                if (_wtxModbusObj.isConnected == true)
+                if (_wtxObj.isConnected == true)
                 {
                     pictureBox1.Image = WTXGUIsimple.Properties.Resources.modbus_symbol;
                     pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
-                    _wtxModbusObj.DataUpdateEvent += ValuesOnConsole;
+                    _wtxObj.DataUpdateEvent += ValuesOnConsole;
                 }
                 else
                 {
@@ -141,7 +139,7 @@ namespace WTXGUIsimple
 
                     _sConnection = new JetBusConnection(_uri, "Administrator", "wtx", delegate { return true; });
 
-                    _wtxJetObj = new WtxJet(_sConnection);              
+                    _wtxObj = new WtxJet(_sConnection);              
                 
                     try
                     {
@@ -149,13 +147,13 @@ namespace WTXGUIsimple
                     }
                     catch (Exception exc)
                     {
-                        _wtxJetObj.isConnected = false;
+                        _wtxObj.isConnected = false;
                         textBox2.Text = "Connection failed, enter an other IP address please.";
                     }
                 
                 //pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;  // Check, ob der Verbindungsaufbau erfolgreich war? 
 
-                if (_wtxJetObj.isConnected == true)
+                if (_wtxObj.isConnected == true)
                 {
                         pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
                         pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
@@ -178,9 +176,9 @@ namespace WTXGUIsimple
 
             textBox2.Invoke(new Action(() =>
             {
-                textBox2.Text = "Net:" + _wtxModbusObj.NetGrossValueStringComment(_wtxModbusObj.NetValue, _wtxModbusObj.Decimals) + _wtxModbusObj.UnitStringComment() + Environment.NewLine
-                + "Gross:" + _wtxModbusObj.NetGrossValueStringComment(_wtxModbusObj.GrossValue, _wtxModbusObj.Decimals) + _wtxModbusObj.UnitStringComment() + Environment.NewLine
-                + "Tara:" + _wtxModbusObj.NetGrossValueStringComment(taraValue, _wtxModbusObj.Decimals) + _wtxModbusObj.UnitStringComment();
+                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment();
                 textBox2.TextAlign = HorizontalAlignment.Right;
             }));
 
@@ -191,13 +189,13 @@ namespace WTXGUIsimple
         {
             if (this.isJetbus == true && this.isModbus == false)
             {
-                _wtxJetObj.gross(WriteDataCompleted);
+                _wtxObj.gross(WriteDataCompleted);
             }
 
             else
                 if(this.isModbus==true && this.isJetbus==false)
                 {
-                _wtxModbusObj.gross(WriteDataCompleted);
+                _wtxObj.gross(WriteDataCompleted);
                 }
         }
 
@@ -206,13 +204,13 @@ namespace WTXGUIsimple
         {
             if (this.isJetbus == true && this.isModbus == false)
             {
-                _wtxJetObj.zeroing(WriteDataCompleted);
+                _wtxObj.zeroing(WriteDataCompleted);
             }
 
             else
               if (this.isModbus == true && this.isJetbus == false)
               {
-                _wtxModbusObj.zeroing(WriteDataCompleted);
+                _wtxObj.zeroing(WriteDataCompleted);
               }
 
         }
@@ -222,13 +220,13 @@ namespace WTXGUIsimple
         {
             if (this.isJetbus == true && this.isModbus == false)
             {
-                _wtxJetObj.taring(WriteDataCompleted);
+                _wtxObj.taring(WriteDataCompleted);
             }
 
             else
               if (this.isModbus == true && this.isJetbus == false)
               {
-                _wtxModbusObj.taring(WriteDataCompleted);
+                _wtxObj.taring(WriteDataCompleted);
               }
         }
 
@@ -243,7 +241,7 @@ namespace WTXGUIsimple
             if (this.isJetbus == true && this.isModbus == false)
             {
               //_aTimer.Stop();
-                _wtxJetObj.getConnection.Disconnect();
+                _wtxObj.getConnection.Disconnect();
                 this.isModbus = true;
                 this.isJetbus = false;
 
@@ -257,7 +255,7 @@ namespace WTXGUIsimple
             else
              if (this.isModbus == true && this.isJetbus == false)
              {
-                _wtxModbusObj.getConnection.Disconnect();
+                _wtxObj.getConnection.Disconnect();
                 this.isModbus = false;
                 this.isJetbus = true;
            
@@ -273,10 +271,10 @@ namespace WTXGUIsimple
         private void calibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(this.isJetbus == true && this.isModbus==false)
-                _weightCalObj = new WeightCalibration(_wtxJetObj, _sConnection.IsConnected);
+                _weightCalObj = new WeightCalibration(_wtxObj, _sConnection.IsConnected);
 
             if(this.isJetbus == false && this.isModbus==true)
-                _weightCalObj = new WeightCalibration(_wtxModbusObj, _sConnection.IsConnected);
+                _weightCalObj = new WeightCalibration(_wtxObj, _sConnection.IsConnected);
 
             DialogResult res = _weightCalObj.ShowDialog();
         }
@@ -285,10 +283,10 @@ namespace WTXGUIsimple
         {
 
             if (this.isJetbus == true && this.isModbus == false)
-                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxModbusObj, _sConnection.IsConnected);
+                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxObj, _sConnection.IsConnected);
 
             if(this.isJetbus == false && this.isModbus==true)
-                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxJetObj, _sConnection.IsConnected);
+                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxObj, _sConnection.IsConnected);
 
             DialogResult res = _calcCalObj.ShowDialog();
         }

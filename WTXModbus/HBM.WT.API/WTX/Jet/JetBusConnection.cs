@@ -70,8 +70,8 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         public JetBusConnection(string ipAddr, int timeoutMs = 5000) 
-            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs) {
-
+            : this(ipAddr, NetConnectionSecurity.RemoteCertificationCheck, timeoutMs)
+        {
             IJetConnection jetConnection = new WebSocketJetConnection(ipAddr, NetConnectionSecurity.RemoteCertificationCheck);
             MPeer = new JetPeer(jetConnection);
         }

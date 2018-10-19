@@ -2313,7 +2313,7 @@ namespace HBM.WT.API.WTX
 
         // Calculates the values for deadload and nominal load in d from the inputs in mV/V
         // and writes the into the WTX registers.
-        public void Calculate(double preload, double capacity)
+        public override void Calculate(double preload, double capacity)
         {
             dPreload = 0;
             dNominalLoad = 0; 

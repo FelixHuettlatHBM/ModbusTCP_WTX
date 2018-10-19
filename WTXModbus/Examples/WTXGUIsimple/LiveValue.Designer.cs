@@ -1,6 +1,6 @@
 ﻿namespace WTXGUIsimple
 {
-    partial class Form1
+    partial class LiveValue
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiveValue));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -186,16 +186,16 @@
             this.calibrationWithWeightToolStripMenuItem.Name = "calibrationWithWeightToolStripMenuItem";
             this.calibrationWithWeightToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.calibrationWithWeightToolStripMenuItem.Text = "Calculate calibration";
-            this.calibrationWithWeightToolStripMenuItem.Click += new System.EventHandler(this.calibrationWithWeightToolStripMenuItem_Click);
+            this.calibrationWithWeightToolStripMenuItem.Click += new System.EventHandler(this.calibrationWithWeightToolStripMenuItem_Click_1);
             // 
             // calibrationToolStripMenuItem
             // 
             this.calibrationToolStripMenuItem.Name = "calibrationToolStripMenuItem";
             this.calibrationToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.calibrationToolStripMenuItem.Text = "Calibration with weight";
-            this.calibrationToolStripMenuItem.Click += new System.EventHandler(this.calibrationToolStripMenuItem_Click);
+            this.calibrationToolStripMenuItem.Click += new System.EventHandler(this.calibrationToolStripMenuItem_Click_1);
             // 
-            // Form1
+            // LiveValue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -209,8 +209,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "LiveValue";
+            this.Text = "LiveValue";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

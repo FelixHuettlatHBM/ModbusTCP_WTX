@@ -12,8 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WTXGUISimple;
-
+using WTXModbusGUIsimple;
 
 /*
  * This application example enables communication and a connection to the WTX120 device via 
@@ -21,7 +20,7 @@ using WTXGUISimple;
  */
 namespace WTXGUIsimple
 {
-    public partial class Form1 : Form
+    public partial class LiveValue : Form
     {
         private bool isJetbus;
         private bool isModbus;
@@ -40,7 +39,7 @@ namespace WTXGUIsimple
         private CalcCalibration _calcCalObj;
         private WeightCalibration _weightCalObj;
 
-        public Form1()
+        public LiveValue()
         {
             InitializeComponent();
         
@@ -55,7 +54,7 @@ namespace WTXGUIsimple
            
         }
         
-        public Form1(string[] args)
+        public LiveValue(string[] args)
         {
             InitializeComponent();
             
@@ -120,7 +119,7 @@ namespace WTXGUIsimple
                 {
                     pictureBox1.Image = WTXGUIsimple.Properties.Resources.modbus_symbol;
                     pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
-                    _wtxObj.DataUpdateEvent += ValuesOnConsole;
+                    _wtxObj.DataUpdateEvent += ValuesOnConsoleViaModbus;
                 }
                 else
                 {
@@ -155,9 +154,10 @@ namespace WTXGUIsimple
 
                 if (_wtxObj.isConnected == true)
                 {
+                        _wtxObj.DataUpdateEvent += ValuesOnConsoleViaJetbus;
                         pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
                         pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
-                        
+
                 }
                 else
                 {
@@ -167,10 +167,10 @@ namespace WTXGUIsimple
             }
         }
       
-        // Method executed after read from WTX by eventbased call from WTX120Modbus, UpdateEvent(..) 
+        // Method executed after read from WTX by eventbased call from WTXModbus, UpdateEvent(..) 
         // Updates displayed values and states
         //public void ReadDataReceived(IDeviceValues deviceValues)
-        private void ValuesOnConsole(object sender, DataEvent e)
+        private void ValuesOnConsoleViaModbus(object sender, DataEvent e)
         {
             int taraValue = 0;
 
@@ -180,6 +180,25 @@ namespace WTXGUIsimple
                 + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
                 + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment();
                 textBox2.TextAlign = HorizontalAlignment.Right;
+            }));
+
+        }
+
+        // Method executed after read from WTX by eventbased call from WTXJet, UpdateEvent(..) 
+        // Updates displayed values and states
+        private void ValuesOnConsoleViaJetbus(object sender, DataEvent e)
+        {
+            int taraValue = 0;
+
+            textBox2.Invoke(new Action(() =>
+            {
+                textBox2.Text = "Net:" + e.strArgs[123];
+                /*
+                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment();
+                textBox2.TextAlign = HorizontalAlignment.Right;
+                */
             }));
 
         }
@@ -240,7 +259,7 @@ namespace WTXGUIsimple
         {
             if (this.isJetbus == true && this.isModbus == false)
             {
-              //_aTimer.Stop();
+                _wtxObj.DataUpdateEvent -= ValuesOnConsoleViaModbus;
                 _wtxObj.getConnection.Disconnect();
                 this.isModbus = true;
                 this.isJetbus = false;
@@ -255,6 +274,7 @@ namespace WTXGUIsimple
             else
              if (this.isModbus == true && this.isJetbus == false)
              {
+                _wtxObj.DataUpdateEvent -= ValuesOnConsoleViaJetbus;
                 _wtxObj.getConnection.Disconnect();
                 this.isModbus = false;
                 this.isJetbus = true;
@@ -267,30 +287,28 @@ namespace WTXGUIsimple
              }
         }
 
-        //Method for the calibration with weight:
-        private void calibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        //Method for calculate calibration with dead load and span: 
+        private void calibrationWithWeightToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if(this.isJetbus == true && this.isModbus==false)
+            if (this.isJetbus == true && this.isModbus == false)
+                _calcCalObj = new CalcCalibration(_wtxObj, _sConnection.IsConnected);
+
+            if (this.isJetbus == false && this.isModbus == true)
+                _calcCalObj = new CalcCalibration(_wtxObj, _sConnection.IsConnected);
+
+            DialogResult res = _calcCalObj.ShowDialog();
+        }
+        //Method for calibrating with weight: 
+        private void calibrationToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (this.isJetbus == true && this.isModbus == false)
                 _weightCalObj = new WeightCalibration(_wtxObj, _sConnection.IsConnected);
 
-            if(this.isJetbus == false && this.isModbus==true)
+            if (this.isJetbus == false && this.isModbus == true)
                 _weightCalObj = new WeightCalibration(_wtxObj, _sConnection.IsConnected);
 
             DialogResult res = _weightCalObj.ShowDialog();
         }
-        //Method to calculate the calibration with a span(zero load) and a dead load:
-        private void calibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            if (this.isJetbus == true && this.isModbus == false)
-                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxObj, _sConnection.IsConnected);
-
-            if(this.isJetbus == false && this.isModbus==true)
-                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxObj, _sConnection.IsConnected);
-
-            DialogResult res = _calcCalObj.ShowDialog();
-        }
-
         private void WriteDataCompleted(IDeviceData obj)
         {
         }
@@ -325,5 +343,6 @@ namespace WTXGUIsimple
         {
 
         }
+
     }
 }

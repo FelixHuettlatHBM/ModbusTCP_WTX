@@ -71,6 +71,7 @@ namespace HBM.WT.API
 
         public abstract void MeasureZero();
         public abstract void Calibrate(int PotencyCalibrationWeight, string calibrationWeight);
+        public abstract void Calculate(double _preload, double _capacity);
 
         public abstract int NetValue { get; }                    // data[1]
         public abstract int GrossValue { get; }                  // data[2]

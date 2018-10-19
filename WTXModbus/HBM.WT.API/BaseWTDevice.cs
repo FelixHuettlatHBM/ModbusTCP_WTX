@@ -52,21 +52,26 @@ namespace HBM.WT.API
         public abstract event EventHandler<DataEvent> DataUpdateEvent;
 
         public abstract bool isConnected { get; set; }
-
-        public abstract void Connect(Action<bool> completed, double timeoutMs);
-        
+        public abstract void Connect(Action<bool> completed, double timeoutMs);     
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
 
-        public abstract IDeviceData DeviceValues { get; }
-        
+        public abstract IDeviceData DeviceValues { get; }      
         public abstract bool IsDataReceived { get; set; }       
 
         public abstract void UpdateEvent(object sender, DataEvent e);
         
         public abstract string[] GetDataStr { get; set; }
-
         public abstract ushort[] GetDataUshort { get; set; }
-        
+
+        public abstract string NetGrossValueStringComment(int value, int decimals);
+        public abstract void gross(Action<IDeviceData> WriteDataCompleted);
+        public abstract void zeroing(Action<IDeviceData> WriteDataCompleted);
+        public abstract void taring(Action<IDeviceData> WriteDataCompleted);
+        public abstract string UnitStringComment();
+
+        public abstract void MeasureZero();
+        public abstract void Calibrate(int PotencyCalibrationWeight, string calibrationWeight);
+
         public abstract int NetValue { get; }                    // data[1]
         public abstract int GrossValue { get; }                  // data[2]
         public abstract int GeneralWeightError { get; }          // data[3]

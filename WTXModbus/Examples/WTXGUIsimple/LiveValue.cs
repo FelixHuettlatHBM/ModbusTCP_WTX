@@ -149,14 +149,14 @@ namespace WTXGUIsimple
                         _wtxObj.isConnected = false;
                         textBox2.Text = "Connection failed, enter an other IP address please.";
                     }
-                
-                //pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;  // Check, ob der Verbindungsaufbau erfolgreich war? 
 
+                //pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;  // Check, ob der Verbindungsaufbau erfolgreich war? 
+                
                 if (_wtxObj.isConnected == true)
                 {
-                        _wtxObj.DataUpdateEvent += ValuesOnConsoleViaJetbus;
-                        pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
-                        pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
+                    _wtxObj.DataUpdateEvent += ValuesOnConsoleViaJetbus;
+                    pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
+                    pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
 
                 }
                 else
@@ -192,13 +192,11 @@ namespace WTXGUIsimple
 
             textBox2.Invoke(new Action(() =>
             {
-                textBox2.Text = "Net:" + e.strArgs[123];
-                /*
-                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(_wtxObj.NetValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
-                + "Gross:" + _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment() + Environment.NewLine
-                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, _wtxObj.Decimals) + _wtxObj.UnitStringComment();
+                textBox2.Text = "Net:" + _wtxObj.NetGrossValueStringComment(Convert.ToInt32(e.strArgs[123]), 4) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Gross:" + _wtxObj.NetGrossValueStringComment(Convert.ToInt32(e.strArgs[123]), 4) + _wtxObj.UnitStringComment() + Environment.NewLine
+                + "Tara:" + _wtxObj.NetGrossValueStringComment(taraValue, 4) + _wtxObj.UnitStringComment();
                 textBox2.TextAlign = HorizontalAlignment.Right;
-                */
+                
             }));
 
         }
@@ -206,47 +204,20 @@ namespace WTXGUIsimple
         // button click event for switching to gross or net value. 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (this.isJetbus == true && this.isModbus == false)
-            {
                 _wtxObj.gross(WriteDataCompleted);
-            }
-
-            else
-                if(this.isModbus==true && this.isJetbus==false)
-                {
-                _wtxObj.gross(WriteDataCompleted);
-                }
         }
 
         // button click event for zeroing
         private void button3_Click(object sender, EventArgs e)
         {
-            if (this.isJetbus == true && this.isModbus == false)
-            {
                 _wtxObj.zeroing(WriteDataCompleted);
-            }
-
-            else
-              if (this.isModbus == true && this.isJetbus == false)
-              {
-                _wtxObj.zeroing(WriteDataCompleted);
-              }
-
         }
 
         // button click event for taring 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (this.isJetbus == true && this.isModbus == false)
-            {
-                _wtxObj.taring(WriteDataCompleted);
-            }
 
-            else
-              if (this.isModbus == true && this.isJetbus == false)
-              {
                 _wtxObj.taring(WriteDataCompleted);
-              }
         }
 
         private void button5_Click(object sender, EventArgs e)

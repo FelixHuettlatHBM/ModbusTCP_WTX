@@ -331,7 +331,7 @@ namespace HBM.WT.API.WTX
         *In the following methods the different options for the single integer values are used to define and
         *interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
         */
-        public string NetGrossValueStringComment(int value, int decimals)
+        public override string NetGrossValueStringComment(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";
@@ -417,7 +417,7 @@ namespace HBM.WT.API.WTX
 
 
         // This method sets the value for the nominal weight in the WTX.
-        public void Calibrate(int calibrationValue, string calibrationWeightStr)
+        public override void Calibrate(int calibrationValue, string calibrationWeightStr)
         {
             _connection.Write(ID_keys.LFT_SCALE_CALIBRATION_WEIGHT, calibrationValue);          // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
 
@@ -463,26 +463,31 @@ namespace HBM.WT.API.WTX
             this._isCalibrating = true;
         }
 
-        public void MeasureZero()
+        public override void MeasureZero()
         {
             //write "calz" 0x7A6C6163 ( 2053923171 ) to path(ID)=6002/01
 
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_ZERO);       // SCALE_COMMAND = "6002/01"
         }
 
-        public void zeroing(Action<IDeviceData> WriteDataCompleted)
+        public override void zeroing(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.ZEROING);       // SCALE_COMMAND = "6002/01"
         }
 
-        public void gross(Action<IDeviceData> WriteDataCompleted)
+        public override void gross(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.GROSS);       // SCALE_COMMAND = "6002/01"
         }
 
-        public void taring(Action<IDeviceData> WriteDataCompleted)
+        public override void taring(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.TARING);       // SCALE_COMMAND = "6002/01"
+        }
+
+        public override string UnitStringComment()
+        {
+            throw new NotImplementedException();
         }
 
 

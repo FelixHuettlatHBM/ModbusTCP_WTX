@@ -11,8 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
+using WTXGUISimple;
 
 
 /*
@@ -25,9 +25,7 @@ namespace WTXGUIsimple
     {
         private bool isJetbus;
         private bool isModbus;
-
-        private static System.Timers.Timer _aTimer;
-
+        
         private string _ipAddress;
         private const string DEFAULT_IP_ADDRESS = "192.168.100.88";
         private string _uri;
@@ -37,9 +35,12 @@ namespace WTXGUIsimple
         private static ModbusTcpConnection _modbusObj;
         private static JetBusConnection _sConnection;
 
-        private static WtxModbus _wtxModbusObj;
-        private static WtxJet _wtxJetObj;
-        
+        private static BaseWtDevice _wtxModbusObj;
+        private static BaseWtDevice _wtxJetObj;
+
+        private CalcCalibration _calcCalObj;
+        private WeightCalibration _weightCalObj;
+
 
         public Form1()
         {
@@ -56,7 +57,6 @@ namespace WTXGUIsimple
            
         }
         
-
         public Form1(string[] args)
         {
             InitializeComponent();
@@ -157,7 +157,6 @@ namespace WTXGUIsimple
 
                 if (_wtxJetObj.isConnected == true)
                 {
-                        InitializeTimerJetbus(_timerInterval);
                         pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
                         pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
                         
@@ -169,54 +168,7 @@ namespace WTXGUIsimple
                 }
             }
         }
-
-        // This method initializes the with the timer interval as a parameter: 
-        private void InitializeTimerJetbus(int timerInterval)
-        {
-            // Create a timer with an interval of 500ms. 
-            _aTimer = new System.Timers.Timer(timerInterval);
-
-            // Connect the elapsed event for the timer. 
-            _aTimer.Elapsed += JetbusOnTimedEvent;
-            _aTimer.AutoReset = true;
-            _aTimer.Enabled = true;
-        }
-
-        // Event method, which will be triggered after a interval of the timer is elapsed- 
-        // After triggering (after 500ms) the register is read. 
-        private void JetbusOnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            int taraValue = 0;
-
-            try
-            {
-                taraValue = _wtxJetObj.GrossValue - _wtxJetObj.NetValue;
-            }
-            catch (Exception exc)
-            {
-                _aTimer.Stop();
-                _aTimer.Enabled = false;
-                Console.WriteLine(exc.ToString());
-            }
-
-            textBox2.Invoke(new Action(() =>
-            {
-                try
-                {
-                    textBox2.Text = "Net:" + _wtxJetObj.NetGrossValueStringComment(_wtxJetObj.NetValue, _wtxJetObj.Decimals) + _wtxJetObj.UnitStringComment(_wtxJetObj.Unit) + Environment.NewLine
-                    + "Gross:" + _wtxJetObj.NetGrossValueStringComment(_wtxJetObj.GrossValue, _wtxJetObj.Decimals) + _wtxJetObj.UnitStringComment(_wtxJetObj.Unit) + Environment.NewLine
-                    + "Tara:" + _wtxJetObj.NetGrossValueStringComment(taraValue, _wtxJetObj.Decimals) + _wtxJetObj.UnitStringComment(_wtxJetObj.Unit);
-                    textBox2.TextAlign = HorizontalAlignment.Right;
-
-                }
-                catch (Exception exx)
-                {
-                    Console.WriteLine(exx.ToString());
-                }
-                
-            }));
-        }
-
+      
         // Method executed after read from WTX by eventbased call from WTX120Modbus, UpdateEvent(..) 
         // Updates displayed values and states
         //public void ReadDataReceived(IDeviceValues deviceValues)
@@ -230,7 +182,6 @@ namespace WTXGUIsimple
                 + "Gross:" + _wtxModbusObj.NetGrossValueStringComment(_wtxModbusObj.GrossValue, _wtxModbusObj.Decimals) + _wtxModbusObj.UnitStringComment() + Environment.NewLine
                 + "Tara:" + _wtxModbusObj.NetGrossValueStringComment(taraValue, _wtxModbusObj.Decimals) + _wtxModbusObj.UnitStringComment();
                 textBox2.TextAlign = HorizontalAlignment.Right;
-                //pictureBox1.Image = Properties.Resources.NE107_DiagnosisActive;
             }));
 
         }
@@ -291,7 +242,7 @@ namespace WTXGUIsimple
         {
             if (this.isJetbus == true && this.isModbus == false)
             {
-                _aTimer.Stop();
+              //_aTimer.Stop();
                 _wtxJetObj.getConnection.Disconnect();
                 this.isModbus = true;
                 this.isJetbus = false;
@@ -318,6 +269,30 @@ namespace WTXGUIsimple
              }
         }
 
+        //Method for the calibration with weight:
+        private void calibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(this.isJetbus == true && this.isModbus==false)
+                _weightCalObj = new WeightCalibration(_wtxJetObj, _sConnection.IsConnected);
+
+            if(this.isJetbus == false && this.isModbus==true)
+                _weightCalObj = new WeightCalibration(_wtxModbusObj, _sConnection.IsConnected);
+
+            DialogResult res = _weightCalObj.ShowDialog();
+        }
+        //Method to calculate the calibration with a span(zero load) and a dead load:
+        private void calibrationWithWeightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (this.isJetbus == true && this.isModbus == false)
+                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxModbusObj, _sConnection.IsConnected);
+
+            if(this.isJetbus == false && this.isModbus==true)
+                _calcCalObj = new CalcCalibration((BaseWtDevice)_wtxJetObj, _sConnection.IsConnected);
+
+            DialogResult res = _calcCalObj.ShowDialog();
+        }
+
         private void WriteDataCompleted(IDeviceData obj)
         {
         }
@@ -338,5 +313,19 @@ namespace WTXGUIsimple
         {
         }
 
+        private void calculateCalibrationToolStripMenuItem_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void calibrationWithWeightToolStripMenuItem_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripDropDownButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

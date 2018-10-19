@@ -2114,7 +2114,7 @@ namespace HBM.WT.API.WTX
         // In the following methods the different options for the single integer values are used to define and
         // interpret the value. Finally a string should be returned from the methods to write it onto the GUI Form. 
 
-        public string NetGrossValueStringComment(int value, int decimals)
+        public override string NetGrossValueStringComment(int value, int decimals)
         {
             double dvalue = value / Math.Pow(10, decimals);
             string returnvalue = "";
@@ -2196,7 +2196,7 @@ namespace HBM.WT.API.WTX
 
                 return "error";
         }
-        public string UnitStringComment()
+        public override string UnitStringComment()
         {
             switch (this.Unit)
             {
@@ -2227,7 +2227,7 @@ namespace HBM.WT.API.WTX
 
 
         // This method sets the value for the nominal weight in the WTX.
-        public void Calibrate(int calibrationValue, string calibrationWeightStr)
+        public override void Calibrate(int calibrationValue, string calibrationWeightStr)
         {
             //write reg 46, CalibrationWeight     
             
@@ -2324,7 +2324,7 @@ namespace HBM.WT.API.WTX
 
         }
 
-        public void MeasureZero()
+        public override void MeasureZero()
         {
             this.StopTimer();
 
@@ -2360,15 +2360,15 @@ namespace HBM.WT.API.WTX
             set { this._isCalibrating = value; }
         }
 
-        public void gross(Action<IDeviceData> WriteDataCompleted)
+        public override void gross(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x2, WriteDataCompleted);
         }
-        public void taring(Action<IDeviceData> WriteDataCompleted)
+        public override void taring(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x1, WriteDataCompleted);
         }
-        public void zeroing(Action<IDeviceData> WriteDataCompleted)
+        public override void zeroing(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x40, WriteDataCompleted);
         }

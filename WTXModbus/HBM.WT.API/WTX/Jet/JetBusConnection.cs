@@ -27,6 +27,7 @@
 // SOFTWARE.
 //
 // </copyright>
+
 using Hbm.Devices.Jet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -76,7 +77,7 @@ namespace HBM.WT.API.WTX.Jet
         // Constructor without ssh certification. 
         public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 5000)
         {
-            IJetConnection jetConnection = new WebSocketJetConnection(IPAddress);
+            IJetConnection jetConnection = new WebSocketJetConnection(IPAddress, RemoteCertificationCheck);
             _peer = new JetPeer(jetConnection);
             this._user = User;
             this._password = Password;
@@ -124,8 +125,6 @@ namespace HBM.WT.API.WTX.Jet
                 return this.DataStrArray;
             }
         }
-
-
 
         private void OnAuthenticate(bool success, JToken token)
         {           
@@ -228,6 +227,7 @@ namespace HBM.WT.API.WTX.Jet
                 // Timeout-Exception
                 throw new Exception("Jet interface Timeout");
             }
+
 
             this._connected = true; 
 

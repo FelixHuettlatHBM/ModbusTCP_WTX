@@ -138,8 +138,10 @@ namespace WTXGUIsimple
 
                     _sConnection = new JetBusConnection(_uri, "Administrator", "wtx");
 
-                    _wtxObj = new WtxJet(_sConnection);              
-                
+                    _wtxObj = new WtxJet(_sConnection);
+
+                   _sConnection.Connect();
+                /*
                     try
                     {
                         _sConnection.Connect();
@@ -147,22 +149,24 @@ namespace WTXGUIsimple
                     catch (Exception exc)
                     {
                         textBox2.Text = "Connection failed, enter an other IP address please.";
+//MessageBox.Show(exc.ToString());
                     }
-
+                */
                 //pictureBox1.Image = WTXJetGUISimple.Properties.Resources.NE107_DiagnosisActive;  // Check, ob der Verbindungsaufbau erfolgreich war? 
                 
-                if (_wtxObj.isConnected == true)
-                {
-                    _wtxObj.DataUpdateEvent += ValuesOnConsole;
-                    pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
-                    pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
+                    if (_wtxObj.isConnected == true)
+                    {
+                        _wtxObj.DataUpdateEvent += ValuesOnConsole;
+                        pictureBox1.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
+                        pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
 
-                }
-                else
-                {
-                    pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-                    textBox2.Text = "Connection establishment failed, please retry...";
-                }
+                    }
+                    else
+                    {
+                        pictureBox2.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+                        textBox2.Text = "Connection establishment failed, please retry...";
+                    }
+                    
             }
         }
       

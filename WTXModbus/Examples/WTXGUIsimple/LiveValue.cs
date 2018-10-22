@@ -3,14 +3,6 @@ using HBM.WT.API.WTX;
 using HBM.WT.API.WTX.Jet;
 using HBM.WT.API.WTX.Modbus;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WTXModbusGUIsimple;
 
@@ -22,25 +14,29 @@ namespace WTXGUIsimple
 {
     public partial class LiveValue : Form
     {
-        private const string DEFAULT_IP_ADDRESS = "172.19.103.6";
-        //private const string DEFAULT_IP_ADDRESS = "192.168.100.88";
-                
+        #region Locales
+        private const string DEFAULT_IP_ADDRESS = "192.168.100.88";
+
+        private const string MESSAGE_CONNECTION_FAILED = "Connection failed!";
+        private const string MESSAGE_CONNECTING = "Connecting...";
+
         private string _ipAddress = DEFAULT_IP_ADDRESS;
-        private string _uri;
 
         private int _timerInterval = 200;
-
-        private static ModbusTcpConnection _modbusConection;
-        private static JetBusConnection _jetConnection;
-
+        
         private static BaseWtDevice _wtxDevice;
 
         private AdjustmentCalculator _adjustmentCalculator;
         private AdjustmentWeigher _adjustmentWeigher;
+        #endregion
+        
 
+        #region Constructor
         public LiveValue()
         {
-            InitializeComponent();        
+            InitializeComponent();
+
+            txtIPAddress.Text = _ipAddress;
         }
         
         public LiveValue(string[] args)
@@ -51,8 +47,10 @@ namespace WTXGUIsimple
 
             txtIPAddress.Text = _ipAddress;
         }
+        #endregion
 
-
+        
+        #region Command line
         private void EvaluateCommandLine(string[] args)
         {
             if (args.Length > 0)
@@ -75,16 +73,20 @@ namespace WTXGUIsimple
             if (args.Length > 2)
                 this._timerInterval = Convert.ToInt32(args[2]);
         }
+        #endregion
 
+
+        #region Connection
         // This method connects to the given IP address
         private void Connect()
         {
             picConnectionType.Image = null;
             txtInfo.Text = "Connecting...";
+            this._ipAddress = txtIPAddress.Text;
 
             if (this.rbtConnectionModbus.Checked )
             {
-                _modbusConection = new ModbusTcpConnection(this._ipAddress);
+                ModbusTcpConnection _modbusConection = new ModbusTcpConnection(this._ipAddress);
 
                 _wtxDevice = new WtxModbus(_modbusConection, this._timerInterval);
 
@@ -101,14 +103,14 @@ namespace WTXGUIsimple
                 else
                 {
                     picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-                    txtInfo.Text = "Connection failed...";
+                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
                 }
 
 
             }
             else
             {
-                _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
+                JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
 
                 _wtxDevice = new WtxJet(_jetConnection);
 
@@ -118,7 +120,7 @@ namespace WTXGUIsimple
                 }
                 catch (Exception exc)
                 {
-                    txtInfo.Text = "Connection failed, check IP address!";
+                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
                 }
                 
                 if (_wtxDevice.isConnected == true)
@@ -131,7 +133,7 @@ namespace WTXGUIsimple
                 else
                 {
                     picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-                    txtInfo.Text = "Connection establishment failed, please retry...";
+                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
                 }                    
             }
         }
@@ -151,6 +153,13 @@ namespace WTXGUIsimple
 
         }
 
+        private void WriteDataCompleted(IDeviceData obj)
+        {
+        }
+        #endregion
+
+
+        #region Button clicks
         //Connect device
         private void cmdConnect_Click(object sender, EventArgs e)
         {
@@ -190,10 +199,7 @@ namespace WTXGUIsimple
             _adjustmentWeigher = new AdjustmentWeigher(_wtxDevice);
             DialogResult res = _adjustmentWeigher.ShowDialog();
         }
-
-        private void WriteDataCompleted(IDeviceData obj)
-        {
-        }
-
+        #endregion
+        
     }
 }

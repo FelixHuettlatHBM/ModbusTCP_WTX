@@ -1,6 +1,6 @@
 ﻿namespace WTXModbusGUIsimple
 {
-    partial class WeightCalibration
+    partial class AdjustmentWeigher
     {
         /// <summary>
         /// Required designer variable.

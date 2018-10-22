@@ -27,9 +27,9 @@ namespace WTXModbusGUIsimple
     // First ´the dead load is measured and after that the calibration weight is measured.
     // You can step back with button2 (Back).
 
-    public partial class WeightCalibration : Form
+    public partial class AdjustmentWeigher : Form
     {
-        private BaseWtDevice _wtxObj;
+        private BaseWtDevice _wtxDevice;
         private int _state;
         private double _calibrationWeight;
         //private IFormatProvider Provider;
@@ -40,12 +40,12 @@ namespace WTXModbusGUIsimple
         private string _strCommaDot;
 
         // Constructor of class WeightCalibration: 
-        public WeightCalibration(BaseWtDevice wtxObj, bool connected)
+        public AdjustmentWeigher(BaseWtDevice wtxDevice)
         {
             this._powCalibrationWeight = 0.0;
             this._potenz = 0.0;
             
-            this._wtxObj = wtxObj;
+            this._wtxDevice = wtxDevice;
             _state = 0;
 
             _strCommaDot = "";
@@ -54,7 +54,7 @@ namespace WTXModbusGUIsimple
 
             InitializeComponent();
 
-            if (!connected)
+            if (!wtxDevice.isConnected)
             {
                 textBox1.Enabled = false;
                 button1.Enabled = false;
@@ -62,7 +62,7 @@ namespace WTXModbusGUIsimple
                 textBox2.Text = "No WTX connected!";
             }
 
-            switch (wtxObj.Unit)
+            switch (wtxDevice.Unit)
             {
                 case 0:
                     label2.Text = "kg";
@@ -132,7 +132,7 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Measure zero in progess.";
                     Application.DoEvents();
 
-                    _wtxObj.MeasureZero();
+                    _wtxDevice.MeasureZero();
 
                     textBox2.Text = "Dead load measured." + Environment.NewLine + "Put weight on scale.";
                     button1.Text = "Calibrate";
@@ -147,9 +147,9 @@ namespace WTXModbusGUIsimple
                     textBox2.Text = "Calibration in progress.";
                     Application.DoEvents();
                     
-                    _wtxObj.Calibrate(this.PotencyCalibrationWeight(), _calibrationWeight.ToString());
+                    _wtxDevice.Calibrate(this.PotencyCalibrationWeight(), _calibrationWeight.ToString());
 
-                    if (_wtxObj.Status == 1 && _wtxObj.Handshake == 0)
+                    if (_wtxDevice.Status == 1 && _wtxDevice.Handshake == 0)
                         textBox2.Text = "Calibration successful and finished.";
                     else
                         textBox2.Text = "Calibration  failed.";
@@ -175,7 +175,7 @@ namespace WTXModbusGUIsimple
         {
             //this.DoubleCalibrationWeight = Convert.ToDouble(textBox1.Text, Provider); 
 
-            this._potenz = Math.Pow(10, _wtxObj.Decimals);
+            this._potenz = Math.Pow(10, _wtxDevice.Decimals);
 
             this._powCalibrationWeight = _calibrationWeight * _potenz;
 

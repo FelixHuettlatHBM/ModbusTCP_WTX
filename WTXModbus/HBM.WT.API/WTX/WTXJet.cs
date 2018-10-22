@@ -428,10 +428,6 @@ namespace HBM.WT.API.WTX
             {
                 return _connection.IsConnected;
             }
-            set
-            {
-                _connection.IsConnected = value;
-            }
         }
 
         public override void Connect(Action<bool> completed, double timeoutMs)

@@ -153,7 +153,6 @@ namespace HBM.WT.API.WTX.Modbus
             WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
 
             WTXModbusObj.SyncCall(0, 0x1, OnWriteData);
 
@@ -175,7 +174,6 @@ namespace HBM.WT.API.WTX.Modbus
             WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
 
             WTXModbusObj.MeasureZero();
 
@@ -207,7 +205,6 @@ namespace HBM.WT.API.WTX.Modbus
 
             WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.isConnected = true;
             WTXModbusObj.Connect(this.OnConnect, 100);
 
             testConnection.Write(0, 0);

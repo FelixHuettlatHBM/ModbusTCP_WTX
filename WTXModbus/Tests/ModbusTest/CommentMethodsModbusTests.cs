@@ -270,7 +270,6 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
            
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58],new string[58]));
 
@@ -285,7 +284,6 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -300,7 +298,6 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -313,7 +310,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -327,7 +323,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -344,7 +339,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 1 /*_wtxObj.Decimals*/);
@@ -359,7 +353,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -374,7 +367,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -389,7 +381,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -404,7 +395,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -419,8 +409,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
-
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 6/*_wtxObj.Decimals*/);
@@ -435,7 +423,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -448,7 +435,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -461,7 +447,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -476,7 +461,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -489,7 +473,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -502,7 +485,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -515,7 +497,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -532,7 +513,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -545,7 +525,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -561,7 +540,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
@@ -575,7 +553,6 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 

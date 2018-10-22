@@ -269,7 +269,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.zeroing(callbackMethod);
 
@@ -287,7 +286,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.Async_Call(0x1, callbackMethod);
 
@@ -307,7 +305,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.SyncCall(0, 0x100, callbackMethod);
 
@@ -322,7 +319,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             // Write : Gross/Net 
 
@@ -343,7 +339,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             ManualResetEvent done = new ManualResetEvent(false);
 
@@ -387,7 +382,6 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.WriteOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
 
@@ -414,7 +408,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.Async_Call(0x1, callbackMethod);
 
@@ -440,7 +433,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.gross(callbackMethod);
 
@@ -456,7 +448,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.taring(callbackMethod);
 
@@ -473,7 +464,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.adjustZero(callbackMethod);
 
@@ -489,7 +479,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.adjustNominal(callbackMethod);
 
@@ -505,7 +494,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.activateData(callbackMethod);
 
@@ -521,7 +509,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.manualTaring(callbackMethod);
 
@@ -538,7 +525,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.clearDosingResults(callbackMethod);
 
@@ -554,7 +540,7 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
+             //_wtxObj.isConnected = true;
 
             _wtxObj.abortDosing(callbackMethod);
 
@@ -570,7 +556,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.startDosing(callbackMethod);
 
@@ -586,7 +571,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.recordWeight(callbackMethod);
 
@@ -602,7 +586,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.manualReDosing(callbackMethod);
 
@@ -623,7 +606,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.WriteOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);
 
@@ -647,7 +629,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.WriteOutputWordU16(0x7FFFFFFF, 50, callbackMethod);
             
@@ -670,7 +651,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.WriteOutputWordU08(0xA1, 1, callbackMethod);
 
@@ -688,7 +668,6 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj = new WtxModbus(testConnection, 200);
 
             _wtxObj.Connect(this.OnConnect, 100);
-            _wtxObj.isConnected = true;
 
             _wtxObj.ResetTimer(500);
 

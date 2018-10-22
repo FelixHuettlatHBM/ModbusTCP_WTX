@@ -57,8 +57,6 @@ namespace HBM.WT.API.WTX.Jet
 
             this.connectCallbackCalled = false;
 
-            WTXJetObj.isConnected = false; 
-
             WTXJetObj.Connect(this.OnConnect, 100);
             
             return WTXJetObj.isConnected;

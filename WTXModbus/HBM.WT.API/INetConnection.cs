@@ -50,8 +50,8 @@ namespace HBM.WT.API
         void Disconnect();
 
         int NumofPoints     { get; set; }
-        bool IsConnected    { get; set; }
-        string IpAddress    { get; set; }
+        bool IsConnected    { get; }
+        string IpAddress    { get; }
         int SendingInterval { get; set; }
 
     }

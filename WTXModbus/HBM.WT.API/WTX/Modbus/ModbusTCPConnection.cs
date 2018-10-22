@@ -252,7 +252,7 @@ namespace HBM.WT.API.WTX.Modbus
         // This method closes the connection to the device.
         public void Disconnect()
         {
-            _client.Close();
+            _client.Close();        
         }
 
 

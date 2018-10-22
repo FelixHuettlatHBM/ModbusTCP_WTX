@@ -794,8 +794,7 @@ namespace WTXModbusExamples
         // After updating the values the tool bar labels on the bottom (f.e. "toolStripStatusLabel2") is rewritten with the new values. 
         public void Setting()
         {
-            _wtxObj.getConnection.IpAddress = _setObj.GetIpAddress;
-            toolStripStatusLabel2.Text = "IP address: " + _wtxObj.getConnection.IpAddress;
+            toolStripStatusLabel2.Text = "IP address: " + _setObj.GetIpAddress;
 
             _wtxObj.getConnection.SendingInterval = _setObj.GetSendingInterval;     
             this.timer1.Interval = _setObj.GetSendingInterval;

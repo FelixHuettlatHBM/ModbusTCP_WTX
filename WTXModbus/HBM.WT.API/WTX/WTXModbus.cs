@@ -119,10 +119,6 @@ namespace HBM.WT.API.WTX
             {
                 return _connection.IsConnected;
             }
-            set
-            {
-                _connection.IsConnected = value;
-            }
         }
 
         // To terminate,break, a connection to the WTX device via class WTX120_Modbus.

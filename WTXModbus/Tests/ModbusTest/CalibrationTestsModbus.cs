@@ -33,7 +33,6 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
-            WTXModbusObj.isConnected = true;
 
             double preload = 1;
             double capacity = 2;
@@ -77,7 +76,6 @@ namespace HBM.WT.API.WTX.Modbus
 
             WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
 
-            WTXModbusObj.isConnected = true;
             WTXModbusObj.Connect(this.OnConnect, 100);
 
             int testCalibrationValue = 111;

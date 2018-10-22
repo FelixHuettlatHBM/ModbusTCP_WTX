@@ -136,7 +136,7 @@ namespace WTXGUIsimple
                     _uri = _uri + ":443/jet/canopen";     // For : -jet 172.19.103.8:443/jet/canopen ; Initialize Jet-Peer to address
                                                           // Initializing an object of JetBusConnection and WtxJet to establish a connection to the WTX device, to read and write values. 
 
-                    _sConnection = new JetBusConnection(_uri, "Administrator", "wtx", delegate { return true; });
+                    _sConnection = new JetBusConnection(_uri, "Administrator", "wtx");
 
                     _wtxObj = new WtxJet(_sConnection);              
                 
@@ -146,7 +146,6 @@ namespace WTXGUIsimple
                     }
                     catch (Exception exc)
                     {
-                        _wtxObj.isConnected = false;
                         textBox2.Text = "Connection failed, enter an other IP address please.";
                     }
 

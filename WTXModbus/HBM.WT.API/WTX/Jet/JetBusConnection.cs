@@ -447,7 +447,7 @@ namespace HBM.WT.API.WTX.Jet
         {
             try
             {
-                X509Certificate2 clientCertificate = new X509Certificate2("ssh_server_cert.pem");
+                X509Certificate2 clientCertificate = new X509Certificate2("ca-cert.crt");
                 SslStream sslStream = (sender as SslStream);
 
                 if (sslPolicyErrors == SslPolicyErrors.None || sslPolicyErrors == SslPolicyErrors.RemoteCertificateChainErrors)

@@ -26,9 +26,9 @@ namespace WTXModbusGUIsimple
 {
     // This class provides a window to perform a calibration without a calibration weight,
     // based on know values for dead load and nominal load in mV/V
-    public partial class CalcCalibration : Form
+    public partial class AdjustmentCalculator : Form
     {
-        private BaseWtDevice _wtxObj;
+        private BaseWtDevice _wtxDevice;
 
         private bool _finished;
         private double _preload;
@@ -38,9 +38,9 @@ namespace WTXModbusGUIsimple
         private string _strCommaDot;
               
         // Constructor of class 'CalcCalibration' : 
-        public CalcCalibration(BaseWtDevice wtxObj, bool connected)
+        public AdjustmentCalculator(BaseWtDevice wtxDevice)
         {
-            this._wtxObj = wtxObj;
+            this._wtxDevice = wtxDevice;
             
             _finished = false;
             //Provider for english number format
@@ -50,7 +50,7 @@ namespace WTXModbusGUIsimple
 
             InitializeComponent();
 
-            if (!connected)
+            if (!wtxDevice.isConnected)
             {
                 textBox1.Enabled = false;
                 textBox2.Enabled = false;
@@ -106,7 +106,7 @@ namespace WTXModbusGUIsimple
                 }
                 if (abort) return;
                 
-                _wtxObj.Calculate(_preload,_capacity);
+                _wtxDevice.Calculate(_preload,_capacity);
 
                 label5.Text = "Calibration Successful!";
                 _finished = true;

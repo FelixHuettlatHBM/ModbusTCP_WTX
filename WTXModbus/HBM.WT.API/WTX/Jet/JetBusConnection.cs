@@ -77,7 +77,8 @@ namespace HBM.WT.API.WTX.Jet
         // Constructor without ssh certification. 
         public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 5000)
         {
-            IJetConnection jetConnection = new WebSocketJetConnection(IPAddress, RemoteCertificationCheck);
+            string _uri = "wss://" + IPAddress + ":443/jet/canopen";
+            IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
             _peer = new JetPeer(jetConnection);
             this._user = User;
             this._password = Password;
@@ -88,7 +89,8 @@ namespace HBM.WT.API.WTX.Jet
         // Constructor with ssh certification
         public JetBusConnection(string IPAddress, int TimeoutMs = 5000)
         {
-            IJetConnection jetConnection = new WebSocketJetConnection(IPAddress, RemoteCertificationCheck);
+            string _uri = "wss://" + IPAddress + ":443/jet/canopen";
+            IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
             _peer = new JetPeer(jetConnection);
             this._timeoutMs = TimeoutMs;
         }

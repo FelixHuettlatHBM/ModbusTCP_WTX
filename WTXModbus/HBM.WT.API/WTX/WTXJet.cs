@@ -27,14 +27,9 @@
 // SOFTWARE.
 //
 // </copyright>
+
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using HBM.WT.API.WTX.Jet;
-using Newtonsoft.Json.Linq;
 
 namespace HBM.WT.API.WTX
 {
@@ -127,6 +122,7 @@ namespace HBM.WT.API.WTX
             public const string LIMIT_VALUE = "2020/25";
         }
 
+
         public struct command_values
         {
             public const int CALIBRATE_ZERO = 2053923171;
@@ -137,6 +133,7 @@ namespace HBM.WT.API.WTX
             public const int ZEROING = 1869768058;
             public const int GROSS = 1936683623;
         }
+
 
         public WtxJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
         {

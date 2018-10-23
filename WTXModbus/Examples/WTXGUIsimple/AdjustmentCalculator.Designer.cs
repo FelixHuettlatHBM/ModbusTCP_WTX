@@ -1,6 +1,6 @@
 ﻿namespace WTXModbusGUIsimple
 {
-    partial class CalcCalibration
+    partial class AdjustmentCalculator
     {
         /// <summary>
         /// Required designer variable.

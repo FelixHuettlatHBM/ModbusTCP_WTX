@@ -106,6 +106,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AdjustmentWeigher";
             this.Text = "Calibration";
+            this.Load += new System.EventHandler(this.AdjustmentWeigher_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

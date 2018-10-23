@@ -185,7 +185,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.NET_VALUE]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.NET_VALUE]);
             }
         }
 
@@ -193,7 +193,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.GROSS_VALUE]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.GROSS_VALUE]);
             }
         }
 
@@ -201,7 +201,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.DECIMALS]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DECIMALS]);
             }
         }
 
@@ -209,7 +209,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.DOSING_STATUS]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DOSING_STATUS]);
             }
         }
 
@@ -217,7 +217,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.DOSING_COUNTER]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DOSING_COUNTER]);
             }
         }
 
@@ -225,7 +225,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.DOSING_RESULT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DOSING_RESULT]);
             }
         }
 
@@ -233,7 +233,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x1);
             }
         }
@@ -242,7 +242,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x2) >> 1;
             }
         }
@@ -251,7 +251,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0xC) >> 2;
             }
         }
@@ -260,7 +260,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x10) >> 4;
             }
         }
@@ -269,7 +269,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x20) >> 5;
             }
         }
@@ -278,7 +278,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x40) >> 6;
             }
         }
@@ -286,7 +286,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x80) >> 7;
             }
         }
@@ -295,7 +295,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x300) >> 8;
             }
         }
@@ -304,7 +304,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x400) >> 10;
             }
         }
@@ -313,7 +313,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x800) >> 11;
             }
         }
@@ -322,7 +322,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS]);
                 return (_ID_value & 0x1000) >> 12;
             }
         }
@@ -331,7 +331,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.UNIT_PREFIX_FIXED_PARAMETER]);
+                _ID_value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.UNIT_PREFIX_FIXED_PARAMETER]);
                 return (_ID_value & 0xFF0000) >> 16;
             }
         }
@@ -517,7 +517,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_1]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_1]);
             }
         }         // ID = IM1
 
@@ -525,7 +525,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_2]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_2]);
             }
         }         // ID = IM2
 
@@ -533,7 +533,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_3]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_3]);
             }
         }         // ID = IM3        
 
@@ -541,7 +541,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_4]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_INPUT_4]);
             }
         }         // ID = IM4          
 
@@ -549,7 +549,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_1]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_1]);
             }
         }        // ID = OM1
 
@@ -557,7 +557,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_2]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_2]);
             }
         }        // ID = OM2 
 
@@ -565,7 +565,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_3]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_3]);
             }
         }        // ID = OM3
 
@@ -573,7 +573,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_4]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FUNCTION_DIGITAL_OUTPUT_4]);
             }
         }        // ID = OM4
 
@@ -581,7 +581,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_1]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_1]);
             }
         }   // ID = OS1 
 
@@ -589,7 +589,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_2]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_2]);
             }
         }   // ID = OS2
 
@@ -597,7 +597,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_3]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_3]);
             }
         }   // ID = OS3
 
@@ -605,7 +605,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_4]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_4]);
             }
         }   // ID = OS4
 
@@ -613,7 +613,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.MAXIMUM_DOSING_TIME]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.MAXIMUM_DOSING_TIME]);
             }
         } // MDT
 
@@ -621,14 +621,14 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.MEAN_VALUE_DOSING_RESULTS]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.MEAN_VALUE_DOSING_RESULTS]);
             }
         }    // SDM
         public override int StandardDeviation
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.STANDARD_DEVIATION]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.STANDARD_DEVIATION]);
             }
         }         // SDS 
 
@@ -636,14 +636,14 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FINE_FLOW_CUT_OFF_POINT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FINE_FLOW_CUT_OFF_POINT]);
             }
         }       // FFD
         public override int CoarseFlowCutOffPoint
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.COARSE_FLOW_CUT_OFF_POINT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.COARSE_FLOW_CUT_OFF_POINT]);
             }
         }     // CFD
 
@@ -651,7 +651,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.RESIDUAL_FLOW_TIME]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.RESIDUAL_FLOW_TIME]);
             }
             set { throw new NotImplementedException(); }
         }    // RFT
@@ -660,7 +660,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.MINIMUM_FINE_FLOW]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.MINIMUM_FINE_FLOW]);
             }
             set { throw new NotImplementedException(); }
         }     //FFM
@@ -668,7 +668,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.OPTIMIZATION]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.OPTIMIZATION]);
             }
             set { throw new NotImplementedException(); }
         }   // OSN
@@ -676,7 +676,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_3]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.STATUS_DIGITAL_OUTPUT_3]);
             }
             set { throw new NotImplementedException(); }
         }   // MDT
@@ -685,7 +685,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.COARSE_FLOW_TIME]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.COARSE_FLOW_TIME]);
             }
             set { throw new NotImplementedException(); }
         }    // CFT
@@ -693,7 +693,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FINE_FLOW_TIME]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FINE_FLOW_TIME]);
             }
             set { throw new NotImplementedException(); }
         }      // Fine flow time = FFT
@@ -701,7 +701,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.TARE_MODE]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.TARE_MODE]);
             }
             set { throw new NotImplementedException(); }
         }             // ID = TMD 
@@ -710,7 +710,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.UPPER_TOLERANCE_LIMIT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.UPPER_TOLERANCE_LIMIT]);
             }
             set { throw new NotImplementedException(); }
         }      // UTL
@@ -718,7 +718,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.LOWER_TOLERANCE_LOMIT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.LOWER_TOLERANCE_LOMIT]);
             }
             set { throw new NotImplementedException(); }
         }      // LTL
@@ -727,7 +727,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.MINIMUM_START_WEIGHT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.MINIMUM_START_WEIGHT]);
             }
             set { throw new NotImplementedException(); }
         }        // MSW
@@ -735,7 +735,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.EMPTY_WEIGHT]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.EMPTY_WEIGHT]);
             }
             set { throw new NotImplementedException(); }
         }  // EWT
@@ -744,7 +744,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.TARE_DELAY]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.TARE_DELAY]);
             }
             set { throw new NotImplementedException(); }
         }    // TAD
@@ -753,7 +753,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.COARSE_FLOW_MONITORING_TIME]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.COARSE_FLOW_MONITORING_TIME]);
             }
             set { throw new NotImplementedException(); }
         }  // CBT
@@ -761,7 +761,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.COARSE_FLOW_MONITORING]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.COARSE_FLOW_MONITORING]);
             }
             set { throw new NotImplementedException(); }
         }      // CBK
@@ -769,7 +769,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FINE_FLOW_MONITORING]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FINE_FLOW_MONITORING]);
             }
             set { throw new NotImplementedException(); }
         }        // FBK
@@ -777,7 +777,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FINE_FLOW_MONITORING_TIME]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FINE_FLOW_MONITORING_TIME]);
             }
             set { throw new NotImplementedException(); }
         }    // FBT
@@ -786,7 +786,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.SYSTEMATIC_DIFFERENCE]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.SYSTEMATIC_DIFFERENCE]);
             }
             set { throw new NotImplementedException(); }
         }  // SYD
@@ -797,7 +797,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.VALVE_CONTROL]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.VALVE_CONTROL]);
             }
             set { throw new NotImplementedException(); }
         }      // VCT
@@ -805,7 +805,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.EMPTYING_MODE]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.EMPTYING_MODE]);
             }
             set { throw new NotImplementedException(); }
         }      // EMD
@@ -815,7 +815,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.SCALE_COMMAND_STATUS]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.SCALE_COMMAND_STATUS]);
             }
         }
 
@@ -823,7 +823,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.DELAY1_DOSING]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DELAY1_DOSING]);
             }
             set
             {
@@ -835,7 +835,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return Convert.ToInt32(_connection.getTokenBuffer[ID_keys.FINEFLOW_PHASE_BEFORE_COARSEFLOW]);
+                return Convert.ToInt32(_connection.getDataBuffer[ID_keys.FINEFLOW_PHASE_BEFORE_COARSEFLOW]);
             }
             set
             {
@@ -849,7 +849,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                int value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.LIMIT_VALUE]);
+                int value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.LIMIT_VALUE]);
                 return (value & 0x1);
             }
             set
@@ -862,7 +862,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                int value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.LIMIT_VALUE]);
+                int value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.LIMIT_VALUE]);
                 return (value & 0x2)>>1;
             }
             set
@@ -875,7 +875,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                int value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.LIMIT_VALUE]);
+                int value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.LIMIT_VALUE]);
                 return (value & 0x4) >> 2;
             }
             set
@@ -888,7 +888,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                int value = Convert.ToInt32(_connection.getTokenBuffer[ID_keys.LIMIT_VALUE]);
+                int value = Convert.ToInt32(_connection.getDataBuffer[ID_keys.LIMIT_VALUE]);
                 return (value & 0x8) >> 3;
             }
             set

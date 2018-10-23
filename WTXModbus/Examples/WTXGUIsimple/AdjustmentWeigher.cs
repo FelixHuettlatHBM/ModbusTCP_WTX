@@ -220,5 +220,10 @@ namespace WTXModbusGUIsimple
                     break;
             }
         }
+
+        private void AdjustmentWeigher_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

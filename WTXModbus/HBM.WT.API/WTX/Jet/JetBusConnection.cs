@@ -49,7 +49,7 @@ namespace HBM.WT.API.WTX.Jet
         #region member
         protected JetPeer _peer;
 
-        private Dictionary<string, JToken> _mTokenBuffer = new Dictionary<string, JToken>();
+        private Dictionary<string, JToken> _dataBuffer = new Dictionary<string, JToken>();
 
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
         private Exception _mException = null;
@@ -205,7 +205,7 @@ namespace HBM.WT.API.WTX.Jet
             this._connected = true;
             _mSuccessEvent.Set();
 
-            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _mTokenBuffer.Count));
+            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _dataBuffer.Count));
 
         }
 
@@ -254,21 +254,21 @@ namespace HBM.WT.API.WTX.Jet
         {
             string path = data["path"].ToString();
 
-            lock (_mTokenBuffer)
+            lock (_dataBuffer)
             {
 
                 switch (data["event"].ToString())
                 {
                     case "add":
-                        _mTokenBuffer.Add(path, data["value"]);
+                        _dataBuffer.Add(path, data["value"]);
                         break;
 
                     case "fetch":
-                        _mTokenBuffer[path] = data["value"];
+                        _dataBuffer[path] = data["value"];
                         break;
 
                     case "change":
-                        _mTokenBuffer[path] = data["value"];
+                        _dataBuffer[path] = data["value"];
                         break;
                 }
 
@@ -287,15 +287,15 @@ namespace HBM.WT.API.WTX.Jet
         /// <returns></returns>
         protected virtual JToken ReadObj(object index) {
 
-            lock (_mTokenBuffer)
+            lock (_dataBuffer)
             {
-                if (_mTokenBuffer.ContainsKey(index.ToString())) {
+                if (_dataBuffer.ContainsKey(index.ToString())) {
 
                     this.ConvertJTokenToStringArray();
                    
                     RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray,DataStrArray));
 
-                    return _mTokenBuffer[index.ToString()];
+                    return _dataBuffer[index.ToString()];
                 }
                 else {
 
@@ -306,7 +306,7 @@ namespace HBM.WT.API.WTX.Jet
 
         private void ConvertJTokenToStringArray()
         {
-            JTokenArray = _mTokenBuffer.Values.ToArray();
+            JTokenArray = _dataBuffer.Values.ToArray();
             DataUshortArray = new ushort[JTokenArray.Length];
             DataStrArray = new string[JTokenArray.Length];
 
@@ -416,9 +416,9 @@ namespace HBM.WT.API.WTX.Jet
         public string BufferToString()
         {
             StringBuilder sb = new StringBuilder();
-            lock (_mTokenBuffer) {
+            lock (_dataBuffer) {
                 int i = 0;
-                foreach (var item in _mTokenBuffer) {
+                foreach (var item in _dataBuffer) {
                     sb.Append(i.ToString("D3")).Append(" # ").Append(item).Append("\r\n");
                     i++;
                 }
@@ -533,11 +533,11 @@ namespace HBM.WT.API.WTX.Jet
         }
 
 
-        public Dictionary<string, JToken> getTokenBuffer
+        public Dictionary<string, JToken> getDataBuffer
         {
             get
             {
-                return _mTokenBuffer;
+                return _dataBuffer;
             }
         }
         

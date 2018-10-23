@@ -229,6 +229,15 @@ namespace WTXGUIsimple
             DialogResult res = _adjustmentWeigher.ShowDialog();
         }
         #endregion
-        
+
+        private void picConnectionType_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbtConnectionModbus_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -176,7 +176,9 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.NetValue;
 
-            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("601A/01"));
+            Assert.IsTrue(_jetTestConnection.getData().ContainsKey("601A/01"));
+
+            //Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("601A/01"));
         }
 
 

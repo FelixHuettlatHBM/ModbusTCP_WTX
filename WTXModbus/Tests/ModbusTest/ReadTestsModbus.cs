@@ -158,7 +158,6 @@ namespace HBM.WT.API.WTX.Modbus
 
             WTXModbusObj.SyncCall(0, 0x00, OnReadData);
 
-
             return WTXModbusObj.Handshake;
         }
 

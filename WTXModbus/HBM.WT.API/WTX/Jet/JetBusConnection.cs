@@ -49,7 +49,8 @@ namespace HBM.WT.API.WTX.Jet
         #region member
         protected JetPeer _peer;
 
-        private Dictionary<string, JToken> _dataBuffer = new Dictionary<string, JToken>();
+        private Dictionary<string, JToken> _dataJTokenBuffer = new Dictionary<string, JToken>();
+        Dictionary<string, int> _dataIntegerBuffer = new Dictionary<string, int>();
 
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
         private Exception _mException = null;
@@ -205,7 +206,7 @@ namespace HBM.WT.API.WTX.Jet
             this._connected = true;
             _mSuccessEvent.Set();
             
-            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _dataBuffer.Count));
+            BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _dataJTokenBuffer.Count));
 
         }
 
@@ -253,22 +254,36 @@ namespace HBM.WT.API.WTX.Jet
         protected virtual void OnFetchData(JToken data)
         {
             string path = data["path"].ToString();
+            int i = 0;
 
-            lock (_dataBuffer)
+            lock (_dataJTokenBuffer)
             {
 
                 switch (data["event"].ToString())
                 {
                     case "add":
-                        _dataBuffer.Add(path, data["value"]);
+
+                        _dataJTokenBuffer.Add(path, data["value"]);
+                    
+                        if (int.TryParse(data["value"].ToString(), out i))      // checks if the data is a number, which can be converted to an integer at the path. 
+                            _dataIntegerBuffer.Add(path, Convert.ToInt32(data["value"].ToString()));
                         break;
 
                     case "fetch":
-                        _dataBuffer[path] = data["value"];
+
+                        _dataJTokenBuffer[path] = data["value"];
+
+                        if (int.TryParse(data["value"].ToString(), out i))      // checks if the data is a number, which can be converted to an integer at the path. 
+                            _dataIntegerBuffer[path] = Convert.ToInt32(data["value"].ToString());
                         break;
 
                     case "change":
-                        _dataBuffer[path] = data["value"];
+
+                        _dataJTokenBuffer[path] = data["value"];
+
+                        if (int.TryParse(data["value"].ToString(), out i))      // checks if the data is a number, which can be converted to an integer at the path. 
+                            _dataIntegerBuffer[path] = Convert.ToInt32(data["value"].ToString());
+                        
                         break;
                 }
 
@@ -279,6 +294,27 @@ namespace HBM.WT.API.WTX.Jet
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
+     
+        public Dictionary<string, int> getData()
+        {
+            return _dataIntegerBuffer;
+
+            // Alternative to the filling in method of the data buffer 'dataIntegerBuffer' OnFetchData(JToken data)
+            /*
+            Dictionary<string, int> newDict = new Dictionary<string, int>();
+
+            foreach(var element in _dataJTokenBuffer)
+            {
+                int i = 0;
+
+                if(int.TryParse(element.Value.ToString(),out i))
+                    newDict.Add(element.Key, Convert.ToInt32(element.Value.ToString()));                
+            }
+
+            return newDict;
+            */
+        }
+
 
         /// <summary>
         /// 
@@ -287,15 +323,15 @@ namespace HBM.WT.API.WTX.Jet
         /// <returns></returns>
         protected virtual JToken ReadObj(object index) {
 
-            lock (_dataBuffer)
+            lock (_dataJTokenBuffer)
             {
-                if (_dataBuffer.ContainsKey(index.ToString())) {
+                if (_dataJTokenBuffer.ContainsKey(index.ToString())) {
 
                     this.ConvertJTokenToStringArray();
                    
                     RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray,DataStrArray));
 
-                    return _dataBuffer[index.ToString()];
+                    return _dataJTokenBuffer[index.ToString()];
                 }
                 else {
 
@@ -306,7 +342,7 @@ namespace HBM.WT.API.WTX.Jet
 
         private void ConvertJTokenToStringArray()
         {
-            JTokenArray = _dataBuffer.Values.ToArray();
+            JTokenArray = _dataJTokenBuffer.Values.ToArray();
             DataUshortArray = new ushort[JTokenArray.Length];
             DataStrArray = new string[JTokenArray.Length];
 
@@ -416,9 +452,9 @@ namespace HBM.WT.API.WTX.Jet
         public string BufferToString()
         {
             StringBuilder sb = new StringBuilder();
-            lock (_dataBuffer) {
+            lock (_dataJTokenBuffer) {
                 int i = 0;
-                foreach (var item in _dataBuffer) {
+                foreach (var item in _dataJTokenBuffer) {
                     sb.Append(i.ToString("D3")).Append(" # ").Append(item).Append("\r\n");
                     i++;
                 }
@@ -532,12 +568,11 @@ namespace HBM.WT.API.WTX.Jet
             throw new NotImplementedException();
         }
 
-
         public Dictionary<string, JToken> getDataBuffer
         {
             get
             {
-                return _dataBuffer;
+                return _dataJTokenBuffer;
             }
         }
         

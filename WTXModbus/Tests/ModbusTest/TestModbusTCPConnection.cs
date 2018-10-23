@@ -759,6 +759,11 @@ namespace HBM.WT.API.WTX.Modbus
             throw new NotImplementedException();
         }
 
+        Dictionary<string, int> INetConnection.getData()
+        {
+            throw new NotImplementedException();
+        }
+
         public int getWordNumber
         {
             get

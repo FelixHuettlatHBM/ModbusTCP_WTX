@@ -49,8 +49,9 @@ namespace HBM.WT.API
         void WriteArray(ushort index, ushort[] data);
 
         void Disconnect();
+        
+        Dictionary<string, int> getData();
 
-        Dictionary<string, Newtonsoft.Json.Linq.JToken> getDataBuffer { get; }
         int NumofPoints     { get; set; }
         bool IsConnected    { get; }
         string IpAddress    { get; }

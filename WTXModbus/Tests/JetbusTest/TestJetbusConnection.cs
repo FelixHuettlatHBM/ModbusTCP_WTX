@@ -280,6 +280,21 @@ namespace HBM.WT.API.WTX.Jet
 
         }
 
+        public Dictionary<string, int> getData()
+        {
+            Dictionary<string, int> newDict = new Dictionary<string, int>();
+
+            foreach (var element in _dataBuffer)
+            {
+                int i = 0;
+
+                if (int.TryParse(element.Value.ToString(), out i))
+                    newDict.Add(element.Key, Convert.ToInt32(element.Value.ToString()));
+            }
+
+            return newDict;
+        }
+
         public Dictionary<string, JToken> getDataBuffer
         {
             get

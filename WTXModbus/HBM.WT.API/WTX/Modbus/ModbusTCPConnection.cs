@@ -59,14 +59,12 @@ namespace HBM.WT.API.WTX.Modbus
 
         private ushort[] _data;
 
-        private List<int> messages;
+        private Dictionary<string, int> _dataIntegerBuffer = new Dictionary<string, int>();
 
         private int command;
 
         public ModbusTcpConnection(string ipAddress)
         {
-            messages = new List<int>();
-
             _connected = false;
             _port = 502;
             _iPAddress = ipAddress; //IP-address to establish a successful connection to the device
@@ -74,14 +72,6 @@ namespace HBM.WT.API.WTX.Modbus
             _numOfPoints = 38;
             _startAdress = 0;
             _sendingInterval = 5; // Timer1.Interval = Sending Interval 
-        }
-
-        public List<int> getMessages
-        {
-            get
-            {
-                return this.messages;
-            }
         }
         
         // Getter/Setter for the IP_Adress, StartAdress, NumofPoints, Sending_interval, Port, Is_connected()
@@ -148,9 +138,7 @@ namespace HBM.WT.API.WTX.Modbus
         public void Write(object index, int data)
         {
             this.command = data;
-
-            messages.Add(0x1);
-
+            
             _master.WriteSingleRegister((ushort)Convert.ToInt32(index), (ushort)data);
 
             BusActivityDetection?.Invoke(this, new LogEvent("Data(ushort) have been written successfully to the register"));
@@ -173,7 +161,15 @@ namespace HBM.WT.API.WTX.Modbus
             }
         }
 
-        public Dictionary<string, JToken> getDataBuffer => throw new NotImplementedException();
+        public Dictionary<string, int> getData()
+        {
+
+            for(int i=0; i<_data.Length;i++)
+            {
+                _dataIntegerBuffer.Add(i.ToString(), Convert.ToInt32(_data[i]));
+            }
+            return _dataIntegerBuffer;
+        }
 
         public ushort arr1; // For test purpose
         public ushort arr2; // For test purpose

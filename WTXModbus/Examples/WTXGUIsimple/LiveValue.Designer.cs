@@ -69,9 +69,9 @@
             // 
             // cmdConnect
             // 
-            this.cmdConnect.Location = new System.Drawing.Point(250, 29);
+            this.cmdConnect.Location = new System.Drawing.Point(255, 28);
             this.cmdConnect.Name = "cmdConnect";
-            this.cmdConnect.Size = new System.Drawing.Size(87, 19);
+            this.cmdConnect.Size = new System.Drawing.Size(61, 36);
             this.cmdConnect.TabIndex = 2;
             this.cmdConnect.Text = "Connect";
             this.cmdConnect.UseVisualStyleBackColor = true;
@@ -117,9 +117,9 @@
             // 
             // picConnectionType
             // 
-            this.picConnectionType.Location = new System.Drawing.Point(337, 26);
+            this.picConnectionType.Location = new System.Drawing.Point(322, 24);
             this.picConnectionType.Name = "picConnectionType";
-            this.picConnectionType.Size = new System.Drawing.Size(27, 26);
+            this.picConnectionType.Size = new System.Drawing.Size(42, 47);
             this.picConnectionType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picConnectionType.TabIndex = 25;
             this.picConnectionType.TabStop = false;
@@ -167,9 +167,9 @@
             // picNE107
             // 
             this.picNE107.Image = global::WTXGUIsimple.Properties.Resources.NE107_OutOfSpecification;
-            this.picNE107.Location = new System.Drawing.Point(280, 118);
+            this.picNE107.Location = new System.Drawing.Point(290, 118);
             this.picNE107.Name = "picNE107";
-            this.picNE107.Size = new System.Drawing.Size(94, 72);
+            this.picNE107.Size = new System.Drawing.Size(84, 72);
             this.picNE107.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picNE107.TabIndex = 27;
             this.picNE107.TabStop = false;

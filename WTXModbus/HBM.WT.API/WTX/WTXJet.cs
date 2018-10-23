@@ -168,7 +168,7 @@ namespace HBM.WT.API.WTX
 
             // Do something with the data, like in the class WTXModbus.cs           
         }
-
+        
         public override bool IsDataReceived
         {
             get

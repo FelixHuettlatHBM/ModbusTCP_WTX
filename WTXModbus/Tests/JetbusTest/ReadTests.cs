@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace JetbusTest
@@ -1042,7 +1043,7 @@ namespace JetbusTest
 
             Assert.IsNotNull(_wtxObj.GetDataStr);
         }
-
+   
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_DataReceived")]
         public bool testIsDataReceived(Behavior behavior)
         {
@@ -1054,10 +1055,11 @@ namespace JetbusTest
 
             _wtxObj.IsDataReceived = false;
 
-            testGrossValue = _wtxObj.NetValue;
-
+            _wtxObj.getConnection.Read("601A/01");
+            
             return _wtxObj.IsDataReceived;
         }
+        
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
         public void testGetDataUshort(Behavior behavior)

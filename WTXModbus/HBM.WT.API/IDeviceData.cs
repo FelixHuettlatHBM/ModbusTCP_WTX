@@ -56,7 +56,7 @@ namespace HBM.WT.API
         event EventHandler<DataEvent> DataUpdateEvent;
 
         /// <summary>
-        ///Gets or sets a value indicating whether
+        ///Gets or sets a value indicating whether data are received. 
         /// </summary>
         bool IsDataReceived
         {

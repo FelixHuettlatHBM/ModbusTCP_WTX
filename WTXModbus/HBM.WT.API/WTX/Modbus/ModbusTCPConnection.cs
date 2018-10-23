@@ -28,6 +28,7 @@
 //
 // </copyright>
 using Modbus.Device;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -171,7 +172,9 @@ namespace HBM.WT.API.WTX.Modbus
                 this._numOfPoints = (ushort)value;
             }
         }
-        
+
+        public Dictionary<string, JToken> getDataBuffer => throw new NotImplementedException();
+
         public ushort arr1; // For test purpose
         public ushort arr2; // For test purpose
 

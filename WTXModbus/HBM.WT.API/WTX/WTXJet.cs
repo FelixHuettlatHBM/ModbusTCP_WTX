@@ -35,7 +35,7 @@ namespace HBM.WT.API.WTX
 {
     public class WtxJet : BaseWtDevice
     {
-        private JetBusConnection _connection;
+        private INetConnection /*JetBusConnection*/ _connection;
         private bool _dataReceived;
 
         public override event EventHandler<DataEvent> DataUpdateEvent;
@@ -135,9 +135,9 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public WtxJet(INetConnection connection) : base(connection)  // ParameterProperty umändern 
+        public WtxJet(INetConnection connectionParameter) : base(connectionParameter)  // ParameterProperty umändern 
         {
-            _connection = (JetBusConnection) connection;
+            _connection = connectionParameter;
             
             _dataReceived = false;
             _dataStrArr = new string[185];
@@ -897,13 +897,16 @@ namespace HBM.WT.API.WTX
             }
         }
 
+
+
+
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
         */
 
-        public override int ApplicationMode { get { return 1; } }
         public override int Handshake { get { return 1; } }
+        public override int ApplicationMode { get { return 1; } }
 
         public override int WeightMemDay { get { return 1; } }
         public override int WeightMemMonth { get { return 1; } }

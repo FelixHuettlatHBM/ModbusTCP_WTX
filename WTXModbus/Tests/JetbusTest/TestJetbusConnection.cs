@@ -327,7 +327,8 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-       
+        public Dictionary<string, JToken> getDataBuffer => throw new NotImplementedException();
+
         public void FetchAll()
         {
 

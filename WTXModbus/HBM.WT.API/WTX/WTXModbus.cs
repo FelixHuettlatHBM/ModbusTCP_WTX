@@ -487,17 +487,6 @@ namespace HBM.WT.API.WTX
                 this.GetDataStr[57] = this.FillerWeightMemoryNet.ToString();
             }
 
-            // Vorher: 
-            /*
-                        e.Args = this.data;
-
-                        EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        // Neu : 4.5.18
-
-                        if (handler2 != null)
-                            handler2(this, e);
-             */
-            // Oder : DataUpdateEvent?.Invoke(this, e);
-
             _compareDataChanged = false;
 
             e.ushortArgs = this._data;
@@ -507,6 +496,7 @@ namespace HBM.WT.API.WTX
                 if (this._previousData[index] != this._data[index])
                     _compareDataChanged = true;
             }
+
             // If one value of the data changes, the boolean value 'compareDataChanged' will be set to true and the data will be 
             // updated in the following, as well as the GUI form. ('compareDataChanged' is for the purpose of comparision.)
 
@@ -516,7 +506,6 @@ namespace HBM.WT.API.WTX
             if ((this._compareDataChanged == true) || (this._isCalibrating == true) || this._isRefreshed == true)   // 'isCalibrating' indicates if a calibration is done just before ...
             {                                                                                                    // and the data should be send to the GUI/console and be printed out. 
                                                                                                                  // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
-
                 DataUpdateEvent?.Invoke(this, e);
 
                 this._isCalibrating = false;

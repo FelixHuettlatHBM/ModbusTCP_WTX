@@ -28,6 +28,7 @@
 //
 // </copyright>
 using System;
+using System.Collections.Generic;
 
 namespace HBM.WT.API
 {
@@ -49,6 +50,7 @@ namespace HBM.WT.API
 
         void Disconnect();
 
+        Dictionary<string, Newtonsoft.Json.Linq.JToken> getDataBuffer { get; }
         int NumofPoints     { get; set; }
         bool IsConnected    { get; }
         string IpAddress    { get; }

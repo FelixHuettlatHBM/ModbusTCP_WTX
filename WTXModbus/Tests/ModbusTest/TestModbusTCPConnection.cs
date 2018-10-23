@@ -2,6 +2,7 @@
 namespace HBM.WT.API.WTX.Modbus
 {
     using HBM.WT.API;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Threading;
@@ -846,5 +847,7 @@ namespace HBM.WT.API.WTX.Modbus
             }
 
         }
+
+        public Dictionary<string, JToken> getDataBuffer => throw new NotImplementedException();
     }
 }

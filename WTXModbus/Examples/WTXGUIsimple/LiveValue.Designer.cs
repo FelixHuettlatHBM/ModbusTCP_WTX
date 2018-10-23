@@ -226,6 +226,7 @@
             this.Controls.Add(this.grrpSetup);
             this.Name = "LiveValue";
             this.Text = "LiveValue";
+            this.Load += new System.EventHandler(this.LiveValue_Load);
             this.grrpSetup.ResumeLayout(false);
             this.grrpSetup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picConnectionType)).EndInit();

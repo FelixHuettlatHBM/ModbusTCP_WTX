@@ -101,7 +101,7 @@ namespace HBM.WT.API.WTX.Jet
         public void Connect()
         {
             ConnectPeer(this._user, this._password, this._timeoutMs);
-            FetchAll();
+            FetchAll();          
         }
 
 
@@ -204,7 +204,7 @@ namespace HBM.WT.API.WTX.Jet
 
             this._connected = true;
             _mSuccessEvent.Set();
-
+            
             BusActivityDetection?.Invoke(this, new LogEvent("Fetch-All success: " + success + " - buffersize is " + _dataBuffer.Count));
 
         }
@@ -216,7 +216,7 @@ namespace HBM.WT.API.WTX.Jet
             FetchId id;
 
             _peer.Fetch(out id, matcher, OnFetchData, OnFetch , this._timeoutMs);
-            WaitOne(3);
+            WaitOne(3);         
         }
         
         protected virtual void WaitOne(int timeoutMultiplier = 1)

@@ -14,7 +14,7 @@ namespace HBM.WT.API.WTX.Jet
     public class ConnectTestsJetbus
     {
 
-        private TestJetbusConnection testConnection;
+        private INetConnection testConnection;
 
         private bool connectCallbackCalled;
         private bool connectCompleted;
@@ -51,9 +51,9 @@ namespace HBM.WT.API.WTX.Jet
         [Test, TestCaseSource(typeof(ConnectTestsJetbus), "Connect_TestCases_Jetbus")]
         public bool TestConnectJetbus(Behavior behaviour)
         {        
-            testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; });
+            testConnection = new TestJetbusConnection(behaviour, "wss://172.19.103.8:443/jet/canopen", "Administrator", "wtx", delegate { return true; },5000);
 
-            WtxJet WTXJetObj = new WtxJet(testConnection);
+            WtxJet WTXJetObj = new WtxJet(testConnection);      
 
             this.connectCallbackCalled = false;
 

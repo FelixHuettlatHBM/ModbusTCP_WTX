@@ -30,6 +30,7 @@
 
 using HBM.WT.API;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -44,8 +45,11 @@ namespace WTXModbusGUIsimple
         private BaseWtDevice _wtxDevice;
         private int _state = 0;
         
-        private int _calibrationWeight = 3000;
+        private double _calibrationWeight = 0.0;
         private int _wtxDeviceDecimals = 1;
+
+        private double potency, expCalibrationWeight;
+        private string _calibrationWeightWithComma;
 
         // Constructor of class WeightCalibration: 
         public AdjustmentWeigher(BaseWtDevice wtxDevice)
@@ -98,15 +102,17 @@ namespace WTXModbusGUIsimple
 
                     try
                     {
-                        string _calibrationWeightWithComma = txtCalibrationWeight.Text.Replace(".", ",");  // Accept comma and dot
-                        _calibrationWeight = int.Parse(_calibrationWeightWithComma);
+                        _calibrationWeightWithComma = txtCalibrationWeight.Text.Replace(".", ",");  // Accept comma and dot
+                        _calibrationWeight = double.Parse(_calibrationWeightWithComma);
                         txtCalibrationWeight.Enabled = false;
                         txtInfo.Text = _calibrationWeight.ToString();
+
                     }
                     catch (FormatException)
                     {
                         txtInfo.Text = "Wrong format!" + Environment.NewLine
-                            + "Accepted format: 123,456 or 789.0123 !";
+                        + "Accepted format(comma): " + _wtxDevice.NetGrossValueStringComment(19876, _wtxDevice.Decimals)
+                        + " ; or(dot): " + _wtxDevice.NetGrossValueStringComment(19876, _wtxDevice.Decimals).Replace(",", ".");
                         break;
                     }
                     catch (OverflowException)
@@ -114,7 +120,7 @@ namespace WTXModbusGUIsimple
                         txtInfo.Text = "Overflow!";
                         break;
                     }
-
+                    
                     txtInfo.Text = "Unload Scale!";
                     cmdAdjust.Text = "Measure Zero";
                     cmdCancel.Text = "<Back";
@@ -122,6 +128,7 @@ namespace WTXModbusGUIsimple
                     break;
 
                 case 1: // measure zero
+
                     txtInfo.Text = "Measure zero in progess.";
                     Application.DoEvents(); //Change txtInfo
 
@@ -133,23 +140,37 @@ namespace WTXModbusGUIsimple
                     break;
 
                 case 2: // start calibration   
+
                     txtInfo.Text = "Calibration in progress.";
                     Application.DoEvents(); //Change txtInfo
 
                     _wtxDevice.Calibrate(this.CalibrationWeightWithoutDecimals(), _calibrationWeight.ToString());
 
-                    txtInfo.Text = "Calibration finished.";
-                    /* This doesn't work with Jet!
-                    if (_wtxDevice.Status == 1 && _wtxDevice.Handshake == 0)
-                        txtInfo.Text = "Calibration successful.";
+                    Thread.Sleep(4000);
+
+                    cmdAdjust.Text = "Check";
+                    _state = 3;
+
+                    break;
+
+                case 3:  // Check calibration:
+
+                    if (
+                         _wtxDevice.NetValue == (int)expCalibrationWeight ||
+                        (_wtxDevice.NetValue > (int) expCalibrationWeight && _wtxDevice.NetValue < (int) expCalibrationWeight + 5) ||
+                        (_wtxDevice.NetValue < (int) expCalibrationWeight && _wtxDevice.NetValue > (int) expCalibrationWeight - 5)
+                        )
+                        txtInfo.Text = "Calibration finished and successful";
+
                     else
                         txtInfo.Text = "Calibration failed.";
-                    */
+                    
                     cmdAdjust.Text = "Close";
-                    _state = 3;
+                    _state = 4;
                     break;
 
                 default: //close window
+
                     _state = 0;
                     Close();
                     break;
@@ -174,10 +195,17 @@ namespace WTXModbusGUIsimple
 
         private int CalibrationWeightWithoutDecimals()
         {
+            potency = Math.Pow(10, _wtxDevice.Decimals);
+
+            expCalibrationWeight = _calibrationWeight * potency;
+
+            return (int) expCalibrationWeight;
+
+            /*
             int _noDecimalFactor = (int) Math.Pow(10, _wtxDeviceDecimals);
             return _calibrationWeight * _noDecimalFactor;
+            */    
         }
-
 
         // Limits the input of the textbox to digits, ',' and '.'
         private void txtCakibrationWeight_KeyPress(object sender, KeyPressEventArgs e)

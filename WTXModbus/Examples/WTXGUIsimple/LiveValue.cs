@@ -65,12 +65,16 @@ namespace WTXGUIsimple
         {
             InitializeComponent();
 
+            txtInfo.Text = "To Connect to the WTX device, please enter an IP address, select 'Jet' or 'Modbus/TCP' and press 'connect'.";
+
             txtIPAddress.Text = _ipAddress;
         }
         
         public LiveValue(string[] args)
         {
             InitializeComponent();
+
+            txtInfo.Text = "To Connect to the WTX device, please enter an IP address, select 'Jet' or 'Modbus/TCP' and press 'connect'.";
 
             EvaluateCommandLine(args);      
 
@@ -135,14 +139,13 @@ namespace WTXGUIsimple
                     txtInfo.Text = MESSAGE_CONNECTION_FAILED;
                 }
 
-
             }
             else
             {
                 JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
 
                 _wtxDevice = new WtxJet(_jetConnection);
-
+            
                 try
                 {
                     _jetConnection.Connect();
@@ -236,6 +239,11 @@ namespace WTXGUIsimple
         }
 
         private void rbtConnectionModbus_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LiveValue_Load(object sender, EventArgs e)
         {
 
         }

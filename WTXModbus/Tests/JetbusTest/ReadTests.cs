@@ -151,13 +151,13 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.GrossValue;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6144/00"));
 
             /*
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("6144/00"))
+            if (_jetTestConnection.getDataBuffer.ContainsKey("6144/00"))
                 return true;
             else
-                if (_jetTestConnection.getTokenBuffer.ContainsKey(""))
+                if (_jetTestConnection.getDataBuffer.ContainsKey(""))
                 return false;
             return false;
            */
@@ -175,7 +175,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.NetValue;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("601A/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("601A/01"));
         }
 
 
@@ -190,7 +190,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.WeightMoving;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         
@@ -210,7 +210,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.GeneralWeightError;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -224,7 +224,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ScaleAlarmTriggered;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -238,7 +238,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.LimitStatus;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -252,7 +252,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ScaleSealIsOpen;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -266,7 +266,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ManualTare;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -280,7 +280,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.WeightType;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -294,7 +294,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ScaleRange;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -308,7 +308,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ZeroRequired;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -322,7 +322,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.WeightWithinTheCenterOfZero;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_WEIGHING_DEVICE_1_WEIGHT_STATUS")]
@@ -336,7 +336,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.WeightInZeroRange;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6012/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6012/01"));
         }
 
 
@@ -352,7 +352,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Decimals;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6013/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6013/01"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_FillingProcessSatus")]
@@ -366,7 +366,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.FillingProcessStatus;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SDO"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("SDO"));
         }
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_DosingResult")]
         public void testDosingResult(Behavior behavior)
@@ -379,7 +379,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.DosingResult;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FRS1"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FRS1"));
         }
 
 
@@ -394,7 +394,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.NumberDosingResults;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("NDS"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("NDS"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Unit")]
@@ -408,7 +408,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Unit;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("6014/01"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("6014/01"));
         }
 
 
@@ -423,7 +423,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Input1;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM1"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("IM1"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -437,7 +437,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Input2;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM2"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("IM2"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -451,7 +451,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Input3;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM3"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("IM3"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -465,7 +465,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Input4;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("IM4"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("IM4"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -479,7 +479,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Output1;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM1"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OM1"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -493,7 +493,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Output2;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM2"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OM2"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -507,7 +507,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Output3;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM3"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OM3"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -521,7 +521,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.Output4;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OM4"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OM4"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -535,7 +535,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.LimitStatus1;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS1"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OS1"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -549,7 +549,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.LimitStatus2;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS2"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OS2"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -563,7 +563,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.LimitStatus3;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS3"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OS3"));
         }
 
 
@@ -578,7 +578,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.LimitStatus4;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OS4"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OS4"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -592,7 +592,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.MaxDosingTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("MDT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("MDT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -606,7 +606,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.MeanValueDosingResults;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SDM"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("SDM"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -620,7 +620,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.StandardDeviation;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SDS"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("SDS"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -634,7 +634,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.FineFlowCutOffPoint;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFD"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FFD"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -648,7 +648,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.CoarseFlowCutOffPoint;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CFD"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("CFD"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -662,7 +662,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ResidualFlowTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("RFT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("RFT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -676,7 +676,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.MinimumFineFlow;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFM"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FFM"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -690,7 +690,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.OptimizationOfCutOffPoints;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("OSN"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("OSN"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -704,7 +704,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.MaximumDosingTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("MDT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("MDT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -718,7 +718,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.CoarseLockoutTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CFT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("CFT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -732,7 +732,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.FineLockoutTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FFT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -746,7 +746,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.TareMode;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("TMD"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("TMD"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -760,7 +760,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.UpperToleranceLimit;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("UTL"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("UTL"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -774,7 +774,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.LowerToleranceLimit;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("LTL"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("LTL"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -788,7 +788,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.MinimumStartWeight;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("MSW"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("MSW"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -802,7 +802,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.EmptyWeight;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("EWT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("EWT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -816,7 +816,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.TareDelay;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("TAD"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("TAD"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -830,7 +830,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.CoarseFlowMonitoringTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CBT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("CBT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -844,7 +844,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.CoarseFlowMonitoring;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("CBK"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("CBK"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -858,7 +858,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.FineFlowMonitoring;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FBK"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FBK"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -872,7 +872,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.FineFlowMonitoringTime;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FBT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FBT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -886,7 +886,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.SystematicDifference;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("SYD"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("SYD"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -900,7 +900,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ValveControl;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("VCT"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("VCT"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -914,7 +914,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.EmptyingMode;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("EMD"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("EMD"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -928,7 +928,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.DelayTimeAfterFineFlow;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("DL1"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("DL1"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -942,7 +942,7 @@ namespace JetbusTest
 
             testGrossValue = _wtxObj.ActivationTimeAfterFineFlow;
 
-            Assert.IsTrue(_jetTestConnection.getTokenBuffer.ContainsKey("FFL"));
+            Assert.IsTrue(_jetTestConnection.getDataBuffer.ContainsKey("FFL"));
         }
 
         [Test, TestCaseSource(typeof(ReadTests), "ReadTestCases_Attributes")]
@@ -958,7 +958,7 @@ namespace JetbusTest
 
             int limitvalue1 = _wtxObj.LimitValue1Input;
 
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue1 == 0)
+            if (_jetTestConnection.getDataBuffer.ContainsKey("2020/25") == true && limitvalue1 == 0)
                 testVar = true;
             else
                 testVar = false;
@@ -979,7 +979,7 @@ namespace JetbusTest
 
             int limitvalue2 = _wtxObj.LimitValue2Source;
 
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue2 == 1)
+            if (_jetTestConnection.getDataBuffer.ContainsKey("2020/25") == true && limitvalue2 == 1)
                 testVar = true;
             else
                 testVar = false;
@@ -1000,7 +1000,7 @@ namespace JetbusTest
 
             int limitvalue3 = _wtxObj.LimitValue3Source;
 
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue3 == 0)
+            if (_jetTestConnection.getDataBuffer.ContainsKey("2020/25") == true && limitvalue3 == 0)
                 testVar = true;
             else
                 testVar = false;
@@ -1021,7 +1021,7 @@ namespace JetbusTest
 
             int limitvalue4 = _wtxObj.LimitValue4Source;
 
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("2020/25") == true && limitvalue4 == 1)
+            if (_jetTestConnection.getDataBuffer.ContainsKey("2020/25") == true && limitvalue4 == 1)
                 testVar = true;
             else
                 testVar = false;

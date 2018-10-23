@@ -67,8 +67,8 @@ namespace JetbusTest
            
             _wtxObj.Calibrate(15000, "15000");
 
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("6152/00") && _jetTestConnection.getTokenBuffer.ContainsValue(15000) &&     // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
-                _jetTestConnection.getTokenBuffer.ContainsKey("6002/01") && _jetTestConnection.getTokenBuffer.ContainsValue(1852596579)   // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
+            if (_jetTestConnection.getDataBuffer.ContainsKey("6152/00") && _jetTestConnection.getDataBuffer.ContainsValue(15000) &&     // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
+                _jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(1852596579)   // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
                 )
 
                 return true;
@@ -89,7 +89,7 @@ namespace JetbusTest
 
             _wtxObj.MeasureZero();
 
-            if (_jetTestConnection.getTokenBuffer.ContainsKey("6002/01") && _jetTestConnection.getTokenBuffer.ContainsValue(2053923171))
+            if (_jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(2053923171))
                 return true;
 
             else
@@ -124,8 +124,8 @@ namespace JetbusTest
             testIntNominalLoad = Convert.ToInt32(testdPreload);
 
             if (
-                _jetTestConnection.getTokenBuffer.ContainsKey("2110/06") && _jetTestConnection.getTokenBuffer.ContainsValue(testIntPreload) &&
-                _jetTestConnection.getTokenBuffer.ContainsKey("2110/07") && _jetTestConnection.getTokenBuffer.ContainsValue(testIntNominalLoad) 
+                _jetTestConnection.getDataBuffer.ContainsKey("2110/06") && _jetTestConnection.getDataBuffer.ContainsValue(testIntPreload) &&
+                _jetTestConnection.getDataBuffer.ContainsKey("2110/07") && _jetTestConnection.getDataBuffer.ContainsValue(testIntNominalLoad) 
                 )
 
                 return true;

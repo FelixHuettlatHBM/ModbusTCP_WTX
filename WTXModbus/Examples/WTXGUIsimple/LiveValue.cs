@@ -113,7 +113,8 @@ namespace WTXGUIsimple
         // This method connects to the given IP address
         private void Connect()
         {
-            picConnectionType.Image = null;
+            picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+            picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
             txtInfo.Text = "Connecting...";
             this._ipAddress = txtIPAddress.Text;
 
@@ -125,7 +126,14 @@ namespace WTXGUIsimple
 
                 _wtxDevice.getConnection.NumofPoints = 6;
 
-                _wtxDevice.getConnection.Connect();
+                try
+                {
+                    _wtxDevice.getConnection.Connect();
+                }
+                catch(Exception)
+                {
+                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
+                }
 
                 if (_wtxDevice.isConnected == true)
                 {
@@ -141,42 +149,43 @@ namespace WTXGUIsimple
 
             }
             else
-            {
-                JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
+                if(this.rbtConnectionJet.Checked)
+                {
+                    JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
 
-                _wtxDevice = new WtxJet(_jetConnection);
+                    _wtxDevice = new WtxJet(_jetConnection);
             
-                try
-                {
-                    _jetConnection.Connect();
-                }
-                catch (Exception exc)
-                {
-                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                }
+                    try
+                    {
+                        _jetConnection.Connect();
+                    }
+                    catch (Exception exc)
+                    {
+                        txtInfo.Text = MESSAGE_CONNECTION_FAILED;
+                    }
                 
-                if (_wtxDevice.isConnected == true)
-                {
-                    _wtxDevice.DataUpdateEvent += Update;
-                    picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
-                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
+                    if (_wtxDevice.isConnected == true)
+                    {
+                        _wtxDevice.DataUpdateEvent += Update;
+                        picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
+                        picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
 
+                    }
+                    else
+                    {
+                        picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+                        txtInfo.Text = MESSAGE_CONNECTION_FAILED;
+                    }                    
                 }
-                else
-                {
-                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                }                    
-            }
         }
       
         //Callback for automatically receiving event based data from the device
         private void Update(object sender, DataEvent e)
-        {
-            int taraValue = 0;
-
+        {         
             txtInfo.Invoke(new Action(() =>
             {
+                int taraValue = _wtxDevice.NetValue - _wtxDevice.GrossValue;
+
                 txtInfo.Text = "Net:" + _wtxDevice.NetGrossValueStringComment(_wtxDevice.NetValue, _wtxDevice.Decimals) + _wtxDevice.UnitStringComment() + Environment.NewLine
                 + "Gross:" + _wtxDevice.NetGrossValueStringComment(_wtxDevice.GrossValue, _wtxDevice.Decimals) + _wtxDevice.UnitStringComment() + Environment.NewLine
                 + "Tara:" + _wtxDevice.NetGrossValueStringComment(taraValue, _wtxDevice.Decimals) + _wtxDevice.UnitStringComment();

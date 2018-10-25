@@ -54,7 +54,7 @@ namespace HBM.WT.API
         public abstract bool isConnected { get; }
         public abstract void Connect(Action<bool> completed, double timeoutMs);     
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
-
+        
         public abstract IDeviceData DeviceValues { get; }      
         public abstract bool IsDataReceived { get; set; }       
 

@@ -79,8 +79,10 @@ namespace HBM.WT.API.WTX.Jet
         public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 5000)
         {
             string _uri = "wss://" + IPAddress + ":443/jet/canopen";
+
             IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
             _peer = new JetPeer(jetConnection);
+
             this._user = User;
             this._password = Password;
             this._timeoutMs = TimeoutMs;
@@ -92,7 +94,9 @@ namespace HBM.WT.API.WTX.Jet
         {
             string _uri = "wss://" + IPAddress + ":443/jet/canopen";
             IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
+
             _peer = new JetPeer(jetConnection);
+
             this._timeoutMs = TimeoutMs;
         }
         #endregion
@@ -226,7 +230,7 @@ namespace HBM.WT.API.WTX.Jet
             {
 
                 this._connected = false;
-  
+
                 // Timeout-Exception
                 throw new Exception("Jet interface Timeout");
             }
@@ -298,21 +302,6 @@ namespace HBM.WT.API.WTX.Jet
         public Dictionary<string, int> getData()
         {
             return _dataIntegerBuffer;
-
-            // Alternative to the filling in method of the data buffer 'dataIntegerBuffer' OnFetchData(JToken data)
-            /*
-            Dictionary<string, int> newDict = new Dictionary<string, int>();
-
-            foreach(var element in _dataJTokenBuffer)
-            {
-                int i = 0;
-
-                if(int.TryParse(element.Value.ToString(),out i))
-                    newDict.Add(element.Key, Convert.ToInt32(element.Value.ToString()));                
-            }
-
-            return newDict;
-            */
         }
 
 
@@ -449,6 +438,7 @@ namespace HBM.WT.API.WTX.Jet
         }
         #endregion
 
+        
         public string BufferToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -461,7 +451,7 @@ namespace HBM.WT.API.WTX.Jet
             }
             return sb.ToString();
         }
-
+        
 
         public void Disconnect()
         {
@@ -529,7 +519,23 @@ namespace HBM.WT.API.WTX.Jet
 
         private byte[] CertificateToByteArray()
         {
-            const string input = "MIIECzCCAvOgAwIBAgIJAPTJN5RGpzbRMA0GCSqGSIb3DQEBBQUAMIGbMQswCQYDVQQGEwJERTELMAkGA1UECAwCSEUxEjAQBgNVBAcMCURhcm1zdGFkdDErMCkGA1UECgwiSG90dGluZ2VyIEJhbGR3aW4gTWVzc3RlY2huaWsgR21iSDELMAkGA1UECwwCV1QxFDASBgNVBAMMC3d3dy5oYm0uY29tMRswGQYJKoZIhvcNAQkBFgxpbmZvQGhibS5jb20wHhcNMTcwNDA2MTU1NzQzWhcNMjcwNDA0MTU1NzQzWjCBmzELMAkGA1UEBhMCREUxCzAJBgNVBAgMAkhFMRIwEAYDVQQHDAlEYXJtc3RhZHQxKzApBgNVBAoMIkhvdHRpbmdlciBCYWxkd2luIE1lc3N0ZWNobmlrIEdtYkgxCzAJBgNVBAsMAldUMRQwEgYDVQQDDAt3d3cuaGJtLmNvbTEbMBkGCSqGSIb3DQEJARYMaW5mb0BoYm0uY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr + 51SnSoQX1M3aOUwaD8dcFIoac9peaiRsIOUqwJGn58g + n53aevw54sFyvffcJnzZVAFEPEch1oQCNowsNDnNr4UL / NaO4C4GsJX5bmdia6nGj7IWLMeQzs + 0gfqPWmO / OsJVnwrp9h6 / SxuIz5n04l7ESupSBnXfifb9RGA0encHtZK0LxHRD9sxyhNYKDKW76hgDK / EZ5HU2YjKS0y58 + PU15AV + vQ5srJFMC + KNHveWF4xgj528r3C25FWpVtW5Dqd937OrSAS5truGxPBzenWx3PHw6zRPvBbOApTNWLfbcp90mF8 / 9wFi94PG + EokaYSoF0xyT2G6fAVs3qQIDAQABo1AwTjAdBgNVHQ4EFgQUZC39SAkffhRee1x / 7TbnrQJQ / jMwHwYDVR0jBBgwFoAUZC39SAkffhRee1x / 7TbnrQJQ / jMwDAYDVR0TBAUwAwEB / zANBgkqhkiG9w0BAQUFAAOCAQEACRI28UaB6KNtDVee + waz + SfNd3tm / RspwRarJBlf9dcbpcxolvp9UxCoWkyf9hkmJPEyJzJltuan08DkqmschD36saOJcVRh6BfLNBD8DkFTavP0Q2BKb8FvJpdacNTRK542sJHSk5gr6imwnD5EAj + OT24UpH5rwq5Esu5TYFLdSuYfRXw6puTION / fqqTKVK9Au0TdFPgZ4Fppym4fInQ0jJQhcGSWMs3yomPqftwitRwv5 / p8hLtf3yNIkk9OnBwPpT7QxXxw4Zs0Jvl / VBFuNwbeD12ur3RKbMyCn9W0RjaMrYpKnAjik3IlSqDYZ0XDMwZ0oQiOFy / a6bR4Vw ==";
+            const string input = 
+                
+                "MIIECzCCAvOgAwIBAgIJAPTJN5RGpzbRMA0GCSqGSIb3DQEBBQUAMIGbMQswCQYDVQQGEwJERTELMAkGA1UECAw" +
+                "CSEUxEjAQBgNVBAcMCURhcm1zdGFkdDErMCkGA1UECgwiSG90dGluZ2VyIEJhbGR3aW4gTWVzc3RlY2huaWsgR21iSDELMAkGA1UECwwCV" +
+                "1QxFDASBgNVBAMMC3d3dy5oYm0uY29tMRswGQYJKoZIhvcNAQkBFgxpbmZvQGhibS5jb20wHhcNMTcwNDA2MTU1NzQzWhcNMjcwNDA0MTU1N" +
+                "zQzWjCBmzELMAkGA1UEBhMCREUxCzAJBgNVBAgMAkhFMRIwEAYDVQQHDAlEYXJtc3RhZHQxKzApBgNVBAoMIkhvdHRpbmdlciBCYWxkd2luIE1" +
+                "lc3N0ZWNobmlrIEdtYkgxCzAJBgNVBAsMAldUMRQwEgYDVQQDDAt3d3cuaGJtLmNvbTEbMBkGCSqGSIb3DQEJARYMaW5mb0BoYm0uY29tMIIBIjA" +
+                "NBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr + 51SnSoQX1M3aOUwaD8dcFIoac9peaiRsIOUqwJGn58g + n53aevw54sFyvffcJnzZVAFEP" +
+                "Ech1oQCNowsNDnNr4UL / NaO4C4GsJX5bmdia6nGj7IWLMeQzs + 0gfqPWmO / OsJVnwrp9h6 / SxuIz5n04l7ESupSBnXfifb9RGA0encHt" +
+                "ZK0LxHRD9sxyhNYKDKW76hgDK / EZ5HU2YjKS0y58 + PU15AV + vQ5srJFMC + KNHveWF4xgj528r3C25FWpVtW5Dqd937OrSAS5truGxPBz" +
+                "enWx3PHw6zRPvBbOApTNWLfbcp90mF8 / 9wFi94PG + EokaYSoF0xyT2G6fAVs3qQIDAQABo1AwTjAdBgNVHQ4EFgQUZC39SAkffhRee1x / 7" +
+                "TbnrQJQ / jMwHwYDVR0jBBgwFoAUZC39SAkffhRee1x / 7TbnrQJQ / jMwDAYDVR0TBAUwAwEB / zANBgkqhkiG9w0BAQUFAAOCAQEACRI28" +
+                "UaB6KNtDVee + waz + SfNd3tm / RspwRarJBlf9dcbpcxolvp9UxCoWkyf9hkmJPEyJzJltuan08DkqmschD36saOJcVRh6BfLNBD8DkFTavP" +
+                "0Q2BKb8FvJpdacNTRK542sJHSk5gr6imwnD5EAj + OT24UpH5rwq5Esu5TYFLdSuYfRXw6puTION / fqqTKVK9Au0TdFPgZ4Fppym4fInQ0jJQ" +
+                "hcGSWMs3yomPqftwitRwv5 / p8hLtf3yNIkk9OnBwPpT7QxXxw4Zs0Jvl / VBFuNwbeD12ur3RKbMyCn9W0RjaMrYpKnAjik3IlSqDYZ0XDMwZ" +
+                "0oQiOFy / a6bR4Vw =="     
+                ;
 
             // Invoke GetBytes method.
             byte[] _byteArray = Encoding.ASCII.GetBytes(input);
@@ -616,17 +622,27 @@ namespace HBM.WT.API.WTX.Jet
         #endregion
     }
 
+
+
     public class JetBusException : Exception
     {
         private int _mError;
         private string _mMessage;
 
-        public JetBusException(JToken token) {
+        public JetBusException(JToken token)
+        {
             _mError = int.Parse(token["error"]["code"].ToString());
+
             _mMessage = token["error"]["message"].ToString();
         }
 
-        public int Error { get { return _mError; } }
+        public int Error
+        {
+            get
+            {
+                return _mError;
+            }
+        }
 
         public override string Message
         {

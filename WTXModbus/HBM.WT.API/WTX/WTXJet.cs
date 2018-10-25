@@ -901,14 +901,45 @@ namespace HBM.WT.API.WTX
         }
 
 
+        // Method to check if the handshake is done.
+        public override int Handshake
+        {
+            get
+            {
+                if (_connection.getData()[ID_keys.SCALE_COMMAND_STATUS] == 1801543519)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
 
+        /*
+        // Alternative implementation to the get-property 'handshake' previously:
+        public override bool HandshakeCheck()
+        {
+
+            int ScaleCommandStatus_before = 1801543519;
+
+            if (_connection.getData()[ID_keys.SCALE_COMMAND_STATUS] == 1634168417)
+            {
+                ScaleCommandStatus_before = 1634168417;
+                return false;
+            }
+            else
+                if (_connection.getData()[ID_keys.SCALE_COMMAND_STATUS] == 1801543519 && ScaleCommandStatus_before == 1634168417)
+            {
+                ScaleCommandStatus_before = 1801543519;
+                return true;
+            }
+            return false;
+        }
+        */
 
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:
         // this._connection.Read(ParameterKeys.GROSS_VALUE);
         */
 
-        public override int Handshake { get { return 1; } }
         public override int ApplicationMode { get { return 1; } }
 
         public override int WeightMemDay { get { return 1; } }

@@ -312,8 +312,8 @@ namespace HBM.WT.API.WTX.Jet
         /// <returns></returns>
         protected virtual JToken ReadObj(object index) {
 
-            lock (_dataJTokenBuffer)
-            {
+            //lock (_dataJTokenBuffer)
+
                 if (_dataJTokenBuffer.ContainsKey(index.ToString())) {
 
                     this.ConvertJTokenToStringArray();
@@ -326,7 +326,6 @@ namespace HBM.WT.API.WTX.Jet
 
                     throw new Exception("Object does not exist in the object dictionary");
                 }
-            }
         }
 
         private void ConvertJTokenToStringArray()

@@ -443,6 +443,12 @@ namespace HBM.WT.API.WTX
 
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_NOMINAL_WEIGHT);  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
 
+            // check : command "on go" = command is in execution = 
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1634168417) ;
+
+            // check : command "ok" = command is done = 
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1801543519) ;
+
             this._isCalibrating = true;
         }
         
@@ -488,6 +494,12 @@ namespace HBM.WT.API.WTX
             //write "calz" 0x7A6C6163 ( 2053923171 ) to path(ID)=6002/01
 
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_ZERO);       // SCALE_COMMAND = "6002/01"
+
+            // check : command "on go" = command is in execution = 
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1634168417);
+
+            // check : command "ok" = command is done = 
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1801543519);
         }
 
         public override void zeroing(Action<IDeviceData> WriteDataCompleted)

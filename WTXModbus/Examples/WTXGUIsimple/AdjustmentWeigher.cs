@@ -133,9 +133,7 @@ namespace WTXModbusGUIsimple
                     Application.DoEvents(); //Change txtInfo
 
                     _wtxDevice.MeasureZero();
-
-                    while (_wtxDevice.Handshake == 0) ;   // polling for a synchronous execution of the calibration. 
-
+                    
                     txtInfo.Text = "Zero load measured." + Environment.NewLine + "Put weight on scale.";
                     cmdAdjust.Text = "Calibrate";
                     _state = 2;
@@ -148,9 +146,7 @@ namespace WTXModbusGUIsimple
                     Application.DoEvents();              //For changing the 'txtInfo' textbox. 
 
                     _wtxDevice.Calibrate(this.CalibrationWeightWithoutDecimals(), _calibrationWeight.ToString());
-
-                    while (_wtxDevice.Handshake == 0) ;   // polling for a synchronous execution of the calibration. 
-                    
+                                       
                     cmdAdjust.Text = "Check";
                     _state = 3;
 

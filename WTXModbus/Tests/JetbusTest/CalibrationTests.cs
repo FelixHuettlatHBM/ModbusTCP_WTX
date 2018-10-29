@@ -67,8 +67,9 @@ namespace JetbusTest
            
             _wtxObj.Calibrate(15000, "15000");
 
-            if (_jetTestConnection.getDataBuffer.ContainsKey("6152/00") && _jetTestConnection.getDataBuffer.ContainsValue(15000) &&     // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
-                _jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(1852596579)   // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
+            if (_jetTestConnection.getDataBuffer.ContainsKey("6152/00") && _jetTestConnection.getDataBuffer.ContainsValue(15000) &&       // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
+                _jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(1852596579) &&  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
+                _jetTestConnection.getDataBuffer.ContainsKey("6002/02") && _jetTestConnection.getDataBuffer.ContainsValue(1801543519)
                 )
 
                 return true;
@@ -89,7 +90,10 @@ namespace JetbusTest
 
             _wtxObj.MeasureZero();
 
-            if (_jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(2053923171))
+            if (
+                _jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(2053923171) &&
+                _jetTestConnection.getDataBuffer.ContainsKey("6002/02") && _jetTestConnection.getDataBuffer.ContainsValue(1801543519)
+                )
                 return true;
 
             else

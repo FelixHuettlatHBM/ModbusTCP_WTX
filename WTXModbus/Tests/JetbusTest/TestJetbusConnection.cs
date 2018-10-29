@@ -168,7 +168,7 @@ namespace HBM.WT.API.WTX.Jet
         {
             
             switch (this.behavior)
-            {
+            {             
                 case Behavior.ReadGrossValueSuccess:
                     if (_dataBuffer.ContainsKey(index.ToString()))
                         return _dataBuffer[index.ToString()];
@@ -242,18 +242,70 @@ namespace HBM.WT.API.WTX.Jet
                     break;
 
                 case Behavior.t_UnitValue_Fail:
-                    return _dataBuffer[""];
-
+                        return _dataBuffer[""];
+                    break;
                 case Behavior.NetGrossValueStringComment_4D_Success:
-                    return _dataBuffer[""];
+                        return _dataBuffer[""];
                     break;
 
                 case Behavior.NetGrossValueStringComment_4D_Fail:
                     return "";
-                    break; 
+                    break;
+
+                case Behavior.CalibrationSuccess:
+
+                    if (_dataBuffer.ContainsValue(1801543519))
+                        _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
+
+                    else
+                       if (_dataBuffer.ContainsValue(1634168417))
+                        _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
+
+                    return _dataBuffer["6002/02"];
+                    break;
+
+                case Behavior.CalibrationFail:
+
+                    if (_dataBuffer.ContainsValue(1801543519))
+                        _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
+
+                    else
+                       if (_dataBuffer.ContainsValue(1634168417))
+                        _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
+
+                    return _dataBuffer["6002/02"];
+                    break;
+
+                case Behavior.MeasureZeroSuccess:
+
+                    if (_dataBuffer.ContainsValue(1801543519))
+                        _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
+
+                    else
+                        if (_dataBuffer.ContainsValue(1634168417))
+                        _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
+
+                    return _dataBuffer["6002/02"];
+
+                    break;
+
+
+                case Behavior.MeasureZeroFail:
+
+                    if (_dataBuffer.ContainsValue(1801543519))
+                        _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
+
+                    else
+                        if (_dataBuffer.ContainsValue(1634168417))
+                        _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
+
+                    return _dataBuffer["6002/02"];
+
+                    break;
 
                 default:
                     break;
+
 
             }
    
@@ -498,7 +550,7 @@ namespace HBM.WT.API.WTX.Jet
 
         public void Write(object index, int data)
         {
-            switch(behavior)
+            switch (behavior)
             {
                 case Behavior.WriteTareSuccess:
                     // The specific path and specific value for taring is added to the buffer _dataBuffer
@@ -528,25 +580,30 @@ namespace HBM.WT.API.WTX.Jet
                     break;
 
                 case Behavior.CalibrationSuccess:
-                    // The specific path and specific value for calibration is added to the buffer _dataBuffer
+                    // For Calibration : The specific path and specific value for calibration is added to the buffer _dataBuffer
                     if (index.Equals("6152/00"))
                         _dataBuffer.Add("6152/00", simulateJTokenInstance("6152/00", data)["value"]);
-
                     if (index.Equals("6002/01"))
                         _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
 
                     break;
 
                 case Behavior.CalibrationFail:
-                    // No path and no value is added to the buffer _dataBuffer
+                    // A wrong value is added at the specific path to the buffer _dataBuffer
+                    if (index.Equals("6002/01"))
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", 0)["value"]);
                     break;
 
                 case Behavior.MeasureZeroSuccess:
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+                    // For setting to zero(=Measure zero) : The specific path and specific value for calibration is added to the buffer _dataBuffer
+                    if (index.Equals("6002/01"))
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
                     break;
 
                 case Behavior.MeasureZeroFail:
-                    // No path and no value is added to the buffer _dataBuffer
+                    // A wrong value is added at the specific path to the buffer _dataBuffer
+                    if (index.Equals("6002/01"))
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", 0)["value"]);
                     break;
 
                 case Behavior.CalibratePreloadCapacitySuccess:

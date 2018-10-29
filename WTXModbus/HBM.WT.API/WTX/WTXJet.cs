@@ -442,23 +442,6 @@ namespace HBM.WT.API.WTX
         {
             _connection.Connect();
         }
-
-
-        // This method sets the value for the nominal weight in the WTX.
-        public override void Calibrate(int calibrationValue, string calibrationWeightStr)
-        {
-            _connection.Write(ID_keys.LFT_SCALE_CALIBRATION_WEIGHT, calibrationValue);          // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
-
-            _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_NOMINAL_WEIGHT);  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
-
-            // check : command "on go" = command is in execution = 
-            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1634168417) ;
-            
-            // check : command "ok" = command is done = 
-            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1801543519) ;
-            
-            this._isCalibrating = true;
-        }
         
         public override ushort[] GetDataUshort
         {
@@ -509,6 +492,23 @@ namespace HBM.WT.API.WTX
             // check : command "ok" = command is done = 
             while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1801543519);
             
+        }
+
+
+        // This method sets the value for the nominal weight in the WTX.
+        public override void Calibrate(int calibrationValue, string calibrationWeightStr)
+        {
+            _connection.Write(ID_keys.LFT_SCALE_CALIBRATION_WEIGHT, calibrationValue);          // LFT_SCALE_CALIBRATION_WEIGHT = "6152/00" 
+
+            _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_NOMINAL_WEIGHT);  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
+
+            // check : command "on go" = command is in execution = 
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1634168417) ;      // ID_keys.SCALE_COMMAND_STATUS = 6002/02
+
+            // check : command "ok" = command is done = 
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1801543519) ;      // ID_keys.SCALE_COMMAND_STATUS = 6002/02
+
+            this._isCalibrating = true;
         }
 
         public override void zeroing(Action<IDeviceData> WriteDataCompleted)

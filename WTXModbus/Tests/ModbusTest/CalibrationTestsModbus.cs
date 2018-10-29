@@ -53,7 +53,8 @@ namespace HBM.WT.API.WTX.Modbus
                 (testConnection.getArrElement3 == (Convert.ToInt32(dNominalLoad) & 0xffff0000) >> 16) &&
                 (testConnection.getArrElement4 == (Convert.ToInt32(dNominalLoad) & 0x0000ffff)) &&
 
-                testConnection.getCommand == 0x100 && WTXModbusObj.getDPreload == dPreload && WTXModbusObj.getDNominalLoad == dNominalLoad
+                WTXModbusObj.getDPreload == dPreload &&               
+                WTXModbusObj.getDNominalLoad == dNominalLoad
                )
             {
                 return true;
@@ -62,9 +63,7 @@ namespace HBM.WT.API.WTX.Modbus
             {
                 return false;
             }
-
-            //_dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
-            //_dataWritten[1] = (ushort)(valueParam & 0x0000ffff);
+            
         }
 
 

@@ -248,7 +248,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         public int Read(object index)
         {
-            if (_connected)
+            //if (_connected)
                 ReadRegisterPublishing(new DataEvent(_dataWTX, new string[0]));
 
             return 0;
@@ -283,6 +283,28 @@ namespace HBM.WT.API.WTX.Modbus
 
                     break;
 
+                case Behavior.CalibrationFail:
+
+                    //Handshake bit:
+
+                    if (_dataWTX[5] >> 14 == 0)
+                        _dataWTX[5] = 0x4000;
+                    else if (_dataWTX[5] >> 14 == 1)
+                        _dataWTX[5] = 0x0000;
+
+                    break;
+
+                case Behavior.CalibrationSuccess:
+
+                    //Handshake bit:
+
+                    if (_dataWTX[5] >> 14 == 0)
+                        _dataWTX[5] = 0x4000;
+                    else if (_dataWTX[5] >> 14 == 1)
+                        _dataWTX[5] = 0x0000;
+
+                    break;
+
                 case Behavior.MeasureZeroFail:
 
                     // Net value in hexadecimal: 
@@ -292,6 +314,14 @@ namespace HBM.WT.API.WTX.Modbus
                     // Gross value in hexadecimal:
                     _dataWTX[2] = 0x00;
                     _dataWTX[3] = 0x2710;
+
+                    //Handshake bit:
+                    if (_dataWTX[5] >> 14 == 0)
+                        _dataWTX[5] = 0x4000;
+
+                    else if (_dataWTX[5] >> 14 == 1)
+                        _dataWTX[5] = 0x0000;
+
                     break;
 
                 case Behavior.MeasureZeroSuccess:
@@ -303,6 +333,13 @@ namespace HBM.WT.API.WTX.Modbus
                     // Gross value in hexadecimal:
                     _dataWTX[2] = 0x00;
                     _dataWTX[3] = 0x00;
+
+                    //Handshake bit:
+                    if (_dataWTX[5] >> 14 == 0)
+                        _dataWTX[5] = 0x4000;
+                    else if (_dataWTX[5] >> 14 == 1)
+                        _dataWTX[5] = 0x0000; 
+
                     break;
 
                 case Behavior.ReadFail:
@@ -671,14 +708,20 @@ namespace HBM.WT.API.WTX.Modbus
 
                 case Behavior.HandshakeSuccess:
                     // Change the handshake bit : bit .14 from 0 to 1.
-                    _dataWTX[5] = 0x4040;
-                   
+                    if (_dataWTX[5] == 0x0000)
+                        _dataWTX[5] = 0x4000;
+                    else
+                    if (_dataWTX[5] == 0x4000)
+                        _dataWTX[5] = 0x0000;
                     break;
 
                 case Behavior.HandshakeFail:
-                    
-                    _dataWTX[5] = 0x40;
 
+                    if (_dataWTX[5] == 0x0000)
+                        _dataWTX[5] = 0x4000;
+                    else
+                    if (_dataWTX[5] == 0x4000)
+                        _dataWTX[5] = 0x4000;       // Error simulation : Handshake bit is not change to 0. 
                     break;
             }
 

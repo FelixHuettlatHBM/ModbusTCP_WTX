@@ -49,8 +49,8 @@ namespace HBM.WT.API.WTX.Modbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.HandshakeFail).Returns(0);
-                yield return new TestCaseData(Behavior.HandshakeSuccess).Returns(1);
+               // yield return new TestCaseData(Behavior.HandshakeFail).Returns(1);
+                yield return new TestCaseData(Behavior.HandshakeSuccess).Returns(0);
             }
         }
 
@@ -156,14 +156,15 @@ namespace HBM.WT.API.WTX.Modbus
 
             WTXModbusObj.SyncCall(0, 0x1, OnWriteData);
 
-            WTXModbusObj.SyncCall(0, 0x00, OnReadData);
-
             return WTXModbusObj.Handshake;
+        }
+
+        private void OnReadData(IDeviceData obj)
+        {
         }
 
         private void OnWriteData(IDeviceData obj)
         {
-            throw new NotImplementedException();
         }
 
         [Test, TestCaseSource(typeof(ReadTestsModbus), "MeasureZeroTestCases")]
@@ -191,11 +192,6 @@ namespace HBM.WT.API.WTX.Modbus
                 return false;
             }
         }
-
-        private void OnReadData(IDeviceData obj)
-        {
-        }
-
 
         [Test, TestCaseSource(typeof(ReadTestsModbus), "ApplicationModeTestCases")]
         public int ApplicationModeTest(Behavior behavior)

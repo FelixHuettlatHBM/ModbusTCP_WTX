@@ -114,6 +114,7 @@ namespace WTXGUIsimple
         {
             picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
             picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+
             txtInfo.Text = "Connecting...";
             this._ipAddress = txtIPAddress.Text;
 
@@ -125,7 +126,6 @@ namespace WTXGUIsimple
                 _wtxDevice = new WtxModbus(_modbusConection, this._timerInterval);
 
                 _wtxDevice.getConnection.NumofPoints = 6;
-
             }
             else
             {
@@ -135,7 +135,6 @@ namespace WTXGUIsimple
                     JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
 
                     _wtxDevice = new WtxJet(_jetConnection);
-
                 }
             }
 
@@ -149,11 +148,18 @@ namespace WTXGUIsimple
                 txtInfo.Text = MESSAGE_CONNECTION_FAILED;
             }
 
+
             if (_wtxDevice.isConnected == true)
             {
-                picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
+                if (this.rbtConnectionJet.Checked)
+                    picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
+                if (this.rbtConnectionModbus.Checked)
+                    picConnectionType.Image = WTXGUIsimple.Properties.Resources.modbus_symbol;
+
                 picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
+
                 _wtxDevice.DataUpdateEvent += Update;
+
                 this.Update(this, null);
             }
             else
@@ -161,8 +167,8 @@ namespace WTXGUIsimple
                 picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
                 txtInfo.Text = MESSAGE_CONNECTION_FAILED;
             }
-        }
 
+        }
 
 
         //Callback for automatically receiving event based data from the device

@@ -185,14 +185,13 @@ namespace HBM.WT.API.WTX
                 this._connection.Write(wordNumber, this._command);
 
                 // Handshake protocol as given in the manual:                            
-                
-                /*
+                              
                 do
                 {
                     this._connection.Read(0);
 
                 } while (this.Handshake == 0);
-                */
+                
                
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.Handshake == 1)

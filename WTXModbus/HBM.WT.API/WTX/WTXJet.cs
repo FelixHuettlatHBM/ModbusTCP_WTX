@@ -452,15 +452,11 @@ namespace HBM.WT.API.WTX
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.CALIBRATE_NOMINAL_WEIGHT);  // CALIBRATE_NOMINAL_WEIGHT = 1852596579 // SCALE_COMMAND = "6002/01"
 
             // check : command "on go" = command is in execution = 
-            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1634168417) ;
-
-            Thread.Sleep(1000);
-
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1634168417) ;
+            
             // check : command "ok" = command is done = 
-            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1801543519) ;
-
-            Thread.Sleep(1000);
-
+            while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) != 1801543519) ;
+            
             this._isCalibrating = true;
         }
         

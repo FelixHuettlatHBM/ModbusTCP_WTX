@@ -108,7 +108,6 @@ namespace WTXGUIsimple
         }
         #endregion
 
-
         #region Connection
         // This method connects to the given IP address
         private void Connect()
@@ -118,74 +117,57 @@ namespace WTXGUIsimple
             txtInfo.Text = "Connecting...";
             this._ipAddress = txtIPAddress.Text;
 
-            if (this.rbtConnectionModbus.Checked )
+            if (this.rbtConnectionModbus.Checked)    // If 'Modbus/Tcp' is selected: 
             {
+                // Creating objects of ModbusTcpConnection and WTXModbus: 
                 ModbusTcpConnection _modbusConection = new ModbusTcpConnection(this._ipAddress);
 
                 _wtxDevice = new WtxModbus(_modbusConection, this._timerInterval);
 
                 _wtxDevice.getConnection.NumofPoints = 6;
 
-                try
-                {
-                    _wtxDevice.Connect();
-                    //_wtxDevice.getConnection.Connect();
-                }
-                catch(Exception)
-                {
-                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                }
-
-                if (_wtxDevice.isConnected == true)
-                {
-                    picConnectionType.Image = WTXGUIsimple.Properties.Resources.modbus_symbol;
-                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
-                    _wtxDevice.DataUpdateEvent += Update;
-                }
-                else
-                {
-                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                }
-
             }
             else
-                if(this.rbtConnectionJet.Checked)
+            {
+                if (this.rbtConnectionJet.Checked)  // If 'JetBus' is selected: 
                 {
+                    // Creating objects of JetBusConnection and WTXJet: 
                     JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
 
                     _wtxDevice = new WtxJet(_jetConnection);
 
-                    _wtxDevice.Connect();
-
-                try
-                {
-                    _wtxDevice.Connect();
                 }
-                catch (Exception)
-                {
-                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                }
+            }
 
-                if (_wtxDevice.isConnected == true)
-                    {
-                        _wtxDevice.DataUpdateEvent += Update;
-                        this.Update(this,null);
-                        picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
-                        picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
+            // Connection establishment via Modbus or Jetbus :  
+            try
+            {
+                _wtxDevice.Connect();
+            }
+            catch (Exception)
+            {
+                txtInfo.Text = MESSAGE_CONNECTION_FAILED;
+            }
 
-                    }
-                    else
-                    {
-                        picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-                        txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                    }                    
-                }
+            if (_wtxDevice.isConnected == true)
+            {
+                picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
+                picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
+                _wtxDevice.DataUpdateEvent += Update;
+                this.Update(this, null);
+            }
+            else
+            {
+                picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+                txtInfo.Text = MESSAGE_CONNECTION_FAILED;
+            }
         }
-      
+
+
+
         //Callback for automatically receiving event based data from the device
         private void Update(object sender, DataEvent e)
-        {         
+        {
             txtInfo.Invoke(new Action(() =>
             {
                 int taraValue = _wtxDevice.NetValue - _wtxDevice.GrossValue;
@@ -196,6 +178,28 @@ namespace WTXGUIsimple
                 txtInfo.TextAlign = HorizontalAlignment.Right;
             }));
 
+
+            txtInfo.Invoke(new Action(() =>
+            {
+                if (_wtxDevice.LimitStatus == 1)
+                {
+                    txtInfo.Text = "Lower than minimum" + Environment.NewLine;
+                    txtInfo.TextAlign = HorizontalAlignment.Right;
+
+                }
+                if (_wtxDevice.LimitStatus == 2)
+                {
+                    txtInfo.Text = "Higher than maximum capacity" + Environment.NewLine;
+                    txtInfo.TextAlign = HorizontalAlignment.Right;
+
+                }
+                if (_wtxDevice.LimitStatus == 3)
+                {
+                    txtInfo.Text = "Higher than safe load limit" + Environment.NewLine;
+                    txtInfo.TextAlign = HorizontalAlignment.Right;
+
+                }
+            }));
         }
 
         private void WriteDataCompleted(IDeviceData obj)

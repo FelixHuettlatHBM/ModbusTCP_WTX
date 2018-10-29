@@ -52,6 +52,8 @@ namespace HBM.WT.API
         public abstract event EventHandler<DataEvent> DataUpdateEvent;
 
         public abstract bool isConnected { get; }
+
+        public abstract void Connect();
         public abstract void Connect(Action<bool> completed, double timeoutMs);     
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
         

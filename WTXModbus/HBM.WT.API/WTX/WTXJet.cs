@@ -29,6 +29,7 @@
 // </copyright>
 
 using System;
+using System.Threading;
 using HBM.WT.API.WTX.Jet;
 
 namespace HBM.WT.API.WTX
@@ -430,6 +431,13 @@ namespace HBM.WT.API.WTX
             }
         }
 
+        public override void Connect()
+        {
+            _connection.Connect();
+
+            //this.UpdateEvent(this, null);
+        }
+
         public override void Connect(Action<bool> completed, double timeoutMs)
         {
             _connection.Connect();
@@ -446,8 +454,12 @@ namespace HBM.WT.API.WTX
             // check : command "on go" = command is in execution = 
             while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1634168417) ;
 
+            Thread.Sleep(1000);
+
             // check : command "ok" = command is done = 
             while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1801543519) ;
+
+            Thread.Sleep(1000);
 
             this._isCalibrating = true;
         }
@@ -498,8 +510,12 @@ namespace HBM.WT.API.WTX
             // check : command "on go" = command is in execution = 
             while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1634168417);
 
+            Thread.Sleep(1000);
+
             // check : command "ok" = command is done = 
             while (_connection.Read(ID_keys.SCALE_COMMAND_STATUS) == 1801543519);
+
+            Thread.Sleep(1000);
         }
 
         public override void zeroing(Action<IDeviceData> WriteDataCompleted)

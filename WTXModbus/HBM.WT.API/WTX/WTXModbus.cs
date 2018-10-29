@@ -113,6 +113,15 @@ namespace HBM.WT.API.WTX
             this._connection.Connect();
         }
 
+
+        // To establish a connection to the WTX device via class WTX120_Modbus.
+        public override void Connect()
+        {
+            this._connection.Connect();
+
+            //this.UpdateEvent(this, null);
+        }
+
         public override bool isConnected
         {
             get

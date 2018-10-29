@@ -128,7 +128,8 @@ namespace WTXGUIsimple
 
                 try
                 {
-                    _wtxDevice.getConnection.Connect();
+                    _wtxDevice.Connect();
+                    //_wtxDevice.getConnection.Connect();
                 }
                 catch(Exception)
                 {
@@ -154,19 +155,22 @@ namespace WTXGUIsimple
                     JetBusConnection _jetConnection = new JetBusConnection(_ipAddress, "Administrator", "wtx");
 
                     _wtxDevice = new WtxJet(_jetConnection);
-            
-                    try
-                    {
-                        _jetConnection.Connect();
-                    }
-                    catch (Exception exc)
-                    {
-                        txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-                    }
-                
-                    if (_wtxDevice.isConnected == true)
+
+                    _wtxDevice.Connect();
+
+                try
+                {
+                    _wtxDevice.Connect();
+                }
+                catch (Exception)
+                {
+                    txtInfo.Text = MESSAGE_CONNECTION_FAILED;
+                }
+
+                if (_wtxDevice.isConnected == true)
                     {
                         _wtxDevice.DataUpdateEvent += Update;
+                        this.Update(this,null);
                         picConnectionType.Image = WTXGUIsimple.Properties.Resources.jet_symbol;
                         picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
 

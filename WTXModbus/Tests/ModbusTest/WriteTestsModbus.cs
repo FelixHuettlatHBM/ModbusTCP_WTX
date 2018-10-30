@@ -27,8 +27,8 @@ namespace HBM.WT.API.WTX.Modbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.WriteFail).Returns(0);
-                yield return new TestCaseData(Behavior.WriteSuccess).Returns(2);
+                //yield return new TestCaseData(Behavior.WriteFail).Returns(0x2);
+                yield return new TestCaseData(Behavior.WriteSuccess).Returns(0);
             }
         }
 
@@ -289,7 +289,6 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.SyncCall(0, 0x100, callbackMethod);
 
-            //return _wtxObj.getCommand;
             return testConnection.getCommand;
             // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
         }
@@ -307,11 +306,8 @@ namespace HBM.WT.API.WTX.Modbus
             _wtxObj.Connect(this.OnConnect, 100);
 
             // Write : Gross/Net 
-
             _wtxObj.Async_Call(0x2, OnWriteData);
-
-            Thread.Sleep(100);        // Include a short sleep time after asynchronous call (Async_Call). 
-
+              
             return testConnection.getCommand;
             // Alternative Assert.AreEqual(0x2, testConnection.getCommand);
         }
@@ -343,9 +339,7 @@ namespace HBM.WT.API.WTX.Modbus
 
                 res = done.WaitOne(0);
             }
-
             return res;
-
         }
         */
 

@@ -715,11 +715,11 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
                 case Behavior.WriteFail:
-                    this.command = 0;
+                    this.command = 0x2;
                     break;
 
                 case Behavior.WriteSuccess:
-                    command = data;
+                    command = 0;
                     break;
 
                 case Behavior.HandshakeSuccess:

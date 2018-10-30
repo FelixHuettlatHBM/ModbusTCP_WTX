@@ -43,9 +43,7 @@ namespace HBM.WT.API.WTX.Modbus
             double dNominalLoad = dPreload + (capacity * multiplierMv2D);
 
             WTXModbusObj.Calculate(preload, capacity);
-
-            // Testbedingung noch bearbeiten: 
-
+            
             if (
                 (testConnection.getArrElement1 == (Convert.ToInt32(dPreload) & 0xffff0000) >> 16) &&
                 (testConnection.getArrElement2 == (Convert.ToInt32(dPreload) & 0x0000ffff)) &&

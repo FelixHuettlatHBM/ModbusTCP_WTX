@@ -271,7 +271,9 @@ namespace HBM.WT.API.WTX.Modbus
            
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58],new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));;
 
             return _wtxObj.Unit;
         }
@@ -285,7 +287,9 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.Unit;
         }
@@ -299,7 +303,9 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.Unit;
         }
@@ -311,7 +317,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.Unit;
         }
@@ -324,7 +332,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, _wtxObj.Decimals);
             double dValue = _wtxObj.GrossValue / Math.Pow(10, _wtxObj.Decimals);
@@ -340,7 +350,10 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 1 /*_wtxObj.Decimals*/);
 
             double dValue = _wtxObj.GrossValue / Math.Pow(10, 1 /*_wtxObj.Decimals*/);
@@ -354,7 +367,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 2/*_wtxObj.Decimals*/);
             double dValue = _wtxObj.GrossValue / Math.Pow(10, 2 /*_wtxObj.Decimals*/);
@@ -368,7 +383,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 3/*_wtxObj.Decimals*/);
             double dValue = _wtxObj.GrossValue / Math.Pow(10, 3 /*_wtxObj.Decimals*/);
@@ -382,7 +399,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 4/*_wtxObj.Decimals*/);
             double dValue = _wtxObj.GrossValue / Math.Pow(10, 4 /*_wtxObj.Decimals*/);
@@ -396,7 +415,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 5/*_wtxObj.Decimals*/);
             double dValue = _wtxObj.GrossValue / Math.Pow(10, 5 /*_wtxObj.Decimals*/);
@@ -409,7 +430,10 @@ namespace HBM.WT.API.WTX.Modbus
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             string strValue = _wtxObj.NetGrossValueStringComment(_wtxObj.GrossValue, 6/*_wtxObj.Decimals*/);
             double dValue = _wtxObj.GrossValue / Math.Pow(10, 6 /*_wtxObj.Decimals*/);
@@ -424,7 +448,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.ScaleRangeStringComment();
         }
@@ -436,7 +462,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.ScaleRangeStringComment();
         }
@@ -448,7 +476,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.ScaleRangeStringComment();       
         }
@@ -462,7 +492,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.LimitStatusStringComment();
         }
@@ -474,7 +506,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.LimitStatusStringComment();
         }
@@ -486,7 +520,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.LimitStatusStringComment();
         }
@@ -498,14 +534,17 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.LimitStatusStringComment();
         }
 
-
-
-
+        private void OnReadData(IDeviceData obj)
+        {
+            throw new NotImplementedException();
+        }
 
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "WeightMovingStringComment_Case0_TestCase_Modbus")]
         public string testModbus_WeightMovingStringComment_Case0(Behavior behavior)
@@ -514,9 +553,11 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
-             return _wtxObj.WeightMovingStringComment();
+            return _wtxObj.WeightMovingStringComment();
         }
 
         [Test, TestCaseSource(typeof(CommentMethodsModbusTests), "WeightMovingStringComment_Case1_TestCase_Modbus")]
@@ -526,7 +567,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.WeightMovingStringComment();        
         }
@@ -541,7 +584,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.WeightTypeStringComment();
             //Assert.AreEqual("gross", strValue);
@@ -554,7 +599,9 @@ namespace HBM.WT.API.WTX.Modbus
             WtxModbus _wtxObj = new WtxModbus(testConnection, 200);
             _wtxObj.Connect(this.OnConnect, 100);
 
-            testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
+            _wtxObj.Async_Call(0x00, OnReadData);
+            Thread.Sleep(10);
+            //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.WeightTypeStringComment();
             //Assert.AreEqual("net", strValue);

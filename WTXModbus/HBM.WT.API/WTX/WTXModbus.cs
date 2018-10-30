@@ -137,12 +137,12 @@ namespace HBM.WT.API.WTX
             this._connection.Disconnect();
         }
 
-        public void Async_Call(ushort commandParam, Action<IDeviceData> callbackParam)
+        public void Async_Call(int commandParam, Action<IDeviceData> callbackParam)
         {
             this._dataReceived = false;
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
             
-            this._command = commandParam;
+            this._command = (ushort)commandParam;
             this._callbackObj = callbackParam;
 
             bgWorker.WorkerSupportsCancellation = true;  // Specify whether you want the background operation to allow cancellation and to report progress.
@@ -2382,50 +2382,51 @@ namespace HBM.WT.API.WTX
             this.Async_Call(0x40, WriteDataCompleted);
         }
 
-        public void adjustZero(Action<IDeviceData> WriteDataCompleted)
+        public override void adjustZero(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x80, Write_DataReceived);
         }
 
-        public void adjustNominal(Action<IDeviceData> WriteDataCompleted)
+        public override void adjustNominal(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x100, Write_DataReceived);
         }
 
-        public void activateData(Action<IDeviceData> WriteDataCompleted)
+        public override void activateData(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
         }
 
-        public void manualTaring(Action<IDeviceData> WriteDataCompleted)
+        public override void manualTaring(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x1000, Write_DataReceived);
         }
 
-        public void clearDosingResults(Action<IDeviceData> WriteDataCompleted)
+        public override void clearDosingResults(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x4, Write_DataReceived);
         }
 
-        public void abortDosing(Action<IDeviceData> WriteDataCompleted)
+        public override void abortDosing(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x8, Write_DataReceived);
         }
 
-        public void startDosing(Action<IDeviceData> WriteDataCompleted)
+        public override void startDosing(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x10, Write_DataReceived);
         }
 
-        public void recordWeight(Action<IDeviceData> WriteDataCompleted)
+        public override void recordWeight(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x4000,Write_DataReceived);
         }
 
-        public void manualReDosing(Action<IDeviceData> WriteDataCompleted)
+        public override void manualReDosing(Action<IDeviceData> WriteDataCompleted)
         {
             this.Async_Call(0x8000, Write_DataReceived);
         }
+
+
     }
 }
-

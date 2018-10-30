@@ -531,6 +531,50 @@ namespace HBM.WT.API.WTX
             return "t";
         }
 
+        public override void adjustZero(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void adjustNominal(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void activateData(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void manualTaring(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void recordWeight(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void clearDosingResults(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void abortDosing(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void startDosing(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void manualReDosing(Action<IDeviceData> WriteDataCompleted)
+        {
+            throw new NotImplementedException();
+        }
 
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:

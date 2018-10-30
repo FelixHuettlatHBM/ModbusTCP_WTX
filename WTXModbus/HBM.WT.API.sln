@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{88A9A036-C2E9-4BB5-A757-DF2164D246A4}"
 EndProject
@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{12B47EE7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXGUIsimple", "Examples\WTXGUIsimple\WTXGUIsimple.csproj", "{BD4E877B-0A77-4976-8FE6-53D9450B9CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXModbusCL", "Examples\CommandLine\WTXModbusCL.csproj", "{8241DD4F-A40A-4E8D-8BAC-8CD878BC1ABF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXCLwindow", "Examples\CommandLine\WTXCLwindow.csproj", "{8241DD4F-A40A-4E8D-8BAC-8CD878BC1ABF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WTXModbusGUI", "Examples\GUI\WTXModbusGUI.csproj", "{1B8BDE86-5015-40A3-B364-5716EC95B932}"
 EndProject

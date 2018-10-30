@@ -66,9 +66,21 @@ namespace HBM.WT.API
         public abstract ushort[] GetDataUshort { get; set; }
 
         public abstract string NetGrossValueStringComment(int value, int decimals);
+
         public abstract void gross(Action<IDeviceData> WriteDataCompleted);
         public abstract void zeroing(Action<IDeviceData> WriteDataCompleted);
         public abstract void taring(Action<IDeviceData> WriteDataCompleted);
+
+        public abstract void adjustZero(Action<IDeviceData> WriteDataCompleted);
+        public abstract void adjustNominal(Action<IDeviceData> WriteDataCompleted);
+        public abstract void activateData(Action<IDeviceData> WriteDataCompleted);
+        public abstract void manualTaring(Action<IDeviceData> WriteDataCompleted);
+        public abstract void recordWeight(Action<IDeviceData> WriteDataCompleted);
+        public abstract void clearDosingResults(Action<IDeviceData> WriteDataCompleted);
+        public abstract void abortDosing(Action<IDeviceData> WriteDataCompleted);
+        public abstract void startDosing(Action<IDeviceData> WriteDataCompleted);
+        public abstract void manualReDosing(Action<IDeviceData> WriteDataCompleted);
+
         public abstract string UnitStringComment();
 
         public abstract void MeasureZero();
@@ -120,6 +132,7 @@ namespace HBM.WT.API
         public abstract int Ready { get; }                 // data[39]
         public abstract int ReDosing { get; }              // data[40]
         public abstract int Emptying { get; }              // data[41]
+        
         public abstract int FlowError { get; }             // data[42]
         public abstract int Alarm { get; }                 // data[43]
         public abstract int AdcOverUnderload { get; }     // data[44]
@@ -193,7 +206,7 @@ namespace HBM.WT.API
         public abstract int DownwardsDosing { get; set; }
         public abstract int ValveControl { get; set; }
         public abstract int EmptyingMode { get; set; }
-        
+       
     }
 }
 

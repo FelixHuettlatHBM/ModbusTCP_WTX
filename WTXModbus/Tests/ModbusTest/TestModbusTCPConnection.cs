@@ -689,13 +689,29 @@ namespace HBM.WT.API.WTX.Modbus
                     break;
 
                 case Behavior.WriteSyncSuccess:
+
                     this.command = data;
-                    _dataWTX[5] = 0x4040;
+
+                    // Change the handshake bit : bit .14 from 0 to 1.
+                    if (_dataWTX[5] == 0x0000)
+                        _dataWTX[5] = 0x4000;
+                    else
+                        if (_dataWTX[5] == 0x4000)
+                        _dataWTX[5] = 0x0000;
+
                     break;
 
                 case Behavior.WriteSyncFail:
-                    this.command = 0;
-                    _dataWTX[5] = 0x40;
+
+                    this.command = 0x100;
+
+                    // Change the handshake bit : bit .14 from 0 to 1.
+                    if (_dataWTX[5] == 0x0000)
+                        _dataWTX[5] = 0x4000;
+                    else
+                        if (_dataWTX[5] == 0x4000)
+                            _dataWTX[5] = 0x0000;
+
                     break;
 
                 case Behavior.WriteFail:

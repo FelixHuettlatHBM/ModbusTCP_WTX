@@ -46,8 +46,8 @@ namespace HBM.WT.API.WTX.Modbus
         {
             get
             {
-                yield return new TestCaseData(Behavior.WriteSyncFail).Returns(0);
-                yield return new TestCaseData(Behavior.WriteSyncSuccess).Returns(0x100);
+                yield return new TestCaseData(Behavior.WriteSyncFail).Returns(0x100);
+                yield return new TestCaseData(Behavior.WriteSyncSuccess).Returns(0);
             }
         }
 
@@ -277,29 +277,7 @@ namespace HBM.WT.API.WTX.Modbus
 
         }
         
-        // Still not working: 
-        /*
-        // Test for handshake:
-        [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteHandshakeTestModbus")]
-        public int WriteHandshakeTest(Behavior behavior)
-        {
-            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-
-            _wtxObj = new WtxModbus(testConnection, 200);
-
-            _wtxObj.Connect(this.OnConnect, 100);
-
-            _wtxObj.Async_Call(0x1, callbackMethod);
-
-            Thread.Sleep(300);
-
-            return testConnection.getCommand;
-            // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
-        }
-        */
-
-        /*
-        // Test for writing : Tare 
+        // Test for synchronous writing : Tare 
         [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteSyncTestModbus")]
         public int WriteSyncTest(Behavior behavior)
         {
@@ -311,12 +289,14 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.SyncCall(0, 0x100, callbackMethod);
 
+            //return _wtxObj.getCommand;
             return testConnection.getCommand;
             // Alternative : Assert.AreEqual(0x100, testConnection.getCommand);
         }
-        */
 
-        // Still not working: 
+        private void callbackMethod(IDeviceData obj)
+        {
+        }
         
         [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteTestCases")]
         public int WriteTestCasesModbus(Behavior behavior)
@@ -330,15 +310,13 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.Async_Call(0x2, OnWriteData);
 
-            Thread.Sleep(50);        // Include a short sleep time after asynchronous call (Async_Call). 
+            Thread.Sleep(100);        // Include a short sleep time after asynchronous call (Async_Call). 
 
             return testConnection.getCommand;
-            //return _wtxObj.getCommand;
-            //return testConnection.getCommand;
             // Alternative Assert.AreEqual(0x2, testConnection.getCommand);
         }
-        
 
+        // Still not working : 
         /*
         [Test, TestCaseSource(typeof(WriteTestsModbus), "AsyncWriteBackgroundworkerCase")]
         public bool AsyncWriteBackgroundworkerTest(Behavior behavior)
@@ -370,12 +348,6 @@ namespace HBM.WT.API.WTX.Modbus
 
         }
         */
-
-        private void callbackMethod(IDeviceData obj)
-        {
-
-        }
-
 
         // Callback method for writing on the WTX120 device: 
         private void OnWriteData(IDeviceData obj)

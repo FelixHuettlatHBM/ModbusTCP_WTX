@@ -166,8 +166,8 @@ namespace HBM.WT.API.WTX
         // This method writes a data word to the WTX120 device synchronously. 
         public void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
         {
-            this._dataReceived = false;
             this._command = commandParam;
+            this._dataReceived = false;           
             this._callbackObj = callbackParam;
 
             if (this._command == 0x00)
@@ -183,6 +183,7 @@ namespace HBM.WT.API.WTX
                 do
                 {
                     this._connection.Read(0);
+
                 } while (this.Handshake == 0);
                              
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
@@ -193,9 +194,7 @@ namespace HBM.WT.API.WTX
                                 
                 while ( this.Handshake == 1) // Before : 'this.status == 1' additionally in the while condition. 
                 {
-                    Thread.Sleep(100);
-                    this.
-                    _connection.Read(0);
+                    this._connection.Read(0);
                 }   
                 
             }

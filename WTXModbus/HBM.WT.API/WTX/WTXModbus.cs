@@ -88,6 +88,7 @@ namespace HBM.WT.API.WTX
                 this._outputData[i] = 0;
             }
 
+            this._command = 0x00; 
             this._compareDataChanged = false;
             this._isCalibrating = false;
             this._isRefreshed = false;
@@ -136,17 +137,11 @@ namespace HBM.WT.API.WTX
             this._connection.Disconnect();
         }
 
-        public int getCommand
-        {
-            get { return this._command; }
-        }
-
-        public void Async_Call(/*ushort wordNumberParam, */ushort commandParam, Action<IDeviceData> callbackParam)
+        public void Async_Call(ushort commandParam, Action<IDeviceData> callbackParam)
         {
             this._dataReceived = false;
             BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
-
-            //this.wordNumber = wordNumberParam;
+            
             this._command = commandParam;
             this._callbackObj = callbackParam;
 
@@ -167,7 +162,6 @@ namespace HBM.WT.API.WTX
             bgWorker.WorkerReportsProgress = true;
             bgWorker.RunWorkerAsync();
         }
-
 
         // This method writes a data word to the WTX120 device synchronously. 
         public void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
@@ -205,6 +199,11 @@ namespace HBM.WT.API.WTX
                 }   
                 
             }
+        }
+
+        public int getCommand
+        {
+            get { return this._command; }
         }
 
         // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 
@@ -284,12 +283,13 @@ namespace HBM.WT.API.WTX
             while (/*this.status == 1 && */this.Handshake == 1)
             {
                 this._connection.Read(0);
-            }
+            }      
         }
 
         public void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this._callbackObj(this);         // Neu : 21.11.2017         Interface übergeben. 
+            this._callbackObj(this);         // Committing the interface with the updated values after writing. 
+            this._command = 0x00;            // After write : Set command to zero. 
         }
 
         public void WriteOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)

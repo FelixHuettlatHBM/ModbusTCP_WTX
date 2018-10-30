@@ -317,7 +317,7 @@ namespace HBM.WT.API.WTX.Modbus
         */
 
         // Still not working: 
-        /*
+        
         [Test, TestCaseSource(typeof(WriteTestsModbus), "WriteTestCases")]
         public int WriteTestCasesModbus(Behavior behavior)
         {
@@ -330,12 +330,14 @@ namespace HBM.WT.API.WTX.Modbus
 
             _wtxObj.Async_Call(0x2, OnWriteData);
 
-            Thread.Sleep(300);        // Include a short sleep time for the former asynchronous call (Async_Call). 
+            Thread.Sleep(50);        // Include a short sleep time after asynchronous call (Async_Call). 
 
             return testConnection.getCommand;
+            //return _wtxObj.getCommand;
+            //return testConnection.getCommand;
             // Alternative Assert.AreEqual(0x2, testConnection.getCommand);
         }
-        */
+        
 
         /*
         [Test, TestCaseSource(typeof(WriteTestsModbus), "AsyncWriteBackgroundworkerCase")]

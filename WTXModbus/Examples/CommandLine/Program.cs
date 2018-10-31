@@ -27,10 +27,10 @@ using HBM.WT.API.WTX.Jet;
 namespace WTXModbus
 {
     /// <summary>
-    /// This class implements a console application instead of a windows form. An Object of the class 'ModbusTCPConnection' and 'WTX120_Modbus' are initialized as a publisher
-    /// and subscriber. Afterwars a connection to the device is build and the timer/sending interval is set. 
-    /// A timer with for example 500ms is created. After 500ms an event is triggered, which executes the method "OnTimedEvent" reading the register of the device
-    /// by an asynchronous call in the method "WTXObj.Async_Call". As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
+    /// This class implements a console application. An Object of the class 'ModbusTcpConnection' or 'JetBusConnection' and 'BaseWTDevice'('WTXJet' or WTXModbus') 
+    /// are initialized as a publisher and subscriber. Afterwards a connection to the device is established and the timer/sending interval is set. 
+    /// A timer with for example 500ms is created. After 500ms an event is triggered, which executes the method "Update" reading the register of the device
+    /// by an asynchronous call in the method '_wtxDevice.Async_Call'. As soon as the reading is finisihed, the callback method "Read_DataReceived" takes over the
     /// new data , which have already been interpreted in class 'WTX120_Modbus', so the data is given as a string array. 
     /// The data is also printed on the console in the callback method "Read_DataReceived". 
     /// Being in the while-loop it is possible to select commands to the device. For example taring, change from gross to net value, stop dosing, zeroing and so on. 
@@ -103,7 +103,7 @@ namespace WTXModbus
             MenuCases();
 
             //Get a single value from the WTX device : 
-            int x = _wtxDevice.NetValue;    
+            int x = _wtxDevice.NetValue; 
 
         } // end main  
 

@@ -134,7 +134,7 @@ namespace HBM.WT.API.WTX.Jet
         {
             //IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
 
-            _peer = new TestJetPeer(this);
+            _peer = new TestJetPeer(behavior, this);
 
             this.connected = false;
             this.behavior = behavior;

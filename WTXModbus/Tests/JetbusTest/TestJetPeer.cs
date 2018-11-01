@@ -20,10 +20,10 @@ namespace JetbusTest
         private TestJetbusConnection _connection;
         private Behavior behavior;
 
-        public TestJetPeer(TestJetbusConnection _connectionParameter)
+        public TestJetPeer(Behavior _behaviorParameter, TestJetbusConnection _connectionParameter)
         {
             _connection = _connectionParameter;
-            behavior = _connection.GetBehavior; 
+            this.behavior = _behaviorParameter; 
         }
         
         // Method to simulate the fetching of data from the wtx device : By adding and changing paths to the data buffer(='_databuffer') and by calling an event in TestJetbusConnection with invoke.  
@@ -35,7 +35,6 @@ namespace JetbusTest
 
             if (!_connection._dataBuffer.ContainsKey("6014/01")) // Only if the dictionary does not contain the path "6014/01" the dictionary will be filled: 
             {
-
                 _connection._dataBuffer.Add("6144/00", simulateJTokenInstance("6144/00", "add", 1)["value"]);   // Read 'gross value'
                 _connection._dataBuffer.Add("601A/01", simulateJTokenInstance("601A/01", "add", 1)["value"]);   // Read 'net value'
                 _connection._dataBuffer.Add("6153/00", simulateJTokenInstance("6153/00", "add", 1)["value"]);   // Read 'weight moving detection'        
@@ -93,6 +92,13 @@ namespace JetbusTest
                 _connection._dataBuffer.Add("2020/25", simulateJTokenInstance("2020/25", "add", 0xA)["value"]);   // 0xA(hex)=1010(binary) //Limit value status:
              }
 
+            if (this.behavior == Behavior.lb_UnitValue_Fail || this.behavior == Behavior.g_UnitValue_Fail || this.behavior == Behavior.kg_UnitValue_Fail || this.behavior == Behavior.t_UnitValue_Fail)
+            {
+                path = "6014/01";
+                Event = "change";
+                data = 0x00000000;
+            }
+
             switch (this.behavior)
             {
                 case Behavior.t_UnitValue_Success:
@@ -117,19 +123,13 @@ namespace JetbusTest
                     break;
             }
 
-            if(this.behavior==Behavior.lb_UnitValue_Fail || this.behavior==Behavior.g_UnitValue_Fail || this.behavior==Behavior.kg_UnitValue_Fail || this.behavior==Behavior.t_UnitValue_Fail)
-            {
-                path = "6014/01";
-                Event = "change";
-                data = 0x00000000;
-            }
             JToken JTokenobj = simulateJTokenInstance(path,Event,data);
 
             //fetchCallback?.Invoke(JTokenobj);
 
             id = null;
 
-            fetchCallback /*Action<JToken> example1*/ = (JToken x) => _connection.OnFetchData(JTokenobj);
+            fetchCallback = (JToken x) => _connection.OnFetchData(JTokenobj);
 
             fetchCallback.Invoke(JTokenobj);
 

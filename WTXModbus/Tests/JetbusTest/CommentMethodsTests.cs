@@ -376,7 +376,7 @@ namespace JetbusTest
 
             Assert.AreEqual("kg", _wtxObj.UnitStringComment());
         }
-
+        
         [Test, TestCaseSource(typeof(CommentMethodsTests), "G_UnitValueTestCases")]
         public void testUnit_g(Behavior behavior)
         {

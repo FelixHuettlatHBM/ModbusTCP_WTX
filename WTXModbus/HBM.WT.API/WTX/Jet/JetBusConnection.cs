@@ -42,7 +42,7 @@ using System.Threading;
 namespace HBM.WT.API.WTX.Jet
 {
     /// <summary>
-    /// Use this class du handle a connection over Ethernet.
+    /// Use this class to handle a connection via Ethernet.
     /// </summary>
     public class JetBusConnection : INetConnection, IDisposable
     {

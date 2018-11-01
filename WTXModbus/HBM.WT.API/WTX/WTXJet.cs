@@ -377,9 +377,9 @@ namespace HBM.WT.API.WTX
         }
 
 
-        public string UnitStringComment(int unitParam)
+        public override string UnitStringComment()
         {
-            switch (unitParam)
+            switch (this.Unit)
             {
                 case 0x02:
                     return "kg";
@@ -524,11 +524,6 @@ namespace HBM.WT.API.WTX
         public override void taring(Action<IDeviceData> WriteDataCompleted)
         {
             _connection.Write(ID_keys.SCALE_COMMAND, command_values.TARING);       // SCALE_COMMAND = "6002/01"
-        }
-
-        public override string UnitStringComment()
-        {
-            return "t";
         }
 
         public override void adjustZero(Action<IDeviceData> WriteDataCompleted)

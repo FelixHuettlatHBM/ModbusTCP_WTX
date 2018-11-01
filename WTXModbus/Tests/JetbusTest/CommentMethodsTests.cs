@@ -30,8 +30,7 @@ namespace JetbusTest
 
             }
         }
-
-        
+     
         // Test case source for reading values from the WTX120 device. 
         public static IEnumerable KG_UnitValueTestCases
         {
@@ -360,10 +359,10 @@ namespace JetbusTest
 
             value = _wtxObj.Unit;
 
-            Assert.AreEqual("t", _wtxObj.UnitStringComment(value));
+            Assert.AreEqual("t", _wtxObj.UnitStringComment());
         }     
 
-        
+        /*
         [Test, TestCaseSource(typeof(CommentMethodsTests), "KG_UnitValueTestCases")]
         public void testUnit_kg(Behavior behavior)
         {
@@ -373,9 +372,9 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = 0x02;
+            value = _wtxObj.Unit;
 
-            Assert.AreEqual("kg", _wtxObj.UnitStringComment(value));
+            Assert.AreEqual("kg", _wtxObj.UnitStringComment());
         }
 
         [Test, TestCaseSource(typeof(CommentMethodsTests), "G_UnitValueTestCases")]
@@ -387,9 +386,9 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = 0x4B;
+            value = _wtxObj.Unit;
 
-            Assert.AreEqual("g", _wtxObj.UnitStringComment(value));
+            Assert.AreEqual("g", _wtxObj.UnitStringComment());
         }
 
         [Test, TestCaseSource(typeof(CommentMethodsTests), "LB_UnitValueTestCases")]
@@ -401,9 +400,9 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = 0XA6;
+            value = _wtxObj.Unit;
 
-            Assert.AreEqual("lb", _wtxObj.UnitStringComment(value));
+            Assert.AreEqual("lb", _wtxObj.UnitStringComment());
         }
 
         [Test, TestCaseSource(typeof(CommentMethodsTests), "LB_UnitValueTestCases")]
@@ -415,17 +414,11 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            value = 0XCC; // default value
+            value = _wtxObj.Unit;
 
-            Assert.AreEqual("error", _wtxObj.UnitStringComment(value));
+            Assert.AreEqual("error", _wtxObj.UnitStringComment());
         }
-
-
-        // A6 = lb = 0x530000 = 10100110000000000000000
-        // 02 = kg = 0x20000  = 100000000000000000
-        // 4B = g  = 0x4B0000 = 10010110000000000000000
-        // 4C = t  = 0x4C0000 = 10011000000000000000000
-        // CC = default , error value 
+        */
         private void OnConnect(bool obj)
         {
             throw new NotImplementedException();

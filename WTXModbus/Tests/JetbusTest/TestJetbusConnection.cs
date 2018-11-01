@@ -6,7 +6,9 @@
 
 namespace HBM.WT.API.WTX.Jet
 {
+    using Hbm.Devices.Jet;
     using HBM.WT.API;
+    using JetbusTest;
     using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
@@ -66,7 +68,7 @@ namespace HBM.WT.API.WTX.Jet
 
         t_UnitValue_Fail,
         t_UnitValue_Success,
- 
+
         kg_UnitValue_Fail,
         kg_UnitValue_Success,
 
@@ -110,7 +112,7 @@ namespace HBM.WT.API.WTX.Jet
 
         private int _mTimeoutMs;
 
-        private Dictionary<string, JToken> _dataBuffer;
+        public Dictionary<string, JToken> _dataBuffer;
 
         private AutoResetEvent _mSuccessEvent = new AutoResetEvent(false);
                 
@@ -123,11 +125,17 @@ namespace HBM.WT.API.WTX.Jet
         private ushort[] DataUshortArray;
         private string[] DataStrArray;
 
+        private TestJetPeer _peer;
+
         // Constructor with all parameters possible from class 'JetbusConnection' - Without ssh certification.
         //public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000) : base(ipAddr, user, passwd, certificationCallback, timeoutMs = 5000)
 
         public TestJetbusConnection(Behavior behavior, string ipAddr, string user, string passwd, RemoteCertificateValidationCallback certificationCallback, int timeoutMs = 5000)
         {
+            //IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
+
+            _peer = new TestJetPeer(this);
+
             this.connected = false;
             this.behavior = behavior;
             this.messages = new List<string>();
@@ -138,6 +146,14 @@ namespace HBM.WT.API.WTX.Jet
 
             //ConnectOnPeer(user, passwd, timeoutMs);
             FetchAll();
+        }
+
+        public Behavior GetBehavior
+        {
+            get
+            {
+                return this.behavior;
+            }
         }
 
         public int SendingInterval
@@ -235,17 +251,10 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.ReadFail_Unit:
                     return _dataBuffer[""];
-
-                case Behavior.t_UnitValue_Success:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
                     break;
 
-                case Behavior.t_UnitValue_Fail:
-                        return _dataBuffer[""];
-                    break;
                 case Behavior.NetGrossValueStringComment_4D_Success:
-                        return _dataBuffer[""];
+                    return _dataBuffer[""];
                     break;
 
                 case Behavior.NetGrossValueStringComment_4D_Fail:
@@ -305,16 +314,17 @@ namespace HBM.WT.API.WTX.Jet
 
                 default:
                     break;
-
+                
 
             }
-   
+           
             this.ConvertJTokenToStringArray();
 
             if (this.behavior != Behavior.ReadFail_DataReceived)
                 RaiseDataEvent?.Invoke(this, new DataEvent(DataUshortArray, DataStrArray));
 
             return _dataBuffer[index.ToString()];
+            
         }
 
 
@@ -334,6 +344,8 @@ namespace HBM.WT.API.WTX.Jet
 
         public Dictionary<string, int> getData()
         {
+            this.FetchAll();
+            
             Dictionary<string, int> newDict = new Dictionary<string, int>();
 
             foreach (var element in _dataBuffer)
@@ -397,8 +409,13 @@ namespace HBM.WT.API.WTX.Jet
         public void FetchAll()
         {
 
-            this.OnFetchData(this.simulateJTokenInstance("123",123));
-            
+            //this.OnFetchData(this.simulateJTokenInstance("123", "add", 123));
+
+            Matcher matcher = new Matcher();
+            FetchId id;
+
+            _peer.Fetch(out id, matcher, OnFetchData, null, 500); // Onfetch = null (given by 'JetBusConnection'), timeoutms=500;
+
             bool success = true;
 
             this.ConvertJTokenToStringArray();
@@ -434,80 +451,30 @@ namespace HBM.WT.API.WTX.Jet
         /// For testing it must be filled with pseudo data be tested in the UNIT tests. 
         /// </summary>
         /// <param name="data"></param>
-        protected void OnFetchData(JToken data)
+        public void OnFetchData(JToken data)
         {
             string path = data["path"].ToString();
+            string Event = data["Event"].ToString();
             lock (_dataBuffer)
-            {  
-                    _dataBuffer.Add("6144/00", simulateJTokenInstance("6144/00", 1)["value"]);   // Read 'gross value'
-                    _dataBuffer.Add("601A/01", simulateJTokenInstance("601A/01", 1)["value"]);   // Read 'net value'
-                    _dataBuffer.Add("6153/00", simulateJTokenInstance("6153/00", 1)["value"]);   // Read 'weight moving detection'        
-                    _dataBuffer.Add("6012/01", simulateJTokenInstance("6012/01", 1)["value"]);   // Read 'Weighing device 1 (scale) weight status'
-              
-                    _dataBuffer.Add("SDO", simulateJTokenInstance("SDO", 1)["value"]);
-                    _dataBuffer.Add("FRS1", simulateJTokenInstance("FRS1", 1)["value"]);
-                    _dataBuffer.Add("NDS", simulateJTokenInstance("NDS", 1)["value"]);
+            {
+                switch (Event)
+                {
+                    case "add":
+                        _dataBuffer.Add(path, data["value"]);
 
-                    _dataBuffer.Add("6014/01", simulateJTokenInstance("6014/01", 0x4C0000)["value"]);    // Read Unit, prefix or fixed parameters - for t.
+                        break;
+
+                    case "fetch":
+                        _dataBuffer[path] = data["value"];
+
+                        break;
+
+                    case "change":
+                        _dataBuffer[path] = data["value"];
+
+                        break;
+                }
                 
-                    _dataBuffer.Add("6013/01", simulateJTokenInstance("6013/01", 4)["value"]);   // Read 'Weight decimal point', f.e. = 4.
-                    _dataBuffer.Add("IM1", simulateJTokenInstance("IM1", 1)["value"]);
-                    _dataBuffer.Add("IM2", simulateJTokenInstance("IM2", 1)["value"]);
-                    _dataBuffer.Add("IM3", simulateJTokenInstance("IM3", 1)["value"]);
-                    _dataBuffer.Add("IM4", simulateJTokenInstance("IM4", 1)["value"]);
-
-                    _dataBuffer.Add("OM1", simulateJTokenInstance("OM1", 1)["value"]); 
-                    _dataBuffer.Add("OM2", simulateJTokenInstance("OM2", 1)["value"]);
-                    _dataBuffer.Add("OM3", simulateJTokenInstance("OM3", 1)["value"]);
-                    _dataBuffer.Add("OM4", simulateJTokenInstance("OM4", 1)["value"]);
-
-                    _dataBuffer.Add("OS1", simulateJTokenInstance("OS1", 1)["value"]); 
-                    _dataBuffer.Add("OS2", simulateJTokenInstance("OS2", 1)["value"]);
-                    _dataBuffer.Add("OS3", simulateJTokenInstance("OS3", 1)["value"]);
-                    _dataBuffer.Add("OS4", simulateJTokenInstance("OS4", 1)["value"]);
-
-                    _dataBuffer.Add("CFT", simulateJTokenInstance("CFT", 1)["value"]);
-                    _dataBuffer.Add("FFT", simulateJTokenInstance("FFT", 1)["value"]);
-                    _dataBuffer.Add("TMD", simulateJTokenInstance("TMD", 1)["value"]);
-                    _dataBuffer.Add("UTL", simulateJTokenInstance("UTL", 1)["value"]);
-                    _dataBuffer.Add("LTL", simulateJTokenInstance("LTL", 1)["value"]);
-                    _dataBuffer.Add("MSW", simulateJTokenInstance("MSW", 1)["value"]);
-                    _dataBuffer.Add("EWT", simulateJTokenInstance("EWT", 1)["value"]);
-                    _dataBuffer.Add("TAD", simulateJTokenInstance("TAD", 1)["value"]);
-                    _dataBuffer.Add("CBT", simulateJTokenInstance("CBT", 1)["value"]);
-                    _dataBuffer.Add("CBK", simulateJTokenInstance("CBK", 1)["value"]);
-                    _dataBuffer.Add("FBK", simulateJTokenInstance("FBK", 1)["value"]);
-                    _dataBuffer.Add("FBT", simulateJTokenInstance("FBT", 1)["value"]);
-                    _dataBuffer.Add("SYD", simulateJTokenInstance("SYD", 1)["value"]);
-                    _dataBuffer.Add("VCT", simulateJTokenInstance("VCT", 1)["value"]);
-                    _dataBuffer.Add("EMD", simulateJTokenInstance("EMD", 1)["value"]);
-                    _dataBuffer.Add("CFD", simulateJTokenInstance("CFD", 1)["value"]);
-                    _dataBuffer.Add("FFD", simulateJTokenInstance("FFD", 1)["value"]);
-                    _dataBuffer.Add("SDM", simulateJTokenInstance("SDM", 1)["value"]);
-                    _dataBuffer.Add("SDS", simulateJTokenInstance("SDS", 1)["value"]);
-                    _dataBuffer.Add("RFT", simulateJTokenInstance("RFT", 1)["value"]);
-
-                    _dataBuffer.Add("MDT", simulateJTokenInstance("MDT", 1)["value"]);
-                    _dataBuffer.Add("FFM", simulateJTokenInstance("FFM", 1)["value"]);
-                    _dataBuffer.Add("OSN", simulateJTokenInstance("OSN", 1)["value"]);
-                    _dataBuffer.Add("FFL", simulateJTokenInstance("FFL", 1)["value"]);
-                    _dataBuffer.Add("DL1", simulateJTokenInstance("DL1", 1)["value"]);
-
-                //StatusStringComment:
-
-                _dataBuffer.Add("6002/02", simulateJTokenInstance("6002/02", 1801543519)["value"]);
-
-                //Limit value status:
-
-                _dataBuffer.Add("2020/25", simulateJTokenInstance("2020/25", 0xA)["value"]);   // 0xA(hex)=1010(binary)
-
-                // Hex and bin. for Unit testing: 
-
-                // A6 = lb = 0x530000 = 10100110000000000000000
-                // 02 = kg = 0x20000  = 100000000000000000
-                // 4B = g  = 0x4B0000 = 10010110000000000000000
-                // 4C = t  = 0x4C0000 = 10011000000000000000000
-
                 BusActivityDetection?.Invoke(this, new LogEvent(data.ToString()));
             }
         }
@@ -554,7 +521,7 @@ namespace HBM.WT.API.WTX.Jet
             {
                 case Behavior.WriteTareSuccess:
                     // The specific path and specific value for taring is added to the buffer _dataBuffer
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
                     break;
 
                 case Behavior.WriteTareFail:
@@ -563,7 +530,7 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.WriteGrossSuccess:
                     // The specific path and specific value for gross is added to the buffer _dataBuffer
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
                     break;
 
                 case Behavior.WriteGrossFail:
@@ -572,7 +539,7 @@ namespace HBM.WT.API.WTX.Jet
 
                 case Behavior.WriteZeroSuccess:
                     // The specific path and specific value for gross is added to the buffer _dataBuffer
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
                     break;
 
                 case Behavior.WriteZeroFail:
@@ -582,37 +549,37 @@ namespace HBM.WT.API.WTX.Jet
                 case Behavior.CalibrationSuccess:
                     // For Calibration : The specific path and specific value for calibration is added to the buffer _dataBuffer
                     if (index.Equals("6152/00"))
-                        _dataBuffer.Add("6152/00", simulateJTokenInstance("6152/00", data)["value"]);
+                        _dataBuffer.Add("6152/00", simulateJTokenInstance("6152/00", "change", data)["value"]);
                     if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
 
                     break;
 
                 case Behavior.CalibrationFail:
                     // A wrong value is added at the specific path to the buffer _dataBuffer
                     if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", 0)["value"]);
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", 0)["value"]);
                     break;
 
                 case Behavior.MeasureZeroSuccess:
                     // For setting to zero(=Measure zero) : The specific path and specific value for calibration is added to the buffer _dataBuffer
                     if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", data)["value"]);
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
                     break;
 
                 case Behavior.MeasureZeroFail:
                     // A wrong value is added at the specific path to the buffer _dataBuffer
                     if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", 0)["value"]);
+                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", 0)["value"]);
                     break;
 
                 case Behavior.CalibratePreloadCapacitySuccess:
 
                     if (index.Equals("2110/06"))
-                        _dataBuffer.Add("2110/06", simulateJTokenInstance("2110/06", data)["value"]);
+                        _dataBuffer.Add("2110/06", simulateJTokenInstance("2110/06", "change", data)["value"]);
 
                     if (index.Equals("2110/07"))
-                        _dataBuffer.Add("2110/07", simulateJTokenInstance("2110/07", data)["value"]);
+                        _dataBuffer.Add("2110/07", simulateJTokenInstance("2110/07", "change", data)["value"]);
 
                     break;
 
@@ -626,15 +593,14 @@ namespace HBM.WT.API.WTX.Jet
             }
         }
 
-        public JToken simulateJTokenInstance(string index, int data)
+        public JToken simulateJTokenInstance(string pathParam, string eventParam, int data)
         {
 
             FetchData fetchInstance = new FetchData
             {
-                path = index,
-                Event = "change",  // measure zero
-                value = data,
-
+                path = pathParam,    // For path  = "6014/01" (f.e.)
+                Event = eventParam,  // For event = "add" || "change" || "fetch" 
+                value = data,        
             };
 
             return JToken.FromObject(fetchInstance);
@@ -666,3 +632,56 @@ namespace HBM.WT.API.WTX.Jet
 
     }
 }
+
+
+// To method Read(..) in 'TestJetBusConnection.cs':
+/*
+ *                 case Behavior.g_UnitValue_Success:
+
+                    _dataBuffer["6014/01"] = 0x004B0000;
+                    return _dataBuffer["6014/01"];
+               break;
+
+                case Behavior.g_UnitValue_Fail:
+                    return _dataBuffer[""];
+                   break;
+
+                case Behavior.kg_UnitValue_Success:
+                    
+                    if (_dataBuffer.ContainsKey(index.ToString()))
+                    {
+                        _dataBuffer[index.ToString()] = 0x00020000;
+                        return _dataBuffer[index.ToString()];
+                    }
+
+                    _dataBuffer["6014/01"] = 0x00020000;
+                    return _dataBuffer["6014/01"];
+                    break;
+
+                case Behavior.kg_UnitValue_Fail:
+                        return _dataBuffer[""];
+                       break;
+
+                case Behavior.t_UnitValue_Success:
+                    if (_dataBuffer.ContainsKey(index.ToString()))
+                    {
+                        _dataBuffer[index.ToString()] = 0x004C0000;
+                        return _dataBuffer[index.ToString()];
+                    }                   
+                    break;
+
+                case Behavior.t_UnitValue_Fail:
+                    return _dataBuffer[""];
+                    break;
+
+
+                case Behavior.lb_UnitValue_Success:
+                    _dataBuffer["6014/01"]= 0x00A60000;
+                    return _dataBuffer["6014/01"]; 
+                    break;
+
+                case Behavior.lb_UnitValue_Fail:
+                    return _dataBuffer[""];
+                    break;
+
+*/

@@ -118,7 +118,7 @@ namespace WTXGUIsimple
 
         #region Connection
         // This method connects to the given IP address
-        private void Connect()
+        private void InitializeConnection()
         {
             txtInfo.Text = "Connecting...";
             this._ipAddress = txtIPAddress.Text;
@@ -141,8 +141,7 @@ namespace WTXGUIsimple
                 }
             }
 
-            // Connection establishment via Modbus or Jetbus :  
-           
+            // Connection establishment via Modbus or Jetbus :            
             try
             {
                 _wtxDevice.Connect();
@@ -234,7 +233,7 @@ namespace WTXGUIsimple
 
             Thread.Sleep(WAIT_DISCONNECT);     // Wait for 2 seconds till the disconnection request is finished. 
 
-            this.Connect();         // Establish a connection.  
+            this.InitializeConnection();         // Establish a connection.  
             
         }
 

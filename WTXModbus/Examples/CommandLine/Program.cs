@@ -47,6 +47,8 @@ namespace WTXModbus
         private static string mode = "";
         private const string MESSAGE_CONNECTION_FAILED = "Connection failed!";
         private const string MESSAGE_CONNECTING = "Connecting...";
+
+        private const int WAIT_DISCONNECT = 2000; 
         
         private static BaseWtDevice _wtxDevice;
         //private static ModbusTcpConnection _modbusObj;
@@ -107,9 +109,7 @@ namespace WTXModbus
 
         } // end main  
 
-     
-
-
+    
 
         private static void DefineInputs(string[]args)
         {
@@ -235,12 +235,30 @@ namespace WTXModbus
                                 //_wtxDevice.Refreshed = true;
                             }
                             else
-                                if (_showAllOutputWords == true)
+                            if (_showAllOutputWords == true)
                             {
                                 _showAllOutputWords = false;
                                 //_wtxDevice.Refreshed = true;
                             }
 
+                            break;
+
+                        // Change connection from Modbus to Jetbus: 
+                        case 'j':
+                            _wtxDevice.DataUpdateEvent -= Update;   // Delete Callback method 'Update' from the Eventhandler 'DataUpdateEvent'.
+
+                            mode = "Jetbus";
+
+                            if (_wtxDevice != null)    // Necessary to check if the object of BaseWtDevice have been created and a connection exists. 
+                            {
+                                _wtxDevice.getConnection.Disconnect();
+                                _wtxDevice = null;
+                            }
+
+                            Thread.Sleep(WAIT_DISCONNECT);     // Wait for 2 seconds till the disconnection request is finished. 
+
+                            InitializeConnection();
+                            _wtxDevice.DataUpdateEvent += Update;   // To get updated values from the WTX, use method Update(..). 
                             break;
 
 
@@ -254,10 +272,14 @@ namespace WTXModbus
                     {
                     switch (_valueOutputwords.KeyChar)
                     {
-
                         case '0': _wtxDevice.taring(Write_DataReceived); break;                  // Taring 
                         case '1': _wtxDevice.gross(Write_DataReceived); break;                   // Gross/Net
                         case '2': _wtxDevice.zeroing(Write_DataReceived); break;                 // Zeroing
+                        case '3': _wtxDevice.adjustZero(Write_DataReceived); break;              // Adjust zero 
+                        case '4': _wtxDevice.adjustNominal(Write_DataReceived); break;           // Adjust nominal
+                        case '5': _wtxDevice.activateData(Write_DataReceived); break;            // Activate data
+                        case '6': _wtxDevice.manualTaring(Write_DataReceived); break;            // Manual taring
+                        case '7': _wtxDevice.recordWeight(Write_DataReceived); break;            // Record Weight
 
                         // 'c' for writing on multiple registers, which is necessary for the calibration. 
                         case 'c':       // Calculate Calibration
@@ -266,44 +288,30 @@ namespace WTXModbus
                         case 'w':       // Calculation with weight 
                             CalibrationWithWeight();
                             break;
-                        case 'a':  // Show all input words in the filler application. 
-                            if (_showAllInputWords == false)
+                        // Change connection from Jetbus to Modbus: 
+                        case 'j':
+                           
+                            _wtxDevice.DataUpdateEvent -= Update;   // Delete Callback method 'Update' from the Eventhandler 'DataUpdateEvent'.
+
+                            mode = "Modbus";
+
+                            if (_wtxDevice != null)    // Necessary to check if the object of BaseWtDevice have been created and a connection exists. 
                             {
-                                _showAllInputWords = true;
-                                //_wtxDevice.Refreshed = true;
+                                _wtxDevice.getConnection.Disconnect();
+                                _wtxDevice = null;
                             }
-                            else
-                                if (_showAllInputWords == true)
-                            {
-                                _showAllInputWords = false;
-                                //_wtxDevice.Refreshed = true;
-                            }
+
+                            Thread.Sleep(WAIT_DISCONNECT);     // Wait for 2 seconds till the disconnection request is finished. 
+
+                            InitializeConnection();
+                            _wtxDevice.DataUpdateEvent += Update;   // To get updated values from the WTX, use method Update(..). 
                             break;
-
-                        case 'o': // Writing of the output words
-
-                            if (_showAllOutputWords == false)
-                            {
-                                _showAllOutputWords = true;
-                                //_wtxDevice.Refreshed = true;
-                            }
-                            else
-                                if (_showAllOutputWords == true)
-                            {
-                                _showAllOutputWords = false;
-                                //_wtxDevice.Refreshed = true;
-                            }
-
-                            break;
-
 
                         default: break;
 
                     }   // end switch-case
 
-
-
-                }
+                } // end if
 
                 //int valueOutput = Convert.ToInt32(value_outputwords.KeyChar);
                 int value = 0;
@@ -315,13 +323,6 @@ namespace WTXModbus
                 _valueExitapplication = Console.ReadKey();
                 if (_valueExitapplication.KeyChar == 'e')
                     break;
-
-                if (_valueExitapplication.KeyChar == 'b')   // Change number of bytes, which will be read from the register. (with 'b')
-                {
-                    print_table_for_register_words(false);  // The parameter stands for the moment of the program, in which is this program is called. ..
-                    set_number_inputs();                    //...Either on the beginning(=true) or during the execution while the timer is running (=false).
-
-                }
 
             }// end while
         } // end method MenuCases() 
@@ -414,25 +415,27 @@ namespace WTXModbus
             // The description and the value of the WTX are only printed on the console if the Interface, containing all auto-properties of the values is 
             // not null (respectively empty) and if no calibration is done at that moment.
 
-            //if (_wtxDevice != null/* && (_isCalibrating==false)*/)
-            //{
-                Console.Clear();
+            if (_wtxDevice != null/* && (_isCalibrating==false)*/)
+            {
+                Console.Clear();               
 
-                Console.WriteLine("Options to set the device : Enter the following keys:\nb-Choose the number of bytes read from the register |");
-
-                if (_wtxDevice.ApplicationMode == 0)  // If the WTX120_Modbus device is in standard application/mode.
+                if (_wtxDevice.ApplicationMode == 0)  // If the WTX device is in standard application/mode.
                 {
                     Console.WriteLine("0-Taring | 1-Gross/net  | 2-Zeroing  | 3- Adjust zero | 4-Adjust nominal |\n5-Activate Data \t| 6-Manual taring \t      | 7-Weight storage\n");
                 }
                 else
-                    if (_wtxDevice.ApplicationMode == 1 || _wtxDevice.ApplicationMode == 2) // If the WTX120_Modbus device is in filler application/mode.
+                    if (_wtxDevice.ApplicationMode == 1 || _wtxDevice.ApplicationMode == 2) // If the WTX device is in filler application/mode.
                     {
 
-                    if(_showAllInputWords==false)
-                    Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show all input words 0 to 37 | o-Show output words 9-44\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+                    if(_showAllInputWords==false && mode=="Modbus")
+                    Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | j-Connection to Jetbus | a-Show all input words 0 to 37 |\no-Show output words 9-44 | b-Bytes read from the register |\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+                    else
+                    if (_showAllInputWords == true && mode == "Modbus")
+                        Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | j-Connection to Modbus | a-Show only input word 0 to 5 |\nb-Bytes read from the register |\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
 
-                    if (_showAllInputWords == true)
-                        Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | a-Show only input word 0 to 5\nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+                    if (mode == "Jet" || mode == "Jetbus" || mode == "jet" || mode == "jetbus")
+                        Console.WriteLine("\n0-Taring  | 1-Gross/net  | 2-Clear dosing  | 3- Abort dosing | 4-Start dosing| \n5-Zeroing | 6-Adjust zero| 7-Adjust nominal| 8-Activate data | 9-Weight storage|m-Manual redosing | j-Connection to Modbus | \nc-Calculate Calibration | w-Calibration with weight | e-Exit the application\n");
+
                 }
 
                 if (_wtxDevice.ApplicationMode == 0)   // If the device is in the standard mode (standard=0; filler=1 or filler=2) 
@@ -612,7 +615,7 @@ namespace WTXModbus
 
                     }
                     
-                //}
+                }
             }
         }
 

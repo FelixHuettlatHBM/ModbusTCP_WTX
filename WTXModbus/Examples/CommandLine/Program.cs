@@ -109,18 +109,26 @@ namespace WTXModbus
 
         } // end main  
 
-    
 
-        private static void DefineInputs(string[]args)
+
+        private static void DefineInputs(string[] args)
         {
-            if(args.Length > 0)
-                mode = args[0];         
+            if (args.Length > 0)
+                mode = args[0];
+            else
+                mode = "Jetbus";
 
-            if(args.Length > 1)
+            if (args.Length > 1)
                 _ipAddress = args[1];
-
+            else
+            {
+                Console.WriteLine(" WTX - For connection establishment : No IP adress is given. \n please enter the IP adress to the WTX device, format : aaa.bbb.ccc.dd");
+                _ipAddress = Console.ReadLine();
+            }
             if (args.Length > 2)
                 _timerInterval = Convert.ToInt32(args[2]);
+            else
+                _timerInterval = 200;
 
         }
 

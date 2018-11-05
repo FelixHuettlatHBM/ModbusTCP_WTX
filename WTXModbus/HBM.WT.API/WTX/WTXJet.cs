@@ -186,8 +186,9 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return _connection.getData()[ID_keys.NET_VALUE];
-            }
+                    int value=_connection.getData()[ID_keys.NET_VALUE];
+                    return value;
+             }
         }
 
         public override int GrossValue
@@ -195,7 +196,6 @@ namespace HBM.WT.API.WTX
             get
             {
                 return _connection.getData()[ID_keys.GROSS_VALUE];
-                // Alternative : return Convert.ToInt32(_connection.getData()[ID_keys.GROSS_VALUE]);
             }
         }
 
@@ -203,8 +203,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                return _connection.getData()[ID_keys.DECIMALS];
-                // Alternative : return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DECIMALS]);
+                    return _connection.getData()[ID_keys.DECIMALS];
             }
         }
 
@@ -213,7 +212,6 @@ namespace HBM.WT.API.WTX
             get
             {
                 return _connection.getData()[ID_keys.DOSING_STATUS];
-                // Alternative : return Convert.ToInt32(_connection.getDataBuffer[ID_keys.DOSING_STATUS]);
             }
         }
 
@@ -255,9 +253,9 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = _connection.getData()[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS];
-                return (_ID_value & 0xC) >> 2;
-            }
+                    _ID_value = _connection.getData()[ID_keys.WEIGHING_DEVICE_1_WEIGHT_STATUS];
+                    return (_ID_value & 0xC) >> 2;
+             }
         }
 
         public override int WeightMoving
@@ -335,8 +333,16 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                _ID_value = _connection.getData()[ID_keys.UNIT_PREFIX_FIXED_PARAMETER];
-                return (_ID_value & 0xFF0000) >> 16;
+                try
+                {
+                    _ID_value = _connection.getData()[ID_keys.UNIT_PREFIX_FIXED_PARAMETER];
+                    return (_ID_value & 0xFF0000) >> 16;
+                }
+                catch(Exception)
+                {
+                    return 76;
+                }
+
             }
         }
 

@@ -76,7 +76,7 @@ namespace HBM.WT.API.WTX.Jet
         #region constructors
 
         // Constructor without ssh certification. 
-        public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 5000)
+        public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 10000)
         {
             string _uri = "wss://" + IPAddress + ":443/jet/canopen";
 
@@ -90,7 +90,7 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         // Constructor with ssh certification
-        public JetBusConnection(string IPAddress, int TimeoutMs = 5000)
+        public JetBusConnection(string IPAddress, int TimeoutMs = 10000)
         {
             string _uri = "wss://" + IPAddress + ":443/jet/canopen";
             IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
@@ -113,6 +113,8 @@ namespace HBM.WT.API.WTX.Jet
         public void DisconnectDevice()
         {
             _peer.Disconnect();
+            this._connected = false;
+            this.RaiseDataEvent = null;
         }
 
 
@@ -237,13 +239,13 @@ namespace HBM.WT.API.WTX.Jet
 
 
             this._connected = true; 
-            
+                     
             if (_mException != null)
             {
                 Exception exception = _mException;
                 _mException = null;
                 throw exception;
-            }
+            }            
             
         }
         
@@ -456,6 +458,7 @@ namespace HBM.WT.API.WTX.Jet
         {
             _peer.Disconnect();
             this._connected = false;
+            this.RaiseDataEvent = null;
         }
 
 
@@ -599,6 +602,10 @@ namespace HBM.WT.API.WTX.Jet
             get
             {
                 return this._ipaddress;
+            }
+            set
+            {
+                this._ipaddress = value;
             }
         }
 

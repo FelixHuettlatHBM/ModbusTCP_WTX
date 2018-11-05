@@ -121,9 +121,9 @@ namespace WTXGUIsimple
             if (this.rbtConnectionModbus.Checked)    // If 'Modbus/Tcp' is selected: 
             {
                 // Creating objects of ModbusTcpConnection and WTXModbus: 
-                ModbusTcpConnection _modbusConection = new ModbusTcpConnection(this._ipAddress);
+                ModbusTcpConnection _modbusConnection = new ModbusTcpConnection(this._ipAddress);
 
-                _wtxDevice = new WtxModbus(_modbusConection, this._timerInterval);
+                _wtxDevice = new WtxModbus(_modbusConnection, this._timerInterval);
 
                 _wtxDevice.getConnection.NumofPoints = 6;
             }
@@ -139,15 +139,17 @@ namespace WTXGUIsimple
             }
 
             // Connection establishment via Modbus or Jetbus :  
-            try
+
+            _wtxDevice.Connect();
+
+            /*try
             {
                 _wtxDevice.Connect();
             }
             catch (Exception)
             {
                 txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-            }
-
+            }*/
 
             if (_wtxDevice.isConnected == true)
             {
@@ -218,7 +220,11 @@ namespace WTXGUIsimple
         //Connect device
         private void cmdConnect_Click(object sender, EventArgs e)
         {
-            this.Connect();
+            if(_wtxDevice!=null && _wtxDevice.isConnected == true)
+                _wtxDevice.getConnection.Disconnect();
+
+            this.Connect();     
+            
         }
 
 

@@ -91,15 +91,16 @@ namespace WTXModbusExamples
             {
                 _guiInfo.GetDataviewer.getConnection.Connect();
             }
-            this.Close();
-
+            
             //GUI_info.timer1_start();
-
+            
             _guiInfo.setTimerInterval(this._sendingInterval);
 
             //Store IPAddress in Settings .settings
             WTXModbus.Properties.Settings.Default.IPAddress = this._ipAddress;
             WTXModbus.Properties.Settings.Default.Save();
+
+            this.Close();
         }
 
         private void Settings_Form_Load(object sender, EventArgs e)

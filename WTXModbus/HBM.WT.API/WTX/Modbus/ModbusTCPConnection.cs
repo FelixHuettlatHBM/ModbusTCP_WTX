@@ -48,10 +48,11 @@ namespace HBM.WT.API.WTX.Modbus
     /// </summary>
     public class ModbusTcpConnection : INetConnection 
     {
-        private TcpClient _client;
-        private bool _connected;     
-        private string _iPAddress;
         private ModbusIpMaster _master;
+        private TcpClient _client;
+
+        private bool _connected;     
+        private string _iPAddress;       
         private ushort _numOfPoints;
         private int _port;
         private int _sendingInterval; // Timer1.Interval = Sending Interval 
@@ -251,7 +252,10 @@ namespace HBM.WT.API.WTX.Modbus
         // This method closes the connection to the device.
         public void Disconnect()
         {
-            _client.Close();        
+            _client.Close();
+
+            _connected = false;
+            RaiseDataEvent = null;
         }
 
 

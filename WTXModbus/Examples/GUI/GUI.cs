@@ -106,6 +106,7 @@ namespace WTXModbusExamples
                 MessageBox.Show("Kein Timer-Intervall in der Kommandozeile gegeben, bitte unter Edit->Settings einfügen. Es wird einem Timer-Intervall von 100 msec. fortgefahren.");
                 this._timerInterval = 100; // Default value for the timer interval.
             }
+
             _modbusObj = new ModbusTcpConnection(_ipAddress);
             _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusObj, this._timerInterval);
 
@@ -534,7 +535,10 @@ namespace WTXModbusExamples
         // For the application mode(standard or filler) and the printing on the GUI the WTX registers are read out first. 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // First the connection to the device should be established.   
+            // The ip address is actualized.
+            _wtxObj.getConnection.IpAddress = this._ipAddress;
+
+            // The connection to the device is established. 
             _wtxObj.getConnection.Connect();     // Alternative : _wtxObj.Connect();    
 
             this._dataStr = _wtxObj.GetDataStr;
@@ -554,6 +558,7 @@ namespace WTXModbusExamples
             dataGridView1.Columns.Clear();
 
             this.set_GUI_rows();
+
             _wtxObj.Refreshed = true;
 
             _wtxObj.DataUpdateEvent += ValuesOnConsole;
@@ -795,6 +800,9 @@ namespace WTXModbusExamples
         public void Setting()
         {
             toolStripStatusLabel2.Text = "IP address: " + _setObj.GetIpAddress;
+
+            this._ipAddress = _setObj.GetIpAddress;
+            _wtxObj.getConnection.IpAddress = _setObj.GetIpAddress;
 
             _wtxObj.getConnection.SendingInterval = _setObj.GetSendingInterval;     
             this.timer1.Interval = _setObj.GetSendingInterval;

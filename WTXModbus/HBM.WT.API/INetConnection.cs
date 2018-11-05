@@ -54,7 +54,7 @@ namespace HBM.WT.API
 
         int NumofPoints     { get; set; }
         bool IsConnected    { get; }
-        string IpAddress    { get; }
+        string IpAddress    { get; set; }
         int SendingInterval { get; set; }
 
     }

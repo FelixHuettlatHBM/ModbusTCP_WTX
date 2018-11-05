@@ -45,6 +45,12 @@ namespace WTXGUIsimple
     public partial class LiveValue : Form
     {
         #region Locales
+
+        private static BaseWtDevice _wtxDevice;
+
+        private AdjustmentCalculator _adjustmentCalculator;
+        private AdjustmentWeigher _adjustmentWeigher;
+
         private const string DEFAULT_IP_ADDRESS = "192.168.100.88";
 
         private const string MESSAGE_CONNECTION_FAILED = "Connection failed!";
@@ -54,12 +60,7 @@ namespace WTXGUIsimple
 
         private string _ipAddress = DEFAULT_IP_ADDRESS;
 
-        private int _timerInterval = 200;
-        
-        private static BaseWtDevice _wtxDevice;
-
-        private AdjustmentCalculator _adjustmentCalculator;
-        private AdjustmentWeigher _adjustmentWeigher;
+        private int _timerInterval = 200;       
         #endregion
         
         #region Constructor
@@ -220,23 +221,28 @@ namespace WTXGUIsimple
         //Connect device
         private void cmdConnect_Click(object sender, EventArgs e)
         {
-            picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-            picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-
             if (_wtxDevice != null)    // Necessary to check if the object of BaseWtDevice have been created and a connection exists. 
-            {
-                _wtxDevice.getConnection.Disconnect();
-                _wtxDevice = null;
-            }
+                if (this.rbtConnectionJet.Checked == true && _wtxDevice.getWTXType == "Jetbus" && txtIPAddress.Text==_wtxDevice.getConnection.IpAddress)
+                    return;
+                else
+                if (this.rbtConnectionModbus.Checked == true && _wtxDevice.getWTXType == "Modbus" && txtIPAddress.Text == _wtxDevice.getConnection.IpAddress)
+                    return;
+                else
+                {
+                    _wtxDevice.getConnection.Disconnect();
+                    _wtxDevice = null;
 
-            txtInfo.Text = "Connecting..." + Environment.NewLine;
+                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+                    picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
 
-            Thread.Sleep(WAIT_DISCONNECT);     // Wait for 2 seconds till the disconnection request is finished. 
+                    Thread.Sleep(WAIT_DISCONNECT);     // Wait for 2 seconds till the disconnection request is finished. 
 
-            this.InitializeConnection();         // Establish a connection.  
-            
+                    txtInfo.Text = "Connecting..." + Environment.NewLine;
+                }
+
+            /* Establish a connection in Method InitializeConnection() */
+            this.InitializeConnection();          
         }
-
 
         // button click event for switching to gross or net value. 
         private void cmdGrossNet_Click(object sender, EventArgs e)

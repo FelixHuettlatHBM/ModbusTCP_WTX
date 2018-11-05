@@ -540,6 +540,14 @@ namespace HBM.WT.API.WTX
             set { this._compareDataChanged = value; }
         }
 
+        public override string getWTXType
+        {
+            get
+            {
+                return "Modbus";
+            }
+        }
+
 
         // The following methods set the specific, single values from the whole array "data".
 

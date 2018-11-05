@@ -76,7 +76,7 @@ namespace HBM.WT.API.WTX.Jet
         #region constructors
 
         // Constructor without ssh certification. 
-        public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 10000)
+        public JetBusConnection(string IPAddress, string User, string Password, int TimeoutMs = 20000)
         {
             string _uri = "wss://" + IPAddress + ":443/jet/canopen";
 
@@ -90,7 +90,7 @@ namespace HBM.WT.API.WTX.Jet
         }
 
         // Constructor with ssh certification
-        public JetBusConnection(string IPAddress, int TimeoutMs = 10000)
+        public JetBusConnection(string IPAddress, int TimeoutMs = 20000)
         {
             string _uri = "wss://" + IPAddress + ":443/jet/canopen";
             IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);

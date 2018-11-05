@@ -56,6 +56,8 @@ namespace HBM.WT.API
         public abstract void Connect();
         public abstract void Connect(Action<bool> completed, double timeoutMs);     
         public abstract void Disconnect(Action<bool> DisconnectCompleted);
+
+        public abstract string getWTXType { get; }
         
         public abstract IDeviceData DeviceValues { get; }      
         public abstract bool IsDataReceived { get; set; }       

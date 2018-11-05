@@ -237,7 +237,6 @@ namespace HBM.WT.API.WTX.Jet
                 throw new Exception("Jet interface Timeout");
             }
 
-
             this._connected = true; 
                      
             if (_mException != null)

@@ -32,6 +32,7 @@ using HBM.WT.API.WTX;
 using HBM.WT.API.WTX.Jet;
 using HBM.WT.API.WTX.Modbus;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using WTXModbusGUIsimple;
 
@@ -49,6 +50,8 @@ namespace WTXGUIsimple
         private const string MESSAGE_CONNECTION_FAILED = "Connection failed!";
         private const string MESSAGE_CONNECTING = "Connecting...";
 
+        private const int WAIT_DISCONNECT = 2000;
+
         private string _ipAddress = DEFAULT_IP_ADDRESS;
 
         private int _timerInterval = 200;
@@ -59,7 +62,6 @@ namespace WTXGUIsimple
         private AdjustmentWeigher _adjustmentWeigher;
         #endregion
         
-
         #region Constructor
         public LiveValue()
         {
@@ -68,6 +70,9 @@ namespace WTXGUIsimple
             txtInfo.Text = "To Connect to the WTX device, please enter an IP address, select 'Jet' or 'Modbus/TCP' and press 'connect'.";
 
             txtIPAddress.Text = _ipAddress;
+
+            picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+            picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
         }
         
         public LiveValue(string[] args)
@@ -79,6 +84,9 @@ namespace WTXGUIsimple
             EvaluateCommandLine(args);      
 
             txtIPAddress.Text = _ipAddress;
+
+            picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+            picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
         }
         #endregion
 
@@ -112,9 +120,6 @@ namespace WTXGUIsimple
         // This method connects to the given IP address
         private void Connect()
         {
-            picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-            picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
-
             txtInfo.Text = "Connecting...";
             this._ipAddress = txtIPAddress.Text;
 
@@ -124,8 +129,6 @@ namespace WTXGUIsimple
                 ModbusTcpConnection _modbusConnection = new ModbusTcpConnection(this._ipAddress);
 
                 _wtxDevice = new WtxModbus(_modbusConnection, this._timerInterval);
-
-                _wtxDevice.getConnection.NumofPoints = 6;
             }
             else
             {
@@ -139,17 +142,15 @@ namespace WTXGUIsimple
             }
 
             // Connection establishment via Modbus or Jetbus :  
-
-            _wtxDevice.Connect();
-
-            /*try
+           
+            try
             {
                 _wtxDevice.Connect();
             }
             catch (Exception)
             {
                 txtInfo.Text = MESSAGE_CONNECTION_FAILED;
-            }*/
+            }
 
             if (_wtxDevice.isConnected == true)
             {
@@ -220,10 +221,20 @@ namespace WTXGUIsimple
         //Connect device
         private void cmdConnect_Click(object sender, EventArgs e)
         {
-            if(_wtxDevice!=null && _wtxDevice.isConnected == true)
-                _wtxDevice.getConnection.Disconnect();
+            picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
+            picConnectionType.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisPassive;
 
-            this.Connect();     
+            if (_wtxDevice != null)    // Necessary to check if the object of BaseWtDevice have been created and a connection exists. 
+            {
+                _wtxDevice.getConnection.Disconnect();
+                _wtxDevice = null;
+            }
+
+            txtInfo.Text = "Connecting..." + Environment.NewLine;
+
+            Thread.Sleep(WAIT_DISCONNECT);     // Wait for 2 seconds till the disconnection request is finished. 
+
+            this.Connect();         // Establish a connection.  
             
         }
 

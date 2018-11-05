@@ -92,8 +92,6 @@ namespace WTXModbusExamples
             }
             else
             {
-                MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau. Es wird mit der 'Default IP-Adresse fortgefahren.");
-
                 WTXModbus.Properties.Settings.Default.Reload();
                 _ipAddress = WTXModbus.Properties.Settings.Default.IPAddress;
             }
@@ -102,10 +100,21 @@ namespace WTXModbusExamples
                 this._timerInterval = Convert.ToInt32(_args[2]);
             }
             else
-            {
-                MessageBox.Show("Kein Timer-Intervall in der Kommandozeile gegeben, bitte unter Edit->Settings einfügen. Es wird einem Timer-Intervall von 100 msec. fortgefahren.");
+            {    
                 this._timerInterval = 100; // Default value for the timer interval.
             }
+
+            if(_args.Length==1)
+                MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau. Es wird mit der 'Default IP-Adresse' fortgefahren.");
+
+            if (_args.Length<=2)
+                MessageBox.Show("Bitte geben sie unter 'Edit->Settings' die IP-Adresse ein und auf 'File->Start' für einen Verbindungsaufbau. Es wird mit der 'Default IP-Adresse' fortgefahren." +
+                                "Kein Timer-Intervall in der Kommandozeile gegeben, bitte unter Edit->Settings einfügen. Es wird einem Timer-Intervall von 100 msec. fortgefahren.");
+
+            /*
+             Connection establishment : 
+             Create objects of ModbusTcpConnection and WtxModbus to establish a connection.
+            */
 
             _modbusObj = new ModbusTcpConnection(_ipAddress);
             _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusObj, this._timerInterval);

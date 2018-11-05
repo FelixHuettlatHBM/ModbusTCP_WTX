@@ -186,8 +186,7 @@ namespace HBM.WT.API.WTX
         {
             get
             {
-                    int value=_connection.getData()[ID_keys.NET_VALUE];
-                    return value;
+                    return _connection.getData()[ID_keys.NET_VALUE];
              }
         }
 

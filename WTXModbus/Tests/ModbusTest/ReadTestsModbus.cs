@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HBM.WT.API.WTX.Modbus
+namespace HBM.Weighing.API.WTX.Modbus
 {
     [TestFixture]
     public class ReadTestsModbus

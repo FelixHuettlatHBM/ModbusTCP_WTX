@@ -1,6 +1,8 @@
-﻿using HBM.WT.API;
-using HBM.WT.API.WTX;
-using HBM.WT.API.WTX.Modbus;
+﻿
+using HBM.Weighing.API;
+using HBM.Weighing.API.WTX;
+using HBM.Weighing.API.WTX.Modbus;
+
 using NUnit.Framework;
 using System;
 using System.Collections;

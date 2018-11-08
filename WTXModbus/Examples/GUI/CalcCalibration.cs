@@ -18,8 +18,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using HBM.WT.API.WTX.Modbus;
-using HBM.WT.API.WTX;
+using HBM.Weighing.API.WTX.Modbus;
+using HBM.Weighing.API.WTX;
 
 namespace WTXModbusGUIsimple
 {
@@ -27,7 +27,7 @@ namespace WTXModbusGUIsimple
     // based on know values for dead load and nominal load in mV/V
     public partial class CalcCalibration : Form
     {
-        private HBM.WT.API.WTX.WtxModbus _wtxObj;
+        private WtxModbus _wtxObj;
 
         private bool _finished;
         private double _preload;
@@ -37,7 +37,7 @@ namespace WTXModbusGUIsimple
         private string _strCommaDot;
               
         // Constructor of class 'CalcCalibration' : 
-        public CalcCalibration(HBM.WT.API.WTX.WtxModbus wtxObj, bool connected)
+        public CalcCalibration(WtxModbus wtxObj, bool connected)
         {
             this._wtxObj = wtxObj;
             

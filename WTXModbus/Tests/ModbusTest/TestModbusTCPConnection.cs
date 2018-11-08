@@ -1,7 +1,7 @@
 ﻿
-namespace HBM.WT.API.WTX.Modbus
+namespace HBM.Weighing.API.WTX.Modbus
 {
-    using HBM.WT.API;
+    using HBM.Weighing.API;
     using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;

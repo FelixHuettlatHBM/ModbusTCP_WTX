@@ -13,9 +13,9 @@ using WTXModbus;
 using System.Threading;
 using System.ComponentModel;
 
-using HBM.WT.API.WTX;
-using HBM.WT.API;
-using HBM.WT.API.WTX.Modbus;
+using HBM.Weighing.API.WTX;
+using HBM.Weighing.API;
+using HBM.Weighing.API.WTX.Modbus;
 
 namespace WTXModbusExamples
 {
@@ -46,7 +46,7 @@ namespace WTXModbusExamples
     {
         private static ModbusTcpConnection _modbusObj;
 
-        private static HBM.WT.API.WTX.WtxModbus _wtxObj;
+        private static WtxModbus _wtxObj;
 
         //private static WTXModbus WTXObj;
 
@@ -117,7 +117,7 @@ namespace WTXModbusExamples
             */
 
             _modbusObj = new ModbusTcpConnection(_ipAddress);
-            _wtxObj = new HBM.WT.API.WTX.WtxModbus(_modbusObj, this._timerInterval);
+            _wtxObj = new WtxModbus(_modbusObj, this._timerInterval);
 
             _isStandard = true;      // change between standard and application mode in the GUI. 
             _modbusObj.IpAddress = _ipAddress;
@@ -307,7 +307,7 @@ namespace WTXModbusExamples
         }
 
         // This automatic property returns an instance of this class. It has usage in the class "Settings_Form".
-        public HBM.WT.API.WTX.WtxModbus GetDataviewer
+        public WtxModbus GetDataviewer
         {
             get
             {

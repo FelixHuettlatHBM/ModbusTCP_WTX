@@ -30,9 +30,9 @@
 
 using System;
 using System.Threading;
-using HBM.WT.API.WTX.Jet;
+using HBM.Weighing.API.WTX.Jet;
 
-namespace HBM.WT.API.WTX
+namespace HBM.Weighing.API.WTX
 {
     public class WtxJet : BaseWtDevice
     {

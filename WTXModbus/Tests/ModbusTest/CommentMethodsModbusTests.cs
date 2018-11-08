@@ -1,5 +1,7 @@
-﻿using HBM.WT.API.WTX;
-using HBM.WT.API.WTX.Modbus;
+﻿
+using HBM.Weighing.API.WTX;
+using HBM.Weighing.API.WTX.Modbus;
+
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -9,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HBM.WT.API.WTX.Modbus
+namespace HBM.Weighing.API.WTX.Modbus
 {
     [TestFixture]
     public class CommentMethodsModbusTests

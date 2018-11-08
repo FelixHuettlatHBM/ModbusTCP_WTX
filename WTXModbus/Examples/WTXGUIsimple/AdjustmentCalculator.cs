@@ -18,9 +18,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using HBM.WT.API.WTX.Modbus;
-using HBM.WT.API.WTX;
-using HBM.WT.API;
+using HBM.Weighing.API.WTX.Modbus;
+using HBM.Weighing.API.WTX;
+using HBM.Weighing.API;
 
 namespace WTXModbusGUIsimple
 {

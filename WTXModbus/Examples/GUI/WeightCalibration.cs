@@ -7,6 +7,7 @@
  *  */
 
 
+using HBM.Weighing.API.WTX;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,7 @@ namespace WTXModbusGUIsimple
 
     public partial class WeightCalibration : Form
     {
-        private HBM.WT.API.WTX.WtxModbus _wtxObj;
+        private WtxModbus _wtxObj;
         private int _state;
         private double _calibrationWeight;
         //private IFormatProvider Provider;
@@ -39,7 +40,7 @@ namespace WTXModbusGUIsimple
         private string _strCommaDot;
 
         // Constructor of class WeightCalibration: 
-        public WeightCalibration(HBM.WT.API.WTX.WtxModbus wtxObj, bool connected)
+        public WeightCalibration(WtxModbus wtxObj, bool connected)
         {
             this._powCalibrationWeight = 0.0;
             this._potenz = 0.0;

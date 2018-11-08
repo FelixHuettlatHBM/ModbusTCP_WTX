@@ -39,7 +39,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
-namespace HBM.WT.API.WTX.Jet
+namespace HBM.Weighing.API.WTX.Jet
 {
     /// <summary>
     /// Use this class to handle a connection via Ethernet.

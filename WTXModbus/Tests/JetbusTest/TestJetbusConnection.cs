@@ -4,10 +4,10 @@
 
 // Look also on the tests on GitHub at a related project for SharpJet : https://github.com/gatzka/SharpJet/tree/master/SharpJetTests
 
-namespace HBM.WT.API.WTX.Jet
+namespace HBM.Weighing.API.WTX.Jet
 {
     using Hbm.Devices.Jet;
-    using HBM.WT.API;
+    using HBM.Weighing.API;
     using JetbusTest;
     using Newtonsoft.Json.Linq;
     using System;

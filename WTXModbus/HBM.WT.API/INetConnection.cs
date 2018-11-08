@@ -30,7 +30,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HBM.WT.API
+namespace HBM.Weighing.API
 {
     /// <summary>
     /// Define the common communication-interface

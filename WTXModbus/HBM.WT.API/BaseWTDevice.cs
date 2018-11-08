@@ -29,7 +29,7 @@
 // </copyright>
 using System;
 
-namespace HBM.WT.API
+namespace HBM.Weighing.API
 {
     public abstract class BaseWtDevice : IDeviceData
     {

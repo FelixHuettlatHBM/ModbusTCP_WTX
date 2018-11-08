@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace HBM.WT.API.WTX.Modbus
+namespace HBM.Weighing.API.WTX.Modbus
 {
 
     /// <summary>

@@ -1,9 +1,10 @@
 ﻿
-namespace HBM.WT.API.WTX.Modbus
+namespace HBM.Weighing.API.WTX.Modbus
 {
+    using HBM.Weighing.API.WTX;
+
     using System.Collections;
-    using NUnit.Framework;
-    using HBM.WT.API.WTX;
+    using NUnit.Framework;   
     using System.Threading;
 
     [TestFixture]

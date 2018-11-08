@@ -1,7 +1,7 @@
 ﻿
 
-using HBM.WT.API.WTX;
-using HBM.WT.API.WTX.Jet;
+using HBM.Weighing.API.WTX;
+using HBM.Weighing.API.WTX.Jet;
 using NUnit.Framework;
 using System;
 using System.Collections;

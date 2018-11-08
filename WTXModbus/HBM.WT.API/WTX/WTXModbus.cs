@@ -27,13 +27,13 @@
 // SOFTWARE.
 //
 // </copyright>
-using HBM.WT.API.WTX.Modbus;
+using HBM.Weighing.API.WTX.Modbus;
 using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Timers;
 
-namespace HBM.WT.API.WTX
+namespace HBM.Weighing.API.WTX
 {
 
     public class WtxModbus : BaseWtDevice   

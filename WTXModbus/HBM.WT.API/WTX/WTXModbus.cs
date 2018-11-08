@@ -279,7 +279,7 @@ namespace HBM.Weighing.API.WTX
             }
 
             // (3) Wait until the handshake bit is reset to 0x00: 
-            while (/*this.status == 1 && */this.Handshake == 1)
+            while (this.Handshake == 1 /* && this.status == 1 */)
             {
                 this._connection.Read(0);
             }      
@@ -388,12 +388,6 @@ namespace HBM.Weighing.API.WTX
             int previousNetValue = deviceValues.NetValue;
 
         }
-
-        public ushort[] GetValuesAsync()
-        {
-            return _data;
-        }
-
 
         //public override void UpdateEvent(object sender, MessageEvent<ushort> e)
         public override void UpdateEvent(object sender, DataEvent e)
@@ -2265,9 +2259,9 @@ namespace HBM.Weighing.API.WTX
             // Check if the values of the WTX device are equal to the calibration value. It is also checked within a certain interval if the measurement is noisy.
             if ((this.NetValue != calibrationValue || this.GrossValue != calibrationValue))
             {
-                Console.Write("Wait for setting the nominal weight into the WTX.");
                 this.Async_Call(0x00, DataReceivedTimer);
             }
+            /*
             else
             if (this.NetValue > (calibrationValue + 10) || (this.NetValue < (calibrationValue - 10)))
             {
@@ -2283,7 +2277,7 @@ namespace HBM.Weighing.API.WTX
             {
                 Console.Write("Calibration failed, please restart the application");
             }
-
+            */
         }
 
         private void Write_DataReceived(IDeviceData obj)

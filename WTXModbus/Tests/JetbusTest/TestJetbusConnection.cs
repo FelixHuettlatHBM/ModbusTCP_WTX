@@ -1,8 +1,4 @@
 ﻿using System;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-
-// Look also on the tests on GitHub at a related project for SharpJet : https://github.com/gatzka/SharpJet/tree/master/SharpJetTests
 
 namespace HBM.Weighing.API.WTX.Jet
 {
@@ -182,140 +178,50 @@ namespace HBM.Weighing.API.WTX.Jet
 
         protected JToken ReadObj(object index)
         {
-            
             switch (this.behavior)
             {             
-                case Behavior.ReadGrossValueSuccess:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-                case Behavior.ReadGrossValueFail:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.ReadNetValueSuccess:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-                case Behavior.ReadNetValueFail:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.ReadSuccess_WEIGHING_DEVICE_1_WEIGHT_STATUS:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-                case Behavior.ReadFail_WEIGHING_DEVICE_1_WEIGHT_STATUS:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.ReadSuccess_Decimals:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-
-                case Behavior.ReadFail_Decimals:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.ReadSuccess_DosingResult:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-
-                case Behavior.ReadFail_DosingResult:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.ReadSuccess_FillingProcessSatus:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-
-                case Behavior.ReadFail_FillingProcessSatus:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.ReadSuccess_NumberDosingResults:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-
-                case Behavior.ReadFail_NumberDosingResults:
-                    return _dataBuffer[""];
-
-                case Behavior.ReadSuccess_Unit:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                        return _dataBuffer[index.ToString()];
-                    break;
-
-                case Behavior.ReadFail_Unit:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.NetGrossValueStringComment_4D_Success:
-                    return _dataBuffer[""];
-                    break;
-
-                case Behavior.NetGrossValueStringComment_4D_Fail:
-                    return "";
-                    break;
-
                 case Behavior.CalibrationSuccess:
 
                     if (_dataBuffer.ContainsValue(1801543519))
                         _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
-
                     else
                        if (_dataBuffer.ContainsValue(1634168417))
                         _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
 
                     return _dataBuffer["6002/02"];
-                    break;
 
                 case Behavior.CalibrationFail:
 
                     if (_dataBuffer.ContainsValue(1801543519))
                         _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
-
                     else
                        if (_dataBuffer.ContainsValue(1634168417))
                         _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
 
                     return _dataBuffer["6002/02"];
-                    break;
 
                 case Behavior.MeasureZeroSuccess:
 
                     if (_dataBuffer.ContainsValue(1801543519))
                         _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
-
                     else
                         if (_dataBuffer.ContainsValue(1634168417))
                         _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
 
                     return _dataBuffer["6002/02"];
-
-                    break;
-
-
+                    
                 case Behavior.MeasureZeroFail:
 
                     if (_dataBuffer.ContainsValue(1801543519))
                         _dataBuffer["6002/02"] = 1634168417;  // = command 'on go', in exection.
-
                     else
                         if (_dataBuffer.ContainsValue(1634168417))
                         _dataBuffer["6002/02"] = 1801543519;  // = command ok, done. 
 
                     return _dataBuffer["6002/02"];
-
-                    break;
-
+                    
                 default:
-                    break;
-                
-
+                    break;               
             }
            
             this.ConvertJTokenToStringArray();

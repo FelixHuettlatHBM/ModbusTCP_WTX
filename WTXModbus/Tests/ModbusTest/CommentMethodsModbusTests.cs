@@ -495,7 +495,7 @@ namespace HBM.Weighing.API.WTX.Modbus
             _wtxObj.Connect(this.OnConnect, 100);
 
             _wtxObj.Async_Call(0x00, OnReadData);
-            Thread.Sleep(10);
+            Thread.Sleep(50);
             //testConnection.ReadRegisterPublishing(new DataEvent(new ushort[58], new string[58]));
 
             return _wtxObj.LimitStatusStringComment();

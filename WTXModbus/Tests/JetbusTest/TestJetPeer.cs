@@ -124,6 +124,80 @@ namespace JetbusTest
                     break;
             }
 
+            /*
+            switch (this.behavior)
+            {
+                case Behavior.CalibrationSuccess:
+
+                    if (_connection._dataBuffer.ContainsValue(1801543519))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1634168417;      // = command 'on go', in exection.                      
+                    }
+                    else
+                       if (_connection._dataBuffer.ContainsValue(1634168417))
+                       {
+                            path = "6002/02";
+                            Event = "change";
+                            data = 1801543519;      // = command ok, done.             
+                    }
+                    break;
+
+                case Behavior.CalibrationFail:
+
+                    if (_connection._dataBuffer.ContainsValue(1801543519))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1634168417;      // = command 'on go', in exection.                      
+                    }
+                    else
+                       if (_connection._dataBuffer.ContainsValue(1634168417))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1801543519;      // = command ok, done.             
+                    }
+                    break;
+
+                case Behavior.MeasureZeroSuccess:
+
+                    if (_connection._dataBuffer.ContainsValue(1801543519))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1634168417;      // = command 'on go', in exection.                      
+                    }
+                    else
+                       if (_connection._dataBuffer.ContainsValue(1634168417))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1801543519;      // = command ok, done.             
+                    }
+                    break;
+
+
+                case Behavior.MeasureZeroFail:
+
+                    if (_connection._dataBuffer.ContainsValue(1801543519))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1634168417;      // = command 'on go', in exection.                      
+                    }
+                    else
+                       if (_connection._dataBuffer.ContainsValue(1634168417))
+                    {
+                        path = "6002/02";
+                        Event = "change";
+                        data = 1801543519;      // = command ok, done.    
+                    }
+                    break;                    
+            }
+            */
+
             JToken JTokenobj = simulateJTokenInstance(path,Event,data);
 
             //fetchCallback?.Invoke(JTokenobj);

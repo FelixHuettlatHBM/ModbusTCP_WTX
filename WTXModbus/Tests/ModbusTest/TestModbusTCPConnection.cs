@@ -912,6 +912,6 @@ namespace HBM.Weighing.API.WTX.Modbus
 
         }
 
-        public Dictionary<string, JToken> getDataBuffer => throw new NotImplementedException();
+        //public Dictionary<string, JToken> getDataBuffer => throw new NotImplementedException();
     }
 }

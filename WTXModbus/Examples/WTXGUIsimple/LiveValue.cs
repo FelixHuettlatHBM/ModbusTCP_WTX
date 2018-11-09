@@ -65,6 +65,7 @@ namespace WTXGUIsimple
         private int _timerInterval = 200;       
         #endregion
         
+
         #region Constructor
         public LiveValue()
         {
@@ -118,6 +119,7 @@ namespace WTXGUIsimple
                 this._timerInterval = Convert.ToInt32(args[2]);
         }
         #endregion
+
 
         #region Connection
         // This method connects to the given IP address
@@ -189,28 +191,34 @@ namespace WTXGUIsimple
                 txtInfo.TextAlign = HorizontalAlignment.Right;
             }));
 
-
             txtInfo.Invoke(new Action(() =>
             {
                 if (_wtxDevice.LimitStatus == 1)
                 {
                     txtInfo.Text = "Lower than minimum" + Environment.NewLine;
                     txtInfo.TextAlign = HorizontalAlignment.Right;
+                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_OutOfSpecification;
 
                 }
-                if (_wtxDevice.LimitStatus == 2)
+                else if (_wtxDevice.LimitStatus == 2)
                 {
                     txtInfo.Text = "Higher than maximum capacity" + Environment.NewLine;
                     txtInfo.TextAlign = HorizontalAlignment.Right;
 
+                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_OutOfSpecification;
                 }
-                if (_wtxDevice.LimitStatus == 3)
+                else if (_wtxDevice.LimitStatus == 3)
                 {
                     txtInfo.Text = "Higher than safe load limit" + Environment.NewLine;
                     txtInfo.TextAlign = HorizontalAlignment.Right;
 
+                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_OutOfSpecification;
                 }
+                else
+                    picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
             }));
+
+
         }
 
         private void WriteDataCompleted(IDeviceData obj)
@@ -279,20 +287,5 @@ namespace WTXGUIsimple
             DialogResult res = _adjustmentWeigher.ShowDialog();
         }
         #endregion
-
-        private void picConnectionType_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void rbtConnectionModbus_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LiveValue_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

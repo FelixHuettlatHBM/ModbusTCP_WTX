@@ -21,20 +21,28 @@ namespace JetbusTest
         private TestJetbusConnection _connection;
         private Behavior behavior;
 
+        private string path;
+        private string Event;
+        private int data;
+
         public TestJetPeer(Behavior _behaviorParameter, TestJetbusConnection _connectionParameter)
         {
             _connection = _connectionParameter;
-            this.behavior = _behaviorParameter; 
+            this.behavior = _behaviorParameter;
+
+            path = "";
+            Event= "";
+            data = 0;
         }
         
         // Method to simulate the fetching of data from the wtx device : By adding and changing paths to the data buffer(='_databuffer') and by calling an event in TestJetbusConnection with invoke.  
         public JObject Fetch(out FetchId id, Matcher matcher, Action<JToken> fetchCallback, Action<bool, JToken> responseCallback, double responseTimeoutMs)
         {
-            string path="";
-            string Event="";
-            int data=0;
+            string path = "";
+            string Event = "";
+            int data = 0;
 
-            if (!_connection._dataBuffer.ContainsKey("6014/01")) // Only if the dictionary does not contain the path "6014/01" the dictionary will be filled: 
+            if (!_connection._dataBuffer.ContainsKey("6014/01")) // Only if the dictionary does not contain a path(for example "6014/01") the dictionary will be filled: 
             {
                 _connection._dataBuffer.Add("6144/00", simulateJTokenInstance("6144/00", "add", 1)["value"]);   // Read 'gross value'
                 _connection._dataBuffer.Add("601A/01", simulateJTokenInstance("601A/01", "add", 1)["value"]);   // Read 'net value'
@@ -91,116 +99,9 @@ namespace JetbusTest
                 _connection._dataBuffer.Add("DL1", simulateJTokenInstance("DL1", "add", 1)["value"]);
                 _connection._dataBuffer.Add("6002/02", simulateJTokenInstance("6002/02", "add", 1801543519)["value"]); //StatusStringComment
                 _connection._dataBuffer.Add("2020/25", simulateJTokenInstance("2020/25", "add", 0xA)["value"]);   // 0xA(hex)=1010(binary) //Limit value status:
-             }
-
-            if (this.behavior == Behavior.lb_UnitValue_Fail || this.behavior == Behavior.g_UnitValue_Fail || this.behavior == Behavior.kg_UnitValue_Fail || this.behavior == Behavior.t_UnitValue_Fail)
-            {
-                path = "6014/01";
-                Event = "change";
-                data = 0x00000000;
             }
-
-            switch (this.behavior)
-            {
-                case Behavior.t_UnitValue_Success:
-                    path = "6014/01";
-                    Event = "change";
-                    data = 0x004C0000;
-                    break;
-                case Behavior.kg_UnitValue_Success:
-                    path = "6014/01";
-                    Event = "change";
-                    data = 0x00020000;
-                    break;
-                case Behavior.g_UnitValue_Success:
-                    path = "6014/01";
-                    Event = "change";
-                    data = 0x004B0000;
-                    break;
-                case Behavior.lb_UnitValue_Success:
-                    path = "6014/01";
-                    Event = "change";
-                    data = 0x00A60000;
-                    break;
-            }
-
-            /*
-            switch (this.behavior)
-            {
-                case Behavior.CalibrationSuccess:
-
-                    if (_connection._dataBuffer.ContainsValue(1801543519))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1634168417;      // = command 'on go', in exection.                      
-                    }
-                    else
-                       if (_connection._dataBuffer.ContainsValue(1634168417))
-                       {
-                            path = "6002/02";
-                            Event = "change";
-                            data = 1801543519;      // = command ok, done.             
-                    }
-                    break;
-
-                case Behavior.CalibrationFail:
-
-                    if (_connection._dataBuffer.ContainsValue(1801543519))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1634168417;      // = command 'on go', in exection.                      
-                    }
-                    else
-                       if (_connection._dataBuffer.ContainsValue(1634168417))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1801543519;      // = command ok, done.             
-                    }
-                    break;
-
-                case Behavior.MeasureZeroSuccess:
-
-                    if (_connection._dataBuffer.ContainsValue(1801543519))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1634168417;      // = command 'on go', in exection.                      
-                    }
-                    else
-                       if (_connection._dataBuffer.ContainsValue(1634168417))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1801543519;      // = command ok, done.             
-                    }
-                    break;
-
-
-                case Behavior.MeasureZeroFail:
-
-                    if (_connection._dataBuffer.ContainsValue(1801543519))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1634168417;      // = command 'on go', in exection.                      
-                    }
-                    else
-                       if (_connection._dataBuffer.ContainsValue(1634168417))
-                    {
-                        path = "6002/02";
-                        Event = "change";
-                        data = 1801543519;      // = command ok, done.    
-                    }
-                    break;                    
-            }
-            */
 
             JToken JTokenobj = simulateJTokenInstance(path,Event,data);
-
-            //fetchCallback?.Invoke(JTokenobj);
 
             id = null;
 
@@ -222,6 +123,149 @@ namespace JetbusTest
 
             return JToken.FromObject(fetchInstance);
         }
+
+
+
+        public JObject Set(string path, JToken jsonValue, Action<JToken/*bool,*/> responseCallback, double responseTimeoutMs)
+        {
+            if (this.behavior == Behavior.lb_UnitValue_Fail || this.behavior == Behavior.g_UnitValue_Fail || this.behavior == Behavior.kg_UnitValue_Fail || this.behavior == Behavior.t_UnitValue_Fail)
+            {
+                path = "6014/01";
+                Event = "change";
+                data = 0x00000000;
+            }
+
+
+            switch (this.behavior)
+            {
+                case Behavior.WriteTareSuccess:
+                    path = "6002/01";
+                    Event = "change";
+                    data = 1701994868;                 // Alternative: data = jsonValue.Value<int>("value");            
+                    break;
+
+                case Behavior.WriteZeroSuccess:
+                    path = "6002/01";
+                    Event = "change";
+                    data = 1869768058;
+                    break;
+
+                case Behavior.WriteGrossSuccess:
+                    path = "6002/01";
+                    Event = "change";
+                    data = 1936683623;
+                    break;
+
+                case Behavior.t_UnitValue_Success:
+                    path = "6014/01";
+                    Event = "change";
+                    data = 0x004C0000;
+                    break;
+                case Behavior.kg_UnitValue_Success:
+                    path = "6014/01";
+                    Event = "change";
+                    data = 0x00020000;
+                    break;
+                case Behavior.g_UnitValue_Success:
+                    path = "6014/01";
+                    Event = "change";
+                    data = 0x004B0000;
+                    break;
+                case Behavior.lb_UnitValue_Success:
+                    path = "6014/01";
+                    Event = "change";
+                    data = 0x00A60000;
+                    break;
+
+                case Behavior.CalibrationSuccess:
+
+                    if (path.Equals("6152/00"))
+                    {
+                        path  = "6152/00";
+                        Event = "change";
+                        data = 15000;
+                    }
+                       
+                    if (path.Equals("6002/01"))
+                    {
+                        path = "6002/01";
+                        Event = "change";
+                        data = 1852596579;
+                    }
+                        
+                    break;
+
+                case Behavior.CalibrationFail:
+
+                    if(path.Equals("6002/01"))
+                    {
+                        path = "6002/01";
+                        Event ="change";
+                        data =0;
+                    }
+
+                    break;
+
+                case Behavior.MeasureZeroSuccess:
+
+                    if (path.Equals("6002/01"))
+                    {
+                        path = "6002/01";
+                        Event = "change";
+                        data = 2053923171;
+                    }
+
+                    break;
+
+                case Behavior.MeasureZeroFail:
+
+                    if (path.Equals("6002/01"))
+                    {
+                        path = "6002/01";
+                        Event = "change";
+                        data = 0;
+                    }
+
+                    break;
+
+                case Behavior.CalibratePreloadCapacitySuccess:
+
+                    double preload = 1;
+                    double capacity = 2;
+                    double multiplierMv2D = 500000;
+                    double testdPreload = 0;
+                    
+                    int testIntPreload = Convert.ToInt32(preload * multiplierMv2D);
+                    int testIntNominalLoad = Convert.ToInt32(testdPreload + (capacity * multiplierMv2D));
+
+
+                    if (path.Equals("2110/06"))
+                    {
+                        path = "2110/06";
+                        Event = "change";
+                        data = testIntPreload;
+                    }
+
+                    if (path.Equals("2110/07"))
+                    {
+                        path = "2110/07";
+                        Event = "change";
+                        data = testIntNominalLoad;
+                    }
+
+                    break;
+
+            }
+
+            JToken JTokenobj = simulateJTokenInstance(path, Event, data);
+
+            responseCallback = (JToken x) => _connection.OnFetchData(JTokenobj);    
+
+            responseCallback.Invoke(JTokenobj);
+
+            return JTokenobj.ToObject<JObject>();
+        }
+
 
         public class FetchData
         {

@@ -149,6 +149,9 @@ namespace HBM.Weighing.API.WTX.Modbus
 
          WriteU08ArrayTestSuccess,
          WriteU08ArrayTestFail,
+
+         UpdateOutputTestSuccess,
+         UpdateOutputTestFail,
     }
 
     public class TestModbusTCPConnection : INetConnection, IDisposable
@@ -561,6 +564,14 @@ namespace HBM.Weighing.API.WTX.Modbus
         {
             switch (this.behavior)
             {
+                case Behavior.UpdateOutputTestSuccess:
+                    this.command = 0x800;
+                    break;
+
+                case Behavior.UpdateOutputTestFail:
+                    this.command = 0x00; 
+                    break;
+
                 case Behavior.WriteU08ArrayTestSuccess:
                     this.wordNumberIndex = (ushort)index;
                     this.arrayElement1 = (ushort)data;
@@ -748,6 +759,16 @@ namespace HBM.Weighing.API.WTX.Modbus
 
             switch (this.behavior)
             {
+                case Behavior.UpdateOutputTestSuccess:
+                        this.arrayElement1 = data[0];
+                        this.arrayElement2 = data[1];
+                    break;
+
+                case Behavior.UpdateOutputTestFail:
+                    this.arrayElement1 = 0;
+                    this.arrayElement2 = 0;
+                    break;
+
                 case Behavior.WriteS32ArrayTestSuccess:
                         this.wordNumberIndex = index;
                         this.arrayElement1 = data[0];

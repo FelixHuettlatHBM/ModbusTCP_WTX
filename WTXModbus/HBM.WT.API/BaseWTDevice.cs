@@ -64,8 +64,8 @@ namespace HBM.Weighing.API
 
         public abstract void UpdateEvent(object sender, DataEvent e);
         
-        public abstract string[] GetDataStr { get; set; }
-        public abstract ushort[] GetDataUshort { get; set; }
+        public abstract string[] GetDataStr { get;}
+        public abstract ushort[] GetDataUshort { get;}
 
         public abstract string NetGrossValueStringComment(int value, int decimals);
 

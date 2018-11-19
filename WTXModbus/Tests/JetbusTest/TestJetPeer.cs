@@ -140,7 +140,7 @@ namespace JetbusTest
             {
                 case Behavior.WriteTareSuccess:
                     path = "6002/01";
-                    Event = "change";
+                    Event = "change";          
                     data = 1701994868;                 // Alternative: data = jsonValue.Value<int>("value");            
                     break;
 

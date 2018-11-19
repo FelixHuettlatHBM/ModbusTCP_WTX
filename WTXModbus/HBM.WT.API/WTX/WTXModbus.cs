@@ -70,13 +70,13 @@ namespace HBM.Weighing.API.WTX
         {
             _connection = connection;
 
-            this._previousData = new ushort[59];
-            this._dataStr = new string[59];
-            this._data = new ushort[59];
+            this._previousData = new ushort[100];
+            this._dataStr = new string[100];
+            this._data = new ushort[100];
             this._outputData = new ushort[43]; // Output data length for filler application, also used for the standard application.
             this._dataWritten = new ushort[2];
 
-            for (int i = 0; i < 59; i++)
+            for (int i = 0; i < 100; i++)
             {
                 _dataStr[i] = "0";
                 _data[i] = 0;
@@ -441,6 +441,50 @@ namespace HBM.Weighing.API.WTX
                 this.GetDataStr[33] = this.WeightMemSeqNumber.ToString();
                 this.GetDataStr[34] = this.WeightMemGross.ToString();
                 this.GetDataStr[35] = this.WeightMemNet.ToString();
+
+                this.GetDataStr[36] = this.ManualTareValue.ToString();
+                this.GetDataStr[37] = this.LimitValue1Input.ToString();
+                this.GetDataStr[38] = this.LimitValue1Mode.ToString();
+                this.GetDataStr[39] = this.LimitValue1ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[40] = this.LimitValue1HysteresisBandHeight.ToString();
+                this.GetDataStr[41] = this.LimitValue2Source.ToString();
+                this.GetDataStr[42] = this.LimitValue2Mode.ToString();
+                this.GetDataStr[43] = this.LimitValue2ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[44] = this.LimitValue2HysteresisBandHeight.ToString();
+                this.GetDataStr[45] = this.LimitValue3Source.ToString();
+                this.GetDataStr[46] = this.LimitValue3Mode.ToString();
+                this.GetDataStr[47] = this.LimitValue3ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[48] = this.LimitValue3HysteresisBandHeight.ToString();
+                this.GetDataStr[49] = this.LimitValue4Source.ToString();
+                this.GetDataStr[50] = this.LimitValue4Mode.ToString();
+                this.GetDataStr[51] = this.LimitValue4ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[52] = this.LimitValue4HysteresisBandHeight.ToString();
+                this.GetDataStr[53] = this.ResidualFlowTime.ToString();
+                this.GetDataStr[54] = this.TargetFillingWeight.ToString();
+                this.GetDataStr[55] = this.CoarseFlowCutOffPointSet.ToString();
+                this.GetDataStr[56] = this.FineFlowCutOffPointSet.ToString();
+                this.GetDataStr[57] = this.MinimumFineFlow.ToString();
+                this.GetDataStr[58] = this.OptimizationOfCutOffPoints.ToString();
+                this.GetDataStr[59] = this.MaximumDosingTime.ToString();
+                this.GetDataStr[60] = this.StartWithFineFlow.ToString();
+                this.GetDataStr[61] = this.CoarseLockoutTime.ToString();
+                this.GetDataStr[62] = this.FineLockoutTime.ToString();
+                this.GetDataStr[63] = this.TareMode.ToString();
+                this.GetDataStr[64] = this.UpperToleranceLimit.ToString();
+                this.GetDataStr[65] = this.LowerToleranceLimit.ToString();
+                this.GetDataStr[66] = this.MinimumStartWeight.ToString();
+                this.GetDataStr[67] = this.EmptyWeight.ToString();
+                this.GetDataStr[68] = this.TareDelay.ToString();
+                this.GetDataStr[69] = this.CoarseFlowMonitoringTime.ToString();
+                this.GetDataStr[70] = this.CoarseFlowMonitoring.ToString();
+                this.GetDataStr[71] = this.FineFlowMonitoring.ToString();
+                this.GetDataStr[72] = this.FineFlowMonitoringTime.ToString();
+                this.GetDataStr[73] = this.DelayTimeAfterFineFlow.ToString();
+                this.GetDataStr[74] = this.ActivationTimeAfterFineFlow.ToString();
+                this.GetDataStr[75] = this.SystematicDifference.ToString();
+                this.GetDataStr[76] = this.DownwardsDosing.ToString();
+                this.GetDataStr[77] = this.ValveControl.ToString();
+                this.GetDataStr[78] = this.EmptyingMode.ToString();
             }
             else
                 if (this.ApplicationMode == 2 || this.ApplicationMode == 1) // in filler mode 
@@ -460,7 +504,7 @@ namespace HBM.Weighing.API.WTX
                 this.GetDataStr[36] = this.ToleranceErrorPlus.ToString();
                 this.GetDataStr[37] = this.ToleranceErrorMinus.ToString();
 
-                this.GetDataStr[38] = this.Status.ToString();
+                this.GetDataStr[38] = this.StatusInput1.ToString();
                 this.GetDataStr[39] = this.GeneralScaleError.ToString();
                 this.GetDataStr[40] = this.FillingProcessStatus.ToString();
                 this.GetDataStr[41] = this.NumberDosingResults.ToString();
@@ -484,6 +528,50 @@ namespace HBM.Weighing.API.WTX
                 this.GetDataStr[55] = this.FillerWeightMemorySeqNumber.ToString();
                 this.GetDataStr[56] = this.FillerWeightMemoryGross.ToString();
                 this.GetDataStr[57] = this.FillerWeightMemoryNet.ToString();
+
+                this.GetDataStr[58] = ManualTareValue.ToString();
+                this.GetDataStr[59] = LimitValue1Input.ToString();
+                this.GetDataStr[60] = LimitValue1Mode.ToString();
+                this.GetDataStr[61] = LimitValue1ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[62] = LimitValue1HysteresisBandHeight.ToString();
+                this.GetDataStr[63] = LimitValue2Source.ToString();
+                this.GetDataStr[64] = LimitValue2Mode.ToString();
+                this.GetDataStr[65] = LimitValue2ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[66] = LimitValue2HysteresisBandHeight.ToString();
+                this.GetDataStr[67] = LimitValue3Source.ToString();
+                this.GetDataStr[68] = LimitValue3Mode.ToString();
+                this.GetDataStr[69] = LimitValue3ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[70] = LimitValue3HysteresisBandHeight.ToString();
+                this.GetDataStr[71] = LimitValue4Source.ToString();
+                this.GetDataStr[72] = LimitValue4Mode.ToString();
+                this.GetDataStr[73] = LimitValue4ActivationLevelLowerBandLimit.ToString();
+                this.GetDataStr[74] = LimitValue4HysteresisBandHeight.ToString();
+                this.GetDataStr[75] = ResidualFlowTime.ToString();
+                this.GetDataStr[76] = TargetFillingWeight.ToString();
+                this.GetDataStr[77] = CoarseFlowCutOffPointSet.ToString();
+                this.GetDataStr[77] = FineFlowCutOffPointSet.ToString();
+                this.GetDataStr[78] = MinimumFineFlow.ToString();
+                this.GetDataStr[79] = OptimizationOfCutOffPoints.ToString();
+                this.GetDataStr[80] = MaximumDosingTime.ToString();
+                this.GetDataStr[81] = StartWithFineFlow.ToString();
+                this.GetDataStr[82] = CoarseLockoutTime.ToString();
+                this.GetDataStr[83] = FineLockoutTime.ToString();
+                this.GetDataStr[84] = TareMode.ToString();
+                this.GetDataStr[85] = UpperToleranceLimit.ToString();
+                this.GetDataStr[86] = LowerToleranceLimit.ToString();
+                this.GetDataStr[87] = MinimumStartWeight.ToString();
+                this.GetDataStr[88] = EmptyWeight.ToString();
+                this.GetDataStr[89] = TareDelay.ToString();
+                this.GetDataStr[90] = CoarseFlowMonitoringTime.ToString();
+                this.GetDataStr[91] = CoarseFlowMonitoring.ToString();
+                this.GetDataStr[92] = FineFlowMonitoring.ToString();
+                this.GetDataStr[93] = FineFlowMonitoringTime.ToString();
+                this.GetDataStr[94] = DelayTimeAfterFineFlow.ToString();
+                this.GetDataStr[95] = ActivationTimeAfterFineFlow.ToString();
+                this.GetDataStr[96] = SystematicDifference.ToString();
+                this.GetDataStr[97] = DownwardsDosing.ToString();
+                this.GetDataStr[98] = ValveControl.ToString();
+                this.GetDataStr[99] = EmptyingMode.ToString();
             }
 
             _compareDataChanged = false;
@@ -1761,7 +1849,7 @@ namespace HBM.Weighing.API.WTX
             }
         }
 
-        // Get and Set-Properties of the output words, for the standard and filler application. (To be continued on 04-06-2018 for all the rest...)
+        // Get and Set-Properties of the output words, for the standard and filler application. 
 
         public override int ManualTareValue
         {
@@ -2108,8 +2196,7 @@ namespace HBM.Weighing.API.WTX
             set { this._outputData[42] = (ushort)value; }
         }
 
-
-
+        
         public bool GetIsNet
         {
             get
@@ -2117,6 +2204,7 @@ namespace HBM.Weighing.API.WTX
                 return this._isNet;
             }
         }
+        
 
         /* In den folgenden Comment-Methoden werden jeweils verschiedene Auswahloptionen mit Fallunterscheidungen
         * betrachtet und je nach Fall eine unterschiedliche Option ausgewählt.

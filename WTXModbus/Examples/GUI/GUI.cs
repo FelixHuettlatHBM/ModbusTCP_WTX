@@ -434,12 +434,12 @@ namespace WTXModbusExamples
 
         // This method sends a command to the device : Activate data. Command : 0x800
         // For standard and filler application.
-        // If the button 'Activate data' is clicked the output words entered into the datagrid in column ...
+        // If the button 'Activate data' is clicked the output words are entered into the datagrid in column ...
         // ... 'Output:value' from word 2 to 26 (standard mode) and from word 9 to 44 are written into the WTX device. 
         private void button8_Click(object sender, EventArgs e)
         {
             // Activate data
-                       
+                     
             int maximumIndex = 0;
 
             if (_wtxObj.ApplicationMode == 0)     // if in standard mode: 
@@ -469,17 +469,19 @@ namespace WTXModbusExamples
                 // Writing values to the WTX according to the data type : S32 or U08 or U16 (given in the GUI datagrid).
                 if (inputStr != "0")
                 {
+                    valueArr[_i] = (ushort)Convert.ToInt32(dataGridView1.Rows[index].Cells[8].Value);
+
                     if (dataGridView1.Rows[index].Cells[10].Value.ToString()=="S32")
-                        _wtxObj.WriteOutputWordS32(valueArr[_i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                        _wtxObj.WriteOutputWordS32(valueArr[_i], (ushort)Convert.ToInt32(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
                     else
                         if(dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
-                            _wtxObj.WriteOutputWordU08(valueArr[_i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);           
+                            _wtxObj.WriteOutputWordU08(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);           
                     else if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
-                              _wtxObj.WriteOutputWordU16(valueArr[_i], (ushort)Convert.ToInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                              _wtxObj.WriteOutputWordU16(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                    
                 }
-
-                //WTXObj.Async_Call(0x100, Write_DataReceived);
             }
+            _wtxObj.UpdateOutputWords(valueArr);
 
             _wtxObj.activateData(Write_DataReceived); 
         }       

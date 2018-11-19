@@ -360,10 +360,6 @@ namespace HBM.Weighing.API.WTX
             {
                 return this._dataStrArr;
             }
-            set
-            {
-                this._dataStrArr = value;
-            }
         }
 
         /* 
@@ -461,11 +457,6 @@ namespace HBM.Weighing.API.WTX
             get
             {
                 return this._dataUshort;
-            }
-
-            set
-            {
-                this._dataUshort = value;
             }
         }
 
@@ -985,28 +976,6 @@ namespace HBM.Weighing.API.WTX
                     return 0;
             }
         }
-
-        /*
-        // Alternative implementation to the get-property 'handshake' previously:
-        public override bool HandshakeCheck()
-        {
-
-            int ScaleCommandStatus_before = 1801543519;
-
-            if (_connection.getData()[ID_keys.SCALE_COMMAND_STATUS] == 1634168417)
-            {
-                ScaleCommandStatus_before = 1634168417;
-                return false;
-            }
-            else
-                if (_connection.getData()[ID_keys.SCALE_COMMAND_STATUS] == 1801543519 && ScaleCommandStatus_before == 1634168417)
-            {
-                ScaleCommandStatus_before = 1801543519;
-                return true;
-            }
-            return false;
-        }
-        */
 
         /*
         // Input values : To implement these you have to get the ID's from the manual and set them like:

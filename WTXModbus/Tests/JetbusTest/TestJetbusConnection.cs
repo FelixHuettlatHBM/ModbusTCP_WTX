@@ -178,6 +178,7 @@ namespace HBM.Weighing.API.WTX.Jet
 
         protected JToken ReadObj(object index)
         {
+            
             switch (this.behavior)
             {             
                 case Behavior.CalibrationSuccess:
@@ -421,82 +422,43 @@ namespace HBM.Weighing.API.WTX.Jet
             }
         }
 
+        private void OnSet(/*bool success, */JToken token)
+        {
+            /*
+            if (!success)
+            {
+                JetBusException exception = new JetBusException(token);
+                _mException = new Exception(exception.Error.ToString());
+            }
+            */
+            _mSuccessEvent.Set();
+
+            BusActivityDetection?.Invoke(this, new LogEvent("Set data" + true));
+        }
+
+        private void SetData(object path, JValue value)
+        {
+            try
+            {
+                JObject request = _peer.Set(path.ToString(), value, OnSet,5000);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.ToString());
+            }
+        }
+
         public void Write(object index, int data)
         {
-            switch (behavior)
-            {
-                case Behavior.WriteTareSuccess:
-                    // The specific path and specific value for taring is added to the buffer _dataBuffer
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
-                    break;
+            
+            if(this.behavior == Behavior.WriteZeroSuccess   || this.behavior == Behavior.WriteGrossSuccess || this.behavior == Behavior.WriteTareSuccess   ||
+               this.behavior == Behavior.CalibrationSuccess || this.behavior == Behavior.CalibrationFail   || this.behavior == Behavior.MeasureZeroSuccess ||
+               this.behavior == Behavior.MeasureZeroFail    || this.behavior == Behavior.CalibratePreloadCapacitySuccess)
+               {
+                JValue valueObj = new JValue(data);
 
-                case Behavior.WriteTareFail:
-                    // No path and no value is added to the buffer _dataBuffer
-                    break;
-
-                case Behavior.WriteGrossSuccess:
-                    // The specific path and specific value for gross is added to the buffer _dataBuffer
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
-                    break;
-
-                case Behavior.WriteGrossFail:
-                    // No path and no value is added to the buffer _dataBuffer
-                    break;
-
-                case Behavior.WriteZeroSuccess:
-                    // The specific path and specific value for gross is added to the buffer _dataBuffer
-                    _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
-                    break;
-
-                case Behavior.WriteZeroFail:
-                    // No path and no value is added to the buffer _dataBuffer
-                    break;
-
-                case Behavior.CalibrationSuccess:
-                    // For Calibration : The specific path and specific value for calibration is added to the buffer _dataBuffer
-                    if (index.Equals("6152/00"))
-                        _dataBuffer.Add("6152/00", simulateJTokenInstance("6152/00", "change", data)["value"]);
-                    if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
-
-                    break;
-
-                case Behavior.CalibrationFail:
-                    // A wrong value is added at the specific path to the buffer _dataBuffer
-                    if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", 0)["value"]);
-                    break;
-
-                case Behavior.MeasureZeroSuccess:
-                    // For setting to zero(=Measure zero) : The specific path and specific value for calibration is added to the buffer _dataBuffer
-                    if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", data)["value"]);
-                    break;
-
-                case Behavior.MeasureZeroFail:
-                    // A wrong value is added at the specific path to the buffer _dataBuffer
-                    if (index.Equals("6002/01"))
-                        _dataBuffer.Add("6002/01", simulateJTokenInstance("6002/01", "change", 0)["value"]);
-                    break;
-
-                case Behavior.CalibratePreloadCapacitySuccess:
-
-                    if (index.Equals("2110/06"))
-                        _dataBuffer.Add("2110/06", simulateJTokenInstance("2110/06", "change", data)["value"]);
-
-                    if (index.Equals("2110/07"))
-                        _dataBuffer.Add("2110/07", simulateJTokenInstance("2110/07", "change", data)["value"]);
-
-                    break;
-
-                case Behavior.CalibratePreloadCapacityFail:
-                    // No path and no value is added to the buffer _dataBuffer
-                    break;
-
-                default:
-                    break; 
-
-            }
+                this.SetData(index,valueObj);
+               }
         }
 
         public JToken simulateJTokenInstance(string pathParam, string eventParam, int data)
@@ -538,56 +500,3 @@ namespace HBM.Weighing.API.WTX.Jet
 
     }
 }
-
-
-// To method Read(..) in 'TestJetBusConnection.cs':
-/*
- *                 case Behavior.g_UnitValue_Success:
-
-                    _dataBuffer["6014/01"] = 0x004B0000;
-                    return _dataBuffer["6014/01"];
-               break;
-
-                case Behavior.g_UnitValue_Fail:
-                    return _dataBuffer[""];
-                   break;
-
-                case Behavior.kg_UnitValue_Success:
-                    
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                    {
-                        _dataBuffer[index.ToString()] = 0x00020000;
-                        return _dataBuffer[index.ToString()];
-                    }
-
-                    _dataBuffer["6014/01"] = 0x00020000;
-                    return _dataBuffer["6014/01"];
-                    break;
-
-                case Behavior.kg_UnitValue_Fail:
-                        return _dataBuffer[""];
-                       break;
-
-                case Behavior.t_UnitValue_Success:
-                    if (_dataBuffer.ContainsKey(index.ToString()))
-                    {
-                        _dataBuffer[index.ToString()] = 0x004C0000;
-                        return _dataBuffer[index.ToString()];
-                    }                   
-                    break;
-
-                case Behavior.t_UnitValue_Fail:
-                    return _dataBuffer[""];
-                    break;
-
-
-                case Behavior.lb_UnitValue_Success:
-                    _dataBuffer["6014/01"]= 0x00A60000;
-                    return _dataBuffer["6014/01"]; 
-                    break;
-
-                case Behavior.lb_UnitValue_Fail:
-                    return _dataBuffer[""];
-                    break;
-
-*/

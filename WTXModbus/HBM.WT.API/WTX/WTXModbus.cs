@@ -40,7 +40,7 @@ namespace HBM.Weighing.API.WTX
     {
         private string[] _dataStr;
         private ushort[] _previousData;
-        public ushort[] _data;
+        private ushort[] _data;
         private ushort[] _outputData;
         private ushort[] _dataWritten;
 
@@ -70,13 +70,13 @@ namespace HBM.Weighing.API.WTX
         {
             _connection = connection;
 
-            this._previousData = new ushort[59];
-            this._dataStr = new string[59];
-            this._data = new ushort[59];
+            this._previousData = new ushort[100];
+            this._dataStr = new string[100];
+            this._data = new ushort[100];
             this._outputData = new ushort[43]; // Output data length for filler application, also used for the standard application.
             this._dataWritten = new ushort[2];
 
-            for (int i = 0; i < 59; i++)
+            for (int i = 0; i < 100; i++)
             {
                 _dataStr[i] = "0";
                 _data[i] = 0;
@@ -223,7 +223,6 @@ namespace HBM.Weighing.API.WTX
             return this;
         }
 
-        // Neu : 8.3.2018
         public IDeviceData SyncReadData()
         {
             this._connection.Read(0);
@@ -393,7 +392,6 @@ namespace HBM.Weighing.API.WTX
         public override void UpdateEvent(object sender, DataEvent e)
         {
             this._data = e.ushortArgs;
-            this.GetDataUshort = e.ushortArgs;
 
             this.GetDataStr[0] = this.NetGrossValueStringComment(this.NetValue, this.Decimals);  // 1 equal to "Net measured" as a parameter
             this.GetDataStr[1] = this.NetGrossValueStringComment(this.GrossValue, this.Decimals);  // 2 equal to "Gross measured" as a parameter
@@ -441,6 +439,50 @@ namespace HBM.Weighing.API.WTX
                 this.GetDataStr[33] = this.WeightMemSeqNumber.ToString();
                 this.GetDataStr[34] = this.WeightMemGross.ToString();
                 this.GetDataStr[35] = this.WeightMemNet.ToString();
+
+                this.ManualTareValue = _outputData[0];
+                this.LimitValue1Input = _outputData[1];
+                this.LimitValue1Mode = _outputData[2];
+                this.LimitValue1ActivationLevelLowerBandLimit = _outputData[3];
+                this.LimitValue1HysteresisBandHeight = _outputData[4];
+                this.LimitValue2Source = _outputData[5];
+                this.LimitValue2Mode = _outputData[6];
+                this.LimitValue2ActivationLevelLowerBandLimit = _outputData[7];
+                this.LimitValue2HysteresisBandHeight = _outputData[8];
+                this.LimitValue3Source = _outputData[9];
+                this.LimitValue3Mode = _outputData[10];
+                this.LimitValue3ActivationLevelLowerBandLimit = _outputData[11];
+                this.LimitValue3HysteresisBandHeight = _outputData[12];
+                this.LimitValue4Source = _outputData[13];
+                this.LimitValue4Mode = _outputData[14];
+                this.LimitValue4ActivationLevelLowerBandLimit = _outputData[15];
+                this.LimitValue4HysteresisBandHeight = _outputData[16];
+                this.ResidualFlowTime = _outputData[17];
+                this.TargetFillingWeight = _outputData[18];
+                this.CoarseFlowCutOffPointSet = _outputData[19];
+                this.FineFlowCutOffPointSet = _outputData[20];
+                this.MinimumFineFlow = _outputData[21];
+                this.OptimizationOfCutOffPoints = _outputData[22];
+                this.MaximumDosingTime = _outputData[23];
+                this.StartWithFineFlow = _outputData[24];
+                this.CoarseLockoutTime = _outputData[25];
+                this.FineLockoutTime = _outputData[26];
+                this.TareMode = _outputData[27];
+                this.UpperToleranceLimit = _outputData[28];
+                this.LowerToleranceLimit = _outputData[29];
+                this.MinimumStartWeight = _outputData[30];
+                this.EmptyWeight = _outputData[31];
+                this.TareDelay = _outputData[32];
+                this.CoarseFlowMonitoringTime = _outputData[33];
+                this.CoarseFlowMonitoring = _outputData[34];
+                this.FineFlowMonitoring = _outputData[35];
+                this.FineFlowMonitoringTime = _outputData[36];
+                this.DelayTimeAfterFineFlow = _outputData[37];
+                this.ActivationTimeAfterFineFlow = _outputData[38];
+                this.SystematicDifference = _outputData[39];
+                this.DownwardsDosing = _outputData[40];
+                this.ValveControl = _outputData[41];
+                this.EmptyingMode = _outputData[42];
             }
             else
                 if (this.ApplicationMode == 2 || this.ApplicationMode == 1) // in filler mode 
@@ -460,7 +502,7 @@ namespace HBM.Weighing.API.WTX
                 this.GetDataStr[36] = this.ToleranceErrorPlus.ToString();
                 this.GetDataStr[37] = this.ToleranceErrorMinus.ToString();
 
-                this.GetDataStr[38] = this.Status.ToString();
+                this.GetDataStr[38] = this.StatusInput1.ToString();
                 this.GetDataStr[39] = this.GeneralScaleError.ToString();
                 this.GetDataStr[40] = this.FillingProcessStatus.ToString();
                 this.GetDataStr[41] = this.NumberDosingResults.ToString();
@@ -484,6 +526,51 @@ namespace HBM.Weighing.API.WTX
                 this.GetDataStr[55] = this.FillerWeightMemorySeqNumber.ToString();
                 this.GetDataStr[56] = this.FillerWeightMemoryGross.ToString();
                 this.GetDataStr[57] = this.FillerWeightMemoryNet.ToString();
+
+
+                this.ManualTareValue  = _outputData[0];
+                this.LimitValue1Input = _outputData[1];
+                this.LimitValue1Mode  = _outputData[2];
+                this.LimitValue1ActivationLevelLowerBandLimit = _outputData[3];
+                this.LimitValue1HysteresisBandHeight = _outputData[4];
+                this.LimitValue2Source = _outputData[5];
+                this.LimitValue2Mode   = _outputData[6];
+                this.LimitValue2ActivationLevelLowerBandLimit = _outputData[7];
+                this.LimitValue2HysteresisBandHeight = _outputData[8];
+                this.LimitValue3Source = _outputData[9];
+                this.LimitValue3Mode   = _outputData[10];
+                this.LimitValue3ActivationLevelLowerBandLimit = _outputData[11];
+                this.LimitValue3HysteresisBandHeight = _outputData[12];
+                this.LimitValue4Source = _outputData[13];
+                this.LimitValue4Mode   = _outputData[14];
+                this.LimitValue4ActivationLevelLowerBandLimit = _outputData[15];
+                this.LimitValue4HysteresisBandHeight = _outputData[16];
+                this.ResidualFlowTime = _outputData[17];
+                this.TargetFillingWeight = _outputData[18];
+                this.CoarseFlowCutOffPointSet = _outputData[19];
+                this.FineFlowCutOffPointSet = _outputData[20];
+                this.MinimumFineFlow = _outputData[21];
+                this.OptimizationOfCutOffPoints = _outputData[22];
+                this.MaximumDosingTime = _outputData[23];
+                this.StartWithFineFlow = _outputData[24];
+                this.CoarseLockoutTime = _outputData[25];
+                this.FineLockoutTime   = _outputData[26];
+                this.TareMode = _outputData[27];
+                this.UpperToleranceLimit = _outputData[28];
+                this.LowerToleranceLimit = _outputData[29];
+                this.MinimumStartWeight  = _outputData[30];
+                this.EmptyWeight         = _outputData[31];
+                this.TareDelay           = _outputData[32];
+                this.CoarseFlowMonitoringTime = _outputData[33];
+                this.CoarseFlowMonitoring     = _outputData[34];
+                this.FineFlowMonitoring       = _outputData[35];
+                this.FineFlowMonitoringTime = _outputData[36];
+                this.DelayTimeAfterFineFlow = _outputData[37];
+                this.ActivationTimeAfterFineFlow = _outputData[38];
+                this.SystematicDifference        = _outputData[39];
+                this.DownwardsDosing = _outputData[40];
+                this.ValveControl    = _outputData[41];
+                this.EmptyingMode    = _outputData[42];
             }
 
             _compareDataChanged = false;
@@ -540,6 +627,22 @@ namespace HBM.Weighing.API.WTX
             {
                 return "Modbus";
             }
+        }
+
+        public ushort[] getOutputData
+        {
+            get
+            {
+                return this._outputData;
+            }
+        }
+
+        public void UpdateOutputWords(ushort []valueArr)
+        {
+            for(int index=0;index<valueArr.Length;index++)
+            {
+               _outputData[index] = valueArr[index];
+            }         
         }
 
 
@@ -861,10 +964,6 @@ namespace HBM.Weighing.API.WTX
             {
                 return this._data;
             }
-            set
-            {
-                this._data = value;
-            }
         }
 
         public override string[] GetDataStr
@@ -872,10 +971,6 @@ namespace HBM.Weighing.API.WTX
             get
             {
                 return this._dataStr;
-            }
-            set
-            {
-                this._dataStr = value;
             }
         }
 
@@ -1649,10 +1744,6 @@ namespace HBM.Weighing.API.WTX
                     return 0;
                 }
             }
-            set
-            {
-                this._data[62] = (ushort)value;
-            }
         }
         public int FillerWeightMemoryMonth
         {
@@ -1670,10 +1761,6 @@ namespace HBM.Weighing.API.WTX
                     return 0;
                 }
             }
-            set
-            {
-                this._data[63] = (ushort)value;
-            }
         }
         public int FillerWeightMemoryYear
         {
@@ -1690,10 +1777,6 @@ namespace HBM.Weighing.API.WTX
                 {
                     return 0;
                 }
-            }
-            set
-            {
-                this._data[64] = (ushort)value;
             }
 
         }
@@ -1713,10 +1796,6 @@ namespace HBM.Weighing.API.WTX
                     return 0;
                 }
             }
-            set
-            {
-                this._data[65] = (ushort)value;
-            }
         }
         public int FillerWeightMemoryGross
         {
@@ -1733,10 +1812,6 @@ namespace HBM.Weighing.API.WTX
                 {
                     return 0;
                 }
-            }
-            set
-            {
-                this._data[66] = (ushort)value;
             }
         }
         public int FillerWeightMemoryNet
@@ -1755,13 +1830,9 @@ namespace HBM.Weighing.API.WTX
                     return 0;
                 }
             }
-            set
-            {
-                this._data[67] = (ushort)value;
-            }
         }
 
-        // Get and Set-Properties of the output words, for the standard and filler application. (To be continued on 04-06-2018 for all the rest...)
+        // Get and Set-Properties of the output words, for the standard and filler application. 
 
         public override int ManualTareValue
         {
@@ -2108,8 +2179,7 @@ namespace HBM.Weighing.API.WTX
             set { this._outputData[42] = (ushort)value; }
         }
 
-
-
+        /*
         public bool GetIsNet
         {
             get
@@ -2117,6 +2187,7 @@ namespace HBM.Weighing.API.WTX
                 return this._isNet;
             }
         }
+        */
 
         /* In den folgenden Comment-Methoden werden jeweils verschiedene Auswahloptionen mit Fallunterscheidungen
         * betrachtet und je nach Fall eine unterschiedliche Option ausgewählt.

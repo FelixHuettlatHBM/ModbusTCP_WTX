@@ -225,6 +225,17 @@ namespace HBM.Weighing.API.WTX.Modbus
             }
         }
 
+        public static IEnumerable UpdateOutputTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(Behavior.UpdateOutputTestSuccess).Returns(true);
+                yield return new TestCaseData(Behavior.UpdateOutputTestFail).Returns(false);
+            }
+        }
+
+        
+
         [SetUp]
         public void Setup()
         {
@@ -520,8 +531,7 @@ namespace HBM.Weighing.API.WTX.Modbus
              //_wtxObj.isConnected = true;
 
             _wtxObj.abortDosing(callbackMethod);
-
-            //return _wtxObj.getCommand;
+            
             Assert.AreEqual(0x8, _wtxObj.getCommand);
         }
 
@@ -650,6 +660,109 @@ namespace HBM.Weighing.API.WTX.Modbus
 
             return (int)_wtxObj._aTimer.Interval;
             //Assert.AreEqual(_wtxObj._aTimer.Interval, 500);
+        }
+
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "UpdateOutputTestCases")]
+        public bool UpdateOutputTest(Behavior behavior)
+        {
+            bool compareDataWritten=false;
+
+            ushort [] _dataWritten = new ushort[2];
+            ushort[] _outputData = new ushort[43];
+
+            for (int i = 0; i < _outputData.Length; i++)
+                _outputData[i] = 1;
+
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            _wtxObj.UpdateOutputWords(_outputData);
+      
+            for (int i=0; i< _outputData.Length; i++)
+            {
+                _wtxObj.WriteOutputWordS32(_outputData[i], (ushort)(i+40), callbackMethod);
+
+                _dataWritten[0] = (ushort)((_outputData[i] & 0xffff0000) >> 16);
+                _dataWritten[1] = (ushort)(_outputData[i] & 0x0000ffff);
+
+                if (testConnection.getArrElement1 == _dataWritten[0] && testConnection.getArrElement2 == _dataWritten[1])
+                    compareDataWritten = true;
+                else
+                    compareDataWritten = false; 
+            }
+
+            _wtxObj.activateData(callbackMethod);
+            
+            if (compareDataWritten==true/* && testConnection.getCommand==0x800*/)
+
+                return true;
+
+            else
+                return false;
+
+        }
+
+        [Test, TestCaseSource(typeof(WriteTestsModbus), "UpdateOutputTestCases")]
+        public bool UpdateOutput1Test(Behavior behavior)
+        {
+            bool compareDataWritten = false;
+
+            ushort[] _dataWritten = new ushort[2];
+            ushort[] _outputData = new ushort[43];
+
+            for (int i = 0; i < _outputData.Length; i++)
+                _outputData[i] = 1;
+
+            testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
+            _wtxObj = new WtxModbus(testConnection, 200);
+
+            _wtxObj.Connect(this.OnConnect, 100);
+
+            _wtxObj.UpdateOutputWords(_outputData);
+
+            for (int i = 0; i < _outputData.Length; i++)
+            {
+                _wtxObj.WriteOutputWordS32(_outputData[i], (ushort)(i + 40), callbackMethod);
+
+                _dataWritten[0] = (ushort)((_outputData[i] & 0xffff0000) >> 16);
+                _dataWritten[1] = (ushort)(_outputData[i] & 0x0000ffff);
+
+                if (testConnection.getArrElement1 == _dataWritten[0] && testConnection.getArrElement2 == _dataWritten[1] && testGetOutputwords()==true)
+                    compareDataWritten = true;
+                else
+                    compareDataWritten = false;
+            }
+
+            _wtxObj.activateData(callbackMethod);
+
+            if (compareDataWritten == true/* && testConnection.getCommand==0x800*/)
+
+                return true;
+
+            else
+                return false;
+
+        }
+
+        private bool testGetOutputwords()
+        {
+            if
+             (               
+            _wtxObj.ManualTareValue == 1   &&_wtxObj.LimitValue1Input == 1 &&_wtxObj.LimitValue1Mode == 1 &&_wtxObj.LimitValue1ActivationLevelLowerBandLimit == 1 &&_wtxObj.LimitValue1HysteresisBandHeight == 1 &&
+            _wtxObj.LimitValue2Source == 1 &&_wtxObj.LimitValue2Mode == 1&&_wtxObj.LimitValue2ActivationLevelLowerBandLimit == 1&&_wtxObj.LimitValue2HysteresisBandHeight == 1&&_wtxObj.LimitValue3Source == 1 &&
+            _wtxObj.LimitValue3Mode == 1   &&_wtxObj.LimitValue3ActivationLevelLowerBandLimit == 1 && _wtxObj.LimitValue3HysteresisBandHeight == 1&&_wtxObj.LimitValue4Source == 1&&_wtxObj.LimitValue4Mode == 1 &&
+            _wtxObj.LimitValue4ActivationLevelLowerBandLimit ==1&&_wtxObj.LimitValue4HysteresisBandHeight == 1&& _wtxObj.ResidualFlowTime == 1 &&_wtxObj.TargetFillingWeight == 1 && _wtxObj.EmptyingMode == 1 &&
+            _wtxObj.CoarseFlowCutOffPointSet == 1 &&_wtxObj.FineFlowCutOffPointSet == 1 &&_wtxObj.MinimumFineFlow == 1 &&_wtxObj.OptimizationOfCutOffPoints == 1 &&_wtxObj.MaximumDosingTime == 1 && _wtxObj.ValveControl == 1 &&
+            _wtxObj.StartWithFineFlow == 1 &&_wtxObj.CoarseLockoutTime == 1 &&_wtxObj.FineLockoutTime == 1 &&_wtxObj.TareMode == 1 &&_wtxObj.UpperToleranceLimit == 1 &&_wtxObj.LowerToleranceLimit == 1 &&
+            _wtxObj.MinimumStartWeight == 1 &&_wtxObj.TareDelay == 1 &&_wtxObj.CoarseFlowMonitoringTime == 1 && _wtxObj.CoarseFlowMonitoring == 1 &&_wtxObj.FineFlowMonitoring == 1 && _wtxObj.EmptyWeight == 1 && 
+            _wtxObj.FineFlowMonitoringTime == 1 &&_wtxObj.DelayTimeAfterFineFlow == 1 &&_wtxObj.ActivationTimeAfterFineFlow == 1 &&_wtxObj.SystematicDifference == 1 &&_wtxObj.DownwardsDosing == 1
+            )
+                return true;
+
+            else
+                return false;
         }
 
     }

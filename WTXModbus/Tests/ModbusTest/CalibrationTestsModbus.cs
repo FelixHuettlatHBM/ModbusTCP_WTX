@@ -1,4 +1,5 @@
-﻿using HBM.Weighing.API.WTX;
+﻿using HBM.Weighing.API;
+using HBM.Weighing.API.WTX;
 using HBM.Weighing.API.WTX.Modbus;
 
 using NUnit.Framework;
@@ -31,7 +32,7 @@ namespace HBM.WT.API.WTX.Modbus
         public bool CalculateCalibrationTest(Behavior behavior)
         {
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -72,7 +73,7 @@ namespace HBM.WT.API.WTX.Modbus
         {
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
 
-            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -97,6 +98,11 @@ namespace HBM.WT.API.WTX.Modbus
                 return false;
             }
 
+        }
+
+        private void Update(object sender, DataEvent e)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnConnect(bool obj)

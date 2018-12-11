@@ -117,7 +117,7 @@ namespace WTXModbusExamples
             */
 
             _modbusObj = new ModbusTcpConnection(_ipAddress);
-            _wtxObj = new WtxModbus(_modbusObj, this._timerInterval);
+            _wtxObj = new WtxModbus(_modbusObj, this._timerInterval,Update);
 
             _isStandard = true;      // change between standard and application mode in the GUI. 
             _modbusObj.IpAddress = _ipAddress;
@@ -134,6 +134,11 @@ namespace WTXModbusExamples
             _startIndex = 8;   // Default setting for standard mode. 
             _i = 0;
             _arrayLength = 0;
+        }
+
+        private void Update(object sender, DataEvent e)
+        {
+            //throw new NotImplementedException();
         }
 
         public void setTimerInterval(int timerIntervalParam)
@@ -396,7 +401,7 @@ namespace WTXModbusExamples
         private void button4_Click(object sender, EventArgs e)
         {
             // Taring       
-            _wtxObj.taring(Write_DataReceived);
+            _wtxObj.taring();
         }
 
         // This method sends a command to the device : Change between gross and net value. Command : 0x2 
@@ -404,7 +409,7 @@ namespace WTXModbusExamples
         private void button1_Click(object sender, EventArgs e)
         {
             // Gross/Net
-            _wtxObj.gross(Write_DataReceived);
+            _wtxObj.gross();
         }
 
         
@@ -413,7 +418,7 @@ namespace WTXModbusExamples
         private void button5_Click(object sender, EventArgs e)
         {
             // Zeroing
-            _wtxObj.zeroing(Write_DataReceived);
+            _wtxObj.zeroing();
         }
 
         // This method sends a command to the device : Adjust zero. Command : 0x80
@@ -421,7 +426,7 @@ namespace WTXModbusExamples
         private void button6_Click(object sender, EventArgs e)
         {
             // Adjust zero
-            _wtxObj.adjustZero(Write_DataReceived);
+            _wtxObj.adjustZero();
         }
 
         // This method sends a command to the device : Adjust nominal. Command : 0x100
@@ -429,7 +434,7 @@ namespace WTXModbusExamples
         private void button7_Click(object sender, EventArgs e)
         {
             // Adjust nominal
-            _wtxObj.adjustNominal(Write_DataReceived);
+            _wtxObj.adjustNominal();
         }
 
         // This method sends a command to the device : Activate data. Command : 0x800
@@ -472,18 +477,21 @@ namespace WTXModbusExamples
                     valueArr[_i] = (ushort)Convert.ToInt32(dataGridView1.Rows[index].Cells[8].Value);
 
                     if (dataGridView1.Rows[index].Cells[10].Value.ToString()=="S32")
-                        _wtxObj.WriteOutputWordS32(valueArr[_i], (ushort)Convert.ToInt32(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                        //_wtxObj.WriteOutputWordS32(valueArr[_i], (ushort)Convert.ToInt32(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                        _wtxObj.WriteOutputWordS32(valueArr[_i], (ushort)Convert.ToInt32(dataGridView1.Rows[index].Cells[8].Value));
                     else
                         if(dataGridView1.Rows[index].Cells[10].Value.ToString() == "U08")
-                            _wtxObj.WriteOutputWordU08(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);           
+                        //_wtxObj.WriteOutputWordU08(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);   
+                        _wtxObj.WriteOutputWordU08(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value));
                     else if (dataGridView1.Rows[index].Cells[10].Value.ToString() == "U16")
-                              _wtxObj.WriteOutputWordU16(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
-                    
+                        //_wtxObj.WriteOutputWordU16(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value), Write_DataReceived);
+                        _wtxObj.WriteOutputWordU16(valueArr[_i], (ushort)Convert.ToUInt16(dataGridView1.Rows[index].Cells[8].Value));
+
                 }
             }
             _wtxObj.UpdateOutputWords(valueArr);
 
-            _wtxObj.activateData(Write_DataReceived); 
+            _wtxObj.activateData(); 
         }       
 
         // This method sends a command to the device : Manual taring. Command : 0x1000
@@ -492,7 +500,7 @@ namespace WTXModbusExamples
         {
             // Manual taring
             //if (this.is_standard == true)      // Activate this if-conditon only in case, if the should be a change between standard and filler application. 
-            _wtxObj.manualTaring(Write_DataReceived);
+            _wtxObj.manualTaring();
         }
 
         // This method sends a command to the device : Clear dosing results. Command : 0x4
@@ -501,7 +509,7 @@ namespace WTXModbusExamples
         {
             // Clear dosing results
             //if (this.is_standard == false)
-            _wtxObj.clearDosingResults(Write_DataReceived);
+            _wtxObj.clearDosingResults();
         }
 
         // This method sends a command to the device : Abort dosing. Command : 0x8
@@ -510,7 +518,7 @@ namespace WTXModbusExamples
         {
             // Abort dosing
             //if (this.is_standard == false)
-            _wtxObj.abortDosing(Write_DataReceived);
+            _wtxObj.abortDosing();
         }
 
         // This method sends a command to the device : Start dosing. Command : 0x10
@@ -519,7 +527,7 @@ namespace WTXModbusExamples
         {
             // Start dosing
             //if (this.is_standard == false)
-            _wtxObj.startDosing(Write_DataReceived);
+            _wtxObj.startDosing();
         }
 
         // This method sends a command to the device : Record weight. Command : 0x4000 , Bit .14
@@ -528,7 +536,7 @@ namespace WTXModbusExamples
         {
             // Record weight: 
             //if (this.is_standard == false)
-            _wtxObj.recordWeight(Write_DataReceived);
+            _wtxObj.recordWeight();
 
         }
 
@@ -538,7 +546,7 @@ namespace WTXModbusExamples
         {
             // Manual re-dosing
             //if (this.is_standard == false)
-            _wtxObj.manualReDosing(Write_DataReceived);
+            _wtxObj.manualReDosing();
         }
 
         // This event starts the timer and the periodical fetch of values from the device (here: WTX120_Modbus).
@@ -723,13 +731,13 @@ namespace WTXModbusExamples
                 } // end - if (inputFormatIsRight == true)
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "S32")
-                    _wtxObj.WriteOutputWordS32(value, index, Write_DataReceived);
+                    _wtxObj.WriteOutputWordS32(value, index);
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U08")
-                    _wtxObj.WriteOutputWordU08(value, index, Write_DataReceived);
+                    _wtxObj.WriteOutputWordU08(value, index);
 
                 if (dataGridView1.Rows[e.RowIndex].Cells[10].Value.ToString() == "U16")
-                    _wtxObj.WriteOutputWordU16(value, index, Write_DataReceived);
+                    _wtxObj.WriteOutputWordU16(value, index);
             }
 
             // Test Activate Data after the write of an output word: 

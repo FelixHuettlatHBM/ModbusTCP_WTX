@@ -31,6 +31,7 @@ using HBM.Weighing.API.WTX.Modbus;
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace HBM.Weighing.API.WTX
@@ -66,9 +67,14 @@ namespace HBM.Weighing.API.WTX
 
         public override event EventHandler<DataEvent> DataUpdateEvent;
 
-        public WtxModbus(INetConnection connection, int paramTimerInterval) : base(connection)
-        {
+
+        public event EventHandler<DataEvent> method;
+
+        public WtxModbus(INetConnection connection, int paramTimerInterval, EventHandler<DataEvent> methodParameter) : base(connection)
+        { 
             _connection = connection;
+
+            this.method = methodParameter;
 
             this._previousData = new ushort[100];
             this._dataStr = new string[100];
@@ -119,8 +125,6 @@ namespace HBM.Weighing.API.WTX
         public override void Connect()
         {
             this._connection.Connect();
-
-            //this.UpdateEvent(this, null);
         }
 
         public override bool isConnected
@@ -134,41 +138,18 @@ namespace HBM.Weighing.API.WTX
         // To terminate,break, a connection to the WTX device via class WTX120_Modbus.
         public override void Disconnect(Action<bool> DisconnectCompleted)
         {
+            _aTimer.Enabled = false;
+            _aTimer.Stop();
             this._connection.Disconnect();
         }
-
-        public void Async_Call(int commandParam, Action<IDeviceData> callbackParam)
-        {
-            this._dataReceived = false;
-            BackgroundWorker bgWorker = new BackgroundWorker();   // At the class level, create an instance of the BackgroundWorker class.
-            
-            this._command = (ushort)commandParam;
-            this._callbackObj = callbackParam;
-
-            bgWorker.WorkerSupportsCancellation = true;  // Specify whether you want the background operation to allow cancellation and to report progress.
-            bgWorker.WorkerReportsProgress = true;
-
-            if (this._command == 0x00)       // command=0x00 , read data from register 
-            {
-                bgWorker.DoWork += new DoWorkEventHandler(this.ReadDoWork);  // To set up for a background operation, an event handler, "DoWorkEventHandler" is added.
-                bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.ReadCompleted);  // Create an event handler for the RunWorkerCompleted event (method "Read_Completed"). 
-            }
-            else  // else , write command into register 
-            {
-                bgWorker.DoWork += new DoWorkEventHandler(this.WriteDoWork);
-                bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.WriteCompleted);
-            }
-
-            bgWorker.WorkerReportsProgress = true;
-            bgWorker.RunWorkerAsync();
-        }
-
+        
+        
         // This method writes a data word to the WTX120 device synchronously. 
-        public void SyncCall(ushort wordNumber, ushort commandParam, Action<IDeviceData> callbackParam)      // Callback-Methode nicht benötigt. 
+        public void SyncCall(ushort wordNumber, ushort commandParam)    
         {
             this._command = commandParam;
             this._dataReceived = false;           
-            this._callbackObj = callbackParam;
+            //this._callbackObj = callbackParam;
 
             if (this._command == 0x00)
                 this._connection.Read(0);
@@ -179,24 +160,23 @@ namespace HBM.Weighing.API.WTX
                 this._connection.Write(wordNumber, this._command);
 
                 // Handshake protocol as given in the manual:                            
-                              
+
                 do
                 {
                     this._connection.Read(0);
 
                 } while (this.Handshake == 0);
-                             
+
                 // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
                 if (this.Handshake == 1)
                 {
-                    this._connection.Write(wordNumber, 0x00);  
+                    this._connection.Write(wordNumber, 0x00);
                 }
-                                
-                while ( this.Handshake == 1) // Before : 'this.status == 1' additionally in the while condition. 
+
+                while (this.Handshake == 1) // Before : 'this.status == 1' additionally in the while condition. 
                 {
                     this._connection.Read(0);
-                }   
-                
+                }
             }
         }
 
@@ -205,28 +185,10 @@ namespace HBM.Weighing.API.WTX
             get { return this._command; }
         }
 
-        // This method is executed asynchronously in the background for reading the register by a Backgroundworker. 
-        // @param : sender - the object of this class. dowork_asynchronous - the argument of the event. 
-        public void ReadDoWork(object sender, DoWorkEventArgs doworkAsynchronous)
-        {
-            this._dataReceived = false;
-            doworkAsynchronous.Result = (IDeviceData)this.AsyncReadData((BackgroundWorker)sender); // the private method "this.read_data" in called to read the register in class Modbus_TCP
-            // dowork_asynchronous.Result contains all values defined in Interface IDevice_Values.
-        }
-
-        // This method read the register of the Device(here: WTX120), therefore it calls the method in class Modbus_TCP to read the register. 
-        // @return: IDevice_Values - Interface, that contains all values for the device. 
-        public IDeviceData AsyncReadData(BackgroundWorker worker)
-        {
-            this._connection.Read(0);
-
-            return this;
-        }
 
         public IDeviceData SyncReadData()
         {
             this._connection.Read(0);
-            //this.JetConnObj.Read();
 
             return this;
         }
@@ -237,14 +199,6 @@ namespace HBM.Weighing.API.WTX
             {
                 return _thisValues;
             }
-        }
-
-        public void ReadCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this._callbackObj((IDeviceData)e.Result);         // Interface commited via callback. 
-
-            // For synchronous check that data is received:
-            _dataReceived = true;
         }
 
         public override bool IsDataReceived
@@ -258,41 +212,10 @@ namespace HBM.Weighing.API.WTX
                 this._dataReceived = value;
             }
         }
-
-        public void WriteDoWork(object sender, DoWorkEventArgs e)
+        
+        public void WriteOutputWordS32(int valueParam, ushort wordNumber/*, Action<IDeviceData> callbackParam*/)
         {
-            // (1) Sending of a command:        
-            
-            this._connection.Write(0, this._command);
-            this._connection.Read(0);
-
-            while (this.Handshake == 0)
-            {
-                this._connection.Read(0);
-            }
-
-            // (2) If the handshake bit is equal to 1, the command has to be set to 0x00:
-            if (this.Handshake == 1)
-            {
-                this._connection.Write(0, 0x00);
-            }
-
-            // (3) Wait until the handshake bit is reset to 0x00: 
-            while (this.Handshake == 1 /* && this.status == 1 */)
-            {
-                this._connection.Read(0);
-            }      
-        }
-
-        public void WriteCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this._callbackObj(this);         // Committing the interface with the updated values after writing. 
-            this._command = 0x00;            // After write : Set command to zero. 
-        }
-
-        public void WriteOutputWordS32(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
-        {
-            this._callbackObj = callbackParam;
+            //this._callbackObj = callbackParam;
 
             _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
             _dataWritten[1] = (ushort)(valueParam & 0x0000ffff);
@@ -300,17 +223,17 @@ namespace HBM.Weighing.API.WTX
             this._connection.WriteArray(wordNumber, _dataWritten);
         }
 
-        public void WriteOutputWordU08(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
+        public void WriteOutputWordU08(int valueParam, ushort wordNumber)
         {
-            this._callbackObj = callbackParam;
+            //this._callbackObj = callbackParam;
       
             _dataWritten[0] = (ushort)((valueParam & 0x000000ff));
             this._connection.Write(wordNumber, _dataWritten[0]);
         }
 
-        public void WriteOutputWordU16(int valueParam, ushort wordNumber, Action<IDeviceData> callbackParam)
+        public void WriteOutputWordU16(int valueParam, ushort wordNumber/*, Action<IDeviceData> callbackParam*/)
         {
-            this._callbackObj = callbackParam;
+            //this._callbackObj = callbackParam;
 
             _dataWritten[0] = (ushort)((valueParam & 0xffff0000) >> 16);
 
@@ -343,9 +266,12 @@ namespace HBM.Weighing.API.WTX
                                              // the timer interval is set. 
                 _aTimer = new System.Timers.Timer(this._timerInterval);
             }
+
+            
+
             // Connect the elapsed event for the timer. 
             _aTimer.Elapsed += OnTimedEvent;
-
+            
             _aTimer.AutoReset = true;
             _aTimer.Enabled = true;
             _aTimer.Start();
@@ -373,21 +299,280 @@ namespace HBM.Weighing.API.WTX
 
         // Event method, which will be triggered after a interval of the timer is elapsed- 
         // After triggering (after 500ms) the register is read. 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private async void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            Async_Call(0x00, DataReceivedTimer);
+            // Call the async method 'AsyncTaskCall' by an Eventhandler:     
 
-            //thisConnection.RaiseDataEvent += UpdateEvent;   // Subscribe to the event.
+            if (isConnected)
+            {
+                /*
+                Task FetchValues = _connection.ReadAsync().ContinueWith(t =>
+                {
+                    ushort[] _asyncData = t.Result;
+                    UpdateData(_asyncData);
+                });
+                */
+                 
+                // Alternative: 
+                Task<ushort[]> FetchValues = _connection.ReadAsync();
+                //DoIndependentWork();
+                ushort[] _asyncData = await FetchValues;
+                UpdateData(_asyncData);
+                
+            }
         }
 
-        private void DataReceivedTimer(IDeviceData deviceValues)
+        private void UpdateData(ushort[] _asyncData)
         {
-            _thisValues = deviceValues;
+            this._data = _asyncData;
 
-            int previousNetValue = deviceValues.NetValue;
+            this.GetDataStr[0] = this.NetGrossValueStringComment(this.NetValue, this.Decimals);  // 1 equal to "Net measured" as a parameter
+            this.GetDataStr[1] = this.NetGrossValueStringComment(this.GrossValue, this.Decimals);  // 2 equal to "Gross measured" as a parameter
 
+            this.GetDataStr[2] = this.GeneralWeightError.ToString();
+            this.GetDataStr[3] = this.ScaleAlarmTriggered.ToString();
+            this.GetDataStr[4] = this.LimitStatusStringComment();
+            this.GetDataStr[5] = this.WeightMovingStringComment();
+
+            this.GetDataStr[6] = this.ScaleSealIsOpen.ToString();
+            this.GetDataStr[7] = this.ManualTare.ToString();
+            this.GetDataStr[8] = this.WeightTypeStringComment();
+            this.GetDataStr[9] = this.ScaleRangeStringComment();
+
+            this.GetDataStr[10] = this.ZeroRequired.ToString();
+            this.GetDataStr[11] = this.WeightWithinTheCenterOfZero.ToString();
+            this.GetDataStr[12] = this.WeightInZeroRange.ToString();
+            this.GetDataStr[13] = this.ApplicationModeStringComment();
+
+            this.GetDataStr[14] = this.Decimals.ToString();
+            this.GetDataStr[15] = this.UnitStringComment();
+            this.GetDataStr[16] = this.Handshake.ToString();
+            this.GetDataStr[17] = this.StatusStringComment();
+
+            this.GetDataStr[18] = this.Input1.ToString();
+            this.GetDataStr[19] = this.Input2.ToString();
+            this.GetDataStr[20] = this.Input3.ToString();
+            this.GetDataStr[21] = this.Input4.ToString();
+
+            this.GetDataStr[22] = this.Output1.ToString();
+            this.GetDataStr[23] = this.Output2.ToString();
+            this.GetDataStr[24] = this.Output3.ToString();
+            this.GetDataStr[25] = this.Output4.ToString();
+
+            if (this.ApplicationMode == 0)
+            {
+                this.GetDataStr[26] = this.LimitStatus1.ToString();
+                this.GetDataStr[27] = this.LimitStatus2.ToString();
+                this.GetDataStr[28] = this.LimitStatus3.ToString();
+                this.GetDataStr[29] = this.LimitStatus4.ToString();
+
+                this.GetDataStr[30] = this.WeightMemDay.ToString();
+                this.GetDataStr[31] = this.WeightMemMonth.ToString();
+                this.GetDataStr[32] = this.WeightMemYear.ToString();
+                this.GetDataStr[33] = this.WeightMemSeqNumber.ToString();
+                this.GetDataStr[34] = this.WeightMemGross.ToString();
+                this.GetDataStr[35] = this.WeightMemNet.ToString();
+
+                this.ManualTareValue = _outputData[0];
+                this.LimitValue1Input = _outputData[1];
+                this.LimitValue1Mode = _outputData[2];
+                this.LimitValue1ActivationLevelLowerBandLimit = _outputData[3];
+                this.LimitValue1HysteresisBandHeight = _outputData[4];
+                this.LimitValue2Source = _outputData[5];
+                this.LimitValue2Mode = _outputData[6];
+                this.LimitValue2ActivationLevelLowerBandLimit = _outputData[7];
+                this.LimitValue2HysteresisBandHeight = _outputData[8];
+                this.LimitValue3Source = _outputData[9];
+                this.LimitValue3Mode = _outputData[10];
+                this.LimitValue3ActivationLevelLowerBandLimit = _outputData[11];
+                this.LimitValue3HysteresisBandHeight = _outputData[12];
+                this.LimitValue4Source = _outputData[13];
+                this.LimitValue4Mode = _outputData[14];
+                this.LimitValue4ActivationLevelLowerBandLimit = _outputData[15];
+                this.LimitValue4HysteresisBandHeight = _outputData[16];
+                this.ResidualFlowTime = _outputData[17];
+                this.TargetFillingWeight = _outputData[18];
+                this.CoarseFlowCutOffPointSet = _outputData[19];
+                this.FineFlowCutOffPointSet = _outputData[20];
+                this.MinimumFineFlow = _outputData[21];
+                this.OptimizationOfCutOffPoints = _outputData[22];
+                this.MaximumDosingTime = _outputData[23];
+                this.StartWithFineFlow = _outputData[24];
+                this.CoarseLockoutTime = _outputData[25];
+                this.FineLockoutTime = _outputData[26];
+                this.TareMode = _outputData[27];
+                this.UpperToleranceLimit = _outputData[28];
+                this.LowerToleranceLimit = _outputData[29];
+                this.MinimumStartWeight = _outputData[30];
+                this.EmptyWeight = _outputData[31];
+                this.TareDelay = _outputData[32];
+                this.CoarseFlowMonitoringTime = _outputData[33];
+                this.CoarseFlowMonitoring = _outputData[34];
+                this.FineFlowMonitoring = _outputData[35];
+                this.FineFlowMonitoringTime = _outputData[36];
+                this.DelayTimeAfterFineFlow = _outputData[37];
+                this.ActivationTimeAfterFineFlow = _outputData[38];
+                this.SystematicDifference = _outputData[39];
+                this.DownwardsDosing = _outputData[40];
+                this.ValveControl = _outputData[41];
+                this.EmptyingMode = _outputData[42];
+            }
+            else
+                if (this.ApplicationMode == 2 || this.ApplicationMode == 1) // in filler mode 
+            {
+                this.GetDataStr[26] = this.CoarseFlow.ToString();
+                this.GetDataStr[27] = this.FineFlow.ToString();
+                this.GetDataStr[28] = this.Ready.ToString();
+                this.GetDataStr[29] = this.ReDosing.ToString();
+
+                this.GetDataStr[30] = this.Emptying.ToString();
+                this.GetDataStr[31] = this.FlowError.ToString();
+                this.GetDataStr[32] = this.Alarm.ToString();
+                this.GetDataStr[33] = this.AdcOverUnderload.ToString();
+
+                this.GetDataStr[34] = this.MaxDosingTime.ToString();
+                this.GetDataStr[35] = this.LegalTradeOp.ToString();
+                this.GetDataStr[36] = this.ToleranceErrorPlus.ToString();
+                this.GetDataStr[37] = this.ToleranceErrorMinus.ToString();
+
+                this.GetDataStr[38] = this.StatusInput1.ToString();
+                this.GetDataStr[39] = this.GeneralScaleError.ToString();
+                this.GetDataStr[40] = this.FillingProcessStatus.ToString();
+                this.GetDataStr[41] = this.NumberDosingResults.ToString();
+
+                this.GetDataStr[42] = this.DosingResult.ToString();
+                this.GetDataStr[43] = this.MeanValueDosingResults.ToString();
+                this.GetDataStr[44] = this.StandardDeviation.ToString();
+                this.GetDataStr[45] = this.TotalWeight.ToString();
+
+                this.GetDataStr[46] = this.FineFlowCutOffPoint.ToString();
+                this.GetDataStr[47] = this.CoarseFlowCutOffPoint.ToString();
+                this.GetDataStr[48] = this.CurrentDosingTime.ToString();
+                this.GetDataStr[49] = this.CurrentCoarseFlowTime.ToString();
+
+                this.GetDataStr[50] = this.CurrentFineFlowTime.ToString();
+                this.GetDataStr[51] = this.ParameterSetProduct.ToString();
+
+                this.GetDataStr[52] = this.FillerWeightMemoryDay.ToString();
+                this.GetDataStr[53] = this.FillerWeightMemoryMonth.ToString();
+                this.GetDataStr[54] = this.FillerWeightMemoryYear.ToString();
+                this.GetDataStr[55] = this.FillerWeightMemorySeqNumber.ToString();
+                this.GetDataStr[56] = this.FillerWeightMemoryGross.ToString();
+                this.GetDataStr[57] = this.FillerWeightMemoryNet.ToString();
+
+
+                this.ManualTareValue = _outputData[0];
+                this.LimitValue1Input = _outputData[1];
+                this.LimitValue1Mode = _outputData[2];
+                this.LimitValue1ActivationLevelLowerBandLimit = _outputData[3];
+                this.LimitValue1HysteresisBandHeight = _outputData[4];
+                this.LimitValue2Source = _outputData[5];
+                this.LimitValue2Mode = _outputData[6];
+                this.LimitValue2ActivationLevelLowerBandLimit = _outputData[7];
+                this.LimitValue2HysteresisBandHeight = _outputData[8];
+                this.LimitValue3Source = _outputData[9];
+                this.LimitValue3Mode = _outputData[10];
+                this.LimitValue3ActivationLevelLowerBandLimit = _outputData[11];
+                this.LimitValue3HysteresisBandHeight = _outputData[12];
+                this.LimitValue4Source = _outputData[13];
+                this.LimitValue4Mode = _outputData[14];
+                this.LimitValue4ActivationLevelLowerBandLimit = _outputData[15];
+                this.LimitValue4HysteresisBandHeight = _outputData[16];
+                this.ResidualFlowTime = _outputData[17];
+                this.TargetFillingWeight = _outputData[18];
+                this.CoarseFlowCutOffPointSet = _outputData[19];
+                this.FineFlowCutOffPointSet = _outputData[20];
+                this.MinimumFineFlow = _outputData[21];
+                this.OptimizationOfCutOffPoints = _outputData[22];
+                this.MaximumDosingTime = _outputData[23];
+                this.StartWithFineFlow = _outputData[24];
+                this.CoarseLockoutTime = _outputData[25];
+                this.FineLockoutTime = _outputData[26];
+                this.TareMode = _outputData[27];
+                this.UpperToleranceLimit = _outputData[28];
+                this.LowerToleranceLimit = _outputData[29];
+                this.MinimumStartWeight = _outputData[30];
+                this.EmptyWeight = _outputData[31];
+                this.TareDelay = _outputData[32];
+                this.CoarseFlowMonitoringTime = _outputData[33];
+                this.CoarseFlowMonitoring = _outputData[34];
+                this.FineFlowMonitoring = _outputData[35];
+                this.FineFlowMonitoringTime = _outputData[36];
+                this.DelayTimeAfterFineFlow = _outputData[37];
+                this.ActivationTimeAfterFineFlow = _outputData[38];
+                this.SystematicDifference = _outputData[39];
+                this.DownwardsDosing = _outputData[40];
+                this.ValveControl = _outputData[41];
+                this.EmptyingMode = _outputData[42];
+            }
+
+            _compareDataChanged = false;
+
+            //e.ushortArgs = this._data;
+
+            for (int index = 0; index < 6; index++)
+            {
+                if (this._previousData[index] != this._data[index])
+                    _compareDataChanged = true;
+            }
+
+            // If one value of the data changes, the boolean value 'compareDataChanged' will be set to true and the data will be 
+            // updated in the following, as well as the GUI form. ('compareDataChanged' is for the purpose of comparision.)
+
+            // The data is only invoked by the event 'DataUpdateEvent' if the data has been changed. The comparision is made by...
+            // ... the arrays 'previousData' and 'data' with the boolean 
+
+            if ((this._compareDataChanged == true) || (this._isCalibrating == true) || this._isRefreshed == true)   // 'isCalibrating' indicates if a calibration is done just before ...
+            {                                                                                                    // and the data should be send to the GUI/console and be printed out. 
+                                                                                                                 // If the GUI has been refreshed, the values should also be send to the GUI/Console and be printed out. 
+                //DataUpdateEvent?.Invoke(this, new DataEvent(this._data, this.GetDataStr));
+
+                this.method?.Invoke(this, new DataEvent(this._data, this.GetDataStr));
+
+                this._isCalibrating = false;
+                this.Refreshed = false;
+            }
+
+            this._previousData = this._data;
+
+            
         }
 
+        public async Task<int> AsyncWrite(ushort index,ushort commandParam)
+        {
+            if (isConnected)
+            {    
+                Task<int> WriteValue = _connection.WriteAsync(index,commandParam);
+                DoHandshake(index);
+                int command = await WriteValue;
+                return command;
+            }
+            else
+                return 0;
+        }
+
+        private void DoHandshake(ushort index)
+        {        
+            // Handshake protocol as given in the manual:                            
+            do
+            {
+                this._connection.Read(0);
+
+            } while (this.Handshake == 0);
+
+            // (2) If the handshake bit is equal to 0, the command has to be set to 0x00.
+            if (this.Handshake == 1)
+            {
+                this._connection.Write(index, 0x00);
+            }
+
+            while (this.Handshake == 1) // Before : 'this.status == 1' additionally in the while condition. 
+            {
+                this._connection.Read(0);
+            }
+        }
+
+        
         //public override void UpdateEvent(object sender, MessageEvent<ushort> e)
         public override void UpdateEvent(object sender, DataEvent e)
         {
@@ -599,14 +784,6 @@ namespace HBM.Weighing.API.WTX
             }
 
             this._previousData = this._data;
-
-            // As an alternative to 'DataUpdateEvent?.Invoke(this, e);' : Both implementations do the same.  
-            /*
-            EventHandler<NetConnectionEventArgs<ushort[]>> handler2 = DataUpdateEvent;        
-
-            if (handler2 != null)
-                handler2(this, e);
-            */
         }
 
         public bool Refreshed
@@ -647,7 +824,6 @@ namespace HBM.Weighing.API.WTX
 
 
         // The following methods set the specific, single values from the whole array "data".
-
 
         public override int NetValue
         {
@@ -2313,15 +2489,15 @@ namespace HBM.Weighing.API.WTX
         {
             //write reg 46, CalibrationWeight     
             
-            this.WriteOutputWordS32(calibrationValue, 46, Write_DataReceived);
+            this.WriteOutputWordS32(calibrationValue, 46);
 
             //write reg 50, 0x7FFFFFFF
 
-            this.WriteOutputWordS32(0x7FFFFFFF, 50, Write_DataReceived);
+            this.WriteOutputWordS32(0x7FFFFFFF, 50);
 
             Console.Write(".");
 
-            this.SyncCall(0, 0x100, Write_DataReceived);
+            this.SyncCall(0, 0x100);
 
             this.RestartTimer();
 
@@ -2330,7 +2506,7 @@ namespace HBM.Weighing.API.WTX
             // Check if the values of the WTX device are equal to the calibration value. It is also checked within a certain interval if the measurement is noisy.
             if ((this.NetValue != calibrationValue || this.GrossValue != calibrationValue))
             {
-                this.Async_Call(0x00, DataReceivedTimer);
+                this.AsyncWrite(0, 0x00);
             }
             /*
             else
@@ -2390,15 +2566,15 @@ namespace HBM.Weighing.API.WTX
 
             //write reg 48, DPreload;         
 
-            this.WriteOutputWordS32(Convert.ToInt32(dPreload), 48, Write_DataReceived);
+            this.WriteOutputWordS32(Convert.ToInt32(dPreload), 48);
 
-            this.SyncCall(0, 0x80, Write_DataReceived);
+            this.SyncCall(0, 0x80);
 
             //write reg 50, DNominalLoad;          
 
-            this.WriteOutputWordS32(Convert.ToInt32(dNominalLoad), 50, Write_DataReceived);
+            this.WriteOutputWordS32(Convert.ToInt32(dNominalLoad), 50);
 
-            this.SyncCall(0, 0x100, Write_DataReceived);
+            this.SyncCall(0, 0x100);
 
             this._isCalibrating = true;
 
@@ -2412,11 +2588,11 @@ namespace HBM.Weighing.API.WTX
 
             //todo: write reg 48, 0x7FFFFFFF
 
-            this.WriteOutputWordS32(0x7FFFFFFF, 48, Write_DataReceived);
+            this.WriteOutputWordS32(0x7FFFFFFF, 48);
             
             Console.Write(".");
 
-            this.SyncCall(0, 0x80, Write_DataReceived);
+            this.SyncCall(0, 0x80);
 
             /*
             if ((this.NetValue != 0 || this.GrossValue != 0))
@@ -2442,62 +2618,62 @@ namespace HBM.Weighing.API.WTX
             set { this._isCalibrating = value; }
         }
 
-        public override void gross(Action<IDeviceData> WriteDataCompleted)
+        public async override void gross()
         {
-            this.Async_Call(0x2, WriteDataCompleted);
+            _command = (ushort)await AsyncWrite(0, 0x2);
         }
-        public override void taring(Action<IDeviceData> WriteDataCompleted)
+        public async override void taring()
         {
-            this.Async_Call(0x1, WriteDataCompleted);
+            _command = (ushort)await AsyncWrite(0, 0x1);
         }
-        public override void zeroing(Action<IDeviceData> WriteDataCompleted)
+        public async override void zeroing()
         {
-            this.Async_Call(0x40, WriteDataCompleted);
-        }
-
-        public override void adjustZero(Action<IDeviceData> WriteDataCompleted)
-        {
-            this.Async_Call(0x80, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x40);
         }
 
-        public override void adjustNominal(Action<IDeviceData> WriteDataCompleted)
+        public async override void adjustZero()
         {
-            this.Async_Call(0x100, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x80);
         }
 
-        public override void activateData(Action<IDeviceData> WriteDataCompleted)
+        public async override void adjustNominal()
         {
-            this.Async_Call(0x800, Write_DataReceived);  // Set Bit .11 for 'Activate data'. For example, after your input for the limit values.
+            _command = (ushort)await AsyncWrite(0, 0x100);
         }
 
-        public override void manualTaring(Action<IDeviceData> WriteDataCompleted)
+        public async override void activateData()
         {
-            this.Async_Call(0x1000, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x800);
         }
 
-        public override void clearDosingResults(Action<IDeviceData> WriteDataCompleted)
+        public async override void manualTaring()
         {
-            this.Async_Call(0x4, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x1000);
         }
 
-        public override void abortDosing(Action<IDeviceData> WriteDataCompleted)
+        public async override void clearDosingResults()
         {
-            this.Async_Call(0x8, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x4);
         }
 
-        public override void startDosing(Action<IDeviceData> WriteDataCompleted)
+        public async override void abortDosing()
         {
-            this.Async_Call(0x10, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x8);
         }
 
-        public override void recordWeight(Action<IDeviceData> WriteDataCompleted)
+        public async override void startDosing()
         {
-            this.Async_Call(0x4000,Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x10);
         }
 
-        public override void manualReDosing(Action<IDeviceData> WriteDataCompleted)
+        public async override void recordWeight()
         {
-            this.Async_Call(0x8000, Write_DataReceived);
+            _command = (ushort)await AsyncWrite(0, 0x4000);
+        }
+
+        public async override void manualReDosing()
+        {
+            _command = (ushort)await AsyncWrite(0, 0x8000);
         }
 
 

@@ -135,9 +135,21 @@ namespace JetbusTest
                 data = 0x00000000;
             }
 
-
             switch (this.behavior)
             {
+
+                case Behavior.setTestsSuccess:
+                    path = "6002/01";
+                    Event = "change";
+                    data = 100010;
+                    break;
+
+                case Behavior.setTestsFail:
+                    path = "6002/02";
+                    Event = "change";
+                    data = 1230;
+                    break;
+
                 case Behavior.WriteTareSuccess:
                     path = "6002/01";
                     Event = "change";          

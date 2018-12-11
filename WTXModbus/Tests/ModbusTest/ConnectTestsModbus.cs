@@ -4,8 +4,9 @@ namespace HBM.Weighing.API.WTX.Modbus
     using HBM.Weighing.API.WTX;
 
     using System.Collections;
-    using NUnit.Framework;   
+    using NUnit.Framework;
     using System.Threading;
+    using System;
 
     [TestFixture]
     public class ConnectTestsModbus 
@@ -84,16 +85,19 @@ namespace HBM.Weighing.API.WTX.Modbus
         public bool ConnectTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             this.connectCallbackCalled = false;
 
             WTXModbusObj.Connect(this.OnConnect, 100);
-
-            Thread.Sleep(300);
             
             return WTXModbusObj.isConnected;
                  // Alternative : Assert.AreEqual(this.connectCallbackCalled, true); 
+        }
+
+        private void Update(object sender, DataEvent e)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnConnect(bool connectCompleted)
@@ -106,7 +110,7 @@ namespace HBM.Weighing.API.WTX.Modbus
         public bool DisconnectTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 

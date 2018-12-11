@@ -70,7 +70,7 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            _wtxObj.taring(WriteDataCompleted);     // Alternative : _jetTestConnection.Write("6002/01", 1701994868);
+            _wtxObj.taring();     // Alternative : _jetTestConnection.Write("6002/01", 1701994868);
 
             if (_jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(1701994868))
                 return true;
@@ -94,7 +94,7 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            _wtxObj.gross(WriteDataCompleted);     // Alternative : _jetTestConnection.Write("6002/01", 1936683623);
+            _wtxObj.gross();     // Alternative : _jetTestConnection.Write("6002/01", 1936683623);
 
             if (_jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(1936683623))
                 return true;
@@ -113,7 +113,7 @@ namespace JetbusTest
 
             _wtxObj.Connect(this.OnConnect, 100);
 
-            _wtxObj.zeroing(WriteDataCompleted);     // Alternative : _jetTestConnection.Write("6002/01", 1869768058);
+            _wtxObj.zeroing();     // Alternative : _jetTestConnection.Write("6002/01", 1869768058);
 
             if (_jetTestConnection.getDataBuffer.ContainsKey("6002/01") && _jetTestConnection.getDataBuffer.ContainsValue(1869768058)) 
                 return true;

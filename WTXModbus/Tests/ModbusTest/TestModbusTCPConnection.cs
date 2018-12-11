@@ -6,6 +6,7 @@ namespace HBM.Weighing.API.WTX.Modbus
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
 
     public enum Behavior
     {
@@ -214,7 +215,7 @@ namespace HBM.Weighing.API.WTX.Modbus
                     break;
 
                 default:
-                    _connected = false;
+                    _connected = true;
                     break; 
             }
     }
@@ -601,12 +602,7 @@ namespace HBM.Weighing.API.WTX.Modbus
                 case Behavior.TareMethodTestFail:
                     this.command = 0;
                     break;
-                case Behavior.ZeroMethodTestSuccess:
-                    this.command = data;
-                    break;
-                case Behavior.ZeroMethodTestFail:
-                    //this.command = 0;
-                    break;
+
                 case Behavior.AdjustingZeroMethodSuccess:
                     this.command = data;
                     break;
@@ -842,6 +838,30 @@ namespace HBM.Weighing.API.WTX.Modbus
         Dictionary<string, int> INetConnection.getData()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ushort[]> ReadAsync()
+        {
+            ushort[] value = new ushort[1];
+
+            return value;
+        }
+
+        public async Task<int> WriteAsync(ushort index, ushort commandParam)
+        {
+            switch (behavior)
+            {
+                case Behavior.ZeroMethodTestSuccess:
+                    this.command = commandParam;
+                    break;
+                case Behavior.ZeroMethodTestFail:
+                    this.command = 0x00;
+                    break;
+            }
+
+            this.command = commandParam;
+
+            return this.command;
         }
 
         public int getWordNumber

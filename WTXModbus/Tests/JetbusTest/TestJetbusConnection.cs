@@ -11,6 +11,7 @@ namespace HBM.Weighing.API.WTX.Jet
     using System.Linq;
     using System.Net.Security;
     using System.Threading;
+    using System.Threading.Tasks;
 
     public enum Behavior
     {
@@ -94,6 +95,9 @@ namespace HBM.Weighing.API.WTX.Jet
 
         ReadFail_DataReceived,
         ReadSuccess_DataReceived,
+
+        setTestsFail,
+        setTestsSuccess,
 
     }
 
@@ -456,9 +460,15 @@ namespace HBM.Weighing.API.WTX.Jet
                this.behavior == Behavior.MeasureZeroFail    || this.behavior == Behavior.CalibratePreloadCapacitySuccess)
                {
                 JValue valueObj = new JValue(data);
-
                 this.SetData(index,valueObj);
                }
+
+
+            if(this.behavior == Behavior.setTestsSuccess || this.behavior == Behavior.setTestsFail)
+            {
+                JValue valueObj = new JValue(data);
+                this.SetData(index, valueObj);
+            }
         }
 
         public JToken simulateJTokenInstance(string pathParam, string eventParam, int data)
@@ -486,6 +496,16 @@ namespace HBM.Weighing.API.WTX.Jet
         }
 
         public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ushort[]> ReadAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> WriteAsync(ushort index, ushort commandParam)
         {
             throw new NotImplementedException();
         }

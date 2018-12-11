@@ -33,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace HBM.Weighing.API.WTX.Modbus
 {
@@ -130,9 +131,10 @@ namespace HBM.Weighing.API.WTX.Modbus
         // to create a new MessageEvent to read the register of the device. 
         public int Read(object index)
         {
+            
             if (_connected)
                 ReadRegisterPublishing(new DataEvent(_data, new string[0]));
-
+                
             return 0; 
         }
 
@@ -189,15 +191,15 @@ namespace HBM.Weighing.API.WTX.Modbus
         // This method is declared as a virtual method to allow derived class to override the event call.
         //protected virtual void ReadRegisterPublishing(MessageEvent<ushort> e)
 
-        public virtual void ReadRegisterPublishing(DataEvent e) // 25.4 Comment : 'virtual' machte hier probleme beim durchlaufen :o 
+            
+        public virtual void ReadRegisterPublishing(DataEvent e) 
         {
-            // virtual new due to tesing - 3.5.2018
             try
             {
                 // Read the data: e.Message's type - ushort[]  
                 //e.Args = masterParam.ReadHoldingRegisters(this.StartAdress, this.getNumOfPoints);
 
-                e.ushortArgs = _master.ReadHoldingRegisters(StartAdress, NumOfPoints);
+                e.ushortArgs = _master.ReadHoldingRegisters(_startAdress, _numOfPoints);
                 _connected = true;
 
                 BusActivityDetection?.Invoke(this, new LogEvent("Read successful: Registers have been read"));
@@ -221,13 +223,9 @@ namespace HBM.Weighing.API.WTX.Modbus
             // copy of the event to avoid that a race condition is prevented, if the former subscriber directly logs off after the last
             // condition( and after if(handler!=null) ) and before the event is triggered. 
 
-            //RaiseDataEvent?.Invoke(this, e);
-
-            var handler = RaiseDataEvent;
-
-            //If a subscriber exists: 
-            if (handler != null) handler(this, e);
+            RaiseDataEvent?.Invoke(this, e);
         }
+        
 
         // This method establishs a connection to the device. Therefore an IP address and the port number
         // for the TcpClient is need. The client itself is used for the implementation of the ModbusIpMaster. 
@@ -258,6 +256,24 @@ namespace HBM.Weighing.API.WTX.Modbus
             RaiseDataEvent = null;
         }
 
+        public async Task<ushort[]> ReadAsync()
+        {
+            _data = await _master.ReadHoldingRegistersAsync(_startAdress, _numOfPoints);
 
+            //RaiseDataEvent?.Invoke(this, new DataEvent(_data, new string[0]));
+
+            return _data;
+        }
+
+        public async Task<int> WriteAsync(ushort index,ushort commandParam)
+        {         
+            this.command = commandParam;
+
+            await _master.WriteSingleRegisterAsync(index, (ushort)command);
+            
+            BusActivityDetection?.Invoke(this, new LogEvent("Data(ushort) have been written successfully to the register"));
+
+            return this.command;
+        }
     }
 }

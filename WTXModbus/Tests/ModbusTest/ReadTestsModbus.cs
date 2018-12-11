@@ -132,12 +132,12 @@ namespace HBM.Weighing.API.WTX.Modbus
         public ushort ReadTestModbus(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
             testConnection.IsConnected = true;
 
-            WTXModbusObj.Async_Call(0x00, callbackMethod);
+            WTXModbusObj.getConnection.Read(0);
 
             Thread.Sleep(100);
 
@@ -147,39 +147,36 @@ namespace HBM.Weighing.API.WTX.Modbus
             // Alternative :Assert.AreEqual(_dataReadSuccess[0], WTXModbusObj.GetDataUshort[0]);
         }
 
+        private void Update(object sender, DataEvent e)
+        {
+            //throw new NotImplementedException();
+        }
+
         // Test for checking the handshake bit 
         [Test, TestCaseSource(typeof(ReadTestsModbus), "HandshakeTestCases")]
         public int testHandshake(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
-            WTXModbusObj.SyncCall(0, 0x1, OnWriteData);
+            WTXModbusObj.SyncCall(0, 0x1);
 
             return WTXModbusObj.Handshake;
-        }
-
-        private void OnReadData(IDeviceData obj)
-        {
-        }
-
-        private void OnWriteData(IDeviceData obj)
-        {
         }
 
         [Test, TestCaseSource(typeof(ReadTestsModbus), "MeasureZeroTestCases")]
         public bool MeasureZeroTest(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
             WTXModbusObj.MeasureZero();
 
-            WTXModbusObj.Async_Call(0x00, OnReadData);
+            WTXModbusObj.getConnection.Read(0);
 
             //check if : write reg 48, 0x7FFFFFFF and if Net and gross value are zero. 
 
@@ -200,7 +197,7 @@ namespace HBM.Weighing.API.WTX.Modbus
         {
             TestModbusTCPConnection testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
 
-            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200);
+            WtxModbus WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
 
@@ -217,14 +214,12 @@ namespace HBM.Weighing.API.WTX.Modbus
         public bool LogEventGetTest(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
             testConnection.IsConnected = true;
 
-            WTXModbusObj.Async_Call(0x00, callbackMethod);
-
-            Thread.Sleep(100);
+            WTXModbusObj.getConnection.Read(0);
 
             if (testConnection._logObj.Args.Equals("Read successful: Registers have been read"))
                 return true;
@@ -242,14 +237,12 @@ namespace HBM.Weighing.API.WTX.Modbus
         public bool LogEventSetTest(Behavior behavior)
         {
             testConnection = new TestModbusTCPConnection(behavior, "172.19.103.8");
-            WTXModbusObj = new WtxModbus(testConnection, 200);
+            WTXModbusObj = new WtxModbus(testConnection, 200,Update);
 
             WTXModbusObj.Connect(this.OnConnect, 100);
             testConnection.IsConnected = true;
 
-            WTXModbusObj.Async_Call(0x00, callbackMethod);
-
-            Thread.Sleep(100);
+            WTXModbusObj.getConnection.Read(0);
 
             if (testConnection._logObj.Args.Equals("Read successful: Registers have been read"))
                 return true;

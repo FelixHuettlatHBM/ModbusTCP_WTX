@@ -131,7 +131,7 @@ namespace WTXGUIsimple
                 // Creating objects of ModbusTcpConnection and WTXModbus: 
                 ModbusTcpConnection _modbusConnection = new ModbusTcpConnection(this._ipAddress);
 
-                _wtxDevice = new WtxModbus(_modbusConnection, this._timerInterval);
+                _wtxDevice = new WtxModbus(_modbusConnection, this._timerInterval,Update);       // before : _wtxDevice = new WtxModbus(_modbusConnection, this._timerInterval);
             }
             else
             {
@@ -163,7 +163,7 @@ namespace WTXGUIsimple
 
                 picNE107.Image = WTXGUIsimple.Properties.Resources.NE107_DiagnosisActive;
 
-                _wtxDevice.DataUpdateEvent += Update;
+                //_wtxDevice.DataUpdateEvent += Update; // Before.
 
                 this.Update(this, null);
             }
@@ -249,19 +249,19 @@ namespace WTXGUIsimple
         // button click event for switching to gross or net value. 
         private void cmdGrossNet_Click(object sender, EventArgs e)
         {
-                _wtxDevice.gross(WriteDataCompleted);
+                _wtxDevice.gross();
         }
 
         // button click event for zeroing
         private void cmdZero_Click(object sender, EventArgs e)
         {
-                _wtxDevice.zeroing(WriteDataCompleted);
+                _wtxDevice.zeroing();
         }
 
         // button click event for taring 
         private void cmdTare_Click(object sender, EventArgs e)
         {
-            _wtxDevice.taring(WriteDataCompleted);
+            _wtxDevice.taring();
         }
 
         //Method for calculate adjustment with dead load and span: 

@@ -38,6 +38,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace HBM.Weighing.API.WTX.Jet
 {
@@ -571,6 +572,16 @@ namespace HBM.Weighing.API.WTX.Jet
         }
 
         public void WriteArray(ushort index, ushort[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ushort[]> ReadAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> WriteAsync(ushort index, ushort commandParam)
         {
             throw new NotImplementedException();
         }

@@ -69,19 +69,19 @@ namespace HBM.Weighing.API
 
         public abstract string NetGrossValueStringComment(int value, int decimals);
 
-        public abstract void gross(Action<IDeviceData> WriteDataCompleted);
-        public abstract void zeroing(Action<IDeviceData> WriteDataCompleted);
-        public abstract void taring(Action<IDeviceData> WriteDataCompleted);
+        public abstract void gross();
+        public abstract void zeroing();
+        public abstract void taring();
 
-        public abstract void adjustZero(Action<IDeviceData> WriteDataCompleted);
-        public abstract void adjustNominal(Action<IDeviceData> WriteDataCompleted);
-        public abstract void activateData(Action<IDeviceData> WriteDataCompleted);
-        public abstract void manualTaring(Action<IDeviceData> WriteDataCompleted);
-        public abstract void recordWeight(Action<IDeviceData> WriteDataCompleted);
-        public abstract void clearDosingResults(Action<IDeviceData> WriteDataCompleted);
-        public abstract void abortDosing(Action<IDeviceData> WriteDataCompleted);
-        public abstract void startDosing(Action<IDeviceData> WriteDataCompleted);
-        public abstract void manualReDosing(Action<IDeviceData> WriteDataCompleted);
+        public abstract void adjustZero();
+        public abstract void adjustNominal();
+        public abstract void activateData();
+        public abstract void manualTaring();
+        public abstract void recordWeight();
+        public abstract void clearDosingResults();
+        public abstract void abortDosing();
+        public abstract void startDosing();
+        public abstract void manualReDosing();
 
         public abstract string UnitStringComment();
 
